@@ -1,7 +1,7 @@
 let modInfo = {
-	name: "The Milestone Tree",
+	name: "The Milestone Tree NG+",
 	id: "c2nv4in9eusojg59bmo",
-	author: "qq1010903229 (loader3229)",
+	author: "Seder3214/loader3229",
 	pointsName: "points",
 	discordName: "",
 	discordLink: "",
@@ -12,8 +12,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.145",
-	name: "Hardcapped Transcension",
+	num: "1.157",
+	name: "Prestige Powering...",
 }
 
 let changelog = ``
@@ -89,6 +89,8 @@ function getPointSoftcapStart(){
 	if(hasUpgrade("t",73))sc=sc.pow(upgradeEffect("t",73));
 	if(hasUpgrade("se",11))sc=sc.pow(upgradeEffect("se",11));
 	sc=sc.pow(layers.t.getSpecialEffect(22));
+	if(hasUpgrade("se",22))sc=sc.pow(upgradeEffect("se",22));
+	if(hasUpgrade("pp",11))sc=sc.pow(upgradeEffect("pp",11));
 	return sc;
 }
 
@@ -110,7 +112,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.m.points.gte(145);
+	return player.m.points.gte(158);
 }
 
 
