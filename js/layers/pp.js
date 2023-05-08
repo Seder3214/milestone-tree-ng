@@ -80,6 +80,7 @@ addLayer("pp", {
             effectDisplay() { return "x"+format(this.effect()) }, // Add formatting to the effect
         },
         21: {
+unlocked() {return player.m.points.gte(155)},
 			title: "Prestige Power Upgrade 21",
             description: "Unlock Super-Dilated Prestige Points effect.",
             cost: new Decimal(100000),
@@ -89,6 +90,8 @@ addLayer("pp", {
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
         22: {
+unlocked() {return player.m.points.gte(155)},
+
 			title: "Prestige Power Upgrade 22",
             description: "Unlock Prestige-Hardcapped Prestige Points effect.<br>Req: Power Scaler -<br> [11 Lvl]",
             cost: new Decimal(3600000),
