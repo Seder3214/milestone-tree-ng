@@ -568,7 +568,7 @@ for(var i in player.ap.challenges)c+=player.ap.challenges[i];
 			let effect=player.t.specialPoints[31].add(1).log10().div(25).add(1);
 			return effect;
 		}
-        if(x==32 && hasUpgrade('pp',22){
+        if(x==32 && hasUpgrade('pp',22)){
 			let effect=player.t.specialPoints[32].add(1).log10().div(100).add(1);
 			return effect;
 		}
