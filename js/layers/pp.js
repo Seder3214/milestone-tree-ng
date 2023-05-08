@@ -82,7 +82,7 @@ addLayer("pp", {
         21: {
 unlocked() {return player.m.points.gte(155)},
 			title: "Prestige Power Upgrade 21",
-            description: "Unlock Super-Dilated Prestige Points effect.",
+            description: "Unlock Super-Dilated Transcend Points effect.",
             cost: new Decimal(100000),
             currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency
             currencyInternalName: "power", // Use if using a nonstandard currency
@@ -93,7 +93,7 @@ unlocked() {return player.m.points.gte(155)},
 unlocked() {return player.m.points.gte(155)},
 
 			title: "Prestige Power Upgrade 22",
-            description: "Unlock Prestige-Hardcapped Prestige Points effect.<br>Req: Power Scaler -<br> [11 Lvl]",
+            description: "Unlock Prestige-Hardcapped Transcend Points effect.<br>Req: Power Scaler -<br> [11 Lvl]",
             cost: new Decimal(3600000),
             canAfford() {return player.pp.buyables[11].gte(11) && player.pp.power.gte(3600000)},
             currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency
