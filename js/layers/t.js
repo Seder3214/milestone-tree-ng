@@ -546,6 +546,7 @@ for(var i in player.ap.challenges)c+=player.ap.challenges[i];
 		if(x==21)return "Prestige-Dilated Transcend Point";
 		if(x==22)return "Hardcapped Transcend Point";
 		if(x==31)return "Super-Dilated Transcend Point";
+		if(x==32)return "Prestige-Hardcapped Transcend Point";
 	},
 	getSpecialEffect(x){
 		if(x==11){

@@ -1,6 +1,6 @@
 let modInfo = {
 	name: "The Milestone Tree NG+",
-	id: "c2nv4in9eusojg59bmo",
+	id: "tmtng+",
 	author: "Seder3214/loader3229",
 	pointsName: "points",
 	discordName: "",
@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.157.23",
+	num: "1.157.24",
 	name: "Prestige Powering...",
 }
 

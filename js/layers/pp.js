@@ -86,8 +86,7 @@ unlocked() {return player.m.points.gte(155)},
             cost: new Decimal(100000),
             currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency
             currencyInternalName: "power", // Use if using a nonstandard currency
-            currencyLayer: "pp",
-            unlocked() { return true}, // The upgrade is only visible when this is true
+            currencyLayer: "pp", // The upgrade is only visible when this is true
         },
         22: {
 unlocked() {return player.m.points.gte(155)},
@@ -98,8 +97,7 @@ unlocked() {return player.m.points.gte(155)},
             canAfford() {return player.pp.buyables[11].gte(11) && player.pp.power.gte(3600000)},
             currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency
             currencyInternalName: "power", // Use if using a nonstandard currency
-            currencyLayer: "pp",
-            unlocked() { return true}, // The upgrade is only visible when this is true
+            currencyLayer: "pp", // The upgrade is only visible when this is true
         },
 	},
     buyables: {
