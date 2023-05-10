@@ -1314,7 +1314,7 @@ addLayer("m", {
 				return "Passively generate 30% of Prestige Power gain";
 			},
         },
-        {
+         {
 			requirementDescription: "158th Milestone",
             unlocked() {return player[this.layer].best.gte(157)},
             done() {return player[this.layer].best.gte(158)}, // Used to determine when to give the milestone
