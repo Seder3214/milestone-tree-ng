@@ -2,17 +2,19 @@ let modInfo = {
 	name: "The Modding Tree",
 	id: "modbase",
 	pointsName: "points",
+	modFiles: ["Demo/layers/c.js", "Demo/layers/f.js", "Demo/layers/a.js", "Demo/demoTree.js"],
+
+
 	discordName: "",
 	discordLink: "",
 	initialStartPoints: new Decimal (10), // Used for hard resets and new players
-	
 	offlineLimit: 1,  // In hours
 }
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.π",
-	name: "Incrementally Updated",
+	num: "2.6.6",
+	name: "Fixed Reality",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
@@ -59,12 +61,16 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e280000000"))
+	return player.points.gte(new Decimal("11"))
 }
 
 
 
 // Less important things beyond this point!
+
+// Style for the background, can be a function
+var backgroundStyle = {
+}
 
 // You can change this if you have things that can be messed up by long tick lengths
 function maxTickLength() {

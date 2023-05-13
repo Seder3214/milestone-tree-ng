@@ -170,6 +170,8 @@ unlocked() {return player.m.points.gte(155)},
 				  let b=0.23;
 				  let eff=new Decimal(0).add(player[this.layer].buyables[this.id].mul(b).mul(player.m.points.pow(0.15)));
                   if (player.m.points.gte(154)) eff = eff.times(tmp.m.milestone154Effect)
+                  if (player.m.points.gte(163)) eff= eff.pow(1.5)
+                  if (player.m.points.gte(164)) eff= eff.pow(1.5)
 				  return eff;
 			  },
 			  unlocked(){
@@ -206,6 +208,7 @@ unlocked() {return player.m.points.gte(155)},
 	},
 	branches: ["p"],
 	passiveGeneration(){
+        if (player.em.points.gte(5)) return 100
         if (player.em.points.gte(4)) return 1
         if (player.m.points.gte(157)) return 0.3
         if (player.em.points.gte(3)) return 0.1

@@ -226,7 +226,7 @@ addLayer("p", {
 	},
 	buyables: {
 		rows: 1,
-		cols: 1,
+		cols: 2,
 		11:{
 			title(){
 				return "<h3 class='pr'>Softcap Delayer</h3>";
@@ -280,6 +280,53 @@ addLayer("p", {
 				}
 			  }, 
 		},
+		12:{
+			title(){
+				return "<h3 class='ef'>Exotic</h3> <h3 class='pr'>Booster</h3>";
+			},
+			display(){
+				let data = tmp[this.layer].buyables[this.id];
+				return "Level: "+format(player[this.layer].buyables[this.id])+"<br>"+
+				"Exotic Prestige Points gain "+format(data.effect)+"x better<br>"+
+				"Cost for Next Level: "+format(data.cost)+" Prestige points";
+			},
+			cost(){
+				let a=player[this.layer].buyables[this.id];
+                let cost = new Decimal(1)
+				a=Decimal.pow(2,a);
+				return cost.mul(Decimal.pow("e4.7e15",a));
+			},
+			canAfford() {
+                   return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
+			},
+               buy() { 
+                   player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
+               },
+			  effect(){
+				  let b=5;
+				  let eff=new Decimal(1).add(player[this.layer].buyables[this.id].mul(b).pow(1.05));
+				  return eff;
+			  },
+			  unlocked(){
+				  return player.em.points.gte(7);
+			  },
+			  style() {
+				if (player.p.points.lt(this.cost())) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'black',
+					'border':'2px solid',
+					'height':'100px'
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'rgb(68, 68, 68)',
+					'border':'2px solid',
+					'height':'100px'
+				}
+			  }, 
+		},
 	},
 	branches: ["m"],
 	passiveGeneration(){
@@ -311,6 +358,7 @@ addLayer("p", {
 			if(target.gt(player.p.buyables[11])){
 				player.p.buyables[11]=target;
 			}
+			if (player.m.points.gte(124) && player.pp.points.gte(layers.p.buyables[12].cost())) layers.p.buyables[12].buy()
 		}
 	}
 })

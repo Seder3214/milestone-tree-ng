@@ -32,7 +32,7 @@ addLayer("em", {
     ],
     layerShown(){return player.mm.best.gte(30)},
 	resetsNothing(){return true},
-	autoPrestige(){return false},
+	autoPrestige(){return player.m.points.gte(170)},
 	milestones: [
 		{
 			requirementDescription: "1st Extra-Milestone",
@@ -64,6 +64,30 @@ addLayer("em", {
             done() {return player[this.layer].best.gte(4)}, // Used to determine when to give the milestone
             effectDescription: function(){
 				return "Passively gain 100% of Prestige Power."
+			},
+        },
+        {
+			requirementDescription: "5th Extra-Milestone",
+            unlocked() {return player[this.layer].best.gte(4)},
+            done() {return player[this.layer].best.gte(5)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Passively gain 10000% of Prestige Power."
+			},
+        },
+        {
+			requirementDescription: "6th Extra-Milestone",
+            unlocked() {return player[this.layer].best.gte(5)},
+            done() {return player[this.layer].best.gte(6)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Passively gain 10% of Exotic Prestige Points."
+			},
+        },
+        {
+			requirementDescription: "7th Extra-Milestone",
+            unlocked() {return player[this.layer].best.gte(6)},
+            done() {return player[this.layer].best.gte(7)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Unlock Prestige buyable."
 			},
         },
 	],

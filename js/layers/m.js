@@ -42,7 +42,7 @@ addLayer("m", {
 		if(hasUpgrade("ap",23))firstScaling=firstScaling.div(upgradeEffect("ap",23));
 		if(hasUpgrade("pe",12))firstScaling=firstScaling.div(upgradeEffect("pe",12));
 		if(hasUpgrade("se",12))firstScaling=firstScaling.div(upgradeEffect("se",12));
-		return new Decimal(2).add(firstScaling);
+		return new Decimal(2).add(firstScaling.mul(getCostOverflowEff()));
 	},
     getScalingStart(){
         let start=new Decimal(14);
@@ -1347,11 +1347,91 @@ addLayer("m", {
 			},
         },
 		{
-			requirementDescription: "162tnd Milestone",
+			requirementDescription: "162nd Milestone",
             unlocked() {return player[this.layer].best.gte(161)},
             done() {return player[this.layer].best.gte(162)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				return "Keep Prestige Power upgrades on Exotic Prestige reset.";
+			},
+        },
+		{
+			requirementDescription: "163rd Milestone",
+            unlocked() {return player[this.layer].best.gte(162)},
+            done() {return player[this.layer].best.gte(163)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Power Scaler is ^1.5 better.";
+			},
+        },
+		{
+			requirementDescription: "164th Milestone",
+            unlocked() {return player[this.layer].best.gte(163)},
+            done() {return player[this.layer].best.gte(164)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Power Scaler is ^1.5 better.";
+			},
+        },
+		{
+			requirementDescription: "165th Milestone",
+            unlocked() {return player[this.layer].best.gte(164)},
+            done() {return player[this.layer].best.gte(165)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "1st Exotic Effect is better.";
+			},
+        },
+		{
+			requirementDescription: "166th Milestone",
+            unlocked() {return player[this.layer].best.gte(165)},
+            done() {return player[this.layer].best.gte(166)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "2nd Exotic Effect is better.";
+			},
+        },
+		{
+			requirementDescription: "167th Milestone",
+            unlocked() {return player[this.layer].best.gte(166)},
+            done() {return player[this.layer].best.gte(167)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "1st Exotic Effect is better.";
+			},
+        },
+		{
+			requirementDescription: "168th Milestone",
+            unlocked() {return player[this.layer].best.gte(167)},
+            done() {return player[this.layer].best.gte(168)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "1st Exotic Effect is better.";
+			},
+        },
+		{
+			requirementDescription: "169th Milestone",
+            unlocked() {return player[this.layer].best.gte(168)},
+            done() {return player[this.layer].best.gte(169)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Increase the hardcap of Transcend Points 1e70 => 1e90.";
+			},
+        },
+		{
+			requirementDescription: "170th Milestone",
+            unlocked() {return player[this.layer].best.gte(169)},
+            done() {return player[this.layer].best.gte(170)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Autoget Extra-Milestones.";
+			},
+        },
+		{
+			requirementDescription: "171th Milestone",
+            unlocked() {return player[this.layer].best.gte(170)},
+            done() {return player[this.layer].best.gte(171)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "3rd Exotic Effect is x1.3 better.";
+			},
+        },
+		{
+			requirementDescription: "172th Milestone",
+            unlocked() {return player[this.layer].best.gte(171)},
+            done() {return player[this.layer].best.gte(172)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "3rd Exotic Effect is x1.1 better.";
 			},
         },
 	],

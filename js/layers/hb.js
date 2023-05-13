@@ -61,6 +61,9 @@ addLayer("hb", {
         if(hasUpgrade("hp",42)){
 			m+=0.003;
 		}
+		if (player.ep.buyables[11].gte(3)){
+			m+=tmp.ep.threeEffect
+		}
 		return new Decimal(1).add(player.hb.points.add(e).pow(p).mul(m));
 	},
 	effectDescription(){

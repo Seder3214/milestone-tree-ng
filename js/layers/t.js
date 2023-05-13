@@ -21,6 +21,7 @@ addLayer("t", {
 			22: 0,
 			31: 0,
 			32: 0,
+			41: 0,
 		},
 		11: {
 			11: 0,
@@ -29,6 +30,7 @@ addLayer("t", {
 			22: 0,
 			31: 0,
 			32: 0,
+			41: 0,
 		},
 		12: {
 			11: 0,
@@ -37,6 +39,7 @@ addLayer("t", {
 			22: 0,
 			31: 0,
 			32: 0,
+			41: 0,
 		},
 		21: {
 			11: 0,
@@ -45,6 +48,7 @@ addLayer("t", {
 			22: 0,
 			31: 0,
 			32: 0,
+			41: 0,
 		},
 		22: {
 			11: 0,
@@ -53,6 +57,7 @@ addLayer("t", {
 			22: 0,
 			31: 0,
 			32: 0,
+			41: 0,
 		},
 		31: {
 			11: 0,
@@ -61,6 +66,7 @@ addLayer("t", {
 			22: 0,
 			31: 0,
 			32: 0,
+			41: 0,
 		},
 		32: {
 			11: 0,
@@ -69,6 +75,7 @@ addLayer("t", {
 			22: 0,
 			31: 0,
 			32: 0,
+			41: 0,
 		},
 	}
     }},
@@ -487,7 +494,10 @@ addLayer("t", {
 		"Main":{
 			content:[
 				"main-display","prestige-button","resource-display",
-				["display-text",function(){return "Transcend point is hardcapped at "+format(1e30)}],
+				["display-text",function(){		let cap = new Decimal(1e70)
+					if (player.m.points.gte(169)) cap = new Decimal(1e90)
+							if (player.ep.buyables[11].gte(4)) cap = cap.mul(tmp.ep.fourEffect)
+					return "Transcend point is hardcapped at "+format(cap)}],
 				"upgrades",
 				["display-text",function(){return "AP challenge is applied after T challenge, softcap is applied after AP challenge"}],
 				["display-text",function(){
@@ -514,7 +524,10 @@ addLayer("t", {
 		},
 	},
 	update(){
-		if(player.t.points.gte(1e30))player.t.points=new Decimal(1e30);
+		let cap = new Decimal(1e70)
+		if (player.m.points.gte(169)) cap = new Decimal(1e90)
+		if (player.ep.buyables[11].gte(4)) cap = cap.mul(tmp.ep.fourEffect)
+		if(player.t.points.gte(cap))player.t.points=new Decimal(cap);
 		if(player.m.best.gte(130) && player.t.activeChallenge){
 			if(player.t.specialPoints[player.t.activeChallenge].lt(layers.t.getResetGain())){
 				player.t.specialPoints[player.t.activeChallenge]=layers.t.getResetGain();
