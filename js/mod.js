@@ -12,8 +12,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.157.25p1",
-	name: "Prestige Powering...",
+	num: "1.162p1",
+	name: "Exotics...",
 }
 
 let changelog = ``
@@ -63,7 +63,7 @@ function getPointGenBeforeSoftcap() {
 	if(hasUpgrade("hp",12))b=b.mul(upgradeEffect("hp",12));
 	if(hasUpgrade("ap",11))b=b.mul(upgradeEffect("ap",11));
 	if(player.t.activeChallenge==11||player.t.activeChallenge==21||player.t.activeChallenge==31)b=b.pow(tmp.t.dilationEffect);
-	if(player.ap.activeChallenge==22)b=b.add(1).log10().pow(player.m.points.gte(122)?player.m.points:100);
+	if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41 )b=b.add(1).log10().pow(player.m.points.gte(122)?player.m.points:100);
 	return b
 }
 
@@ -112,7 +112,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.m.points.gte(158);
+	return player.m.points.gte(175);
 }
 
 

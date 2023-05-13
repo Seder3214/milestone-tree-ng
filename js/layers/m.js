@@ -1319,7 +1319,39 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(157)},
             done() {return player[this.layer].best.gte(158)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Reach current endgame.";
+				return "Unlock an Atomic Prestige challenge.";
+			},
+        },
+		{
+			requirementDescription: "159th Milestone",
+            unlocked() {return player[this.layer].best.gte(158)},
+            done() {return player[this.layer].best.gte(159)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Unlock last row of Prestige Power upgrades.";
+			},
+        },
+		{
+			requirementDescription: "160th Milestone",
+            unlocked() {return player[this.layer].best.gte(159)},
+            done() {return player[this.layer].best.gte(160)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Unlock a new layer.";
+			},
+        },
+		{
+			requirementDescription: "161st Milestone",
+            unlocked() {return player[this.layer].best.gte(160)},
+            done() {return player[this.layer].best.gte(161)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Unlock an Atomic Prestige buyable.";
+			},
+        },
+		{
+			requirementDescription: "162tnd Milestone",
+            unlocked() {return player[this.layer].best.gte(161)},
+            done() {return player[this.layer].best.gte(162)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Keep Prestige Power upgrades on Exotic Prestige reset.";
 			},
         },
 	],
@@ -1343,12 +1375,12 @@ addLayer("m", {
 	},
 	milestone4Effect(){
 		if(player.m.best.gte(139)){
-			return Decimal.pow(1.05,player.m.best).pow(layers.m.milestone4EffectExponent()).times(hasUpgrade('se', 21)?upgradeEffect('se', 21):1);
+			return Decimal.pow(1.05,player.m.best).pow(layers.m.milestone4EffectExponent()).mul(hasUpgrade('se', 21)?upgradeEffect('se', 21):1).mul(hasUpgrade('ep', 11)?upgradeEffect('ep', 11):1);
 		}
 		return player.m.best.sub(2).pow(layers.m.milestone4EffectExponent());
 	},
 	milestone3Effect(){
-		if(player.ap.activeChallenge==21)return new Decimal(1);
+		if(player.ap.activeChallenge==21 || player.ap.activeChallenge==41 )return new Decimal(1);
 		var m=Decimal.log10(player.points.add(20)).pow(0.9);
 		if(player.m.best.gte(41))m=m.pow(1.003);
 		if(player.m.best.gte(46))m=m.pow(1.001);
@@ -1491,6 +1523,7 @@ addLayer("m", {
         if (hasUpgrade('pp', 21)) {
             p=p.pow(layers.t.getSpecialEffect(31));   
         }
+		p=p.mul(tmp.ap.challenges[41].rewardEffect);
 		return p;
 	},
     resetDescription: "Get ",

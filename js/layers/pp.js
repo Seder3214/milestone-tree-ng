@@ -17,6 +17,7 @@ addLayer("pp", {
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
+        if (hasUpgrade(this.layer, 32)) mult = mult.mul(upgradeEffect(this.layer, 32))
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -42,6 +43,7 @@ addLayer("pp", {
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=0.51;
+                if (hasUpgrade('pp', 23)) base += 0.15
                 let ret = Decimal.mul(base,Decimal.log10(player[this.layer].power.add(1)).pow(0.01).add(1))
                 return ret;
             },
@@ -65,7 +67,7 @@ addLayer("pp", {
         },
         13: {
 			title: "Prestige Power Upgrade 13",
-            description: "Prestige Upgrade Buyable effect is boosted by your prestige power strength.",
+            description: "Prestige Softcap Delayer effect is boosted by your prestige power strength.",
             cost: new Decimal(10000),
             currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency
             currencyInternalName: "power", // Use if using a nonstandard currency
@@ -73,6 +75,7 @@ addLayer("pp", {
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=1.05;
+                if (hasUpgrade('pp', 31)) base += 0.15
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].power.add(1)).add(1))
                 ret = softcap(ret, new Decimal(3), new Decimal(0.001))
                 return ret;
@@ -99,6 +102,44 @@ unlocked() {return player.m.points.gte(155)},
             currencyInternalName: "power", // Use if using a nonstandard currency
             currencyLayer: "pp", // The upgrade is only visible when this is true
         },
+        23: {
+            unlocked() {return player.m.points.gte(155)},
+            
+                        title: "Prestige Power Upgrade 23",
+                        description: "Prestige Power 11 upgrade is better.<br>Req: Power Scaler -<br> [12 Lvl]",
+                        cost: new Decimal(50000000),
+                        canAfford() {return player.pp.buyables[11].gte(12) && player.pp.power.gte(20000000)},
+                        currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency
+                        currencyInternalName: "power", // Use if using a nonstandard currency
+                        currencyLayer: "pp", // The upgrade is only visible when this is true
+                    },
+        31: {
+        unlocked() {return player.m.points.gte(159)},
+                        
+         title: "Prestige Power Upgrade 31",
+        description: "Prestige Power 13 upgrade is better.<br>Req: Power Scaler -<br> [17 Lvl]",
+        cost: new Decimal(1e10),
+         canAfford() {return player.pp.buyables[11].gte(17) && player.pp.power.gte(1e10)},
+            currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency
+            currencyInternalName: "power", // Use if using a nonstandard currency
+             currencyLayer: "pp", // The upgrade is only visible when this is true
+                                },
+        32: {
+        unlocked() {return player.m.points.gte(159)},
+                        
+         title: "Prestige Power Upgrade 32",
+        description: "Exotic Prestige Points boosts Prestige Power gain.<br>Req: Power Scaler -<br> [35 Lvl]",
+        cost: new Decimal(1e21),
+         canAfford() {return player.pp.buyables[11].gte(35) && player.pp.power.gte(1e21)},
+            currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency
+            currencyInternalName: "power", // Use if using a nonstandard currency
+             currencyLayer: "pp", // The upgrade is only visible when this is true
+             effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
+                let ret = player.ep.points.pow(0.75).mul(1.5).add(1)
+                return ret;
+            },
+            effectDisplay() { return "x"+format(this.effect()) },
+                                },
 	},
     buyables: {
 		rows: 1,
@@ -149,6 +190,7 @@ unlocked() {return player.m.points.gte(155)},
 	},
 	branches: ["p"],
 	passiveGeneration(){
+        if (player.em.points.gte(4)) return 1
         if (player.m.points.gte(157)) return 0.3
         if (player.em.points.gte(3)) return 0.1
 		return 0;

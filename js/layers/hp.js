@@ -183,6 +183,12 @@ addLayer("hp", {
 			},
             unlocked() { return player.m.points.gte(142)}, // The upgrade is only visible when this is true
         },
+		43: {
+			title: "Hyper-Prestige Upgrade 32",
+            description: "The first Hyper-Prestige buyable's effect ^1.1",
+            cost: new Decimal("e468e11"),
+            unlocked() { return player.m.points.gte(142)}, // The upgrade is only visible when this is true
+        },
 	},
 	
 	buyables: {
@@ -214,7 +220,7 @@ addLayer("hp", {
                    player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
                },
 			  effect(){
-				  if(player.ap.activeChallenge==32)return new Decimal(1);
+				  if(player.ap.activeChallenge==32 || player.ap.activeChallenge==41 )return new Decimal(1);
 				  let eff=new Decimal("1e50000").pow(player[this.layer].buyables[this.id]);
 				  if(hasUpgrade("hp",32))eff=eff.pow(1.1);
 				  if(hasUpgrade("t",51))eff=eff.pow(2.1);
@@ -247,7 +253,7 @@ addLayer("hp", {
                    player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
                },
 			  effect(){
-				  if(player.ap.activeChallenge==32)return new Decimal(1);
+				  if(player.ap.activeChallenge==32 || player.ap.activeChallenge==41 )return new Decimal(1);
 				  let eff=new Decimal("1e1000000").pow(player[this.layer].buyables[this.id]);
 				  if(hasUpgrade("ap",31))eff=eff.pow(1.5);
 				  eff=eff.pow(tmp.ap.challenges[32].rewardEffect);

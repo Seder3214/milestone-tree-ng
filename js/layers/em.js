@@ -55,7 +55,15 @@ addLayer("em", {
             unlocked() {return player[this.layer].best.gte(2)},
             done() {return player[this.layer].best.gte(3)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Passively gain 1% of Prestige Points."
+				return "Passively gain 1% of Prestige Power."
+			},
+        },
+        {
+			requirementDescription: "4th Extra-Milestone",
+            unlocked() {return player[this.layer].best.gte(3)},
+            done() {return player[this.layer].best.gte(4)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Passively gain 100% of Prestige Power."
 			},
         },
 	],

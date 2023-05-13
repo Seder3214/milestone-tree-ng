@@ -16,7 +16,7 @@ addLayer("sp", {
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
-		if(player.ap.activeChallenge==12)return new Decimal(0);
+		if(player.ap.activeChallenge==12 || player.ap.activeChallenge==41)return new Decimal(0);
 		if(player.m.points.gte(27))mult=mult.mul(tmp.m.milestone27Effect);
 		if(hasUpgrade("sp",21))mult=mult.mul(upgradeEffect("sp",21));
 		if(hasUpgrade("sp",22))mult=mult.mul(upgradeEffect("sp",22));
@@ -254,7 +254,7 @@ addLayer("sp", {
                    player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
                },
 			  effect(){
-				  if(player.ap.activeChallenge==32)return new Decimal(1);
+				  if(player.ap.activeChallenge==32 || player.ap.activeChallenge==41)return new Decimal(1);
 				  let eff=new Decimal("1e10000").pow(player[this.layer].buyables[this.id]);
 				  if(hasUpgrade("hp",31))eff=eff.pow(1.05);
 				  eff=eff.pow(tmp.ap.challenges[32].rewardEffect);
@@ -286,7 +286,7 @@ addLayer("sp", {
                    player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
                },
 			  effect(){
-				  if(player.ap.activeChallenge==32)return new Decimal(1);
+				  if(player.ap.activeChallenge==32 || player.ap.activeChallenge==41 )return new Decimal(1);
 				  let b=0.02;
 				  if(player.m.points.gte(132))b+=0.01;
 				  let eff=new Decimal(1).add(player[this.layer].buyables[this.id].mul(b));

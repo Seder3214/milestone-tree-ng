@@ -16,7 +16,7 @@ addLayer("p", {
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
-		if(player.ap.activeChallenge==31)return new Decimal(0);
+		if(player.ap.activeChallenge==31 || player.ap.activeChallenge==41 )return new Decimal(0);
 		if(player.m.points.gte(6))mult=mult.mul(tmp.m.milestone6Effect);
 		if(hasUpgrade("p",13))mult=mult.mul(upgradeEffect("p",13));
 		if(hasUpgrade("p",14))mult=mult.mul(upgradeEffect("p",14));
@@ -250,7 +250,7 @@ addLayer("p", {
                    player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
                },
 			  effect(){
-				  if(player.ap.activeChallenge==32)return new Decimal(1);
+				  if(player.ap.activeChallenge==32 || player.ap.activeChallenge==41 )return new Decimal(1);
 				  let b=0.03;
 				  if(hasUpgrade("p",43))b+=0.011;
 				  if(hasUpgrade("p",44))b+=0.011;
