@@ -27,7 +27,7 @@ addLayer("ep", {
         return eff;
     },
     twoEffect() {
-        let eff = player.ep.points.add(1).pow(1.5).mul(2).max(1)
+        let eff = player.ep.points.add(1).pow(1.5).mul(4).max(1)
         return eff;
     },
     row: 3, // Row the layer is in on the tree (0 is the first row)
@@ -110,7 +110,7 @@ addLayer("ep", {
 				"main-display","prestige-button","resource-display",
 				["display-text",function(){table = ''
                 if (player.ep.buyables[11].gte(1)) table += '1st effect: AP challenge 41 effect is ' + format(tmp.ep.oneEffect) + "x better"
-                if (player.ep.buyables[11].gte(2)) table += '<br>2nd effect: Transcend Points gain is ' + format(tmp.ep.twoEffect) + "x better"
+                if (player.ep.buyables[11].gte(2)) table += '<br>2nd effect: Transcend Points gain is ' + format(tmp.ep.twoEffect) + "x better (only outside of T challenges)"
                  return table}],
 				"buyables",
                 "upgrades"

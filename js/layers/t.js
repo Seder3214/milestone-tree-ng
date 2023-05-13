@@ -103,7 +103,7 @@ addLayer("t", {
 		if(player.mm.points.gte(25))mult=mult.mul(tmp.mm.meta25Effect);
 		if(hasUpgrade("pe",21))mult=mult.mul(upgradeEffect("pe",21));
 		if(hasUpgrade("t",63))mult=mult.mul(upgradeEffect("t",63));
-		if (player.ep.buyables[11].gte(2)) mult = mult.mul(tmp.ep.twoEffect)
+		if (player.ep.buyables[11].gte(2) && !player.t.activeChallenge) mult = mult.mul(tmp.ep.twoEffect)
 		return mult;
 	},
 	getResetGain() {
