@@ -27,7 +27,7 @@ addLayer("ep", {
         return eff;
     },
     twoEffect() {
-        let eff = player.ep.points.add(1).pow(5).mul(2).max(1)
+        let eff = player.ep.points.add(1).pow(1.5).mul(2).max(1)
         return eff;
     },
     row: 3, // Row the layer is in on the tree (0 is the first row)
@@ -57,11 +57,11 @@ addLayer("ep", {
 		cols: 1,
 		11:{
 			title(){
-				return "Exotic Fusioner";
+				return "<h3 class='ef'>Exotic Fusioner</h3>";
 			},
 			display(){
 				let data = tmp[this.layer].buyables[this.id];
-				return "Tier: "+format(player[this.layer].buyables[this.id])+"<br>"+
+				return "<h4 class='ef'>Tier: "+format(player[this.layer].buyables[this.id])+"<br></h4>"+
 				"Unlocking "+format(data.effect)+" more effects<br>"+
 				"Cost for Next Tier: "+format(data.cost)+" Exotic Prestige points";
 			},
@@ -92,14 +92,14 @@ addLayer("ep", {
 					'color':'white',
 					'background-color':'black',
 					'border':'2px solid',
-					'height':'150px'
+					'height':'100px'
 				}
 				else return {
 					'border-radius': '0%',
 					'color':'white',
-					'background-color':'gray',
+					'background-color':'rgb(68, 68, 68)',
 					'border':'2px solid',
-					'height':'150px'
+					'height':'100px'
 				}
 			  }, 
 		},

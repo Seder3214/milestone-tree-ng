@@ -229,7 +229,7 @@ addLayer("p", {
 		cols: 1,
 		11:{
 			title(){
-				return "Softcap Delayer";
+				return "<h3 class='pr'>Softcap Delayer</h3>";
 			},
 			display(){
 				let data = tmp[this.layer].buyables[this.id];
@@ -262,7 +262,23 @@ addLayer("p", {
 			  },
 			  unlocked(){
 				  return player.m.points.gte(123);
-			  }
+			  },
+			  style() {
+				if (player.p.points.lt(this.cost())) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'black',
+					'border':'2px solid',
+					'height':'100px'
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'rgb(68, 68, 68)',
+					'border':'2px solid',
+					'height':'100px'
+				}
+			  }, 
 		},
 	},
 	branches: ["m"],

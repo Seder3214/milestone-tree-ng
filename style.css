@@ -11,7 +11,115 @@
 	outline: none;
 	webkit-outline: none;
 }
+/* GRADIENTE */
 
+@-webkit-keyframes masked-animation {
+	0% { background-position: 0 0;} 
+	00% {background-position: -8000px -3000px;}
+  }
+  
+  .pr {
+	text-align: center;
+	font-size: 18px;
+	color: #000;
+	max-width: 700px;
+	background: rgba(255,253,160,1);
+	background: -webkit-linear-gradient( left, #658091 0%, #8bb4ce 25%, #80a0b4 50%, #658091 100% ) repeat;
+	-webkit-background-clip: text;
+	-ms-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-ms-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	text-fill-color: transparent;
+	-webkit-animation-name: masked-animation;
+	-webkit-animation-duration: 50s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+  }
+  .sr {
+	text-align: center;
+	font-size: 18px;
+	color: #000;
+	max-width: 700px;
+	background: rgba(255,253,160,1);
+	background: -webkit-linear-gradient( left, #65A0B0 0%, #78c0d4 25%, #78bfd3 50%, #65A0B0 100% ) repeat;
+	-webkit-background-clip: text;
+	-ms-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-ms-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	text-fill-color: transparent;
+	-webkit-animation-name: masked-animation;
+	-webkit-animation-duration: 50s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+  }
+  .hr {
+	text-align: center;
+	font-size: 18px;
+	color: #000;
+	max-width: 700px;
+	background: rgba(255,253,160,1);
+	background: -webkit-linear-gradient( left, #80C0D0 0%, #77cde2 25%, #a2deec 50%, #80C0D0 100% ) repeat;
+	border-color: -webkit-linear-gradient( left, #80C0D0 0%, #77cde2 25%, #a2deec 50%, #80C0D0 100% ) repeat;
+	-webkit-background-clip: text;
+	-ms-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-ms-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	text-fill-color: transparent;
+	-webkit-animation-name: masked-animation;
+	-webkit-animation-duration: 50s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+  }
+  .ps {
+	text-align: center;
+	font-size: 18px;
+	color: #000;
+	max-width: 700px;
+	background: rgba(255,253,160,1);
+	background: -webkit-linear-gradient( left, #652021 0%, #8b3133 25%, #bd3c3e 50%, #652021 100% ) repeat;
+	border-color: -webkit-linear-gradient( left, #652021 0%, #8b3133 25%, #bd3c3e 50%, #652021 100% ) repeat;
+	-webkit-background-clip: text;
+	-ms-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-ms-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	text-fill-color: transparent;
+	-webkit-animation-name: masked-animation;
+	-webkit-animation-duration: 50s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+  }
+  .ef {
+	text-align: center;
+	font-size: 18px;
+	color: #000;
+	max-width: 700px;
+	background: rgba(255,253,160,1);
+	background: -webkit-linear-gradient( left, lime 0%, rgb(133, 235, 133) 25%, rgb(94, 201, 94) 50%, lime 100% ) repeat;
+	-webkit-background-clip: text;
+	-ms-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-ms-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	text-fill-color: transparent;
+	-webkit-animation-name: masked-animation;
+	-webkit-animation-duration: 50s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+  }
 body {
 	background-color: var(--background);
 	color: var(--color);

@@ -146,7 +146,7 @@ unlocked() {return player.m.points.gte(155)},
 		cols: 1,
 		11:{
 			title(){
-				return "Power Scaler";
+				return "<h3 class='ps'>Power Scaler</h3>";
 			},
 			display(){
 				let data = tmp[this.layer].buyables[this.id];
@@ -174,7 +174,23 @@ unlocked() {return player.m.points.gte(155)},
 			  },
 			  unlocked(){
 				  return player.m.points.gte(123);
-			  }
+			  },
+			  style() {
+				if (player.pp.points.lt(this.cost())) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'black',
+					'border':'2px solid',
+					'height':'100px',
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'rgb(68, 68, 68)',
+					'border':'2px solid',
+					'height':'100px'
+				}
+			  },
 		},
 	},
     tabFormat: {

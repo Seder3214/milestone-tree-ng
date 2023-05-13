@@ -196,7 +196,7 @@ addLayer("hp", {
 		cols: 2,
 		11:{
 			title(){
-				return "Prestige Multiplier";
+				return "<h3 class='hr'>Prestige Multiplier</h3>";
 			},
 			display(){
 				let data = tmp[this.layer].buyables[this.id];
@@ -229,11 +229,27 @@ addLayer("hp", {
 			  },
 			  unlocked(){
 				  return player.m.points.gte(85);
-			  }
+			  },
+			  style() {
+				if (player.hp.points.lt(this.cost())) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'black',
+					'border':'2px solid',
+					'height':'100px'
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'rgb(68, 68, 68)',
+					'border':'2px solid',
+					'height':'100px'
+				}
+			  }, 
 		},
 		12:{
 			title(){
-				return "Super-Multiplier";
+				return "<h3 class='hr'>Super-Multiplier</h3>";
 			},
 			display(){
 				let data = tmp[this.layer].buyables[this.id];
@@ -261,7 +277,23 @@ addLayer("hp", {
 			  },
 			  unlocked(){
 				  return player.m.points.gte(104);
-			  }
+			  },
+			  style() {
+				if (player.hp.points.lt(this.cost())) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'black',
+					'border':'2px solid',
+					'height':'100px'
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'rgb(68, 68, 68)',
+					'border':'2px solid',
+					'height':'100px'
+				}
+			  }, 
 		},
 	},
 	passiveGeneration(){
