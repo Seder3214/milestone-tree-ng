@@ -216,5 +216,6 @@ unlocked() {return player.m.points.gte(155)},
 		},
 	update(diff){
         if (player.pp.buyables[11].gte(1)) player.pp.power = player.pp.power.add(buyableEffect('pp', 11).times(diff))
+        if (player.m.points.gte(162) && player.pp.points.gte(layers.pp.buyables[11].cost())) layers.pp.buyables[11].buy()
 	}
 })
