@@ -13,7 +13,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.172c",
+	num: "1.172d",
 	name: "Exotics...",
 }
 
@@ -95,7 +95,7 @@ return sc;
 }
 
 function getCostOverflowStart(){
-	var sc=new Decimal(168);
+	var sc=new Decimal(170);
 	return sc;
 	}
 	function getCostOverflowEff(){
