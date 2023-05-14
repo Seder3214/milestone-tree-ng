@@ -52,7 +52,7 @@ return b
 
 function getPointGenBeforeSoftcap() {
 var b=new Decimal(0)
-if(player.m.best.gte(1))b=b.add(1);
+if(player.m.best.gte(1))b=b.add(10);
 if(player.m.best.gte(2))b=b.mul(3);
 if(player.m.best.gte(3))b=b.mul(tmp.m.milestone3Effect);
 if(hasUpgrade("p",11))b=b.mul(upgradeEffect("p",11));
