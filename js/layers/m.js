@@ -1461,7 +1461,7 @@ addLayer("m", {
 	},
 	milestone3Effect(){
 		if(player.ap.activeChallenge==21 || player.ap.activeChallenge==41 )return new Decimal(1);
-		var m=Decimal.log10(player.points.add(20)).pow(0.9);
+		var m=Decimal.log10(player.points.add(20)).pow(0.95);
 		if(player.m.best.gte(41))m=m.pow(1.003);
 		if(player.m.best.gte(46))m=m.pow(1.001);
 		if(player.m.best.gte(51))m=m.pow(1.00175);
