@@ -385,7 +385,7 @@ addLayer("ap", {
 			currencyDisplayName: "points",
 			currencyInternalName: "points",
 			rewardEffect() {
-				let ret = new Decimal(player.ap.challenges[41]).add(1).times(2.42).pow(1.05).max(1);
+				let ret = new Decimal(player.ap.challenges[41]).add(1).times(2.42).pow(1.65).max(1);
 				if (player.ep.buyables[11].gte(1)) ret=ret.times(tmp.ep.oneEffect)
 				return ret;
 			},

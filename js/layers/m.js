@@ -42,7 +42,7 @@ addLayer("m", {
 		if(hasUpgrade("ap",23))firstScaling=firstScaling.div(upgradeEffect("ap",23));
 		if(hasUpgrade("pe",12))firstScaling=firstScaling.div(upgradeEffect("pe",12));
 		if(hasUpgrade("se",12))firstScaling=firstScaling.div(upgradeEffect("se",12));
-		return new Decimal(2).add(firstScaling.mul(getCostOverflowEff()));
+		return new Decimal(2).add(firstScaling.mul(player.m.points.gte(getCostOverflowStart())?getCostOverflowEff():1));
 	},
     getScalingStart(){
         let start=new Decimal(14);
@@ -1461,7 +1461,7 @@ addLayer("m", {
 	},
 	milestone3Effect(){
 		if(player.ap.activeChallenge==21 || player.ap.activeChallenge==41 )return new Decimal(1);
-		var m=Decimal.log10(player.points.add(20)).pow(0.90005);
+		var m=Decimal.log10(player.points.add(20)).pow(0.9);
 		if(player.m.best.gte(41))m=m.pow(1.003);
 		if(player.m.best.gte(46))m=m.pow(1.001);
 		if(player.m.best.gte(51))m=m.pow(1.00175);
