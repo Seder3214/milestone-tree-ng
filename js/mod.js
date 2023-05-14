@@ -1,6 +1,6 @@
 let modInfo = {
 	name: "The Milestone Tree NG+",
-	id: "mtmtng+",
+	id: "c2nv4in9eusojg59bmo",
 	author: "Seder3214",
 	pointsName: "points",
 	modFiles: ["/layers/m.js","/layers/p.js","/layers/sp.js","/layers/hp.js","/layers/pb.js","/layers/hb.js","/layers/ap.js","/layers/t.js","/layers/mm.js","/layers/em.js","/layers/pe.js","/layers/se.js","/layers/pp.js","/layers/ep.js", "tree.js"],
@@ -13,7 +13,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.172b",
+	num: "1.172c",
 	name: "Exotics...",
 }
 
