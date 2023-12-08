@@ -258,7 +258,7 @@ addLayer("p", {
 				  let eff=new Decimal(1).add(player[this.layer].buyables[this.id].mul(b));
 				  eff=eff.pow(tmp.ap.challenges[32].rewardEffect);
                   if (hasUpgrade('pp', 13))eff=eff.mul(upgradeEffect('pp', 13))
-				  return eff;
+				  return softcap(eff, new Decimal(17), 0.25);
 			  },
 			  unlocked(){
 				  return player.m.points.gte(123);
@@ -358,7 +358,7 @@ addLayer("p", {
 			if(target.gt(player.p.buyables[11])){
 				player.p.buyables[11]=target;
 			}
-			if (player.m.points.gte(124) && player.pp.points.gte(layers.p.buyables[12].cost())) layers.p.buyables[12].buy()
 		}
+		if (player.m.points.gte(124) && player.p.points.gte(layers.p.buyables[12].cost())) layers.p.buyables[12].buy()
 	}
 })

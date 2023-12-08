@@ -22,6 +22,7 @@ addLayer("hp", {
         mult = layers.hb.effect()
 		if(hasUpgrade("t",14))mult=mult.mul(1.005);
 		if(hasUpgrade("t",34))mult=mult.mul(1.005);
+		if (player.ep.buyables[11].gte(5) && player.hp.points.gte(tmp.ep.fiveEffect.start)) mult = mult.pow(tmp.ep.fiveEffect.eff)
         return mult
     },
     row: 3, // Row the layer is in on the tree (0 is the first row)

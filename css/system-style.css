@@ -96,6 +96,63 @@
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-timing-function: linear;
   }
+  .saveState {
+	width: 100%;
+	border: 2px solid #ffffff7f;
+	border-radius: 4px;
+	text-align: left;	
+	font-family:Verdana, Geneva, Tahoma, sans-serif ;
+	padding: 8px;
+	line-height: 0.9;
+	margin-bottom: 10px;
+}
+.import {
+	width: 80px;
+	height: 40px;
+	background-color: #444;
+	color: white;
+	border: 1px solid white;
+	cursor: pointer;
+}
+.import:hover {
+	width: 80px;
+	height: 40px;
+	background-color: #5a5a5a;
+	color: white;
+	border: 1px solid white;
+	cursor: pointer;
+}
+.saveState .modal, .hide {
+	position: absolute;
+	background-color: #444;
+	color: white;
+	border: 1px solid white;
+	top: 0px;
+	right: 0px
+}
+.saveState .modal, .hide:hover {
+	position: absolute;
+	background-color: #5a5a5a;
+	color: white;
+	border: 1px solid white;
+	top: 0px;
+	right: 0px;
+	cursor: pointer;
+}
+.saveState > input, .modal > div > span > input {
+	padding: 0;
+	margin: 0;
+	font-size: 21px;
+	font-weight: bold;
+	font-family:Verdana, Geneva, Tahoma, sans-serif ;
+	color: black;
+	background-color: transparent;
+	border: none;
+	width: 100%;
+}
+.saveState > input {
+	text-align: left;
+}
   .ef {
 	text-align: center;
 	font-size: 18px;

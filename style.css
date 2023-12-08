@@ -38,6 +38,28 @@
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-timing-function: linear;
   }
+  .saveState {
+	width: 400px;
+	border: 2px solid #ffffff7f;
+	border-radius: 4px;
+	text-align: left;
+	padding: 8px;
+	line-height: 0.9;
+	margin-bottom: 10px;
+}
+.saveState > input, .modal > div > span > input {
+	padding: 0;
+	margin: 0;
+	font-size: 21px;
+	font-weight: bold;
+	color: var(--color);
+	background-color: transparent;
+	border: none;
+	width: 100%;
+}
+.saveState > input {
+	text-align: left;
+}
   .sr {
 	text-align: center;
 	font-size: 18px;

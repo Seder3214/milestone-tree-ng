@@ -109,6 +109,13 @@
 		</div>
 
 		<!-- Popups -->
+		<div v-if="modal.showModal" class="modal">
+			<div>
+				<modal-text v-if="modal.title"><modal-text style="font-size:24px" v-html="modal.title"></modal-text><br/></modal-text>
+				<modal-text v-html="modal.desc"></modal-text><br/>
+				<button v-if="modal.cancel"class='hide' onclick="modal.hide()" v-html="modal.cancel"></button>
+			</div>
+		</div>
 		<div class="popup-container">
 			<transition-group name="fade">
 				<div v-for="popup,index in activePopups" class="popup" v-bind:class="popup.type"

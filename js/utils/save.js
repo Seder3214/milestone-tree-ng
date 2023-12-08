@@ -269,9 +269,30 @@ function exportSave() {
 	document.execCommand("copy");
 	document.body.removeChild(el);
 }
+function ImportSave() {
+	modal.show(
+		"Import Save",
+		`
+			Paste your save here... (Warning: your current save will be overwritten!)<br/>
+			<input type="text" id="importSaveInput" autocomplete="off" style="margin:5px 0;width:400px;"><br/>
+			<button style="margin:5px" class='import' onclick='importSave(document.getElementById("importSaveInput").value)'> Import
+		`,
+		"❌"
+	)
+}
+function HardReset() {
+	modal.show(
+		"Hard Reset",
+		`
+			Are you sure you want to hard reset?<br/>
+			<button style="margin:5px" class='import' onclick='hardReset()'> Proceed
+		`,
+		"❌"
+	)
+}
 function importSave(imported = undefined, forced = false) {
 	if (imported === undefined)
-		imported = prompt("Paste your save here");
+		imported = createPrompt("Paste your save here");
 	try {
 		tempPlr = Object.assign(getStartPlayer(), JSON.parse(atob(imported)));
 		if (tempPlr.versionType != modInfo.id && !forced && !confirm("This save appears to be for a different mod! Are you sure you want to import?")) // Wrong save (use "Forced" to force it to accept.)

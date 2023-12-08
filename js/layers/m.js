@@ -1419,7 +1419,7 @@ addLayer("m", {
 			},
         },
 		{
-			requirementDescription: "171th Milestone",
+			requirementDescription: "171st Milestone",
             unlocked() {return player[this.layer].best.gte(170)},
             done() {return player[this.layer].best.gte(171)}, // Used to determine when to give the milestone
             effectDescription:  function(){
@@ -1427,11 +1427,59 @@ addLayer("m", {
 			},
         },
 		{
-			requirementDescription: "172th Milestone",
+			requirementDescription: "172nd Milestone",
             unlocked() {return player[this.layer].best.gte(171)},
             done() {return player[this.layer].best.gte(172)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				return "3rd Exotic Effect is x1.1 better.";
+			},
+        },
+		{
+			requirementDescription: "173rd Milestone",
+            unlocked() {return player[this.layer].best.gte(172)},
+            done() {return player[this.layer].best.gte(173)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "4th Exotic Effect is ^1.05 better.";
+			},
+        },
+		{
+			requirementDescription: "174th Milestone",
+            unlocked() {return player[this.layer].best.gte(173)},
+            done() {return player[this.layer].best.gte(174)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Hyper-Prestige inflation starts ^0.1 earlier, Milestone Overflow starts 5 later.";
+			},
+        },
+		{
+			requirementDescription: "175th Milestone",
+            unlocked() {return player[this.layer].best.gte(174)},
+            done() {return player[this.layer].best.gte(175)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Automate Challenge Slayer buyable.";
+			},
+        },
+		{
+			requirementDescription: "176th Milestone",
+            unlocked() {return player[this.layer].best.gte(175)},
+            done() {return player[this.layer].best.gte(176)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Milestone Overflow Scale starts 3 later.";
+			},
+        },
+		{
+			requirementDescription: "177th Milestone",
+            unlocked() {return player[this.layer].best.gte(176)},
+            done() {return player[this.layer].best.gte(177)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Milestone Overflow Scale starts 3 later.";
+			},
+        },
+		{
+			requirementDescription: "178th Milestone",
+            unlocked() {return player[this.layer].best.gte(177)},
+            done() {return player[this.layer].best.gte(178)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Milestone Overflow Scale starts 2 later.";
 			},
         },
 	],
@@ -1560,7 +1608,7 @@ addLayer("m", {
 		if(player.m.best.gte(106))p=p.pow(player.mm.points.pow(0.5));
 		if(player.m.best.gte(113))p=p.pow(player.mm.points.pow(0.3));
         if (player.m.best.gte(156))p=p.pow(player.mm.points.pow(layers.t.getSpecialEffect(32)))
-		return p;
+		return softcap(p,new Decimal('ee10'), 0.15);
 	},
 	milestone27Effect(){
 		var p=player.m.best;
@@ -1604,7 +1652,8 @@ addLayer("m", {
             p=p.pow(layers.t.getSpecialEffect(31));   
         }
 		p=p.mul(tmp.ap.challenges[41].rewardEffect);
-		return p;
+		p = softcap(p,new Decimal('1e800'),0.1)
+		return softcap(p,new Decimal('1e1000'),0.01);
 	},
     resetDescription: "Get ",
 	doReset(){},

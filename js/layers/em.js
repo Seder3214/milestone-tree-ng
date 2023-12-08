@@ -90,6 +90,14 @@ addLayer("em", {
 				return "Unlock Prestige buyable."
 			},
         },
+        {
+			requirementDescription: "8th Extra-Milestone",
+            unlocked() {return player[this.layer].best.gte(7)},
+            done() {return player[this.layer].best.gte(8)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Automate 22 Atomic Prestige Challenge (up to 100 completions)."
+			},
+        },
 	],
 	branches: ["mm"],
     resetDescription: "Get ",

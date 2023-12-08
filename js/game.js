@@ -6,7 +6,6 @@ const TMT_VERSION = {
 	tmtNum: "2.6.6.2",
 	tmtName: "Fixed Reality"
 }
-
 function getResetGain(layer, useType = null) {
 	let type = useType
 	if (!useType){ 
@@ -384,7 +383,6 @@ function gameLoop(diff) {
 }
 
 function hardReset(resetOptions) {
-	if (!confirm("Are you sure you want to do this? You will lose all your progress!")) return
 	player = null
 	if(resetOptions) options = null
 	save(true);

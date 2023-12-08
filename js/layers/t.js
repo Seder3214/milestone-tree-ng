@@ -498,7 +498,7 @@ addLayer("t", {
 					if (player.m.points.gte(169)) cap = new Decimal(1e90)
 							if (player.ep.buyables[11].gte(4)) cap = cap.mul(tmp.ep.fourEffect)
 					return "Transcend point is hardcapped at "+format(cap)}],
-				"upgrades",
+
 				["display-text",function(){return "AP challenge is applied after T challenge, softcap is applied after AP challenge"}],
 				["display-text",function(){
 					let c=0;
@@ -507,7 +507,14 @@ addLayer("t", {
 				}],
 				"challenges"
 			]
-		},"Special Transcend Points":{
+		},
+		"Upgrades": {
+			content: [
+				"main-display","prestige-button","resource-display",
+				"upgrades"
+			]
+		},
+		"Special Transcend Points":{
 			content:[
 				"main-display",
 				["display-text",function(){return "Reach "+format(tmp.t.requires1)+" atomic-prestige points in a Transcend Challenge to gain Special Transcend Points!"}],

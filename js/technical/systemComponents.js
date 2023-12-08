@@ -154,11 +154,11 @@ var systemComponents = {
             <tr>
                 <td><button class="opt" onclick="save()">Save</button></td>
                 <td><button class="opt" onclick="toggleOpt('autosave')">Autosave: {{ options.autosave?"ON":"OFF" }}</button></td>
-                <td><button class="opt" onclick="hardReset()">HARD RESET</button></td>
+                <td><button class="opt" onclick="HardReset()">HARD RESET</button></td>
             </tr>
             <tr>
                 <td><button class="opt" onclick="exportSave()">Export to clipboard</button></td>
-                <td><button class="opt" onclick="importSave()">Import</button></td>
+                <td><button class="opt" onclick="ImportSave()">Import</button></td>
                 <td><button class="opt" onclick="toggleOpt('offlineProd')">Offline Prod: {{ options.offlineProd?"ON":"OFF" }}</button></td>
             </tr>
             <tr>

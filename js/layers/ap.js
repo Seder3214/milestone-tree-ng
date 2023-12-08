@@ -183,14 +183,14 @@ addLayer("ap", {
 			let p=player.points;
 			if(player.m.points.gte(130)){
 				if(p.lte("1e1000000"))return 0;
-				return p.log10().div(1000000).log(1.3).pow(1/1.3).toNumber();
+				return p.log10().div(1000000/ buyableEffect('ap', 11)).log(1.3).pow(1/1.3).toNumber();
 			}
 			if(p.lte("1e1400000"))return 0;
-			return p.log10().div(1400000).log(1.32).pow(1/1.3).toNumber();
+			return p.log10().div(1400000/ buyableEffect('ap', 11)).log(1.32).pow(1/1.3).toNumber();
 		},
 		goalAfter120(x=player.ap.challenges[11]){
-			if(player.m.points.gte(130))return Decimal.pow(10,Decimal.pow(1.3,Decimal.pow(x,1.3)).mul(1000000));
-			return Decimal.pow(10,Decimal.pow(1.32,Decimal.pow(x,1.3)).mul(1400000));
+			if(player.m.points.gte(130))return Decimal.pow(10,Decimal.pow(1.3,Decimal.pow(x,1.3)).mul(1000000/ buyableEffect('ap', 11)));
+			return Decimal.pow(10,Decimal.pow(1.32,Decimal.pow(x,1.3)).mul(1400000/ buyableEffect('ap', 11)));
 		},
 		canComplete(){
 			return player.points.gte(tmp.ap.challenges[this.id].goal)&&player.m.points.lt(110);
@@ -225,14 +225,14 @@ addLayer("ap", {
 			let p=player.points;
 			if(player.m.points.gte(130)){
 				if(p.lte("1e1500000"))return 0;
-				return p.log10().div(1500000).log(1.31).pow(1/1.3).toNumber();
+				return p.log10().div(1500000/ buyableEffect('ap', 11)).log(1.31).pow(1/1.3).toNumber();
 			}
 			if(p.lte("1e1700000"))return 0;
-			return p.log10().div(1700000).log(1.32).pow(1/1.3).toNumber();
+			return p.log10().div(1700000/ buyableEffect('ap', 11)).log(1.32).pow(1/1.3).toNumber();
 		},
 		goalAfter120(x=player.ap.challenges[12]){
-			if(player.m.points.gte(130))return Decimal.pow(10,Decimal.pow(1.31,Decimal.pow(x,1.3)).mul(1500000));
-			return Decimal.pow(10,Decimal.pow(1.32,Decimal.pow(x,1.3)).mul(1700000));
+			if(player.m.points.gte(130))return Decimal.pow(10,Decimal.pow(1.31,Decimal.pow(x,1.3)).mul(1500000/ buyableEffect('ap', 11)));
+			return Decimal.pow(10,Decimal.pow(1.32,Decimal.pow(x,1.3)).mul(1700000/ buyableEffect('ap', 11)));
 		},
 		canComplete(){
 			return player.points.gte(tmp.ap.challenges[this.id].goal)&&player.m.points.lt(110);
@@ -256,14 +256,14 @@ addLayer("ap", {
 			let p=player.points;
 			if(player.m.points.gte(130)){
 				if(p.lte("1e1000000"))return 0;
-				return p.log10().div(1000000).log(1.3).pow(1/1.34).toNumber();
+				return p.log10().div(1000000/ buyableEffect('ap', 11)).log(1.3).pow(1/1.34).toNumber();
 			}
 			if(p.lte("1e1140000"))return 0;
-			return p.log10().div(1140000).log(1.3).pow(1/1.36).toNumber();
+			return p.log10().div(1140000/ buyableEffect('ap', 11)).log(1.3).pow(1/1.36).toNumber();
 		},
 		goalAfter120(x=player.ap.challenges[21]){
-			if(player.m.points.gte(130))return Decimal.pow(10,Decimal.pow(1.3,Decimal.pow(x,1.34)).mul(1000000));
-			return Decimal.pow(10,Decimal.pow(1.3,Decimal.pow(x,1.36)).mul(1140000));
+			if(player.m.points.gte(130))return Decimal.pow(10,Decimal.pow(1.3,Decimal.pow(x,1.34)).mul(1000000/ buyableEffect('ap', 11)));
+			return Decimal.pow(10,Decimal.pow(1.3,Decimal.pow(x,1.36)).mul(1140000/ buyableEffect('ap', 11)));
 		},
 		canComplete(){
 			return player.points.gte(tmp.ap.challenges[this.id].goal)&&player.m.points.lt(110);
@@ -274,8 +274,8 @@ addLayer("ap", {
                 name: "Reduced Points",
                 completionLimit: Infinity,
 			    challengeDescription() {
-			if(player.m.points.gte(122))return "1st milestone's effect is replaced by (log10(1st milestone's effect+1))^(milestones)<br>"+format(challengeCompletions(this.layer, this.id),4) +" completions";
-			return "1st milestone's effect is replaced by (log10(1st milestone's effect+1))^100<br>"+format(challengeCompletions(this.layer, this.id),4) +" completions";
+			if(player.m.points.gte(122))return "1st milestone's effect is replaced by (log10(1st milestone's effect+1))^(milestones)<br>"+format(challengeCompletions(this.layer, this.id),4) +"/50.0000 completions";
+			return "1st milestone's effect is replaced by (log10(1st milestone's effect+1))^100<br>"+format(challengeCompletions(this.layer, this.id),4) +"/50.0000 completions";
 		},
                 unlocked() { return hasUpgrade("ap",22) && hasUpgrade("ap",24) },
                 goal: function(){
@@ -287,7 +287,7 @@ addLayer("ap", {
                 currencyInternalName: "points",
                 rewardDescription() { return "3rd milestone's effect is better, again." },
 		completionsAfter120(){
-			let p=player.points.add(10).log10().div(600).log(1.035);
+			let p=player.points.add(10).log10().div(600/ buyableEffect('ap', 11)).log(1.035).min(50);
 			if(p.lte(3)){
 				return p.toNumber()/2+3;
 			}
@@ -295,9 +295,9 @@ addLayer("ap", {
 		},
 		goalAfter120(x=player.ap.challenges[22]){
 			if(player.ap.challenges[22]<=3){
-				return Decimal.pow(10,Decimal.pow(1.035,x*2-3).mul(600));
+				return Decimal.pow(10,Decimal.pow(1.035,x*2-3).mul(600/ buyableEffect('ap', 11)));
 			}
-			return Decimal.pow(10,Decimal.pow(1.035,x).mul(600));
+			return Decimal.pow(10,Decimal.pow(1.035,x).mul(600/ buyableEffect('ap', 11)));
 		},
 		canComplete(){
 			return player.points.gte(tmp.ap.challenges[this.id].goal)&&player.m.points.lt(110);
@@ -321,14 +321,14 @@ addLayer("ap", {
 			let p=player.points;
 			if(player.m.points.gte(136)){
 				if(p.lte("1e1600000"))return 0;
-				return p.log10().div(1600000).log(1.2).pow(1/1.35).toNumber();
+				return p.log10().div(1600000/ buyableEffect('ap', 11)).log(1.2).pow(1/1.35).toNumber();
 			}
 			if(p.lte("1e1700000"))return 0;
-			return p.log10().div(1700000).log(1.2).pow(1/1.36).toNumber();
+			return p.log10().div(1700000/ buyableEffect('ap', 11)).log(1.2).pow(1/1.36).toNumber();
 		},
 		goalAfter120(x=player.ap.challenges[31]){
-			if(player.m.points.gte(136))return Decimal.pow(10,Decimal.pow(1.2,Decimal.pow(x,1.35)).mul(1600000));
-			return Decimal.pow(10,Decimal.pow(1.2,Decimal.pow(x,1.36)).mul(1700000));
+			if(player.m.points.gte(136))return Decimal.pow(10,Decimal.pow(1.2,Decimal.pow(x,1.35)).mul(1600000/ buyableEffect('ap', 11)));
+			return Decimal.pow(10,Decimal.pow(1.2,Decimal.pow(x,1.36)).mul(1700000/ buyableEffect('ap', 11)));
 		},
 		canComplete(){
 			return player.points.gte(tmp.ap.challenges[this.id].goal)&&player.m.points.lt(110);
@@ -355,19 +355,19 @@ addLayer("ap", {
 			let p=player.points;
 			if(player.m.points.gte(141)){
 				if(p.lte("e1e10"))return 0;
-				return p.log10().div(1e10).log(1.2).pow(1/1.5).toNumber();
+				return p.log10().div(1e10/ buyableEffect('ap', 11)).log(1.2).pow(1/1.5).toNumber();
 			}
 			if(player.m.points.gte(130)){
 				if(p.lte("e2e10"))return 0;
-				return p.log10().div(2e10).log(1.2).pow(1/1.5).toNumber();
+				return p.log10().div(2e10/ buyableEffect('ap', 11)).log(1.2).pow(1/1.5).toNumber();
 			}
 			if(p.lte("e3e10"))return 0;
-			return p.log10().div(3e10).log(1.2).pow(1/1.5).toNumber();
+			return p.log10().div(3e10/ buyableEffect('ap', 11)).log(1.2).pow(1/1.5).toNumber();
 		},
 		goalAfter120(x=player.ap.challenges[31]){
-			if(player.m.points.gte(141))return Decimal.pow(10,Decimal.pow(1.2,Decimal.pow(x,1.5)).mul(1e10));
-			if(player.m.points.gte(130))return Decimal.pow(10,Decimal.pow(1.2,Decimal.pow(x,1.5)).mul(2e10));
-			return Decimal.pow(10,Decimal.pow(1.2,Decimal.pow(x,1.5)).mul(3e10));
+			if(player.m.points.gte(141))return Decimal.pow(10,Decimal.pow(1.2,Decimal.pow(x,1.5)).mul(1e10/ buyableEffect('ap', 11)));
+			if(player.m.points.gte(130))return Decimal.pow(10,Decimal.pow(1.2,Decimal.pow(x,1.5)).mul(2e10/ buyableEffect('ap', 11)));
+			return Decimal.pow(10,Decimal.pow(1.2,Decimal.pow(x,1.5)).mul(3e10/ buyableEffect('ap', 11)));
 		},
 		canComplete(){
 			return player.points.gte(tmp.ap.challenges[this.id].goal)&&player.m.points.lt(110);
@@ -387,7 +387,7 @@ addLayer("ap", {
 			rewardEffect() {
 				let ret = new Decimal(player.ap.challenges[41]).add(1).times(2.42).pow(1.65).max(1);
 				if (player.ep.buyables[11].gte(1)) ret=ret.times(tmp.ep.oneEffect)
-				return ret;
+				return softcap(ret,new Decimal('1e520'), 0.05);
 			},
 			rewardDisplay() { return "154th Milestone effect is x"+format(this.rewardEffect())+ " better" },
 			rewardDescription() { return "154th Milestone effect is better." },
@@ -395,19 +395,19 @@ addLayer("ap", {
 		let p=player.points;
 		if(player.m.points.gte(141)){
 			if(p.lte("e1820"))return 0;
-			return p.log10().div(1820).log(1.02).pow(1/1.15).toNumber();
+			return p.log10().div(1820 / buyableEffect('ap', 11)).log(1.02).pow(1/1.15).toNumber();
 		}
 		if(player.m.points.gte(130)){
 			if(p.lte("e1860"))return 0;
-			return p.log10().div(1860).log(1.02).pow(1/1.15).toNumber();
+			return p.log10().div(1860 / buyableEffect('ap', 11)).log(1.02).pow(1/1.15).toNumber();
 		}
 		if(p.lte("e1950"))return 0;
-		return p.log10().div(1950).log(1.02).pow(1/1.15).toNumber();
+		return p.log10().div(1950 / buyableEffect('ap', 11)).log(1.02).pow(1/1.15).toNumber();
 	},
 	goalAfter120(x=player.ap.challenges[41]){
-		if(player.m.points.gte(141))return Decimal.pow(10,Decimal.pow(1.02,Decimal.pow(x,1.15)).mul(1820));
-		if(player.m.points.gte(130))return Decimal.pow(10,Decimal.pow(1.02,Decimal.pow(x,1.15)).mul(1860));
-		return Decimal.pow(10,Decimal.pow(1.02,Decimal.pow(x,1.15)).mul(1950));
+		if(player.m.points.gte(141))return Decimal.pow(10,Decimal.pow(1.02,Decimal.pow(x,1.15)).mul(1820 / buyableEffect('ap', 11)));
+		if(player.m.points.gte(130))return Decimal.pow(10,Decimal.pow(1.02,Decimal.pow(x,1.15)).mul(1860 / buyableEffect('ap', 11)));
+		return Decimal.pow(10,Decimal.pow(1.02,Decimal.pow(x,1.15)).mul(1950 / buyableEffect('ap', 11)));
 	},
 	canComplete(){
 		return player.points.gte(tmp.ap.challenges[this.id].goal)&&player.m.points.lt(110);
@@ -415,6 +415,55 @@ addLayer("ap", {
 	
 	},
 	},
+	buyables: {
+	11:{
+		title(){
+			return "<h3 class='hr'>Challenge Slayer</h3>";
+		},
+		display(){
+			let data = tmp[this.layer].buyables[this.id];
+			return "Level: "+format(player[this.layer].buyables[this.id])+"<br>"+
+			"Reduce Challenges base costs by /"+format(data.effect,4)+" (based on exotic prestige points)<br>"+
+			"Cost for Next Level: "+format(data.cost)+" Prestige points";
+		},
+		cost(){
+			let a=player[this.layer].buyables[this.id];
+			let cost = new Decimal(1)
+			a=Decimal.pow(1.2,a);
+			return cost.mul(Decimal.pow("e4e10",a));
+		},
+		canAfford() {
+			   return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
+		},
+		   buy() { 
+			   player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
+		   },
+		  effect(){
+			  let b=0.135;
+			  let eff=new Decimal(1).add(player[this.layer].buyables[this.id].mul(b)).pow(player.ep.points.log10().log10().pow(0.5));
+			  return eff;
+		  },
+		  unlocked(){
+			  return player.m.points.gte(161);
+		  },
+		  style() {
+			if (player.ap.points.lt(this.cost())) return {
+				'border-radius': '0%',
+				'color':'white',
+				'background-color':'black',
+				'border':'2px solid',
+				'height':'100px'
+			}
+			else return {
+				'border-radius': '0%',
+				'color':'white',
+				'background-color':'rgb(68, 68, 68)',
+				'border':'2px solid',
+				'height':'100px'
+			}
+		  }, 
+	},
+},
 	passiveGeneration(){
 		if(player.m.points.gte(135))return 1e10;
 		if(player.m.points.gte(90))return 5;
@@ -474,5 +523,10 @@ addLayer("ap", {
                     player.ap.challenges[32]=Math.max(player.ap.challenges[32],layers.ap.challenges[32].completionsAfter120());
                 }
                 }
+				if (player.em.points.gte(8)){
+					if (player.points.gte(tmp.ap.challenges[22].goal)){
+						player.ap.challenges[22]=Math.max(player.ap.challenges[22],layers.ap.challenges[22].completionsAfter120());
+					}
+					}
             }
 })

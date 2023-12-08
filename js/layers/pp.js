@@ -78,6 +78,7 @@ addLayer("pp", {
                 if (hasUpgrade('pp', 31)) base += 0.15
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].power.add(1)).add(1))
                 ret = softcap(ret, new Decimal(3), new Decimal(0.001))
+                ret = softcap(ret, new Decimal(4.5), new Decimal(0.001))
                 return ret;
             },
             effectDisplay() { return "x"+format(this.effect()) }, // Add formatting to the effect
@@ -135,11 +136,21 @@ unlocked() {return player.m.points.gte(155)},
             currencyInternalName: "power", // Use if using a nonstandard currency
              currencyLayer: "pp", // The upgrade is only visible when this is true
              effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
-                let ret = player.ep.points.pow(0.75).mul(1.5).add(1)
-                return ret;
+                let ret = player.ep.points.pow(hasUpgrade('pp', 33)?0.8:0.75).mul(1.5).add(1)
+                return softcap(ret,new Decimal('1e800'),0.1);
             },
             effectDisplay() { return "x"+format(this.effect()) },
                                 },
+         33: {
+         unlocked() {return player.m.points.gte(159)},
+                                                    
+        title: "Prestige Power Upgrade 33",
+        description: "Prestige Power upgrade 32 is better.",
+         cost: new Decimal('1e1910'),
+        currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency
+        currencyInternalName: "power", // Use if using a nonstandard currency
+        currencyLayer: "pp", // The upgrade is only visible when this is true
+       },
 	},
     buyables: {
 		rows: 1,
@@ -218,7 +229,9 @@ unlocked() {return player.m.points.gte(155)},
 			if(l=="pp")if(player.m.points.gte(153))layerDataReset("p",["upgrades",[4]]);else layerDataReset("p",[]);
 		},
 	update(diff){
+        let a=player.pp.buyables[11];
+        a=new Decimal(a.log(2));
         if (player.pp.buyables[11].gte(1)) player.pp.power = player.pp.power.add(buyableEffect('pp', 11).times(diff))
-        if (player.m.points.gte(162) && player.pp.points.gte(layers.pp.buyables[11].cost())) layers.pp.buyables[11].buy()
+        if (player.m.points.gte(162) && player.pp.points.gte(layers.pp.buyables[11].cost())) player.pp.buyables[11] = player.pp.buyables[11].add(player.pp.power.log(3).div(a.log(1.4).ceil()))
 	}
 })

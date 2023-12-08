@@ -615,6 +615,7 @@ function loadVue() {
 		data: {
 			player,
 			tmp,
+			modal,
 			options,
 			Decimal,
 			format,

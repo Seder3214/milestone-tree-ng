@@ -3,7 +3,7 @@ let modInfo = {
 	id: "c2nv4in9eusojg59bmo",
 	author: "Seder3214",
 	pointsName: "points",
-	modFiles: ["/layers/m.js","/layers/p.js","/layers/sp.js","/layers/hp.js","/layers/pb.js","/layers/hb.js","/layers/ap.js","/layers/t.js","/layers/mm.js","/layers/em.js","/layers/pe.js","/layers/se.js","/layers/pp.js","/layers/ep.js", "tree.js"],
+	modFiles: ["/layers/m.js","/layers/p.js","/layers/sp.js","/layers/hp.js","/layers/pb.js","/layers/hb.js","/layers/ap.js","/layers/t.js","/layers/mm.js","/layers/em.js","/layers/pe.js","/layers/se.js","/layers/pp.js","/layers/ep.js", "tree.js",'modal.js'],
 
 	discordName: "",
 	discordLink: "",
@@ -13,7 +13,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.172d",
+	num: "1.178a",
 	name: "Exotics...",
 }
 
@@ -96,10 +96,21 @@ return sc;
 
 function getCostOverflowStart(){
 	var sc=new Decimal(170);
+	if (player.m.points.gte(174)) sc = sc.add(5)
 	return sc;
 	}
+	function getCostOverflowScale(){
+		var sc=new Decimal(172);
+		if (player.m.points.gte(176)) sc = sc.add(3)
+		if (player.m.points.gte(177)) sc = sc.add(3)
+		if (player.m.points.gte(178)) sc = sc.add(2)
+		return sc;
+		}
 	function getCostOverflowEff(){
-		let eff=player.m.points.log(30).pow(0.3)
+		let eff=player.m.points.sub(getCostOverflowStart()).div(2).pow(0.3)
+		if(player.m.best.gte(getCostOverflowScale)){
+			eff=player.m.points.sub(getCostOverflowScale()).div(2).pow(0.5)
+		}
 		return eff;
 		}
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
@@ -114,7 +125,7 @@ function(){let table = ''
 		table += "1st milestone's effect ^"+format(getPointGen().log(getPointGenBeforeSoftcap()),4)+" because of softcap.<br>1st milestone's softcap starts at "+format(getPointSoftcapStart());
 	}
 	if(player.m.points.gte(getCostOverflowStart())){
-		table += "<br>Milestone cost exponent is x"+format(getCostOverflowEff(),4)+" because of overflow.<br> Starts at "+format(getCostOverflowStart()) + " milestones";
+		table += "<br>Milestone cost exponent is x"+format(getCostOverflowEff(),4)+" because of overflow.<br> Starts at "+format(getCostOverflowStart()) + " milestones, scales at " +format(getCostOverflowScale()) + " milestones";
    }
 	return table
 }

@@ -31,7 +31,7 @@ addLayer("ep", {
     },
     twoEffect() {
         let eff = player.ep.points.add(1).pow(player.m.points.gte(166)?2.5:2.2).mul(4).max(1)
-        return eff;
+        return softcap(eff,new Decimal('1e100'),0.05);
     },
 	threeEffect() {
         let eff = player.ep.points.add(1).log10().pow(0.01).max(1)
@@ -40,8 +40,15 @@ addLayer("ep", {
         return eff;
     },
 	fourEffect() {
-        let eff = player.ep.points.add(1).pow(0.3).max(1)
+        let eff = player.ep.points.add(1).pow(0.35).max(1)
+		if (player.m.points.gte(173)) eff = eff.pow(1.05)
         return eff;
+    },
+	fiveEffect() {
+        let eff = player.ep.points.add(1).log10().log(10).pow(0.5).max(1)
+		let start = new Decimal('e5.6e12').mul(player.ep.points.add(1).log10().log(10).pow(0.5))
+		if (player.m.points.gte(174)) start = start.pow(0.1)
+        return {eff: eff, start: start};
     },
     row: 3, // Row the layer is in on the tree (0 is the first row)
 	exponent: 0.5,
@@ -79,7 +86,7 @@ addLayer("ep", {
 				"Cost for Next Tier: "+format(data.cost,0)+" Exotic Prestige points";
 			},
 			cost(){
-				return [new Decimal("2"),new Decimal("8"),new Decimal("512"),new Decimal("1e55"),new Decimal("1e120"), new Decimal('1e175')][player.ep.buyables[11]]
+				return [new Decimal("2"),new Decimal("8"),new Decimal("512"),new Decimal("1e55"),new Decimal("1e120"), new Decimal('1e450')][player.ep.buyables[11]]
 			},
 			canAfford() {
                    return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
@@ -122,7 +129,8 @@ addLayer("ep", {
                 if (player.ep.buyables[11].gte(1)) table += '1st effect: AP challenge 41 effect is ' + format(tmp.ep.oneEffect) + "x better"
                 if (player.ep.buyables[11].gte(2)) table += '<br>2nd effect: Transcend Points gain is ' + format(tmp.ep.twoEffect) + "x better (only outside of T challenges)"
 				if (player.ep.buyables[11].gte(3)) table += '<br>3rd effect: Hyper Boost effect base +' + format(tmp.ep.threeEffect,4)
-				if (player.ep.buyables[11].gte(4)) table += '<br>3rd effect: Transcend Points hardcap starts ' + format(tmp.ep.fourEffect,4) + "x later"
+				if (player.ep.buyables[11].gte(4)) table += '<br>4th effect: Transcend Points hardcap starts ' + format(tmp.ep.fourEffect,4) + "x later"
+				if (player.ep.buyables[11].gte(5)) table += '<br>5th effect: Add an Hyper-Prestige Points inflation (^' + format(tmp.ep.fiveEffect.eff,4) + " to gain), that starts at "+ format(tmp.ep.fiveEffect.start,4) + " Hyper-Prestige Points"
 				return table}],
 				"buyables",
                 "upgrades"
