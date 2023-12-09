@@ -50,6 +50,9 @@ addLayer("ep", {
 		if (player.m.points.gte(174)) start = start.pow(0.1)
         return {eff: eff, start: start};
     },
+sixEffect() {
+let eff = player.ep.points.add(1).log(10).log(2).pow(1.5).max(1)
+return eff}
     row: 3, // Row the layer is in on the tree (0 is the first row)
 	exponent: 0.5,
     hotkeys: [
@@ -131,6 +134,7 @@ addLayer("ep", {
 				if (player.ep.buyables[11].gte(3)) table += '<br>3rd effect: Hyper Boost effect base +' + format(tmp.ep.threeEffect,4)
 				if (player.ep.buyables[11].gte(4)) table += '<br>4th effect: Transcend Points hardcap starts ' + format(tmp.ep.fourEffect,4) + "x later"
 				if (player.ep.buyables[11].gte(5)) table += '<br>5th effect: Add an Hyper-Prestige Points inflation (^' + format(tmp.ep.fiveEffect.eff,4) + " to gain), that starts at "+ format(tmp.ep.fiveEffect.start,4) + " Hyper-Prestige Points"
+    if (player.ep.buyables[11].gte(6)) table += '<br>6th effect: Milestone Overflow starts +' + format(tmp.ep.sixEffect,4) + ' later.'
 				return table}],
 				"buyables",
                 "upgrades"
