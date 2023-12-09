@@ -51,7 +51,7 @@ addLayer("ep", {
         return {eff: eff, start: start};
     },
 sixEffect() {
-let eff = player.ep.points.add(1).log(10).log(2).pow(1.5).max(1)
+let eff = player.ep.points.add(1).log(10).log(10).log(10).pow(1.5).max(1)
 return eff},
     row: 3, // Row the layer is in on the tree (0 is the first row)
 	exponent: 0.5,
