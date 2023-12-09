@@ -52,7 +52,7 @@ addLayer("ep", {
     },
 sixEffect() {
 let eff = player.ep.points.add(1).log(10).log(2).pow(1.5).max(1)
-return eff}
+return eff},
     row: 3, // Row the layer is in on the tree (0 is the first row)
 	exponent: 0.5,
     hotkeys: [
@@ -89,7 +89,7 @@ return eff}
 				"Cost for Next Tier: "+format(data.cost,0)+" Exotic Prestige points";
 			},
 			cost(){
-				return [new Decimal("2"),new Decimal("8"),new Decimal("512"),new Decimal("1e55"),new Decimal("1e120"), new Decimal('1e800')][player.ep.buyables[11]]
+				return [new Decimal("2"),new Decimal("8"),new Decimal("512"),new Decimal("1e55"),new Decimal("1e120"), new Decimal('1e800'),new Decimal(1e1200)][player.ep.buyables[11]]
 			},
 			canAfford() {
                    return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
