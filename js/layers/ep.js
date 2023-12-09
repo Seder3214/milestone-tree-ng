@@ -6,7 +6,7 @@ addLayer("ep", {
         unlocked: false,
 		points: new Decimal(0),
     }},
-    color: "lime",
+    color: "#648c11",
     requires(){
 		return new Decimal(1e15);
 	},

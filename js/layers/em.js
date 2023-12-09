@@ -95,7 +95,7 @@ addLayer("em", {
             unlocked() {return player[this.layer].best.gte(7)},
             done() {return player[this.layer].best.gte(8)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Automate 22 Atomic Prestige Challenge (up to 100 completions)."
+				return "Automate [Reduced Points] Challenge."
 			},
         },
 	],

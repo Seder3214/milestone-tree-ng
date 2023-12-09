@@ -274,8 +274,8 @@ addLayer("ap", {
                 name: "Reduced Points",
                 completionLimit: Infinity,
 			    challengeDescription() {
-			if(player.m.points.gte(122))return "1st milestone's effect is replaced by (log10(1st milestone's effect+1))^(milestones)<br>"+format(challengeCompletions(this.layer, this.id),4) +"/50.0000 completions";
-			return "1st milestone's effect is replaced by (log10(1st milestone's effect+1))^100<br>"+format(challengeCompletions(this.layer, this.id),4) +"/50.0000 completions";
+			if(player.m.points.gte(122))return "1st milestone's effect is replaced by (log10(1st milestone's effect+1))^(milestones)<br>"+format(challengeCompletions(this.layer, this.id),4) +" completions";
+			return "1st milestone's effect is replaced by (log10(1st milestone's effect+1))^100<br>"+format(challengeCompletions(this.layer, this.id),4) +" completions";
 		},
                 unlocked() { return hasUpgrade("ap",22) && hasUpgrade("ap",24) },
                 goal: function(){
@@ -287,13 +287,16 @@ addLayer("ap", {
                 currencyInternalName: "points",
                 rewardDescription() { return "3rd milestone's effect is better, again." },
 		completionsAfter120(){
-			let p=player.points.add(10).log10().div(600/ buyableEffect('ap', 11)).log(1.035).min(50);
+			let p=player.points.add(10).log10().div(600/ buyableEffect('ap', 11)).log(player.ap.challenges[22]>=50?1.475:1.035);
 			if(p.lte(3)){
 				return p.toNumber()/2+3;
 			}
 			return p.toNumber();
 		},
 		goalAfter120(x=player.ap.challenges[22]){
+			if(player.ap.challenges[22]>=50){
+				return Decimal.pow(10,Decimal.pow(1.475,x).mul(600/ buyableEffect('ap', 11)));
+			}
 			if(player.ap.challenges[22]<=3){
 				return Decimal.pow(10,Decimal.pow(1.035,x*2-3).mul(600/ buyableEffect('ap', 11)));
 			}
