@@ -103,7 +103,6 @@ function getCostOverflowStart(){
 		var sc=new Decimal(172);
 		if (player.m.points.gte(176)) sc = sc.add(3)
 		if (player.m.points.gte(177)) sc = sc.add(3)
-		if (player.m.points.gte(178)) sc = sc.add(2)
 		return sc;
 		}
 	function getCostOverflowEff(){
