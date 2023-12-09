@@ -1479,7 +1479,7 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(177)},
             done() {return player[this.layer].best.gte(178)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Milestone Overflow Scale starts 2 later.";
+				return "Unlock Final Atomic-Prestige challenge.";
 			},
         },
 	],
