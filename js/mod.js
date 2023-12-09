@@ -103,6 +103,7 @@ function getCostOverflowStart(){
 		var sc=new Decimal(172);
 		if (player.m.points.gte(176)) sc = sc.add(3)
 		if (player.m.points.gte(177)) sc = sc.add(3)
+if (player.ep.buyables[11].gte(6)) sc = sc.add(tmp.ep.sixEffect)
 		return sc;
 		}
 	function getCostOverflowEff(){
