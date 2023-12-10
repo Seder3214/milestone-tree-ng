@@ -32,7 +32,7 @@ addLayer("em", {
     ],
     layerShown(){return player.mm.best.gte(30)},
 	resetsNothing(){return true},
-	autoPrestige(){return player.m.points.gte(170)},
+	autoPrestige(){return player.m.best.gte(170)},
 	milestones: [
 		{
 			requirementDescription: "1st Extra-Milestone",

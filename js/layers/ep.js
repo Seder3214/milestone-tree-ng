@@ -24,34 +24,35 @@ addLayer("ep", {
 		return m;
     },
     oneEffect() {
-        let eff = new Decimal(player.ep.points.add(1).pow(player.m.points.gte(165)?4:3.25)).max(1)
-		if (player.m.points.gte(167)) eff = eff.pow(1.1)
-		if (player.m.points.gte(168)) eff = eff.pow(1.1)
+        let eff = new Decimal(player.ep.points.add(1).pow(player.m.best.gte(165)?4:3.25)).max(1)
+		if (player.m.best.gte(167)) eff = eff.pow(1.1)
+		if (player.m.best.gte(168)) eff = eff.pow(1.1)
         return eff;
     },
     twoEffect() {
-        let eff = player.ep.points.add(1).pow(player.m.points.gte(166)?2.5:2.2).mul(4).max(1)
+        let eff = player.ep.points.add(1).pow(player.m.best.gte(166)?2.5:2.2).mul(4).max(1)
         return softcap(eff,new Decimal('1e100'),0.05);
     },
 	threeEffect() {
         let eff = player.ep.points.add(1).log10().pow(0.01).max(1)
-		if (player.m.points.gte(171)) eff = eff.mul(1.3)
-		if (player.m.points.gte(172)) eff = eff.mul(1.1)
+		if (player.m.best.gte(171)) eff = eff.mul(1.3)
+		if (player.m.best.gte(172)) eff = eff.mul(1.1)
         return eff;
     },
 	fourEffect() {
         let eff = player.ep.points.add(1).pow(0.35).max(1)
-		if (player.m.points.gte(173)) eff = eff.pow(1.05)
+		if (player.m.best.gte(173)) eff = eff.pow(1.05)
         return eff;
     },
 	fiveEffect() {
         let eff = player.ep.points.add(1).log10().log(10).pow(0.5).max(1)
 		let start = new Decimal('e5.6e12').mul(player.ep.points.add(1).log10().log(10).pow(0.5))
-		if (player.m.points.gte(174)) start = start.pow(0.1)
+		if (player.m.best.gte(174)) start = start.pow(0.1)
+		eff=eff.add(tmp.ap.challenges[42].rewardEffect);
         return {eff: eff, start: start};
     },
 sixEffect() {
-let eff = player.ep.points.add(1).log(10).log(10).log(2).pow(1.5).max(1)
+let eff = player.ep.points.add(1).log(10).log(10).log(2).div(5)
 return eff},
     row: 3, // Row the layer is in on the tree (0 is the first row)
 	exponent: 0.5,
@@ -143,7 +144,7 @@ return eff},
     },
 	branches: ["pp"],
 	passiveGeneration(){
-		if (player.em.points.gte(6)) return 0.1
+		if (player.em.best.gte(6)) return 0.1
 		return 0;
 	},
 	softcap(){
@@ -153,7 +154,7 @@ return eff},
 		return new Decimal(1);
 	},
 		doReset(l){
-			if(l=="ep")if(player.m.points.gte(162))layerDataReset("pp",["upgrades", 'buyables']);else layerDataReset("pp",[]);
+			if(l=="ep")if(player.m.best.gte(162))layerDataReset("pp",["upgrades", 'buyables']);else layerDataReset("pp",[]);
 		},
 	update(){
 	}

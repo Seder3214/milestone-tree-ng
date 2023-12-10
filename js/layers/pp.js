@@ -84,7 +84,7 @@ addLayer("pp", {
             effectDisplay() { return "x"+format(this.effect()) }, // Add formatting to the effect
         },
         21: {
-unlocked() {return player.m.points.gte(155)},
+unlocked() {return player.m.best.gte(155)},
 			title: "Prestige Power Upgrade 21",
             description: "Unlock Super-Dilated Transcend Points effect.",
             cost: new Decimal(100000),
@@ -93,7 +93,7 @@ unlocked() {return player.m.points.gte(155)},
             currencyLayer: "pp", // The upgrade is only visible when this is true
         },
         22: {
-unlocked() {return player.m.points.gte(155)},
+unlocked() {return player.m.best.gte(155)},
 
 			title: "Prestige Power Upgrade 22",
             description: "Unlock Prestige-Hardcapped Transcend Points effect.<br>Req: Power Scaler -<br> [11 Lvl]",
@@ -104,7 +104,7 @@ unlocked() {return player.m.points.gte(155)},
             currencyLayer: "pp", // The upgrade is only visible when this is true
         },
         23: {
-            unlocked() {return player.m.points.gte(155)},
+            unlocked() {return player.m.best.gte(155)},
             
                         title: "Prestige Power Upgrade 23",
                         description: "Prestige Power 11 upgrade is better.<br>Req: Power Scaler -<br> [12 Lvl]",
@@ -115,7 +115,7 @@ unlocked() {return player.m.points.gte(155)},
                         currencyLayer: "pp", // The upgrade is only visible when this is true
                     },
         31: {
-        unlocked() {return player.m.points.gte(159)},
+        unlocked() {return player.m.best.gte(159)},
                         
          title: "Prestige Power Upgrade 31",
         description: "Prestige Power 13 upgrade is better.<br>Req: Power Scaler -<br> [17 Lvl]",
@@ -126,7 +126,7 @@ unlocked() {return player.m.points.gte(155)},
              currencyLayer: "pp", // The upgrade is only visible when this is true
                                 },
         32: {
-        unlocked() {return player.m.points.gte(159)},
+        unlocked() {return player.m.best.gte(159)},
                         
          title: "Prestige Power Upgrade 32",
         description: "Exotic Prestige Points boosts Prestige Power gain.<br>Req: Power Scaler -<br> [35 Lvl]",
@@ -137,12 +137,13 @@ unlocked() {return player.m.points.gte(155)},
              currencyLayer: "pp", // The upgrade is only visible when this is true
              effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
                 let ret = player.ep.points.pow(hasUpgrade('pp', 33)?0.8:0.75).mul(1.5).add(1)
-                return softcap(ret,new Decimal('1e800'),0.1);
+                ret = softcap(ret,new Decimal('1e800'), 0.1)
+                return softcap(ret,new Decimal('1e1000'),0.1);
             },
             effectDisplay() { return "x"+format(this.effect()) },
                                 },
          33: {
-         unlocked() {return player.m.points.gte(159)},
+         unlocked() {return player.m.best.gte(159)},
                                                     
         title: "Prestige Power Upgrade 33",
         description: "Prestige Power upgrade 32 is better.",
@@ -167,8 +168,7 @@ unlocked() {return player.m.points.gte(155)},
 			},
 			cost(){
 				let a=player[this.layer].buyables[this.id];
-				a=Decimal.pow(2,a);
-				return new Decimal(3).mul(a.pow(1.4).ceil());
+				return new Decimal(2).pow(a);
 			},
 			canAfford() {
                    return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
@@ -180,13 +180,13 @@ unlocked() {return player.m.points.gte(155)},
 			  effect(){
 				  let b=0.23;
 				  let eff=new Decimal(0).add(player[this.layer].buyables[this.id].mul(b).mul(player.m.points.pow(0.15)));
-                  if (player.m.points.gte(154)) eff = eff.times(tmp.m.milestone154Effect)
-                  if (player.m.points.gte(163)) eff= eff.pow(1.5)
-                  if (player.m.points.gte(164)) eff= eff.pow(1.5)
+                  if (player.m.best.gte(154)) eff = eff.times(tmp.m.milestone154Effect)
+                  if (player.m.best.gte(163)) eff= eff.pow(1.5)
+                  if (player.m.best.gte(164)) eff= eff.pow(1.5)
 				  return eff;
 			  },
 			  unlocked(){
-				  return player.m.points.gte(123);
+				  return player.m.best.gte(123);
 			  },
 			  style() {
 				if (player.pp.points.lt(this.cost())) return {
@@ -219,19 +219,18 @@ unlocked() {return player.m.points.gte(155)},
 	},
 	branches: ["p"],
 	passiveGeneration(){
-        if (player.em.points.gte(5)) return 100
-        if (player.em.points.gte(4)) return 1
-        if (player.m.points.gte(157)) return 0.3
-        if (player.em.points.gte(3)) return 0.1
+        if (player.em.best.gte(5)) return 100
+        if (player.em.best.gte(4)) return 1
+        if (player.m.best.gte(157)) return 0.3
+        if (player.em.best.gte(3)) return 0.1
 		return 0;
 	},
 		doReset(l){
-			if(l=="pp")if(player.m.points.gte(153))layerDataReset("p",["upgrades",[4]]);else layerDataReset("p",[]);
+			if(l=="pp")if(player.m.best.gte(153))layerDataReset("p",["upgrades",[4]]);else layerDataReset("p",[]);
 		},
 	update(diff){
         let a=player.pp.buyables[11];
-a = Decimal.pow(2,a)
         if (player.pp.buyables[11].gte(1)) player.pp.power = player.pp.power.add(buyableEffect('pp', 11).times(diff))
-        if (player.m.points.gte(162) && player.pp.points.gte(layers.pp.buyables[11].cost())) player.pp.buyables[11] = player.pp.buyables[11].add(player.pp.power.log(3).div(a.log(2).log(1.4).ceil()))
+        if (player.m.best.gte(162) && player.pp.points.gte(layers.pp.buyables[11].cost())) player.pp.buyables[11] = player.pp.points.max(1).log(2).add(1).floor()
 	}
 })
