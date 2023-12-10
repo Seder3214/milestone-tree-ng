@@ -1616,7 +1616,7 @@ addLayer("m", {
 		if(player.m.best.gte(106))p=p.pow(player.mm.points.pow(0.5));
 		if(player.m.best.gte(113))p=p.pow(player.mm.points.pow(0.3));
         if (player.m.best.gte(156))p=p.pow(player.mm.points.pow(layers.t.getSpecialEffect(32)))
-		return softcap(p,new Decimal('ee10'), 0.15);
+		return softcap(p,new Decimal('ee10'), 0.01);
 	},
 	milestone27Effect(){
 		var p=player.m.best;
