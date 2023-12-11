@@ -190,7 +190,7 @@ addLayer("hp", {
             cost: new Decimal("e246e11"),
 			effect() {
 				let p=player.hp.points.log10().log(2);
-				return p;
+				return softcap(p,new Decimal(17),0.1);
             },
 			effectDisplay() { return "^"+format(this.effect()) },
             unlocked() { return player.m.best.gte(142)}, // The upgrade is only visible when this is true
