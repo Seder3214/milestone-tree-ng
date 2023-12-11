@@ -96,7 +96,7 @@ return sc;
 
 function getCostOverflowStart(){
 	if(player.ap.activeChallenge==42) return new Decimal(1)
-	var sc=new Decimal(172);
+	var sc=new Decimal(170);
 	if (player.m.points.gte(174)) sc = sc.add(5)
 	if (player.m.points.gte(176)) sc = sc.add(1)
 	if (player.m.points.gte(177)) sc = sc.add(1)
