@@ -320,7 +320,8 @@ addLayer("t", {
 				let m=0.01;
 				if(hasUpgrade("t",74))m+=0.01;
 				let eff=player.t.points.add(10).log10().pow(p).mul(m);
-				return new Decimal(1).plus(eff);
+				let f=new Decimal(1).plus(eff)
+				return softcap(f,new Decimal(1.45),0.1);
 			},
             effectDisplay() { return "/"+format(this.effect(),4) },
         },
@@ -542,11 +543,42 @@ addLayer("t", {
 		if (player.m.best.gte(169)) cap = new Decimal(1e90)
 		if (player.ep.buyables[11].gte(4)) cap = cap.mul(tmp.ep.fourEffect)
 		if(player.t.points.gte(cap))player.t.points=new Decimal(cap);
+		if(player.em.best.gte(9)){
+			if(player.t.specialPoints[11].lt(layers.t.getResetGain())){
+				player.t.specialPoints[11]=layers.t.getResetGain().log(5).mul('1e30');
+			}
+		}
+		if(player.em.best.gte(10)){
+			if(player.t.specialPoints[12].lt(layers.t.getResetGain())){
+				player.t.specialPoints[12]=layers.t.getResetGain().log(5).mul('1e25');
+			}
+		}
+		if(player.em.best.gte(11)){
+			if(player.t.specialPoints[21].lt(layers.t.getResetGain())){
+				player.t.specialPoints[21]=layers.t.getResetGain().log(7).mul('1e25');
+			}
+		}
+		if(player.em.best.gte(12)){
+			if(player.t.specialPoints[22].lt(layers.t.getResetGain())){
+				player.t.specialPoints[22]=layers.t.getResetGain().log(3).mul('1e18');
+			}
+		}
+		if(player.em.best.gte(13)){
+			if(player.t.specialPoints[31].lt(layers.t.getResetGain())){
+				player.t.specialPoints[31]=layers.t.getResetGain().log(2).mul('1e22');
+			}
+		}
+		if(player.em.best.gte(14)){
+			if(player.t.specialPoints[32].lt(layers.t.getResetGain())){
+				player.t.specialPoints[32]=layers.t.getResetGain().log(2).mul('1e15');
+			}
+		}
 		if(player.m.best.gte(130) && player.t.activeChallenge){
 			if(player.t.specialPoints[player.t.activeChallenge].lt(layers.t.getResetGain())){
 				player.t.specialPoints[player.t.activeChallenge]=layers.t.getResetGain();
 			}
 		}
+
 		if(player.m.best.gte(140)&&player.t.activeChallenge){
 			if(layers.t.challenges[player.t.activeChallenge].canComplete()){
 				player.t.challenges[player.t.activeChallenge]++;
@@ -579,11 +611,11 @@ for(var i in player.ap.challenges)c+=player.ap.challenges[i];
 	getSpecialEffect(x){
 		if(x==11){
 			let effect=player.t.specialPoints[11].add(1).log10().div(100).add(1);
-			return effect;
+			return softcap(effect,new Decimal(1.3),0.01);
 		}
 		if(x==12){
 			let effect=player.t.specialPoints[12].add(1).log10().div(100).add(1);
-			return effect;
+			return softcap(effect,new Decimal(1.45),0.01);
 		}
 		if(x==21){
 			let effect=player.t.specialPoints[21].add(1).log10().div(100).add(1);

@@ -31,7 +31,8 @@ addLayer("ep", {
     },
     twoEffect() {
         let eff = player.ep.points.add(1).pow(player.m.best.gte(166)?2.5:2.2).mul(4).max(1)
-        return softcap(eff,new Decimal('1e100'),0.05);
+		eff=softcap(eff,new Decimal('1e100'),0.05)
+        return softcap(eff,new Decimal('1e600'),0.05);
     },
 	threeEffect() {
         let eff = player.ep.points.add(1).log10().pow(0.01).max(1)

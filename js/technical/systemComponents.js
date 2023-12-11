@@ -171,6 +171,10 @@ var systemComponents = {
                 <td><button class="opt" onclick="toggleOpt('forceOneTab'); needsCanvasUpdate = true">Single-Tab Mode: {{ options.forceOneTab?"ALWAYS":"AUTO" }}</button></td>
 				<td><button class="opt" onclick="toggleOpt('forceTooltips'); needsCanvasUpdate = true">Shift-Click to Toggle Tooltips: {{ options.forceTooltips?"ON":"OFF" }}</button></td>
 				</tr> 
+			<tr>
+			<td></td>
+			<td><button class="opt" onclick="toggleOpt('reverseMilestones');">Reverse Milestone showing: {{ options.reverseMilestones?"LAST TO FIRST":"FIRST TO LAST" }}</button></td>
+			</tr>	
         </table>`
     },
 

@@ -5,6 +5,7 @@ addLayer("m", {
     startData() { return {
         unlocked: true,
 		points: new Decimal(0),
+		rev: false,
     }},
     color: "#793784",
     requires(){
