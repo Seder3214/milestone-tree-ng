@@ -25,7 +25,7 @@ addLayer("pp", {
 		return m;
     },
     row: 2, // Row the layer is in on the tree (0 is the first row)
-	exponent() { return player.pp.best.gte('1e15000')?0.0000000000000001:0.00000000000001},
+	exponent() { return player.pp.best.gte('1e15000')?0.000000000000005:0.00000000000001},
     hotkeys: [
         {key: "W", description: "W: Reset for prestige power", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
