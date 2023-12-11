@@ -440,10 +440,10 @@ addLayer("ap", {
 		completionsAfter120(){
 			let p=player.points;
 				if(p.lte("e1490"))return 0;
-				return p.log10().div(6300 / buyableEffect('ap', 11)).log(1.025).pow(1/1.15).toNumber();
+				return p.log10().div(6300 / buyableEffect('ap', 11)).log(1.025).pow(1/1.2).toNumber();
 		},
 		goalAfter120(x=player.ap.challenges[42]){
-			return Decimal.pow(10,Decimal.pow(1.025,Decimal.pow(x,1.15)).mul(6300 / buyableEffect('ap', 11)));
+			return Decimal.pow(10,Decimal.pow(1.025,Decimal.pow(x,1.2)).mul(6300 / buyableEffect('ap', 11)));
 		},
 canComplete(){
 	return player.points.gte(tmp.ap.challenges[this.id].goal)&&player.m.best.lt(110);
