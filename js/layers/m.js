@@ -43,7 +43,7 @@ addLayer("m", {
 		if(hasUpgrade("ap",23))firstScaling=firstScaling.div(upgradeEffect("ap",23));
 		if(hasUpgrade("pe",12))firstScaling=firstScaling.div(upgradeEffect("pe",12));
 		if(hasUpgrade("se",12))firstScaling=firstScaling.div(upgradeEffect("se",12));
-		return new Decimal(2).add(firstScaling).add(player.m.points.gte(getCostOverflowStart())?getCostOverflowEff():0);
+		return new Decimal(2).add(firstScaling);
 	},
     getScalingStart(){
         let start=new Decimal(14);
