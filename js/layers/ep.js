@@ -34,7 +34,7 @@ addLayer("ep", {
         return softcap(eff,new Decimal('1e100'),0.075);
     },
 	threeEffect() {
-        let eff = player.ep.points.add(1).log10().max(1).pow(0.01).div(2.5)
+        let eff = player.ep.points.add(1).log10().max(1).pow(0.01).div(250)
 		if (player.m.best.gte(171)) eff = eff.mul(1.075)
 		if (player.m.best.gte(172)) eff = eff.mul(1.1)
         return eff.toNumber();
