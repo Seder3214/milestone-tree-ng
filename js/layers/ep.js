@@ -52,7 +52,7 @@ addLayer("ep", {
         return {eff: eff, start: start};
     },
 	sixEffect() {
-		let eff=player.ep.points.log(1.1).pow(1.5)
+		let eff=player.ep.points.log(1.1).pow(2.15)
 		return eff
 	},
     row: 3, // Row the layer is in on the tree (0 is the first row)
