@@ -321,7 +321,7 @@ addLayer("t", {
 				let m=0.01;
 				if(hasUpgrade("t",74))m+=0.01;
 				let eff=player.t.points.add(10).log10().pow(p).mul(m);
-				return new Decimal(1).plus(softcap(eff,new Decimal(0.4),0.5));
+				return new Decimal(1).plus(softcap(eff,new Decimal(1.4),0.25);
 			},
             effectDisplay() { return "/"+format(this.effect(),4) },
         },
