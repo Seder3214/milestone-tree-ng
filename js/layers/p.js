@@ -104,7 +104,7 @@ addLayer("p", {
 				if(player.m.best.gte(84))base+=0.05;
 				if(player.m.best.gte(94))base+=0.05;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
-                return softcap(ret,new Decimal('e5e14'),0.1);
+                return softcap(ret,new Decimal('e1e15'),0.1);
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
