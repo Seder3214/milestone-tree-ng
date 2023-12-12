@@ -22,6 +22,7 @@ addLayer("pp", {
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
 		let m= new Decimal(1)
+if (getResetGain("pp").gte('1e10000')||player.pp.best.gte('1e10000')) m = player.pp.points.max(1).log(10).max(1).log(2).div(40).add(0.1)
 		return m;
     },
     row: 2, // Row the layer is in on the tree (0 is the first row)
