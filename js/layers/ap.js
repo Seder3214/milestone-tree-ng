@@ -465,7 +465,7 @@ canComplete(){
 		cost(){
 			let a=player[this.layer].buyables[this.id];
 			let cost = new Decimal(1)
-			a=Decimal.pow(1.35,a);
+			a=Decimal.pow(1.65,a);
 			return cost.mul(Decimal.pow("e1.5e10",a));
 		},
 		canAfford() {
