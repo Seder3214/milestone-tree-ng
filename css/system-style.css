@@ -1,7 +1,7 @@
 * {
 	transition-duration: 0.5s;
 	text-align: center;
-	font-family: "Inconsolata", monospace;
+	font-family: 'Bahnshcrift',monospace;
 	font-weight: bold;
 	table-align: center;
 	margin: auto;
@@ -144,7 +144,7 @@
 	margin: 0;
 	font-size: 21px;
 	font-weight: bold;
-	font-family:Verdana, Geneva, Tahoma, sans-serif ;
+	font-family:'Bahnshcrift' ;
 	color: black;
 	background-color: transparent;
 	border: none;

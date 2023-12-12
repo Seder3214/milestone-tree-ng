@@ -27,10 +27,10 @@ addLayer("pe", {
 	branches: ["p"],
 	base: function(){
 		let b=new Decimal("10");
-		if(player.mm.points.gte(26))b=b.sqrt();
-		if(player.mm.points.gte(27))b=b.sqrt();
-		if(player.mm.points.gte(28))b=b.sqrt();
-		if(player.mm.points.gte(29))b=b.sqrt();
+		if(player.mm.best.gte(26))b=b.sqrt();
+		if(player.mm.best.gte(27))b=b.sqrt();
+		if(player.mm.best.gte(28))b=b.sqrt();
+		if(player.mm.best.gte(29))b=b.sqrt();
 		return b;
 	},
 	exponent: function(){
@@ -39,7 +39,7 @@ addLayer("pe", {
 	resetsNothing:true,
 	doReset(l){},
 	canBuyMax:true,
-	autoPrestige(){return player.m.points.gte(126)},
+	autoPrestige(){return player.m.best.gte(126)},
 	upgrades: {
         rows: 2,
         cols: 4,

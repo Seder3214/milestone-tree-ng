@@ -27,9 +27,9 @@ addLayer("se", {
 	branches: ["sp"],
 	base: function(){
 		let b=new Decimal("10");
-        if(player.m.points.gte(148))b=b.sqrt();
-        if(player.m.points.gte(149))b=b.sqrt();
-        if(player.m.points.gte(152))b=b.sqrt(tmp.m.milestone152Effect);
+        if(player.m.best.gte(148))b=b.sqrt();
+        if(player.m.best.gte(149))b=b.sqrt();
+        if(player.m.best.gte(152))b=b.sqrt(tmp.m.milestone152Effect);
 		return b;
 	},
 	exponent: function(){
@@ -38,7 +38,7 @@ addLayer("se", {
 	resetsNothing:true,
 	doReset(l){},
 	canBuyMax:true,
-	autoPrestige(){return player.m.points.gte(140)},
+	autoPrestige(){return player.m.best.gte(140)},
 	upgrades: {
         rows: 2,
         cols: 4,
@@ -66,7 +66,7 @@ addLayer("se", {
         },
         21: {
 			title: "Super Energy Upgrade 21",
-            unlocked() {return player.m.points.gte(146)},
+            unlocked() {return player.m.best.gte(146)},
             description: "4th Milestone's effect is better based on your super energy..",
             cost: new Decimal(2.89e12),
             unlocked() { return true}, // The upgrade is only visible when this is true
@@ -78,7 +78,7 @@ addLayer("se", {
         },
         22: {
 			title: "Super Energy Upgrade 22",
-            unlocked() {return player.m.points.gte(146)},
+            unlocked() {return player.m.best.gte(146)},
             description: "1st Milestone's softcap starts later based on your super energy.",
             cost: new Decimal(3.1e13),
             unlocked() { return true}, // The upgrade is only visible when this is true

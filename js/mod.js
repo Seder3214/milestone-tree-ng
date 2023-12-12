@@ -63,8 +63,8 @@ if(hasUpgrade("hp",11))b=b.mul(upgradeEffect("hp",11));
 if(hasUpgrade("hp",12))b=b.mul(upgradeEffect("hp",12));
 if(hasUpgrade("ap",11))b=b.mul(upgradeEffect("ap",11));
 if(player.t.activeChallenge==11||player.t.activeChallenge==21||player.t.activeChallenge==31)b=b.pow(tmp.t.dilationEffect);
-if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41 )b=b.add(1).log10().pow(player.m.points.gte(122)?player.m.points:100);
-return b
+if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41||player.ap.activeChallenge==42 )b=b.add(1).log10().pow(player.m.best.gte(122)?player.m.points:100);
+return b.div(player.m.best.gte(180)?2:1)
 }
 
 function getPointGenString(){
@@ -95,21 +95,23 @@ return sc;
 }
 
 function getCostOverflowStart(){
+	if(player.ap.activeChallenge==42){
+		return new Decimal(player.points.log(10).pow(0.585))
+	}
 	var sc=new Decimal(170);
-	if (player.m.points.gte(174)) sc = sc.add(5)
+	if (player.m.best.gte(174)) sc = sc.add(2)
 	return sc;
 	}
 	function getCostOverflowScale(){
 		var sc=new Decimal(172);
-		if (player.m.points.gte(176)) sc = sc.add(3)
-		if (player.m.points.gte(177)) sc = sc.add(3)
-		if (player.m.points.gte(178)) sc = sc.add(2)
+		if (player.m.best.gte(176)) sc = sc.add(1)
+		if (player.m.best.gte(177)) sc = sc.add(1)
 		return sc;
 		}
 	function getCostOverflowEff(){
-		let eff=new Decimal(1).mul(player.m.points.sub(getCostOverflowStart()).add(1.15).pow(0.1)).pow(1.15)
+		let eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(1.05)
 		if (player.m.points.gte(getCostOverflowScale())){
-		eff=player.m.points.sub(getCostOverflowScale()).add(1).mul(1.5).pow(1.15)
+		eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(1.1)
 		}
 		return eff;
 		}
@@ -124,7 +126,7 @@ function(){let table = ''
 	if(getPointGen().gte(getPointSoftcapStart().sqrt())){
 		table += "1st milestone's effect ^"+format(getPointGen().log(getPointGenBeforeSoftcap()),4)+" because of softcap.<br>1st milestone's softcap starts at "+format(getPointSoftcapStart());
 	}
-	if(player.m.points.gte(getCostOverflowStart())){
+	if(player.m.best.gte(getCostOverflowStart())){
 		table += "<br>Milestone cost exponent is x"+format(getCostOverflowEff(),4)+" because of overflow.<br> Starts at "+format(getCostOverflowStart()) + " milestones, scales at " +format(getCostOverflowScale()) + " milestones";
    }
 	return table

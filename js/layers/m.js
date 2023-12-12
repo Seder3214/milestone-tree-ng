@@ -8,7 +8,7 @@ addLayer("m", {
     }},
     color: "#793784",
     requires(){
-		//if(player.m.points.gte(99))return new Decimal(Infinity);
+		//if(player.m.best.gte(99))return new Decimal(Infinity);
 		return new Decimal(10);
 	},
     resource: "milestones", // Name of prestige currency
@@ -42,7 +42,7 @@ addLayer("m", {
 		if(hasUpgrade("ap",23))firstScaling=firstScaling.div(upgradeEffect("ap",23));
 		if(hasUpgrade("pe",12))firstScaling=firstScaling.div(upgradeEffect("pe",12));
 		if(hasUpgrade("se",12))firstScaling=firstScaling.div(upgradeEffect("se",12));
-		return new Decimal(2).add(firstScaling.mul(player.m.points.gte(getCostOverflowStart())?getCostOverflowEff():1));
+		return new Decimal(2).add(firstScaling).mul(player.m.points.gte(getCostOverflowStart())?getCostOverflowEff():1);
 	},
     getScalingStart(){
         let start=new Decimal(14);
@@ -54,7 +54,7 @@ addLayer("m", {
     ],
     layerShown(){return true},
 	resetsNothing(){return true},
-	autoPrestige(){return player.mm.points.gte(1)},
+	autoPrestige(){return player.mm.best.gte(1)},
 	milestones: [
 		{
 			requirementDescription: "1st Milestone",
@@ -1447,7 +1447,7 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(173)},
             done() {return player[this.layer].best.gte(174)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Hyper-Prestige inflation starts ^0.1 earlier, Milestone Overflow starts 5 later.";
+				return "Hyper-Prestige inflation starts ^0.1 earlier, Milestone Overflow starts 2 later.";
 			},
         },
 		{
@@ -1463,7 +1463,7 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(175)},
             done() {return player[this.layer].best.gte(176)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Milestone Overflow Scale starts 3 later.";
+				return "Milestone Overflow Scale starts 1 later.";
 			},
         },
 		{
@@ -1471,7 +1471,7 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(176)},
             done() {return player[this.layer].best.gte(177)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Milestone Overflow Scale starts 3 later.";
+				return "Milestone Overflow Scale starts 1 later.";
 			},
         },
 		{
@@ -1479,7 +1479,23 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(177)},
             done() {return player[this.layer].best.gte(178)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Milestone Overflow Scale starts 2 later.";
+				return "Unlock last Atomic Prestige Challenge and a row of Hyper Boost Upgrades.";
+			},
+        },
+        {
+			requirementDescription: "179th Milestone",
+            unlocked() {return player[this.layer].best.gte(178)},
+            done() {return player[this.layer].best.gte(179)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Exotic Booster effect is better by Milestones amount<b> After Overflow</b> and Exotic Prestige Points amount.<br>Currently: " + format(tmp.m.milestone179Effect) + "x";
+			},
+        },
+        {
+			requirementDescription: "180th Milestone",
+            unlocked() {return player[this.layer].best.gte(179)},
+            done() {return player[this.layer].best.gte(180)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "<b>Challenge Slayer'</b> effect is better, but 1st milestone softcap is 2.00x stronger.";
 			},
         },
 	],
@@ -1523,7 +1539,7 @@ addLayer("m", {
 		if(player.m.best.gte(91))m=m.pow(1.0005);
 		if(player.m.best.gte(96))m=m.pow(1.0005);
 		if(player.m.best.gte(107))m=m.pow(1.002);//0.91298476860857272607902105461039
-        if(player.em.points.gte(2))m=m.pow(1.01);
+        if(player.em.best.gte(2))m=m.pow(1.01);
 		var b=new Decimal(2);
 		if(player.m.best.gte(4)){
 			b=b.add(layers.m.milestone4Effect());
@@ -1652,6 +1668,11 @@ addLayer("m", {
             p=p.pow(layers.t.getSpecialEffect(31));   
         }
 		p=p.mul(tmp.ap.challenges[41].rewardEffect);
+		p = softcap(p,new Decimal('1e800'),0.1)
+		return softcap(p,new Decimal('1e1000'),0.01);
+	},
+    milestone179Effect(){
+		var p=player.m.best.sub(getCostOverflowStart()).pow(25).pow(player.ep.points.log10().log(2));
 		p = softcap(p,new Decimal('1e800'),0.1)
 		return softcap(p,new Decimal('1e1000'),0.01);
 	},

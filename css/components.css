@@ -59,7 +59,17 @@
 	border-color: rgba(0, 0, 0, 0.125);
 	color: rgba(0, 0, 0, 0.5);
 }
-
+.milestoneDone:hover {
+    height: 45px;
+    background-color: #8be16e;
+    color: rgba(0, 0, 0, 0.75);
+    transition: color 0.5s, background-color 0.5s, height 0.3s;
+}
+.milestone:hover {
+    height: 45px;
+    background-color: #cc9d9d;
+    transition: color 0.5s, background-color 0.5s, height 0.3s;
+}
 .challenge {
 	background-color: #bf8f8f;
 	position: relative;
@@ -75,7 +85,19 @@
 .challenge.done {
 	background-color: #77bf5f;
 }
-
+.challenge:hover {
+    height: 305px;
+	width: 305px;
+    background-color: #d8adad;
+    color: rgba(0, 0, 0, 0.75);
+    transition: color 0.5s, background-color 0.5s, height 0.3s;
+}
+.challenge.done:hover {
+    height: 305px;
+	width: 305px;
+    background-color: #8be16e;
+    transition: color 0.5s, background-color 0.5s, height 0.3s;
+}
 .challenge.canComplete {
 	background-color: #ffbf00;
 }
