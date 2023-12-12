@@ -32,7 +32,7 @@ addLayer("em", {
     ],
     layerShown(){return player.mm.best.gte(30)},
 	resetsNothing(){return true},
-	autoPrestige(){return player.m.best.gte(170)},
+	autoPrestige(){return player.m.points.gte(170)},
 	milestones: [
 		{
 			requirementDescription: "1st Extra-Milestone",
@@ -95,55 +95,7 @@ addLayer("em", {
             unlocked() {return player[this.layer].best.gte(7)},
             done() {return player[this.layer].best.gte(8)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Automate [Reduced Points] Challenge."
-			},
-        },
-        {
-			requirementDescription: "9th Extra-Milestone",
-            unlocked() {return player[this.layer].best.gte(8)},
-            done() {return player[this.layer].best.gte(9)}, // Used to determine when to give the milestone
-            effectDescription: function(){
-				return "Get Dilated Transcend Points outside of 'Dilation' at reduced rate."
-			},
-        },
-        {
-			requirementDescription: "10th Extra-Milestone",
-            unlocked() {return player[this.layer].best.gte(9)},
-            done() {return player[this.layer].best.gte(10)}, // Used to determine when to give the milestone
-            effectDescription: function(){
-				return "Get Softcapped Transcend Points outside of 'Softcapped' at reduced rate."
-			},
-        },
-        {
-			requirementDescription: "11st Extra-Milestone",
-            unlocked() {return player[this.layer].best.gte(10)},
-            done() {return player[this.layer].best.gte(11)}, // Used to determine when to give the milestone
-            effectDescription: function(){
-				return "Get Prestige-Dilated Transcend Points outside of 'Prestige Dilation' at reduced rate."
-			},
-        },
-        {
-			requirementDescription: "12nd Extra-Milestone",
-            unlocked() {return player[this.layer].best.gte(11)},
-            done() {return player[this.layer].best.gte(12)}, // Used to determine when to give the milestone
-            effectDescription: function(){
-				return "Get Hardcapped Transcend Points outside of 'Hardcapped' at reduced rate."
-			},
-        },
-        {
-			requirementDescription: "13rd Extra-Milestone",
-            unlocked() {return player[this.layer].best.gte(12)},
-            done() {return player[this.layer].best.gte(13)}, // Used to determine when to give the milestone
-            effectDescription: function(){
-				return "Get Super-Dilated Transcend Points outside of 'Super Dilation' at reduced rate."
-			},
-        },
-        {
-			requirementDescription: "14th Extra-Milestone",
-            unlocked() {return player[this.layer].best.gte(13)},
-            done() {return player[this.layer].best.gte(14)}, // Used to determine when to give the milestone
-            effectDescription: function(){
-				return "Get Prestige-Hardcapped Transcend Points outside of 'Get Prestige-Hardcapped' at reduced rate."
+				return "Automate 22 Atomic Prestige Challenge (up to 100 completions)."
 			},
         },
 	],

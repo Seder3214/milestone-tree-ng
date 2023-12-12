@@ -13,8 +13,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.179c",
-	name: "Breaking The Limits!!!",
+	num: "1.178a",
+	name: "Exotics...",
 }
 
 let changelog = ``
@@ -63,7 +63,7 @@ if(hasUpgrade("hp",11))b=b.mul(upgradeEffect("hp",11));
 if(hasUpgrade("hp",12))b=b.mul(upgradeEffect("hp",12));
 if(hasUpgrade("ap",11))b=b.mul(upgradeEffect("ap",11));
 if(player.t.activeChallenge==11||player.t.activeChallenge==21||player.t.activeChallenge==31)b=b.pow(tmp.t.dilationEffect);
-if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41||player.ap.activeChallenge==42 )b=b.add(1).log10().pow(player.m.points.gte(122)?player.m.points:100);
+if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41 )b=b.add(1).log10().pow(player.m.points.gte(122)?player.m.points:100);
 return b
 }
 
@@ -95,22 +95,21 @@ return sc;
 }
 
 function getCostOverflowStart(){
-	if(player.ap.activeChallenge==42) return new Decimal(1)
 	var sc=new Decimal(170);
 	if (player.m.points.gte(174)) sc = sc.add(5)
-	if (player.m.points.gte(176)) sc = sc.add(1)
-	if (player.m.points.gte(177)) sc = sc.add(1)
-if (player.ep.buyables[11].gte(6)) sc = sc.add(tmp.ep.sixEffect)
 	return sc;
 	}
 	function getCostOverflowScale(){
-		var sc=new Decimal(178);
+		var sc=new Decimal(172);
+		if (player.m.points.gte(176)) sc = sc.add(3)
+		if (player.m.points.gte(177)) sc = sc.add(3)
+		if (player.m.points.gte(178)) sc = sc.add(2)
 		return sc;
 		}
 	function getCostOverflowEff(){
-		let eff=player.m.points.sub(getCostOverflowStart()).add(0.75).pow(0.1).add(0.2)
-		if (player.m.points.gte(getCostOverflowScale())){
-		eff=player.m.points.sub(getCostOverflowScale()).add(1).mul(1.5).pow(1.15)
+		let eff=player.m.points.sub(getCostOverflowStart()).div(2).pow(0.3)
+		if(player.m.best.gte(getCostOverflowScale)){
+			eff=player.m.points.sub(getCostOverflowScale()).div(2).pow(0.5)
 		}
 		return eff;
 		}
@@ -126,7 +125,7 @@ function(){let table = ''
 		table += "1st milestone's effect ^"+format(getPointGen().log(getPointGenBeforeSoftcap()),4)+" because of softcap.<br>1st milestone's softcap starts at "+format(getPointSoftcapStart());
 	}
 	if(player.m.points.gte(getCostOverflowStart())){
-		table += "<br>Milestone cost exponent is +"+format(getCostOverflowEff(),4)+" because of overflow.<br> Starts at "+format(getCostOverflowStart()) + " milestones,"+" scales at "+format(getCostOverflowScale()) + " milestones";
+		table += "<br>Milestone cost exponent is x"+format(getCostOverflowEff(),4)+" because of overflow.<br> Starts at "+format(getCostOverflowStart()) + " milestones, scales at " +format(getCostOverflowScale()) + " milestones";
    }
 	return table
 }

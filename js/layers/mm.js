@@ -8,7 +8,7 @@ addLayer("mm", {
     }},
     color: "#A057B0",
     requires(){
-		//if(player.mm.best.gte(20))return new Decimal(Infinity);
+		//if(player.mm.points.gte(20))return new Decimal(Infinity);
 		let b=new Decimal(40);
 		if(hasUpgrade("t",72))b=b.div(upgradeEffect("t",72));
 		return b;
@@ -34,7 +34,7 @@ addLayer("mm", {
     ],
     layerShown(){return player.m.best.gte(40)},
 	resetsNothing(){return true},
-	autoPrestige(){return player.em.best.gte(1)},
+	autoPrestige(){return player.em.points.gte(1)},
 	milestones: [
 		{
 			requirementDescription: "1st Meta-Milestone",
@@ -282,7 +282,7 @@ addLayer("mm", {
 	doReset(){},
 	meta25Effect(){
 		let ret=player.mm.points.div(10);
-		if(player.mm.best.gte(30))ret=ret.pow(2);
+		if(player.mm.points.gte(30))ret=ret.pow(2);
 		return ret;
 	},
 })

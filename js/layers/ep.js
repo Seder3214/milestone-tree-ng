@@ -6,7 +6,7 @@ addLayer("ep", {
         unlocked: false,
 		points: new Decimal(0),
     }},
-    color: "#648c11",
+    color: "lime",
     requires(){
 		return new Decimal(1e15);
 	},
@@ -24,37 +24,32 @@ addLayer("ep", {
 		return m;
     },
     oneEffect() {
-        let eff = new Decimal(player.ep.points.add(1).pow(player.m.best.gte(165)?4:3.25)).max(1)
-		if (player.m.best.gte(167)) eff = eff.pow(1.1)
-		if (player.m.best.gte(168)) eff = eff.pow(1.1)
+        let eff = new Decimal(player.ep.points.add(1).pow(player.m.points.gte(165)?4:3.25)).max(1)
+		if (player.m.points.gte(167)) eff = eff.pow(1.1)
+		if (player.m.points.gte(168)) eff = eff.pow(1.1)
         return eff;
     },
     twoEffect() {
-        let eff = player.ep.points.add(1).pow(player.m.best.gte(166)?2.5:2.2).mul(4).max(1)
-		eff=softcap(eff,new Decimal('1e100'),0.05)
-        return softcap(eff,new Decimal('1e600'),0.25);
+        let eff = player.ep.points.add(1).pow(player.m.points.gte(166)?2.5:2.2).mul(4).max(1)
+        return softcap(eff,new Decimal('1e100'),0.05);
     },
 	threeEffect() {
         let eff = player.ep.points.add(1).log10().pow(0.01).max(1)
-		if (player.m.best.gte(171)) eff = eff.mul(1.3)
-		if (player.m.best.gte(172)) eff = eff.mul(1.1)
+		if (player.m.points.gte(171)) eff = eff.mul(1.3)
+		if (player.m.points.gte(172)) eff = eff.mul(1.1)
         return eff;
     },
 	fourEffect() {
         let eff = player.ep.points.add(1).pow(0.35).max(1)
-		if (player.m.best.gte(173)) eff = eff.pow(1.05)
+		if (player.m.points.gte(173)) eff = eff.pow(1.05)
         return eff;
     },
 	fiveEffect() {
         let eff = player.ep.points.add(1).log10().log(10).pow(0.5).max(1)
 		let start = new Decimal('e5.6e12').mul(player.ep.points.add(1).log10().log(10).pow(0.5))
-		if (player.m.best.gte(174)) start = start.pow(0.1)
-		eff=eff.add(tmp.ap.challenges[42].rewardEffect);
+		if (player.m.points.gte(174)) start = start.pow(0.1)
         return {eff: eff, start: start};
     },
-sixEffect() {
-let eff = player.ep.points.add(1).log(10).log(10).log(2).div(5)
-return eff},
     row: 3, // Row the layer is in on the tree (0 is the first row)
 	exponent: 0.5,
     hotkeys: [
@@ -91,7 +86,7 @@ return eff},
 				"Cost for Next Tier: "+format(data.cost,0)+" Exotic Prestige points";
 			},
 			cost(){
-				return [new Decimal("2"),new Decimal("8"),new Decimal("512"),new Decimal("1e55"),new Decimal("1e120"), new Decimal('1e800'),new Decimal(1e1200)][player.ep.buyables[11]]
+				return [new Decimal("2"),new Decimal("8"),new Decimal("512"),new Decimal("1e55"),new Decimal("1e120"), new Decimal('1e450')][player.ep.buyables[11]]
 			},
 			canAfford() {
                    return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
@@ -136,7 +131,6 @@ return eff},
 				if (player.ep.buyables[11].gte(3)) table += '<br>3rd effect: Hyper Boost effect base +' + format(tmp.ep.threeEffect,4)
 				if (player.ep.buyables[11].gte(4)) table += '<br>4th effect: Transcend Points hardcap starts ' + format(tmp.ep.fourEffect,4) + "x later"
 				if (player.ep.buyables[11].gte(5)) table += '<br>5th effect: Add an Hyper-Prestige Points inflation (^' + format(tmp.ep.fiveEffect.eff,4) + " to gain), that starts at "+ format(tmp.ep.fiveEffect.start,4) + " Hyper-Prestige Points"
-    if (player.ep.buyables[11].gte(6)) table += '<br>6th effect: Milestone Overflow starts +' + format(tmp.ep.sixEffect,4) + ' later.'
 				return table}],
 				"buyables",
                 "upgrades"
@@ -145,7 +139,7 @@ return eff},
     },
 	branches: ["pp"],
 	passiveGeneration(){
-		if (player.em.best.gte(6)) return 0.1
+		if (player.em.points.gte(6)) return 0.1
 		return 0;
 	},
 	softcap(){
@@ -155,7 +149,7 @@ return eff},
 		return new Decimal(1);
 	},
 		doReset(l){
-			if(l=="ep")if(player.m.best.gte(162))layerDataReset("pp",["upgrades", 'buyables']);else layerDataReset("pp",[]);
+			if(l=="ep")if(player.m.points.gte(162))layerDataReset("pp",["upgrades", 'buyables']);else layerDataReset("pp",[]);
 		},
 	update(){
 	}

@@ -5,7 +5,6 @@ addLayer("m", {
     startData() { return {
         unlocked: true,
 		points: new Decimal(0),
-		rev: false,
     }},
     color: "#793784",
     requires(){
@@ -43,7 +42,7 @@ addLayer("m", {
 		if(hasUpgrade("ap",23))firstScaling=firstScaling.div(upgradeEffect("ap",23));
 		if(hasUpgrade("pe",12))firstScaling=firstScaling.div(upgradeEffect("pe",12));
 		if(hasUpgrade("se",12))firstScaling=firstScaling.div(upgradeEffect("se",12));
-		return new Decimal(2).add(firstScaling).add(player.m.points.gte(getCostOverflowStart())?getCostOverflowEff():0);
+		return new Decimal(2).add(firstScaling.mul(player.m.points.gte(getCostOverflowStart())?getCostOverflowEff():1));
 	},
     getScalingStart(){
         let start=new Decimal(14);
@@ -55,7 +54,7 @@ addLayer("m", {
     ],
     layerShown(){return true},
 	resetsNothing(){return true},
-	autoPrestige(){return player.mm.best.gte(1)},
+	autoPrestige(){return player.mm.points.gte(1)},
 	milestones: [
 		{
 			requirementDescription: "1st Milestone",
@@ -1464,7 +1463,7 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(175)},
             done() {return player[this.layer].best.gte(176)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Milestone Overflow starts 1 later.";
+				return "Milestone Overflow Scale starts 3 later.";
 			},
         },
 		{
@@ -1472,7 +1471,7 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(176)},
             done() {return player[this.layer].best.gte(177)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Milestone Overflow starts 1 later.";
+				return "Milestone Overflow Scale starts 3 later.";
 			},
         },
 		{
@@ -1480,15 +1479,7 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(177)},
             done() {return player[this.layer].best.gte(178)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Unlock Final Atomic-Prestige challenge.";
-			},
-        },
-		{
-			requirementDescription: "179th Milestone",
-            unlocked() {return player[this.layer].best.gte(178)},
-            done() {return player[this.layer].best.gte(179)}, // Used to determine when to give the milestone
-            effectDescription:  function(){
-				return "Unlock one row of Hyper Boosts' upgrades.";
+				return "Milestone Overflow Scale starts 2 later.";
 			},
         },
 	],
@@ -1532,7 +1523,7 @@ addLayer("m", {
 		if(player.m.best.gte(91))m=m.pow(1.0005);
 		if(player.m.best.gte(96))m=m.pow(1.0005);
 		if(player.m.best.gte(107))m=m.pow(1.002);//0.91298476860857272607902105461039
-        if(player.em.best.gte(2))m=m.pow(1.01);
+        if(player.em.points.gte(2))m=m.pow(1.01);
 		var b=new Decimal(2);
 		if(player.m.best.gte(4)){
 			b=b.add(layers.m.milestone4Effect());
@@ -1617,7 +1608,7 @@ addLayer("m", {
 		if(player.m.best.gte(106))p=p.pow(player.mm.points.pow(0.5));
 		if(player.m.best.gte(113))p=p.pow(player.mm.points.pow(0.3));
         if (player.m.best.gte(156))p=p.pow(player.mm.points.pow(layers.t.getSpecialEffect(32)))
-		return softcap(p,new Decimal('ee10'), 0.01);
+		return softcap(p,new Decimal('ee10'), 0.15);
 	},
 	milestone27Effect(){
 		var p=player.m.best;

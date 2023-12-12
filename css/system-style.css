@@ -159,7 +159,7 @@
 	color: #000;
 	max-width: 700px;
 	background: rgba(255,253,160,1);
-	background: -webkit-linear-gradient( left, #648c11 0%, #8fc523 25%, #99d61e 50%, #648c11 100% ) repeat;
+	background: -webkit-linear-gradient( left, lime 0%, rgb(133, 235, 133) 25%, rgb(94, 201, 94) 50%, lime 100% ) repeat;
 	-webkit-background-clip: text;
 	-ms-background-clip: text;
 	-moz-background-clip: text;

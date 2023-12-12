@@ -39,7 +39,7 @@ addLayer("hb", {
 		let p=new Decimal(1.25);
 		if(x.gte(10)){
 			let scaling=x.sub(10).pow(2).div(1000);
-			if(player.m.best.gte(119))scaling=scaling.div(1.2);
+			if(player.m.points.gte(119))scaling=scaling.div(1.2);
 			p=p.add(scaling);
 		}
 		return p;
@@ -61,9 +61,6 @@ addLayer("hb", {
         if(hasUpgrade("hp",42)){
 			m+=0.003;
 		}
-        if(hasUpgrade("hb",32)){
-			m+=0.007;
-		}
 		if (player.ep.buyables[11].gte(3)){
 			m+=tmp.ep.threeEffect
 		}
@@ -74,7 +71,7 @@ addLayer("hb", {
 	},
 	
 	upgrades: {
-        rows: 3,
+        rows: 2,
 		cols: 4,
 		11: {
 			title: "Hyper Boost Upgrade 11",
@@ -96,7 +93,6 @@ addLayer("hb", {
 				if(hasUpgrade("hb",22))exp+=0.05;
 				if(hasUpgrade("hb",23))exp+=0.05;
 				if(hasUpgrade("hb",24))exp+=0.05;
-				if(hasUpgrade("hb",31))exp+=tmp.hb.upgrades[31].effect;
 				let p=player.hb.points.pow(exp);
 				return p;
             },
@@ -132,37 +128,15 @@ addLayer("hb", {
             description: "Hyper Boost Upgrade 12 is boosted.",
             cost: new Decimal(42),
         },
-		31: {
-			title: "Hyper Boost Upgrade 31",
-			unlocked(){return player.m.best.gte(179)},
-            description: "Hyper Boost Upgrade 12 is boosted by Hyper Boosts effect.",
-			effect() {
-				let exp=0.3;
-				let p=layers.hb.effect().pow(exp).sub(1);
-				return p.toNumber();
-            },
-			effectDisplay() { return "+"+format(this.effect(),4) },
-            cost: new Decimal(77),
-        },
-		32: {
-			title: "Hyper Boost Upgrade 32",
-            description: "Hyper Boosts effect is better. You can buy this upgrade while you're in AP challenge 8<br> and reached 1e1647 Points.",
-            cost(){
-				if(player.ap.activeChallenge!=42)return new Decimal(Infinity);
-				else if (player.points.gte('1e1647')) return new Decimal(81)
-				else return new Decimal(Infinity);
-			},
-			unlocked(){return player.m.best.gte(179)}, // The upgrade is only visible when this is true
-        },
 	},
-	resetsNothing(){return player.m.best.gte(111)},
+	resetsNothing(){return player.m.points.gte(111)},
 		doReset(l){
 			if(l=="hb"){return;}
-			if(l=="t")if(player.m.best.gte(134))layerDataReset("hb",["upgrades"]);else layerDataReset("hb",[]);
+			if(l=="t")if(player.m.points.gte(134))layerDataReset("hb",["upgrades"]);else layerDataReset("hb",[]);
 		},
-	//autoPrestige(){return player.m.best.gte(116)},
+	//autoPrestige(){return player.m.points.gte(116)},
 	update(){
-		if(player.m.best.gte(116)){//quick autobuy
+		if(player.m.points.gte(116)){//quick autobuy
 			while(true){
 				let req=layers.hb.requires().mul(layers.hb.base.pow(Decimal.pow(player.hb.points,layers.hb.exponent())));
 				if(player.hp.points.gt(req))player.hb.points=player.hb.points.add(1);
