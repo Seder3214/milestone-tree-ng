@@ -108,7 +108,7 @@ if (player.ep.buyables[11].gte(6)) sc = sc.add(tmp.ep.sixEffect)
 		return sc;
 		}
 	function getCostOverflowEff(){
-		let eff=player.m.points.sub(getCostOverflowStart()).add(0.75).pow(0.1).add(0.2)
+		let eff=player.m.points.sub(getCostOverflowStart()).add(1).pow(0.1).add(0.2)
 		if (player.m.points.gte(getCostOverflowScale())){
 		eff=player.m.points.sub(getCostOverflowScale()).add(1).mul(1.5).pow(1.15)
 		}
