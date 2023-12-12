@@ -37,7 +37,7 @@ addLayer("ep", {
         let eff = player.ep.points.add(1).log10().max(1).pow(0.01).div(2.5)
 		if (player.m.best.gte(171)) eff = eff.mul(1.075)
 		if (player.m.best.gte(172)) eff = eff.mul(1.1)
-        return eff;
+        return eff.toNumber();
     },
 	fourEffect() {
         let eff = player.ep.points.add(1).pow(0.35).max(1)
