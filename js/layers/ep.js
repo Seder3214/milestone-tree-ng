@@ -155,7 +155,7 @@ return eff},
 		return new Decimal(1);
 	},
 		doReset(l){
-			if(l=="ep")if(player.m.best.gte(162))layerDataReset("pp",["upgrades", 'buyables']);else layerDataReset("pp",[player.pp.best]);
+			if(l=="ep")if(player.m.best.gte(162))layerDataReset("pp",["upgrades", 'buyables']);else layerDataReset("pp",[]);
 		},
 	update(){
 	}
