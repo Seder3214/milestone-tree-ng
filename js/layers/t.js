@@ -624,13 +624,15 @@ for(var i in player.ap.challenges)c+=player.ap.challenges[i];
 			let effect=player.t.specialPoints[22].add(1).log10().div(100).add(1);
 			return effect;
 		}
-        if(x==31 && hasUpgrade('pp',21)){
+        if(x==31){
 			let effect=player.t.specialPoints[31].add(1).log10().div(25).add(1);
-			return effect.max(1);
+if (!hasUpgrade('p',21) return new Decimal(1)
+			else return effect.max(1);
 		}
-        if(x==32 && hasUpgrade('pp',22)){
+        if(x==32){
 			let effect=player.t.specialPoints[32].add(1).log10().div(100).add(1);
-			return effect.max(1);
+if (!hasUpgrade('p',21) return new Decimal(1)
+		else	return effect.max(1);
 		}
 	}
 })
