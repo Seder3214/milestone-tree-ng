@@ -626,11 +626,11 @@ for(var i in player.ap.challenges)c+=player.ap.challenges[i];
 		}
         if(x==31 && hasUpgrade('pp',21)){
 			let effect=player.t.specialPoints[31].add(1).log10().div(25).add(1);
-			return effect;
+			return effect.max(1);
 		}
         if(x==32 && hasUpgrade('pp',22)){
 			let effect=player.t.specialPoints[32].add(1).log10().div(100).add(1);
-			return effect;
+			return effect.max(1);
 		}
 	}
 })
