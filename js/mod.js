@@ -3,7 +3,7 @@ let modInfo = {
 	id: "c2nv4in9eusojg59bmo",
 	author: "Seder3214",
 	pointsName: "points",
-	modFiles: ["/layers/m.js","/layers/p.js","/layers/sp.js","/layers/hp.js","/layers/pb.js","/layers/hb.js","/layers/ap.js","/layers/t.js","/layers/mm.js","/layers/em.js","/layers/pe.js","/layers/se.js","/layers/pp.js","/layers/ep.js", "tree.js",'modal.js'],
+	modFiles: ["/layers/m.js","/layers/p.js","/layers/sp.js","/layers/hp.js","/layers/pb.js","/layers/hb.js","/layers/ap.js","/layers/t.js","/layers/mm.js","/layers/em.js","/layers/pe.js","/layers/se.js","/layers/pp.js","/layers/ep.js","/layers/mp.js", "tree.js",'modal.js'],
 
 	discordName: "",
 	discordLink: "",
@@ -13,7 +13,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "1.178a",
+	num: "1.182a",
 	name: "Exotics...",
 }
 
@@ -109,9 +109,9 @@ function getCostOverflowStart(){
 		return sc;
 		}
 	function getCostOverflowEff(){
-		let eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(1.05)
+		let eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(1.075)
 		if (player.m.points.gte(getCostOverflowScale())){
-		eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(1.1)
+		eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(player.m.best.gte(181)?1.7:1.2)
 		}
 		return eff;
 		}

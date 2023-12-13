@@ -146,6 +146,30 @@ addLayer("em", {
 				return "Get Prestige-Hardcapped Transcend Points outside of 'Get Prestige-Hardcapped' at reduced rate."
 			},
         },
+        {
+			requirementDescription: "15th Extra-Milestone",
+            unlocked() {return player[this.layer].best.gte(14)},
+            done() {return player[this.layer].best.gte(15)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "'Softcapped' effect is better, but the number of completions are limited at 20."
+			},
+        },
+        {
+			requirementDescription: "16th Extra-Milestone",
+            unlocked() {return player[this.layer].best.gte(15)},
+            done() {return player[this.layer].best.gte(16)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "'Hardcapped' effect is better, but the number of completions are limited at 12."
+			},
+        },
+        {
+			requirementDescription: "17th Extra-Milestone",
+            unlocked() {return player[this.layer].best.gte(16)},
+            done() {return player[this.layer].best.gte(17)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "'Prestige-Hardcapped' effect is better, but the number of completions are limited at 12."
+			},
+        },
 	],
 	branches: ["mm"],
     resetDescription: "Get ",

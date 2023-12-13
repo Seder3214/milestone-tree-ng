@@ -448,10 +448,10 @@ addLayer("ap", {
 		completionsAfter120(){
 			let p=player.points;
 				if(p.lte("e600"))return 0;
-				return p.log10().div(600).log(1.01).pow(1/1.01).toNumber();
+				return p.log10().div(700).log(1.01).pow(1/1.01).toNumber();
 		},
 		goalAfter120(x=player.ap.challenges[42]){
-			return Decimal.pow(10,Decimal.pow(1.01,Decimal.pow(x,1.01)).mul(600));
+			return Decimal.pow(10,Decimal.pow(1.01,Decimal.pow(x,1.01)).mul(700));
 		},
 canComplete(){
 	return player.points.gte(tmp.ap.challenges[this.id].goal)&&player.m.best.lt(110);
@@ -473,7 +473,7 @@ canComplete(){
 		cost(){
 			let a=player[this.layer].buyables[this.id];
 			let cost = new Decimal(1)
-			a=Decimal.pow(1.25,a);
+			a=Decimal.pow(player[this.layer].buyables[11].gte(25)?1.3:1.25,a);
 			return cost.mul(Decimal.pow("e1.5e10",a));
 		},
 		canAfford() {
@@ -485,7 +485,7 @@ canComplete(){
 		  effect(){
 			  let b=0.135;
 			  if (player.m.best.gte(180)) b+=0.005
-			  let eff=new Decimal(1).add(player[this.layer].buyables[this.id].mul(b)).pow(player.ep.points.log10().log10().pow(0.5));
+			  let eff=new Decimal(1).add(player[this.layer].buyables[this.id].mul(b)).pow(player.ep.points.add(1).log10().add(1).log10().pow(0.5));
 			  return eff;
 		  },
 		  unlocked(){

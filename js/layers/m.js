@@ -1495,7 +1495,47 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(179)},
             done() {return player[this.layer].best.gte(180)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "<b>Challenge Slayer'</b> effect is better, but 1st milestone softcap is 2.00x stronger.";
+				return "<b>Challenge Slayer'</b> effect is better.";
+			},
+        },
+        {
+			requirementDescription: "181st Milestone",
+            unlocked() {return player[this.layer].best.gte(180)},
+            done() {return player[this.layer].best.gte(181)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Unlock a new layer.";
+			},
+        },
+        {
+			requirementDescription: "182nd Milestone",
+            unlocked() {return player[this.layer].best.gte(181)},
+            done() {return player[this.layer].best.gte(182)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Add Exotic Fusioner Tier to 179th milestone effect.";
+			},
+        },
+        {
+			requirementDescription: "183rd Milestone",
+            unlocked() {return player[this.layer].best.gte(182)},
+            done() {return player[this.layer].best.gte(183)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Unlock a Multiverse Challenge (ENDGAME).";
+			},
+        },
+        {
+			requirementDescription: "184th Milestone",
+            unlocked() {return player[this.layer].best.gte(183)},
+            done() {return player[this.layer].best.gte(184)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "<b>Unlock another Multiverse Challenge.";
+			},
+        },
+        {
+			requirementDescription: "185th Milestone",
+            unlocked() {return player[this.layer].best.gte(184)},
+            done() {return player[this.layer].best.gte(185)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "<b>Unlock Prestige Milestone Tree.";
 			},
         },
 	],
@@ -1667,12 +1707,12 @@ addLayer("m", {
         if (hasUpgrade('pp', 21)) {
             p=p.pow(layers.t.getSpecialEffect(31));   
         }
-		p=p.mul(tmp.ap.challenges[41].rewardEffect);
+		p=p.mul(tmp.ap.challenges[41].rewardEffect).max(1);
 		p = softcap(p,new Decimal('1e800'),0.1)
 		return softcap(p,new Decimal('1e1000'),0.01);
 	},
     milestone179Effect(){
-		var p=player.m.best.sub(getCostOverflowStart()).pow(25).pow(player.ep.points.log10().log(2));
+		var p=player.m.best.add(player.m.best.gte(182)?player.ep.buyables[11]:0).sub(getCostOverflowStart()).pow(25).pow(player.ep.points.add(1).log10().add(1).log(2));
 		p = softcap(p,new Decimal('1e800'),0.1)
 		return softcap(p,new Decimal('1e1000'),0.01);
 	},

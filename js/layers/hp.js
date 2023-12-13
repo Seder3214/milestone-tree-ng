@@ -190,9 +190,21 @@ addLayer("hp", {
             cost: new Decimal("e450e11"),
 			effect() {
 				let p=player.hp.points.log10().log(2);
-				return softcap(p,new Decimal(15),0.25);
+				if (hasUpgrade('hp',44)) return p.mul(hasUpgrade('hp',44)?tmp.hp.upgrades[44].effect:0)
+				else return softcap(p,new Decimal(15),0.25);
             },
 			effectDisplay() { return "^"+format(this.effect()) },
+            unlocked() { return player.m.best.gte(142)}, // The upgrade is only visible when this is true
+        },
+		44: {
+			title: "Hyper-Prestige Upgrade 44",
+            description: "Remove Previous upgrade's effect softcap and the effect is stronger.",
+            cost: new Decimal("e149e12"),
+			effect() {
+				let p=player.hp.points.max(1).log10().max(1).log(10).add(1).log(2).max(1);
+				return p;
+            },
+			effectDisplay() { return "x"+format(this.effect()) },
             unlocked() { return player.m.best.gte(142)}, // The upgrade is only visible when this is true
         },
 	},

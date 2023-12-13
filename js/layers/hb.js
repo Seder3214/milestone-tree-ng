@@ -135,21 +135,24 @@ addLayer("hb", {
 		31: {
 			title: "Hyper Boost Upgrade 31",
 			unlocked(){return player.m.best.gte(178)},
-            description: "Hyper Boost Upgrade 12 is boosted by Hyper Boosts effect.",
+            description: "Hyper Boost Upgrade 12 is boosted by Hyper Boosts effect. To buy this upgrade, complete 8th AP Challenge 10 times.",
 			effect() {
 				let exp=0.3;
 				let p=layers.hb.effect().pow(exp).sub(1);
 				return p.toNumber();
             },
 			effectDisplay() { return "+"+format(this.effect(),4) },
-            cost: new Decimal(77),
+            cost(){
+				if(player.ap.challenges[41]<10)return new Decimal(Infinity);
+				else return new Decimal(78);
+			},
         },
 		32: {
 			title: "Hyper Boost Upgrade 32",
             description: "Hyper Boosts effect is better. You can buy this upgrade while you're in AP challenge 8<br> and reached 1e790 Points.",
             cost(){
 				if(player.ap.activeChallenge!=42)return new Decimal(Infinity);
-				else if (player.points.gte('1e790')) return new Decimal(78)
+				else if (player.points.gte('1e790')) return new Decimal(79)
 				else return new Decimal(Infinity);
 			},
 			unlocked(){return player.m.best.gte(178)}, // The upgrade is only visible when this is true

@@ -77,7 +77,7 @@ addLayer("sp", {
 				if(player.m.best.gte(89))base+=1;
 				if(hasUpgrade("sp",44))base+=2;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
-                return softcap(ret,new Decimal('e5e14'),0.1);
+                return softcap(ret,new Decimal('e5e14'),0.2);
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
@@ -96,7 +96,7 @@ addLayer("sp", {
 				if(player.m.best.gte(89))base+=0.5;
 				if(hasUpgrade("sp",44))base+=1;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
-                return softcap(ret,new Decimal('e5e14'),0.1);
+                return softcap(ret,new Decimal('e5e14'),0.2);
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
@@ -115,7 +115,7 @@ addLayer("sp", {
 				if(player.m.best.gte(89))base+=0.234;
 				if(hasUpgrade("sp",44))base+=1;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
-                return softcap(ret,new Decimal('e5e14'),0.1);
+                return softcap(ret,new Decimal('e5e14'),0.2);
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },

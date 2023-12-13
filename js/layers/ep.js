@@ -27,11 +27,11 @@ addLayer("ep", {
         let eff = new Decimal(player.ep.points.add(1).pow(player.m.best.gte(165)?4:3.25)).max(1)
 		if (player.m.best.gte(167)) eff = eff.pow(1.1)
 		if (player.m.best.gte(168)) eff = eff.pow(1.1)
-        return eff;
+        return eff.max(1);
     },
     twoEffect() {
         let eff = player.ep.points.add(1).pow(player.m.best.gte(166)?2.5:2.2).mul(4).max(1)
-        return softcap(eff,new Decimal('1e100'),0.075);
+        return softcap(eff.max(1),new Decimal('1e100'),0.075);
     },
 	threeEffect() {
         let eff = player.ep.points.add(1).log10().max(1).pow(0.01).div(500)
@@ -42,19 +42,25 @@ addLayer("ep", {
 	fourEffect() {
         let eff = player.ep.points.add(1).pow(0.35).max(1)
 		if (player.m.best.gte(173)) eff = eff.pow(1.05)
-        return eff;
+		if (player.mp.activeChallenge==11) eff = eff.pow(0.15)
+        return eff.max(1);
     },
 	fiveEffect() {
-        let eff = player.ep.points.add(1).log10().log(10).pow(0.5).max(1)
-		let start = new Decimal('e5.6e12').mul(player.ep.points.add(1).log10().log(10).pow(0.5))
+        let eff = player.ep.points.add(1).log10().add(1).log(10).pow(0.5).max(1)
+		let start = new Decimal('e5.6e12').mul(player.ep.points.add(1).log10().add(1).log(10).pow(0.5))
 		if (player.m.best.gte(174)) start = start.pow(0.1)
 		start=start.add(tmp.ap.challenges[42].effect)
         return {eff: eff, start: start};
     },
 	sixEffect() {
-		let eff=player.ep.points.log(1.1).pow(2.15)
-		return eff
+		let eff=player.ep.points.add(1).log(1.1).pow(2.15)
+		if (player.mp.challenges[11]>0) eff=eff.mul(tmp.mp.challenges[11].rewardEffect)
+		return eff.max(1)
 	},
+	sevenEffect() {
+        let eff = player.ep.points.add(1).log10().max(1).pow(0.1).mul(0.382)
+        return eff;
+    },
     row: 3, // Row the layer is in on the tree (0 is the first row)
 	exponent: 0.5,
     hotkeys: [
@@ -71,7 +77,7 @@ addLayer("ep", {
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=1.2;
-                let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.3).add(1))
+                let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.3).add(1)).max(1)
                 return ret;
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
@@ -91,7 +97,7 @@ addLayer("ep", {
 				"Cost for Next Tier: "+format(data.cost,0)+" Exotic Prestige points";
 			},
 			cost(){
-				return [new Decimal("2"),new Decimal("8"),new Decimal("512"),new Decimal("1e55"),new Decimal("1e120"), new Decimal('1e1000')][player.ep.buyables[11]]
+				return [new Decimal("2"),new Decimal("8"),new Decimal("512"),new Decimal("1e55"),new Decimal("1e170"), new Decimal('1e2000'),new Decimal('1e100000')][player.ep.buyables[11]]
 			},
 			canAfford() {
                    return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
@@ -137,6 +143,7 @@ addLayer("ep", {
 				if (player.ep.buyables[11].gte(4)) table += '<br>4th effect: Transcend Points hardcap starts ' + format(tmp.ep.fourEffect,4) + "x later"
 				if (player.ep.buyables[11].gte(5)) table += '<br>5th effect: Add an Hyper-Prestige Points inflation (^' + format(tmp.ep.fiveEffect.eff,4) + " to gain), that starts at "+ format(tmp.ep.fiveEffect.start,4) + " Hyper-Prestige Points"
 				if (player.ep.buyables[11].gte(6)) table += '<br>6th effect: Transcend Points gain in Transcend Challenges is x' + format(tmp.ep.sixEffect,4) + " better."
+				if (player.ep.buyables[11].gte(7)) table += "<br>7th effect: Softcap of Prestige Boost's effect starts +" + format(tmp.ep.sevenEffect,4) + " later."
 				return table}],
 				"buyables",
                 "upgrades"

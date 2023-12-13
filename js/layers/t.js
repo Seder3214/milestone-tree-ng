@@ -372,7 +372,9 @@ addLayer("t", {
 		},
 		12:{
                 name: "Softcapped",
-                completionLimit: Infinity,
+                completionLimit() {
+					if(player.em.best.gte(15)) return new Decimal(19)
+					else return Infinity},
 			    challengeDescription() {return "1st milestone's softcap starts earlier<br>"+challengeCompletions(this.layer, this.id) +" completions"},
                 unlocked() { return player.m.best.gte(104) },
                 goal: function(){
@@ -387,6 +389,7 @@ addLayer("t", {
 				rewardEffect() {
 		if(player.m.points.lt(112) && player.t.activeChallenge==12)return 1;
                     let ret = 1+player.t.challenges[12]*0.1;
+					if(player.em.best.gte(15))ret=ret*1.01
                     return ret;
                 },
 				rewardDisplay() {
@@ -417,7 +420,9 @@ addLayer("t", {
 		},
 		22:{
                 name: "Hardcapped",
-                completionLimit: Infinity,
+                completionLimit() {
+					if(player.em.best.gte(16)) return new Decimal(12)
+					else return Infinity},
 			    challengeDescription() {return "'Softcapped' is applied, and 1st milestone's softcap is its hardcap.<br>"+challengeCompletions(this.layer, this.id) +" completions"},
                 unlocked() { return player.m.best.gte(115) },
                 goal: function(){
@@ -431,6 +436,7 @@ addLayer("t", {
 				},
 				rewardEffect() {
 		            let ret = 1+player.t.challenges[22]*0.1;
+					if(player.em.best.gte(16))ret=ret*1.05
                     return ret;
                 },
 				rewardDisplay() {
@@ -458,7 +464,9 @@ addLayer("t", {
 		},
 		32:{
                 name: "Prestige Hardcapped",
-                completionLimit: Infinity,
+                completionLimit() {
+					if(player.em.best.gte(17)) return new Decimal(12)
+					else return Infinity},
 			    challengeDescription() {return "'Hardcapped' is applied, and prestige point gain is affected by 1st Milestone's softcap<br>"+challengeCompletions(this.layer, this.id) +" completions"},
                 unlocked() { return player.m.best.gte(137) },
                 goal: function(){
@@ -472,6 +480,7 @@ addLayer("t", {
 				},
 				rewardEffect() {
 		            let ret = 1+player.t.challenges[32]*0.1;
+					if(player.em.best.gte(17))ret=ret*1.05
                     return ret;
                 },
 				rewardDisplay() {
@@ -541,32 +550,32 @@ addLayer("t", {
 	update(){
 		if(player.em.best.gte(9)){
 			if(player.t.specialPoints[11].lt(layers.t.getResetGain())){
-				player.t.specialPoints[11]=layers.t.getResetGain().log(5).mul('1e30').mul(tmp.ep.sixEffect);
+				player.t.specialPoints[11]=layers.t.getResetGain().add(1).log(5).mul('1e35').mul(tmp.ep.sixEffect);
 			}
 		}
 		if(player.em.best.gte(10)){
 			if(player.t.specialPoints[12].lt(layers.t.getResetGain())){
-				player.t.specialPoints[12]=layers.t.getResetGain().log(5).mul('1e25').mul(tmp.ep.sixEffect);
+				player.t.specialPoints[12]=layers.t.getResetGain().add(1).log(5).mul('1e30').mul(tmp.ep.sixEffect);
 			}
 		}
 		if(player.em.best.gte(11)){
 			if(player.t.specialPoints[21].lt(layers.t.getResetGain())){
-				player.t.specialPoints[21]=layers.t.getResetGain().log(7).mul('1e25').mul(tmp.ep.sixEffect);
+				player.t.specialPoints[21]=layers.t.getResetGain().add(1).log(7).mul('1e34').mul(tmp.ep.sixEffect);
 			}
 		}
 		if(player.em.best.gte(12)){
 			if(player.t.specialPoints[22].lt(layers.t.getResetGain())){
-				player.t.specialPoints[22]=layers.t.getResetGain().log(3).mul('1e18').mul(tmp.ep.sixEffect);
+				player.t.specialPoints[22]=layers.t.getResetGain().add(1).log(3).mul('1e35').mul(tmp.ep.sixEffect);
 			}
 		}
 		if(player.em.best.gte(13)){
 			if(player.t.specialPoints[31].lt(layers.t.getResetGain())){
-				player.t.specialPoints[31]=layers.t.getResetGain().log(2).mul('1e22').mul(tmp.ep.sixEffect);
+				player.t.specialPoints[31]=layers.t.getResetGain().add(1).log(2).mul('1e30').mul(tmp.ep.sixEffect);
 			}
 		}
 		if(player.em.best.gte(14)){
 			if(player.t.specialPoints[32].lt(layers.t.getResetGain())){
-				player.t.specialPoints[32]=layers.t.getResetGain().log(2).mul('1e15').mul(tmp.ep.sixEffect);
+				player.t.specialPoints[32]=layers.t.getResetGain().add(1).log(2).mul('1e28').mul(tmp.ep.sixEffect);
 			}
 		}
 		let cap = new Decimal(1e70)
@@ -610,11 +619,11 @@ for(var i in player.ap.challenges)c+=player.ap.challenges[i];
 	getSpecialEffect(x){
 		if(x==11){
 			let effect=player.t.specialPoints[11].add(1).log10().div(100).add(1);
-			return effect;
+			return softcap(effect,new Decimal(1.4),0.1);
 		}
 		if(x==12){
 			let effect=player.t.specialPoints[12].add(1).log10().div(100).add(1);
-			return effect;
+			return softcap(effect,new Decimal(1.4),0.1);
 		}
 		if(x==21){
 			let effect=player.t.specialPoints[21].add(1).log10().div(100).add(1);
@@ -622,7 +631,7 @@ for(var i in player.ap.challenges)c+=player.ap.challenges[i];
 		}
 		if(x==22){
 			let effect=player.t.specialPoints[22].add(1).log10().div(100).add(1);
-			return effect;
+			return softcap(effect,new Decimal(1.35),0.1);
 		}
         if(x==31){
 			let effect=player.t.specialPoints[31].add(1).log10().div(25).add(1);

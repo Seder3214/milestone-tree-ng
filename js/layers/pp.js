@@ -18,6 +18,7 @@ addLayer("pp", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
         if (hasUpgrade(this.layer, 32)) mult = mult.mul(upgradeEffect(this.layer, 32))
+        if (hasUpgrade('mp', 11)) mult = mult.mul(upgradeEffect('mp', 11))
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -136,7 +137,7 @@ unlocked() {return player.m.best.gte(155)},
             currencyInternalName: "power", // Use if using a nonstandard currency
              currencyLayer: "pp", // The upgrade is only visible when this is true
              effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
-                let ret = player.ep.points.pow(hasUpgrade('pp', 33)?0.8:0.75).mul(1.5).add(1)
+                let ret = player.ep.points.add(1).pow(hasUpgrade('pp', 33)?0.8:0.75).mul(1.5).add(1)
                 return softcap(ret,new Decimal('1e800'),0.1);
             },
             effectDisplay() { return "x"+format(this.effect()) },
@@ -230,8 +231,8 @@ unlocked() {return player.m.best.gte(155)},
 		},
 	update(diff){
         let a=player.pp.buyables[11];
-        a=new Decimal(a.log(2));
+        a=new Decimal(a.add(1).log(2).max(1));
         if (player.pp.buyables[11].gte(1)) player.pp.power = player.pp.power.add(buyableEffect('pp', 11).times(diff))
-        if (player.m.best.gte(162) && player.pp.points.gte(layers.pp.buyables[11].cost())) player.pp.buyables[11] = player.pp.buyables[11].add(player.pp.power.log(3).div(a.log(1.4).ceil()))
+        if (player.m.best.gte(162) && player.pp.points.gte(layers.pp.buyables[11].cost())) player.pp.buyables[11] = player.pp.buyables[11].add(player.pp.power.add(1).log(3).div(a.add(1).log(1.4).ceil()).max(1))
 	}
 })
