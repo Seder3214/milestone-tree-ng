@@ -62,7 +62,7 @@ addLayer("hb", {
 			m+=0.003;
 		}
 		if(hasUpgrade("hb",32)){
-			m+=0.002;
+			m+=0.001;
 		}
 		if (player.ep.buyables[11].gte(3)){
 			m+=tmp.ep.threeEffect

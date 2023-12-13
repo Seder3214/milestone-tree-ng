@@ -97,7 +97,8 @@ addLayer("pb", {
 		if(hasUpgrade("pb",44)){
 			m+=0.002;
 		}
-		return new Decimal(1).add(player.pb.points.add(e).pow(p).mul(m)).pow(layers.hb.effect());
+		x=new Decimal(1).add(player.pb.points.add(e).pow(p).mul(m)).pow(layers.hb.effect())
+		return softcap(x,new Decimal(30),0.3);
 	},
 	effectDescription(){
 		return "prestige points is powered by "+format(layers.pb.effect(),4)
