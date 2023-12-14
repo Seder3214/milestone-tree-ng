@@ -5,6 +5,13 @@ addLayer("t", {
     startData() { return {
         unlocked: false,
 	points: new Decimal(0),
+	choose: new Decimal(2),
+	dChoose: false,
+	sChoose: false,
+	pdChoose: false,
+	hChoose: false,
+	sdChoose: false,
+	phChoose: false,
 	specialPoints: {
 		11: new Decimal(0),
 		12: new Decimal(0),
@@ -348,7 +355,92 @@ addLayer("t", {
 			unlocked(){return player.m.best.gte(136);},
         },
 	},
-	
+	clickables: {
+        11: {
+            unlocked(){return player.mp.activeChallenge==12},
+            title() {return "Choose Dilated Points"},
+            display() {return "Status:" + (player.t.dChoose==true?" Choosed":" Not Choosed")},
+            canClick() {return player.t.choose.gte(1)},
+            onClick() {
+				player.t.choose = player.t.choose.sub(1)
+                player.t.dChoose = true
+            },
+			style: {
+				width: "300px",
+				minHeight: "30px",
+			  },
+        },
+		12: {
+            unlocked(){return player.mp.activeChallenge==12},
+            title() {return "Choose Softcapped Points"},
+            display() {return "Status:" + (player.t.sChoose==true?" Choosed":" Not Choosed")},
+            canClick() {return player.t.choose.gte(1)},
+            onClick() {
+				player.t.choose = player.t.choose.sub(1)
+                player.t.sChoose = true
+            },
+			style: {
+				width: "300px",
+				minHeight: "30px",
+			  },
+        },
+		21: {
+            unlocked(){return player.mp.activeChallenge==12},
+            title() {return "Choose Prestige-Dilated Points"},
+            display() {return "Status:" + (player.t.pdChoose==true?" Choosed":" Not Choosed")},
+            canClick() {return player.t.choose.gte(1)},
+            onClick() {
+				player.t.choose = player.t.choose.sub(1)
+                player.t.pdChoose = true
+            },
+			style: {
+				width: "300px",
+				minHeight: "30px",
+			  },
+        },
+		22: {
+            unlocked(){return player.mp.activeChallenge==12},
+            title() {return "Choose Hardcapped Points"},
+            display() {return "Status:" + (player.t.hChoose==true?" Choosed":" Not Choosed")},
+            canClick() {return player.t.choose.gte(1)},
+            onClick() {
+				player.t.choose = player.t.choose.sub(1)
+                player.t.hChoose = true
+            },
+			style: {
+				width: "300px",
+				minHeight: "30px",
+			  },
+        },
+		31: {
+            unlocked(){return player.mp.activeChallenge==12},
+            title() {return "Choose Super-Dilated Points"},
+            display() {return "Status:" + (player.t.sdChoose==true?" Choosed":" Not Choosed")},
+            canClick() {return player.t.choose.gte(1)},
+            onClick() {
+				player.t.choose = player.t.choose.sub(1)
+                player.t.sdChoose = true
+            },
+			style: {
+				width: "300px",
+				minHeight: "30px",
+			  },
+        },
+		32: {
+            unlocked(){return player.mp.activeChallenge==12},
+            title() {return "Choose Prestige-Hardcapped Points"},
+            display() {return "Status:" + (player.t.phChoose==true?" Choosed":" Not Choosed")},
+            canClick() {return player.t.choose.gte(1)},
+            onClick() {
+				player.t.choose = player.t.choose.sub(1)
+                player.t.phChoose = true
+            },
+			style: {
+				width: "300px",
+				minHeight: "30px",
+			  },
+        },
+	},
 	challenges: {
         rows: 3,
 		cols: 2,
@@ -358,6 +450,7 @@ addLayer("t", {
 			    challengeDescription() {return "1st milestone's effect ^"+format(tmp.t.dilationEffect)+"<br>"+challengeCompletions(this.layer, this.id) +" completions"},
                 unlocked() { return true },
                 goal: function(){
+					if (player.t.challenges[11]>=19) return (player.t.challenges[11]+1)*(player.t.challenges[11]+1)*1.15;
 					if(player.m.best.gte(110))return (player.t.challenges[11]+1)*(player.t.challenges[11]+1);
 					return 2*Math.pow(3,player.t.challenges[11]);
 				},
@@ -407,6 +500,7 @@ addLayer("t", {
 			    challengeDescription() {return "1st milestone's effect and prestige point gain ^"+format(tmp.t.dilationEffect)+"<br>"+challengeCompletions(this.layer, this.id) +" completions"},
                 unlocked() { return player.m.best.gte(109) },
                 goal: function(){
+					if (player.t.challenges[21]>=19) return (player.t.challenges[21]+1)*(player.t.challenges[21]+1)*1.15
 					return (player.t.challenges[21]+1)*(player.t.challenges[21]+1);
 				},
 				canComplete(){
@@ -451,6 +545,7 @@ addLayer("t", {
 			    challengeDescription() {return "1st milestone's effect, prestige point gain and super-prestige point gain ^"+format(tmp.t.dilationEffect)+"<br>"+challengeCompletions(this.layer, this.id) +" completions"},
                 unlocked() { return player.m.best.gte(125) },
                 goal: function(){
+					if (player.t.challenges[31]>=19) return (player.t.challenges[31]+1)*(player.t.challenges[31]+1)*1.15
 					return (player.t.challenges[31]+1)*(player.t.challenges[31]+1);
 				},
 				canComplete(){
@@ -537,12 +632,12 @@ addLayer("t", {
 				["display-text",function(){return "Reach "+format(tmp.t.requires1)+" atomic-prestige points in a Transcend Challenge to gain Special Transcend Points!"}],
 				function(){if(!player.t.activeChallenge)return ["display-text",""];return "resource-display"},
 				["display-text",function(){if(!player.t.activeChallenge || player.t.specialPoints[player.t.activeChallenge].gte(1e6))return "";return "Next "+layers.t.getSpecialTPName(player.t.activeChallenge)+" at "+format(tmp.t.getNextSPAt)+" atomic-prestige points"}],
-				["display-text",function(){return "You have "+format(player.t.specialPoints[11])+" Dilated Transcend Points, 3rd Milestone's effect ^"+format(layers.t.getSpecialEffect(11),4)}],
-				["display-text",function(){return "You have "+format(player.t.specialPoints[12])+" Softcapped Transcend Points, 1st Milestone's softcap starts "+format(layers.t.getSpecialEffect(12),4)+"x later"}],
-				["display-text",function(){return "You have "+format(player.t.specialPoints[21])+" Prestige-Dilated Transcend Points, Prestige Point gain ^"+format(layers.t.getSpecialEffect(21),4)}],
-				["display-text",function(){return "You have "+format(player.t.specialPoints[22])+" Hardcapped Transcend Points, 1st Milestone's softcap starts "+format(layers.t.getSpecialEffect(22),4)+"x later"}],
-				["display-text",function(){return "You have "+format(player.t.specialPoints[31])+" Super-Dilated Transcend Points, 154th Milestone effect is ^"+format(layers.t.getSpecialEffect(31),4) + " better"}],
-				["display-text",function(){return "You have "+format(player.t.specialPoints[32])+" Prestige-Hardcapped Transcend Points, 6th Milestone effect is ^"+format(layers.t.getSpecialEffect(32),4) + " better"}],
+				["display-text",function(){return "You have "+format(player.t.specialPoints[11])+" Dilated Transcend Points, 3rd Milestone's effect ^"+format(layers.t.getSpecialEffect(11),4)}],["clickable",11],
+				["display-text",function(){return "You have "+format(player.t.specialPoints[12])+" Softcapped Transcend Points, 1st Milestone's softcap starts "+format(layers.t.getSpecialEffect(12),4)+"x later"}],["clickable",12],
+				["display-text",function(){return "You have "+format(player.t.specialPoints[21])+" Prestige-Dilated Transcend Points, Prestige Point gain ^"+format(layers.t.getSpecialEffect(21),4)}],["clickable",21],
+				["display-text",function(){return "You have "+format(player.t.specialPoints[22])+" Hardcapped Transcend Points, 1st Milestone's softcap starts "+format(layers.t.getSpecialEffect(22),4)+"x later"}],["clickable",22],
+				["display-text",function(){return "You have "+format(player.t.specialPoints[31])+" Super-Dilated Transcend Points, 154th Milestone effect is ^"+format(layers.t.getSpecialEffect(31),4) + " better"}],["clickable",31],
+				["display-text",function(){return "You have "+format(player.t.specialPoints[32])+" Prestige-Hardcapped Transcend Points, 6th Milestone effect is ^"+format(layers.t.getSpecialEffect(32),4) + " better"}],["clickable",32],
 			],
 			unlocked(){return player.m.best.gte(130);}
 		},
@@ -602,6 +697,20 @@ for(var i in player.ap.challenges)c+=player.ap.challenges[i];
                 return player.t.challenges[12]++
             }
         }
+        if (player.em.best.gte(18)){
+			let c=0;
+for(var i in player.ap.challenges)c+=player.ap.challenges[i];
+	if (c >=(tmp.t.challenges[21].goal)){
+	   return player.t.challenges[21]++
+	}
+}
+if (player.em.best.gte(19)){
+	let c=0;
+for(var i in player.ap.challenges)c+=player.ap.challenges[i];
+if (c >=(tmp.t.challenges[31].goal)){
+return player.t.challenges[31]++
+}
+}
 	},
 	dilationEffect(){
 		let eff=0.45;
@@ -619,28 +728,34 @@ for(var i in player.ap.challenges)c+=player.ap.challenges[i];
 	getSpecialEffect(x){
 		if(x==11){
 			let effect=player.t.specialPoints[11].add(1).log10().div(100).add(1);
+			if (player.t.dChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
 			return softcap(effect,new Decimal(1.4),0.1);
 		}
 		if(x==12){
 			let effect=player.t.specialPoints[12].add(1).log10().div(100).add(1);
+			if (player.t.sChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
 			return softcap(effect,new Decimal(1.4),0.1);
 		}
 		if(x==21){
 			let effect=player.t.specialPoints[21].add(1).log10().div(100).add(1);
+			if (player.t.pdChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
 			return effect;
 		}
 		if(x==22){
 			let effect=player.t.specialPoints[22].add(1).log10().div(100).add(1);
+			if (player.t.hChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
 			return softcap(effect,new Decimal(1.35),0.1);
 		}
         if(x==31){
 			let effect=player.t.specialPoints[31].add(1).log10().div(25).add(1);
 if (!hasUpgrade('pp',21)) return new Decimal(1)
+if (player.t.sdChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
 			else return effect.max(1);
 		}
         if(x==32){
 			let effect=player.t.specialPoints[32].add(1).log10().div(100).add(1);
 if (!hasUpgrade('pp',22)) return new Decimal(1)
+if (player.t.phChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
 		else	return effect.max(1);
 		}
 	}

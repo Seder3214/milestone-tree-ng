@@ -37,6 +37,7 @@ addLayer("ep", {
         let eff = player.ep.points.add(1).log10().max(1).pow(0.01).div(500)
 		if (player.m.best.gte(171)) eff = eff.mul(1.075)
 		if (player.m.best.gte(172)) eff = eff.mul(1.1)
+		if (player.mp.challenges[12]>0) eff=eff.add(tmp.mp.challenges[12].rewardEffect)
         return eff.toNumber();
     },
 	fourEffect() {
@@ -58,7 +59,7 @@ addLayer("ep", {
 		return eff.max(1)
 	},
 	sevenEffect() {
-        let eff = player.ep.points.add(1).log10().max(1).pow(0.1).mul(0.382)
+        let eff = player.ep.points.add(1).log10().max(1).pow(0.1).mul(0.382).div(20)
         return eff;
     },
     row: 3, // Row the layer is in on the tree (0 is the first row)
@@ -97,7 +98,7 @@ addLayer("ep", {
 				"Cost for Next Tier: "+format(data.cost,0)+" Exotic Prestige points";
 			},
 			cost(){
-				return [new Decimal("2"),new Decimal("8"),new Decimal("512"),new Decimal("1e55"),new Decimal("1e170"), new Decimal('1e2000'),new Decimal('1e100000')][player.ep.buyables[11]]
+				return [new Decimal("2"),new Decimal("8"),new Decimal("512"),new Decimal("1e55"),new Decimal("1e170"), new Decimal('1e2000'),new Decimal('1e250000')][player.ep.buyables[11]]
 			},
 			canAfford() {
                    return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)

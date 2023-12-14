@@ -114,7 +114,7 @@ function getCostOverflowStart(){
 	function getCostOverflowEff(){
 		let eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(1.075)
 		if (player.m.points.gte(getCostOverflowScale())){
-		eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(player.m.points.gte(181)?1.7:1.2)
+		eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(player.m.points.gte(181)?new Decimal(1.7).add(player.m.points.sub(181).div(10)):1.2)
 		}
 		return eff;
 		}

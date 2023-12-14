@@ -97,7 +97,7 @@ addLayer("hb", {
 				if(hasUpgrade("hb",23))exp+=0.05;
 				if(hasUpgrade("hb",24))exp+=0.05;
 				if(hasUpgrade("hb",31))exp+=tmp.hb.upgrades[31].effect;
-				let p=player.hb.points.pow(exp);
+				let p=player.hb.points.pow(exp).mul(hasUpgrade("hb",33)?upgradeEffect("hb",33):1);
 				return p;
             },
             effectDisplay() { return "+"+format(this.effect(),4) },
@@ -153,6 +153,31 @@ addLayer("hb", {
             cost(){
 				if(player.ap.activeChallenge!=42)return new Decimal(Infinity);
 				else if (player.points.gte('1e790')) return new Decimal(79)
+				else return new Decimal(Infinity);
+			},
+			unlocked(){return player.m.best.gte(178)}, // The upgrade is only visible when this is true
+        },
+		33: {
+			title: "Hyper Boost Upgrade 33",
+            description: "Hyper Boost Upgrade 12 is boosted. To buy this upgrade, complete 8th AP Challenge 19.8 times.",
+            cost(){
+				if(player.ap.challenges[41]<19.8)return new Decimal(Infinity);
+				else return new Decimal(81);
+			},
+			effect() {
+				let exp=1.05;
+				let p=layers.hb.effect().pow(exp);
+				return p.toNumber();
+            },
+			effectDisplay() { return "x"+format(this.effect(),4) },
+			unlocked(){return player.m.best.gte(178)}, // The upgrade is only visible when this is true
+        },
+		34: {
+			title: "Hyper Boost Upgrade 34",
+            description: "Hyper Boosts effect is better. You can buy this upgrade while you're in AP challenge 8<br> and reached 1e1000 Points.",
+            cost(){
+				if(player.ap.activeChallenge!=42)return new Decimal(Infinity);
+				else if (player.points.gte('1e1000')) return new Decimal(86)
 				else return new Decimal(Infinity);
 			},
 			unlocked(){return player.m.best.gte(178)}, // The upgrade is only visible when this is true

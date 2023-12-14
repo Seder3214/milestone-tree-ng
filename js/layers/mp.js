@@ -34,7 +34,7 @@ addLayer("mp", {
 		11: {
 			title: "Multiverse Prestige Upgrade 11",
             description: "Prestige Power Strength boost Prestige Power gain",
-            cost: new Decimal(4),
+            cost: new Decimal(5),
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=0.2;
@@ -42,6 +42,18 @@ addLayer("mp", {
                 return ret;
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
+        },
+		12: {
+			title: "Multiverse Prestige Upgrade 12",
+            description: "Multiverse Prestige Points reduces Milestone Overflow effect",
+            cost: new Decimal(6),
+            unlocked() { return true}, // The upgrade is only visible when this is true
+			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
+				let base=0.1;
+                let ret = player.mp.points.pow(base).div(2).add(0.5)
+                return ret;
+            },
+            effectDisplay() { return "/"+format(this.effect()) }, // Add formatting to the effect
         },
 	},
     challenges: {
@@ -77,6 +89,46 @@ addLayer("mp", {
             currencyDisplayName: "Exotic Prestige Points",
             rewardDescription() { return "6th Exotic Fusioner effect is x"+ format(this.rewardEffect())+" better." },
     },
+    12:{
+        onEnter() {
+            layerDataReset("t",['challenges','upgrades'])
+            layerDataReset("ep",["buyables"])
+            doReset("hp")
+            player.t.choose = new Decimal(2)
+            player.t.dChoose = false
+            player.t.sChoose = false
+            player.t.pdChoose = false
+            player.t.hChoose = false
+            player.t.sdChoose = false
+            player.t.phChoose = false
+        },
+        name: "Weaker Transcend",
+        completionLimit: Infinity,
+        challengeDescription() {return "While entering this challenge, you should choose 2 Special Transcend Points (others will be unable to get)."+"<br>"+format(challengeCompletions(this.layer, this.id),4) +" completions"},
+        unlocked() { return player.m.best.gte(183) },
+        goal: function(){
+            if(player.m.best.gte(120))return this.goalAfter120(Math.ceil(player.mp.challenges[12]+0.001));
+        },
+        canComplete(){
+            return player.ep.points.gte(tmp.mp.challenges[this.id].goal)&&player.m.points.lt(110);
+        },
+        completionsAfter120(){
+            let p=player.ep.points;
+            if(player.m.best.gte(130)){
+                if(p.lte("1e28000"))return 0;
+                return p.log10().div(28000).log(1.1).pow(1/1.1).toNumber();
+            }
+        },
+        rewardEffect() {
+            let ret = (player.mp.challenges[12]+1)/5000
+            return ret;
+        },
+        goalAfter120(x=player.mp.challenges[12]){
+            if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.1,Decimal.pow(x,1.1)).mul(28000));
+        },
+        currencyDisplayName: "Exotic Prestige Points",
+        rewardDescription() { return "3rd Exotic Fusioner effect is +"+ format(this.rewardEffect())+" better." },
+},
     },
 	buyables: {
 		rows: 1,

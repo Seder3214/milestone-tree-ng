@@ -170,6 +170,22 @@ addLayer("em", {
 				return "'Prestige-Hardcapped' effect is better, but the number of completions are limited at 12."
 			},
         },
+        {
+			requirementDescription: "18th Extra-Milestone",
+            unlocked() {return player[this.layer].best.gte(17)},
+            done() {return player[this.layer].best.gte(18)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Automate 'Prestige Dilation' T challenge."
+			},
+        },
+        {
+			requirementDescription: "19th Extra-Milestone",
+            unlocked() {return player[this.layer].best.gte(18)},
+            done() {return player[this.layer].best.gte(19)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Automate 'Super Dilation' T challenge."
+			},
+        },
 	],
 	branches: ["mm"],
     resetDescription: "Get ",
