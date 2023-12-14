@@ -112,9 +112,9 @@ function getCostOverflowStart(){
 		return sc;
 		}
 	function getCostOverflowEff(){
-		let eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(1.075)
+		let eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(1.075).sub(hasUpgrade("mp",12)?upgradeEffect("mp",12):1)
 		if (player.m.points.gte(getCostOverflowScale())){
-		eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(player.m.points.gte(181)?new Decimal(1.7).add(player.m.points.sub(181).div(10)):1.2)
+		eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(player.m.points.gte(181)?new Decimal(1.7).add(player.m.points.sub(181).div(10)):1.2).sub(hasUpgrade("mp",12)?upgradeEffect("mp",12):1)
 		}
 		return eff;
 		}

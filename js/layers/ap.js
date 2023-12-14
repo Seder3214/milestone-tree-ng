@@ -289,7 +289,7 @@ addLayer("ap", {
 		completionsAfter120(){
 			let p=player.points.add(10).log10().div(600/ buyableEffect('ap', 11)).log(1.035);
 			if(p.gte(75)){
-				return p=player.points.add(10).log10().div(1000/ buyableEffect('ap', 11)).log(1.5);
+				return p=player.points.add(10).log10().div(1000/ buyableEffect('ap', 11)).log(1.55);
 			}
 			if(p.gte(50)){
 				return p=player.points.add(10).log10().div(1000/ buyableEffect('ap', 11)).log(1.5);
@@ -301,7 +301,7 @@ addLayer("ap", {
 		},
 		goalAfter120(x=player.ap.challenges[22]){
 			if(player.ap.challenges[22]>=75){
-				return Decimal.pow(10,Decimal.pow(1.5,x).mul(3000/ buyableEffect('ap', 11)));
+				return Decimal.pow(10,Decimal.pow(1.55,x).mul(1000/ buyableEffect('ap', 11)));
 			}
 			if(player.ap.challenges[22]>=50){
 				return Decimal.pow(10,Decimal.pow(1.5,x).mul(1000/ buyableEffect('ap', 11)));

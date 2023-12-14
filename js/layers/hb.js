@@ -67,6 +67,9 @@ addLayer("hb", {
 		if (player.ep.buyables[11].gte(3)){
 			m+=tmp.ep.threeEffect
 		}
+		if(hasUpgrade("hb",34)){
+			m+=0.03;
+		}
 		return new Decimal(1).add(player.hb.points.add(e).pow(p).mul(m));
 	},
 	effectDescription(){
@@ -167,7 +170,7 @@ addLayer("hb", {
 			effect() {
 				let exp=1.05;
 				let p=layers.hb.effect().pow(exp);
-				return p.toNumber();
+				return p;
             },
 			effectDisplay() { return "x"+format(this.effect(),4) },
 			unlocked(){return player.m.best.gte(178)}, // The upgrade is only visible when this is true

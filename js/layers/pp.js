@@ -138,7 +138,8 @@ unlocked() {return player.m.best.gte(155)},
              currencyLayer: "pp", // The upgrade is only visible when this is true
              effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
                 let ret = player.ep.points.add(1).pow(hasUpgrade('pp', 33)?0.8:0.75).mul(1.5).add(1)
-                return softcap(ret,new Decimal('1e800'),0.1);
+                ret=softcap(ret,new Decimal('1e800'),0.1)
+                return softcap(ret,new Decimal('1e20000'),0.1);
             },
             effectDisplay() { return "x"+format(this.effect()) },
                                 },

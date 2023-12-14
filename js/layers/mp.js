@@ -49,11 +49,11 @@ addLayer("mp", {
             cost: new Decimal(6),
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
-				let base=0.1;
-                let ret = player.mp.points.pow(base).div(2).add(0.5)
+				let base=0.15;
+                let ret = player.mp.points.pow(base).sub(1)
                 return ret;
             },
-            effectDisplay() { return "/"+format(this.effect()) }, // Add formatting to the effect
+            effectDisplay() { return "-"+format(this.effect()) }, // Add formatting to the effect
         },
 	},
     challenges: {
@@ -127,7 +127,7 @@ addLayer("mp", {
             if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.1,Decimal.pow(x,1.1)).mul(28000));
         },
         currencyDisplayName: "Exotic Prestige Points",
-        rewardDescription() { return "3rd Exotic Fusioner effect is +"+ format(this.rewardEffect())+" better." },
+        rewardDescription() { return "7th Exotic Fusioner effect is +"+ format(this.rewardEffect())+" better." },
 },
     },
 	buyables: {
