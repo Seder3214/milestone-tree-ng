@@ -17,7 +17,10 @@ let VERSION = {
 	name: "Exotics...",
 }
 
-let changelog = ``
+let changelog = `
+P??S??GE M??E??O??E T??E
+A?CE?S??N
+PE??E??I??`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
