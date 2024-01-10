@@ -27,7 +27,7 @@ addLayer("pm", {
     },
     essenceBoost() {
         let eff = player.pm.essence.add(1).log2().pow(2).mul(0.1)
-        return eff
+        return eff.max(1)
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
