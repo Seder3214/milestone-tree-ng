@@ -235,9 +235,13 @@ addLayer("mp", {
 		rows: 2,
 		cols: 3,
         respec() {
-            layerDataReset('mp')
+            player.mp.points = new Decimal(7)
+player.mp.perkPoints = new Decimal(0)
+for (i in player.mp.buyables){
+player.mp.buyables[i] = new Decimal(0)}
+player.mp.totalF = new Decimal(0)
         },
-        respecMessage: "Are you sure you want to respec Multiversal Fusioners? This will reset all of multiversal progress!",
+        respecMessage: "Are you sure you want to respec Multiversal Fusioners? This will reset all of multiversal progress to pre-Fusioners stage!",
         respecText: "Respec Multiversal Fusioners",
         11:{
 			title(){
