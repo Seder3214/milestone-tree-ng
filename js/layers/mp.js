@@ -53,7 +53,7 @@ addLayer("mp", {
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=0.15;
-                let ret = player.mp.best.pow(base).sub(1)
+                let ret = player.mp.best.add(1).pow(base).sub(1)
                 return ret.add(hasUpgrade('mp',13)?upgradeEffect('mp',13):0);
             },
             effectDisplay() { return "-"+format(this.effect()) }, // Add formatting to the effect
@@ -65,7 +65,7 @@ addLayer("mp", {
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=0.05;
-                let ret = player.mp.best.pow(base).sub(1)
+                let ret = player.mp.best.add(1).pow(base).sub(1)
 				if (hasUpgrade('mp',14)) ret = ret.mul(2)
                 return ret;
             },
