@@ -76,7 +76,7 @@ addLayer("pm", {
             },
 		},
     update(diff) {
-        if (player.pm.best.gte(1)) player.pm.essence = player.pm.essence.add(tmp.pm.gain.times(diff))
+        if (player.pm.best.gte(1) && player.mp.activeChallenge==21) player.pm.essence = player.pm.essence.add(tmp.pm.gain.times(diff))
     },
 	branches: ["m"],
     resetDescription: "Get ",
