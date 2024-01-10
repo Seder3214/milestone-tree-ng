@@ -67,7 +67,7 @@ addLayer("mp", {
 				let base=0.05;
                 let ret = player.mp.best.add(1).pow(base).sub(1)
 				if (hasUpgrade('mp',14)) ret = ret.mul(2)
-                return ret;
+                return ret.max(0);
             },
             effectDisplay() { return "+"+format(this.effect()) }, // Add formatting to the effect
         },
