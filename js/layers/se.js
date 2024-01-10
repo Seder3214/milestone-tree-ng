@@ -17,13 +17,14 @@ addLayer("se", {
         return mult
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
-        return new Decimal(1)
+		let b = new Decimal(1)
+        return b
     },
     row: 3, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
         {key: "E", description: "Shift+E: Collect Super Energy", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(140)},
+    layerShown(){return player.m.best.gte(140)&& (player.mp.activeChallenge!=21)},
 	branches: ["sp"],
 	base: function(){
 		let b=new Decimal("10");
@@ -33,7 +34,8 @@ addLayer("se", {
 		return b;
 	},
 	exponent: function(){
-		return new Decimal(1);
+		let b = new Decimal(1)
+        return b
 	},
 	resetsNothing:true,
 	doReset(l){},

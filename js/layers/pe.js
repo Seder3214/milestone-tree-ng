@@ -23,7 +23,7 @@ addLayer("pe", {
     hotkeys: [
         {key: "e", description: "E: Collect Prestige Energy", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(125)},
+    layerShown(){return player.m.best.gte(125)&& (player.mp.activeChallenge!=21)},
 	branches: ["p"],
 	base: function(){
 		let b=new Decimal("10");
@@ -34,7 +34,9 @@ addLayer("pe", {
 		return b;
 	},
 	exponent: function(){
-		return new Decimal(1);
+        let b = new Decimal(1)
+        if (player.ep.buyables[11].gte(8)) b = b.sub(tmp.ep.eightEffect)
+        return b
 	},
 	resetsNothing:true,
 	doReset(l){},

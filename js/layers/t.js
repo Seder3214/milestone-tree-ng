@@ -111,7 +111,7 @@ addLayer("t", {
     hotkeys: [
         {key: "t", description: "T: Reset for transcend points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(99)},
+    layerShown(){return player.m.best.gte(99)&& (player.mp.activeChallenge!=21)},
 	branches: ["ap"],
 	softcap:new Decimal(Infinity),
 	softcapPower:new Decimal(1),
@@ -357,12 +357,14 @@ addLayer("t", {
 	},
 	clickables: {
         11: {
-            unlocked(){return player.mp.activeChallenge==12},
-            title() {return "Choose Dilated Points"},
+            unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
+            title() {return (player.mp.activeChallenge!=12)?"Boost Dilated Points":"Choose Dilated Points"},
             display() {return "Status:" + (player.t.dChoose==true?" Choosed":" Not Choosed")},
-            canClick() {return player.t.choose.gte(1)},
+            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
+				else return player.t.choose.gte(1)},
             onClick() {
-				player.t.choose = player.t.choose.sub(1)
+				if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12) player.mp.perkPoints= player.mp.perkPoints.sub(1)
+				else player.t.choose = player.t.choose.sub(1)
                 player.t.dChoose = true
             },
 			style: {
@@ -371,12 +373,14 @@ addLayer("t", {
 			  },
         },
 		12: {
-            unlocked(){return player.mp.activeChallenge==12},
-            title() {return "Choose Softcapped Points"},
+            unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
+            title() {return (player.mp.activeChallenge!=12)?"Boost Softcapped Points":"Choose Softcapped Points"},
             display() {return "Status:" + (player.t.sChoose==true?" Choosed":" Not Choosed")},
-            canClick() {return player.t.choose.gte(1)},
+            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
+				else return player.t.choose.gte(1)},
             onClick() {
-				player.t.choose = player.t.choose.sub(1)
+				if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12) player.mp.perkPoints= player.mp.perkPoints.sub(1)
+				else player.t.choose = player.t.choose.sub(1)
                 player.t.sChoose = true
             },
 			style: {
@@ -385,12 +389,14 @@ addLayer("t", {
 			  },
         },
 		21: {
-            unlocked(){return player.mp.activeChallenge==12},
-            title() {return "Choose Prestige-Dilated Points"},
+            unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
+            title() {return (player.mp.activeChallenge!=12)?"Boost Prestige-Dilated Points":"Choose Prestige-Dilated Points"},
             display() {return "Status:" + (player.t.pdChoose==true?" Choosed":" Not Choosed")},
-            canClick() {return player.t.choose.gte(1)},
+            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
+				else return player.t.choose.gte(1)},
             onClick() {
-				player.t.choose = player.t.choose.sub(1)
+				if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12) player.mp.perkPoints= player.mp.perkPoints.sub(1)
+				else player.t.choose = player.t.choose.sub(1)
                 player.t.pdChoose = true
             },
 			style: {
@@ -399,12 +405,14 @@ addLayer("t", {
 			  },
         },
 		22: {
-            unlocked(){return player.mp.activeChallenge==12},
-            title() {return "Choose Hardcapped Points"},
+            unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
+            title() {return (player.mp.activeChallenge!=12)?"Boost Hardcapped Points": "Choose Hardcapped Points"},
             display() {return "Status:" + (player.t.hChoose==true?" Choosed":" Not Choosed")},
-            canClick() {return player.t.choose.gte(1)},
+            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
+				else return player.t.choose.gte(1)},
             onClick() {
-				player.t.choose = player.t.choose.sub(1)
+				if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12) player.mp.perkPoints= player.mp.perkPoints.sub(1)
+				else player.t.choose = player.t.choose.sub(1)
                 player.t.hChoose = true
             },
 			style: {
@@ -413,12 +421,14 @@ addLayer("t", {
 			  },
         },
 		31: {
-            unlocked(){return player.mp.activeChallenge==12},
-            title() {return "Choose Super-Dilated Points"},
+            unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
+            title() {return (player.mp.activeChallenge!=12)?"Boost Super-Dilated Points": "Choose Super-Dilated Points"},
             display() {return "Status:" + (player.t.sdChoose==true?" Choosed":" Not Choosed")},
-            canClick() {return player.t.choose.gte(1)},
+            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
+				else return player.t.choose.gte(1)},
             onClick() {
-				player.t.choose = player.t.choose.sub(1)
+				if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12) player.mp.perkPoints= player.mp.perkPoints.sub(1)
+				else player.t.choose = player.t.choose.sub(1)
                 player.t.sdChoose = true
             },
 			style: {
@@ -427,12 +437,14 @@ addLayer("t", {
 			  },
         },
 		32: {
-            unlocked(){return player.mp.activeChallenge==12},
-            title() {return "Choose Prestige-Hardcapped Points"},
+            unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
+            title() {return (player.mp.activeChallenge!=12)?"Boost Prestige-Hardcapped Points": "Choose Prestige-Hardcapped Points"},
             display() {return "Status:" + (player.t.phChoose==true?" Choosed":" Not Choosed")},
-            canClick() {return player.t.choose.gte(1)},
+            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
+				else return player.t.choose.gte(1)},
             onClick() {
-				player.t.choose = player.t.choose.sub(1)
+				if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12) player.mp.perkPoints= player.mp.perkPoints.sub(1)
+				else player.t.choose = player.t.choose.sub(1)
                 player.t.phChoose = true
             },
 			style: {
@@ -450,9 +462,11 @@ addLayer("t", {
 			    challengeDescription() {return "1st milestone's effect ^"+format(tmp.t.dilationEffect)+"<br>"+challengeCompletions(this.layer, this.id) +" completions"},
                 unlocked() { return true },
                 goal: function(){
-					if (player.t.challenges[11]>=19) return (player.t.challenges[11]+1)*(player.t.challenges[11]+1)*1.15;
-					if(player.m.best.gte(110))return (player.t.challenges[11]+1)*(player.t.challenges[11]+1);
-					return 2*Math.pow(3,player.t.challenges[11]);
+					let x = (player.t.challenges[11]+1)*(player.t.challenges[11]+1)
+					if (hasUpgrade('ep',21)) x = x-upgradeEffect('ep',21)
+					if (player.t.challenges[11]>=19) return x*1.15;
+					if(player.m.best.gte(110))return x;
+					else return 2*Math.pow(3,player.t.challenges[11]);
 				},
 				canComplete(){
 					let c=0;
@@ -466,7 +480,7 @@ addLayer("t", {
 		12:{
                 name: "Softcapped",
                 completionLimit() {
-					if(player.em.best.gte(15)) return new Decimal(19)
+					if(player.em.points.gte(15)) return new Decimal(20)
 					else return Infinity},
 			    challengeDescription() {return "1st milestone's softcap starts earlier<br>"+challengeCompletions(this.layer, this.id) +" completions"},
                 unlocked() { return player.m.best.gte(104) },
@@ -500,8 +514,10 @@ addLayer("t", {
 			    challengeDescription() {return "1st milestone's effect and prestige point gain ^"+format(tmp.t.dilationEffect)+"<br>"+challengeCompletions(this.layer, this.id) +" completions"},
                 unlocked() { return player.m.best.gte(109) },
                 goal: function(){
-					if (player.t.challenges[21]>=19) return (player.t.challenges[21]+1)*(player.t.challenges[21]+1)*1.15
-					return (player.t.challenges[21]+1)*(player.t.challenges[21]+1);
+					let x = (player.t.challenges[21]+1)*(player.t.challenges[21]+1)
+					if (hasUpgrade('ep',21)) x = x-upgradeEffect('ep',21)
+					if (player.t.challenges[21]>=19) return x*1.15
+					return x;
 				},
 				canComplete(){
 					let c=0;
@@ -515,7 +531,7 @@ addLayer("t", {
 		22:{
                 name: "Hardcapped",
                 completionLimit() {
-					if(player.em.best.gte(16)) return new Decimal(12)
+					if(player.em.points.gte(16)) return new Decimal(12)
 					else return Infinity},
 			    challengeDescription() {return "'Softcapped' is applied, and 1st milestone's softcap is its hardcap.<br>"+challengeCompletions(this.layer, this.id) +" completions"},
                 unlocked() { return player.m.best.gte(115) },
@@ -545,8 +561,10 @@ addLayer("t", {
 			    challengeDescription() {return "1st milestone's effect, prestige point gain and super-prestige point gain ^"+format(tmp.t.dilationEffect)+"<br>"+challengeCompletions(this.layer, this.id) +" completions"},
                 unlocked() { return player.m.best.gte(125) },
                 goal: function(){
-					if (player.t.challenges[31]>=19) return (player.t.challenges[31]+1)*(player.t.challenges[31]+1)*1.15
-					return (player.t.challenges[31]+1)*(player.t.challenges[31]+1);
+					let x = (player.t.challenges[31]+1)*(player.t.challenges[31]+1)
+					if (hasUpgrade('ep',21)) x = x-upgradeEffect('ep',21)
+					if (player.t.challenges[31]>=19) return x*1.15
+					return x;
 				},
 				canComplete(){
 					let c=0;
@@ -560,7 +578,7 @@ addLayer("t", {
 		32:{
                 name: "Prestige Hardcapped",
                 completionLimit() {
-					if(player.em.best.gte(17)) return new Decimal(12)
+					if(player.em.points.gte(17)) return new Decimal(12)
 					else return Infinity},
 			    challengeDescription() {return "'Hardcapped' is applied, and prestige point gain is affected by 1st Milestone's softcap<br>"+challengeCompletions(this.layer, this.id) +" completions"},
                 unlocked() { return player.m.best.gte(137) },
@@ -676,6 +694,7 @@ addLayer("t", {
 		let cap = new Decimal(1e70)
 		if (player.m.best.gte(169)) cap = new Decimal(1e90)
 		if (player.ep.buyables[11].gte(4)) cap = cap.mul(tmp.ep.fourEffect)
+				if (player.mp.activeChallenge==13) cap = new Decimal(1e10)
 		if(player.t.points.gte(cap))player.t.points=new Decimal(cap);
 		if(player.m.best.gte(130) && player.t.activeChallenge){
 			if(player.t.specialPoints[player.t.activeChallenge].lt(layers.t.getResetGain())){
@@ -683,7 +702,7 @@ addLayer("t", {
 			}
 		}
 		if(player.m.best.gte(140)&&player.t.activeChallenge){
-			if(layers.t.challenges[player.t.activeChallenge].canComplete()){
+			if(layers.t.challenges[player.t.activeChallenge].canComplete()&&(new Decimal(player.t.challenges[player.t.activeChallenge]).lt(tmp.t.challenges[player.t.activeChallenge].completionLimit))){
 				player.t.challenges[player.t.activeChallenge]++;
 			}
 		}
@@ -693,7 +712,7 @@ for(var i in player.ap.challenges)c+=player.ap.challenges[i];
             if (c >=(tmp.t.challenges[11].goal)){
                return player.t.challenges[11]++
             }
-            if (c >=(tmp.t.challenges[12].goal)){
+            if (c >=(tmp.t.challenges[12].goal)&&(new Decimal(player.t.challenges[12]).lt(tmp.t.challenges[12].completionLimit))){
                 return player.t.challenges[12]++
             }
         }
@@ -729,33 +748,39 @@ return player.t.challenges[31]++
 		if(x==11){
 			let effect=player.t.specialPoints[11].add(1).log10().div(100).add(1);
 			if (player.t.dChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
+			if (player.t.dChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeChallenge!=12) effect = effect.add(5)
 			return softcap(effect,new Decimal(1.4),0.1);
 		}
 		if(x==12){
 			let effect=player.t.specialPoints[12].add(1).log10().div(100).add(1);
 			if (player.t.sChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
+			if (player.t.sChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeChallenge!=12) effect = effect.add(5)
 			return softcap(effect,new Decimal(1.4),0.1);
 		}
 		if(x==21){
 			let effect=player.t.specialPoints[21].add(1).log10().div(100).add(1);
 			if (player.t.pdChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
+			if (player.t.pdChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeChallenge!=12) effect = effect.add(0.1)
 			return effect;
 		}
 		if(x==22){
 			let effect=player.t.specialPoints[22].add(1).log10().div(100).add(1);
 			if (player.t.hChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
+			if (player.t.hChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeChallenge!=12) effect = effect.add(0.1)
 			return softcap(effect,new Decimal(1.35),0.1);
 		}
         if(x==31){
 			let effect=player.t.specialPoints[31].add(1).log10().div(25).add(1);
 if (!hasUpgrade('pp',21)) return new Decimal(1)
 if (player.t.sdChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
+if (player.t.sdChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeChallenge!=12) effect = effect.add(0.1)
 			else return effect.max(1);
 		}
         if(x==32){
 			let effect=player.t.specialPoints[32].add(1).log10().div(100).add(1);
 if (!hasUpgrade('pp',22)) return new Decimal(1)
 if (player.t.phChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
+if (player.t.phChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeChallenge!=12) effect = effect.add(0.1)
 		else	return effect.max(1);
 		}
 	}

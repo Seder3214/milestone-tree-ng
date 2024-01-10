@@ -32,7 +32,7 @@ addLayer("mm", {
     hotkeys: [
         {key: "M", description: "Shift+M: Get Meta-Milestone", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(40)},
+    layerShown(){return player.m.best.gte(40)&& (player.mp.activeChallenge!=21)},
 	resetsNothing(){return true},
 	autoPrestige(){return player.em.best.gte(1)},
 	milestones: [

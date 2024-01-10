@@ -43,7 +43,7 @@ addLayer("p", {
     hotkeys: [
         {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(5)},
+    layerShown(){return player.m.best.gte(5) && (player.mp.activeChallenge!=21)},
 	upgrades: {
         rows: 4,
         cols: 4,
@@ -291,7 +291,7 @@ addLayer("p", {
 				"Cost for Next Level: "+format(data.cost)+" Prestige points";
 			},
 			cost(){
-				let a=player[this.layer].buyables[this.id];
+				let a=player[this.layer].buyables[this.id].div(hasUpgrade('ep',13)?upgradeEffect('ep',13):1);
                 let cost = new Decimal(1)
 				a=Decimal.pow(2,a);
 				return cost.mul(Decimal.pow("e4.7e15",a));

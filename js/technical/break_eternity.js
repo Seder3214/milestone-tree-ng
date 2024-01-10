@@ -1997,7 +1997,9 @@
     Decimal.prototype.cbrt = function () {
       return this.pow(1/3);
     };
-    
+    Decimal.prototype.crt = function () {
+      return this.pow(new Decimal(1).div(tmp.ep.eightEffect));
+    };
     //Tetration/tetrate: The result of exponentiating 'this' to 'this' 'height' times in a row.  https://en.wikipedia.org/wiki/Tetration
     //If payload != 1, then this is 'iterated exponentiation', the result of exping (payload) to base (this) (height) times. https://andydude.github.io/tetration/archives/tetration2/ident.html
     //Works with negative and positive real heights.

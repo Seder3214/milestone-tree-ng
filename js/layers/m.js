@@ -52,7 +52,7 @@ addLayer("m", {
     hotkeys: [
         {key: "m", description: "M: Get Milestone", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true},
+    layerShown(){return (player.mp.activeChallenge!=21)},
 	resetsNothing(){return true},
 	autoPrestige(){return player.mm.best.gte(1)},
 	milestones: [
@@ -1714,7 +1714,9 @@ addLayer("m", {
     milestone179Effect(){
 		var p=player.m.best.add(player.m.best.gte(182)?player.ep.buyables[11]:0).sub(getCostOverflowStart()).pow(25).pow(player.ep.points.add(1).log10().add(1).log(2));
 		if((player.ap.activeChallenge==42)) return new Decimal(1)
+		if (hasUpgrade('ep',12)) p = p.pow(upgradeEffect('ep',12))
 		p = softcap(p,new Decimal('1e800'),0.1)
+		
 		return softcap(p,new Decimal('1e1000'),0.01);
 	},
     resetDescription: "Get ",

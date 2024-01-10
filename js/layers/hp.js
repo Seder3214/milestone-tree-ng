@@ -30,7 +30,7 @@ addLayer("hp", {
     hotkeys: [
         {key: "h", description: "H: Reset for hyper-prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(60)},
+    layerShown(){return player.m.best.gte(60)&& (player.mp.activeChallenge!=21)},
 	branches: ["sp"],
 	softcap:new Decimal(Infinity),
 	softcapPower:new Decimal(1),

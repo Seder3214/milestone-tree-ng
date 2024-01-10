@@ -5,6 +5,9 @@ addLayer("mp", {
     startData() { return {
         unlocked: false,
 		points: new Decimal(0),
+        best: new Decimal(0),
+        perkPoints: new Decimal(0),
+        totalF: new Decimal(0),
     }},
     color: "#d03800",
     requires(){
@@ -25,7 +28,7 @@ addLayer("mp", {
     row: 4, // Row the layer is in on the tree (0 is the first row)
 	exponent: 7.5,
     hotkeys: [
-        {key: "z", description: "Z: Reset for Multiverse Prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
+        {key: "v", description: "V: Reset for Multiverse Prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return player.m.best.gte(181)},
 	upgrades: {
@@ -50,10 +53,29 @@ addLayer("mp", {
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=0.15;
-                let ret = player.mp.points.pow(base).sub(1)
-                return ret;
+                let ret = player.mp.best.pow(base).sub(1)
+                return ret.add(hasUpgrade('mp',13)?upgradeEffect('mp',13):0);
             },
             effectDisplay() { return "-"+format(this.effect()) }, // Add formatting to the effect
+        },
+        13:  {
+			title: "Multiverse Prestige Upgrade 13",
+            description: "Unlock Multiverse Fusioners. Previous upgrade is better based on Multiverse Points",
+            cost: new Decimal(7),
+            unlocked() { return true}, // The upgrade is only visible when this is true
+			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
+				let base=0.05;
+                let ret = player.mp.best.pow(base).sub(1)
+				if (hasUpgrade('mp',14)) ret = ret.mul(2)
+                return ret;
+            },
+            effectDisplay() { return "+"+format(this.effect()) }, // Add formatting to the effect
+        },
+        14:  {
+			title: "Multiverse Prestige Upgrade 14",
+            description: "Milestone Cost Scaling is disabled, and double prev. upgrade effect",
+            cost: new Decimal(13),
+            unlocked() { return true}, // The upgrade is only visible when this is true
         },
 	},
     challenges: {
@@ -94,17 +116,19 @@ addLayer("mp", {
             layerDataReset("t",['challenges','upgrades'])
             layerDataReset("ep",["buyables"])
             doReset("hp")
-            player.t.choose = new Decimal(2)
+        },
+        onExit() {
             player.t.dChoose = false
             player.t.sChoose = false
             player.t.pdChoose = false
             player.t.hChoose = false
             player.t.sdChoose = false
             player.t.phChoose = false
+            player.mp.perkPoints = player.mp.buyables[13]
         },
         name: "Weaker Transcend",
         completionLimit: Infinity,
-        challengeDescription() {return "While entering this challenge, you should choose 2 Special Transcend Points (others will be unable to get)."+"<br>"+format(challengeCompletions(this.layer, this.id),4) +" completions"},
+        challengeDescription() {return "While entering this challenge, you should choose 2 Special Transcend Points (others will be unable to get)."+"<br>"+format(challengeCompletions(this.layer, this.id),4) +" completions.<br>At 35 completions, unlock a <b>New Challenge</b>."},
         unlocked() { return player.m.best.gte(183) },
         goal: function(){
             if(player.m.best.gte(120))return this.goalAfter120(Math.ceil(player.mp.challenges[12]+0.001));
@@ -129,10 +153,265 @@ addLayer("mp", {
         currencyDisplayName: "Exotic Prestige Points",
         rewardDescription() { return "7th Exotic Fusioner effect is +"+ format(this.rewardEffect())+" better." },
 },
+13:{
+	onEnter() {
+		player.t.points=new Decimal(0)
+		player.p.points=new Decimal(0)
+		player.ep.points = new Decimal(0)
+		player.pp.points = new Decimal(0)
+	},
+	name: "Exotic-less and No Transcend",
+	completionLimit: Infinity,
+	challengeDescription() {return "All of Exotic Fusioner effects are useless, Transcend Points hardcap is always at 1e10."+"<br>"+format(challengeCompletions(this.layer, this.id),4) +" completions"},
+	unlocked() { return player.mp.challenges[12]>=35 },
+	goal: function(){
+		if(player.m.best.gte(120))return this.goalAfter120(Math.ceil(player.mp.challenges[13]+0.001));
+	},
+	canComplete(){
+		return player.ep.points.gte(tmp.mp.challenges[this.id].goal)&&player.m.points.lt(110);
+	},
+	completionsAfter120(){
+		let p=player.ep.points;
+		if(player.m.best.gte(130)){
+			if(p.lte("1e880000"))return 0;
+			return p.log10().div(880000).log(1.01).pow(1/1.01).toNumber();
+		}
+	},
+	rewardEffect() {
+		let ret = (player.mp.challenges[13])*4
+		return softcap(new Decimal(ret),new Decimal(5),0.5);
+	},
+	goalAfter120(x=player.mp.challenges[13]){
+		if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.01,Decimal.pow(x,1.01)).mul(880000));
+	},
+	currencyDisplayName: "Exotic Prestige Points",
+	rewardDescription() { return "Prestige Power Upgrade 12 softcap starts "+ format(this.rewardEffect())+" later." },
+},
+21:{
+	onEnter() {
+		layerDataReset('pp',["upgrades"])
+		layerDataReset('p',["upgrades"])
+		layerDataReset('sp',["upgrades"])
+		layerDataReset('pe',["upgrades"])
+		layerDataReset('hp',["upgrades"])
+		layerDataReset('ap',["upgrades","challenges"])
+		layerDataReset('pb',["upgrades"])
+		layerDataReset('hb',["upgrades"])
+		layerDataReset('se',["upgrades"])
+		layerDataReset("ep")
+	},
+	name: "Enter The Prestige Multiverse",
+	completionLimit: new Decimal(1),
+	challengeDescription() {return "On enter resets all progress except for Milestones, 1st Milestone now divides points gain based on Multiverse Points."+"<br>"+format(challengeCompletions(this.layer, this.id)) +"/1 completions"},
+	unlocked() { return player.m.best.gte(185) },
+	goal: function(){
+		if(player.m.best.gte(120))return this.goalAfter120(Math.ceil(player.mp.challenges[13]+0.001));
+	},
+	canComplete(){
+		return player.ep.points.gte(tmp.mp.challenges[this.id].goal)&&player.m.points.lt(110);
+	},
+	completionsAfter120(){
+		let p=player.ep.points;
+		if(player.m.best.gte(130)){
+			if(p.lte("ee9"))return 0;
+			return p.log10().div(1e9).log(1.01).pow(1/1.01).toNumber();
+		}
+	},
+	rewardEffect() {
+		let ret = (player.mp.challenges[13])*4
+		return softcap(new Decimal(ret),new Decimal(5),0.5);
+	},
+	goalAfter120(x=player.mp.challenges[13]){
+		if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.01,Decimal.pow(x,1.01)).mul(1e9));
+	},
+	currencyDisplayName: "Exotic Prestige Points",
+	rewardDescription() { return "Unlock Ascensions<br><hr color='black'><i>You've reached the limit of Milestones Power. Their pure energy is not enough for you. Travel into <b>Prestige Dimension</b> to get some kind of better Milestones... <br>Or even <b>Ascend</b>?</i>" },
+},
     },
 	buyables: {
-		rows: 1,
-		cols: 1,
+		rows: 2,
+		cols: 3,
+        respec() {
+            layerDataReset('mp')
+        },
+        respecMessage: "Are you sure you want to respec Multiversal Fusioners? This will reset all of multiversal progress!",
+        respecText: "Respec Multiversal Fusioners",
+        11:{
+			title(){
+				return "<h3 class='mr'>Milestone Fusioner</h3>";
+			},
+			display(){
+				let data = tmp[this.layer].buyables[this.id];
+				return "Level: "+format(player[this.layer].buyables[this.id])+"<br>"+
+				"Based on Milestones, get a boost to Exotic Prestige Points. <br>Effect: x"+format(data.effect)+"<br>"+
+				"Cost for Next Level: "+format(data.cost)+" Multiversal Prestige Points";
+			},
+			cost(x) {
+				return new Decimal(6).add(x).add(player.mp.totalF);
+			},
+			canAfford() {
+                   return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
+			},
+               buy() { 
+                   player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
+                   player.mp.totalF = player.mp.totalF.add(1)
+               },
+			  effect(x){
+                let eff = x.add(1).pow(player.m.best.pow(2.5)).pow(new Decimal(2).pow(x))
+				  return eff;
+			  },
+			  unlocked(){
+				  return hasUpgrade('mp',13);
+			  },
+			  style() {
+				if (player.mp.points.lt(this.cost())) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'black',
+					'border':'2px solid',
+					'height':'125px'
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'rgb(68, 68, 68)',
+					'border':'2px solid',
+					'height':'125px'
+				}
+            }
+        },
+        12:{
+			title(){
+				return "<h3 class='mr'>Exotic Fusioner II</h3>";
+			},
+			display(){
+				let data = tmp[this.layer].buyables[this.id];
+				return "Level: "+format(player[this.layer].buyables[this.id])+"<br>"+
+				"Per level, change Exotic Fusioner's effect's formulas or make effect's softcaps weaker. <br>Currently: "+format(data.effect)+" effects boosted (starting at second).<br>"+
+				"Cost for Next Level: "+format(data.cost)+" Multiversal Prestige Points";
+			},
+			cost(x) {
+				return new Decimal(7).add(x).add(player.mp.totalF);
+			},
+			canAfford() {
+                   return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
+			},
+               buy() { 
+                   player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
+                   player.mp.totalF = player.mp.totalF.add(1)
+               },
+			  effect(x){
+                let eff = x
+				  return eff;
+			  },
+			  unlocked(){
+				  return hasUpgrade('mp',13);
+			  },
+			  style() {
+				if (player.mp.points.lt(this.cost())) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'black',
+					'border':'2px solid',
+					'height':'125px'
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'rgb(68, 68, 68)',
+					'border':'2px solid',
+					'height':'125px'
+				}
+            }
+        },
+        13:{
+			title(){
+				return "<h3 class='mr'>Transcend Fusioner</h3>";
+			},
+			display(){
+				let data = tmp[this.layer].buyables[this.id];
+				return "Level: "+format(player[this.layer].buyables[this.id])+"<br>"+
+				"Per level, get a Perk Point, that can be used to strenghen Special Transcend Points's effect (chosen ones resets on enter Weaker Transcend). <br>Currently: "+format(data.effect)+" more Perk Points.<br>"+
+				"Cost for Next Level: "+format(data.cost)+" Multiversal Prestige Points";
+			},
+			cost(x) {
+				return new Decimal(7).add(x).add(player.mp.totalF);
+			},
+			canAfford() {
+                   return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
+			},
+               buy() { 
+                   player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
+                   player.mp.perkPoints = player.mp.perkPoints.add(1)
+                   player.mp.totalF = player.mp.totalF.add(1)
+               },
+			  effect(x){
+                let eff = x
+				  return eff;
+			  },
+			  unlocked(){
+				  return hasUpgrade('mp',13);
+			  },
+			  style() {
+				if (player.mp.points.lt(this.cost())) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'black',
+					'border':'2px solid',
+					'height':'125px'
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'rgb(68, 68, 68)',
+					'border':'2px solid',
+					'height':'125px'
+				}
+            }
+        },
+        21:{
+			title(){
+				return "<h3 class='mr'>Upgrading Fusioner</h3>";
+			},
+			display(){
+				let data = tmp[this.layer].buyables[this.id];
+				return "Level: "+format(player[this.layer].buyables[this.id])+"<br>"+
+				"(This fusioner's cost is not affected by amount of buyed Fusioners) Per level, unlock 2 more Exotic Prestige upgrades. <br>Currently: "+format(data.effect)+" more upgrades.<br>"+
+				"Cost for Next Level: "+format(data.cost)+" Multiversal Prestige Points";
+			},
+			cost(x) {if (x.gte(1)) return new Decimal(10).mul(x)
+				else return new Decimal(8);
+			},
+			canAfford() {
+                   return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
+			},
+               buy() { 
+                   player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
+               },
+			  effect(x){
+                let eff = x.mul(2)
+				  return eff;
+			  },
+			  unlocked(){
+				  return hasUpgrade('mp',13);
+			  },
+			  style() {
+				if (player.mp.points.lt(this.cost())) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'black',
+					'border':'2px solid',
+					'height':'125px'
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'rgb(68, 68, 68)',
+					'border':'2px solid',
+					'height':'125px'
+				}
+            }
+        },
 	},
     tabFormat: {
 		"Main":{
@@ -144,11 +423,18 @@ addLayer("mp", {
         "Upgrades": {
 			content: [
 				"main-display","prestige-button","resource-display",
-				"upgrades"
+				"upgrades",
 			]
 		},
+        "Fusioners": {
+			content: [
+				"main-display","prestige-button","resource-display",
+                "buyables",
+			],
+        unlocked() {return hasUpgrade('mp',13)},
+		},
     },
-	branches: ["ep"],
+	branches: ["ep",'pm'],
 	passiveGeneration(){
 		return 0;
 	},
@@ -161,6 +447,14 @@ addLayer("mp", {
 		doReset(l){
 			if(l=="mp") {
                 layerDataReset('pp',["upgrades"])
+                layerDataReset('p',["upgrades"])
+				layerDataReset('sp',["upgrades"])
+				layerDataReset('pe',["upgrades"])
+				layerDataReset('hp',["upgrades"])
+				layerDataReset('ap',["upgrades","challenges"])
+				layerDataReset('pb',["upgrades"])
+				layerDataReset('hb',["upgrades"])
+				layerDataReset('se',["upgrades"])
                 layerDataReset("ep",["buyables"])};
 		},
 	update(){

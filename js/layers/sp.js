@@ -34,12 +34,12 @@ addLayer("sp", {
 		if(player.t.activeChallenge==31)mult=mult.mul(tmp.t.dilationEffect);
         return mult
     },
-    row: 2, // Row the layer is in on the tree (0 is the first row)
+    row() {return 42}, // Row the layer is in on the tree (0 is the first row)
 	exponent: 0.1,
     hotkeys: [
         {key: "s", description: "S: Reset for super-prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(25)},
+    layerShown(){return player.m.best.gte(25)&& (player.mp.activeChallenge!=21)},
 	upgrades: {
         rows: 4,
         cols: 4,

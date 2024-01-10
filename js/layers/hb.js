@@ -29,7 +29,7 @@ addLayer("hb", {
     hotkeys: [
         {key: "B", description: "Shift+B: Reset for hyper boosts", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(104)},
+    layerShown(){return player.m.best.gte(104)&& (player.mp.activeChallenge!=21)},
 	branches: ["hp","pb"],
 	softcap:new Decimal(Infinity),
 	softcapPower:new Decimal(1),
@@ -180,7 +180,7 @@ addLayer("hb", {
             description: "Hyper Boosts effect is better. You can buy this upgrade while you're in AP challenge 8<br> and reached 1e1000 Points.",
             cost(){
 				if(player.ap.activeChallenge!=42)return new Decimal(Infinity);
-				else if (player.points.gte('1e1000')) return new Decimal(86)
+				else if (player.points.gte('1e1000')) return new Decimal(85)
 				else return new Decimal(Infinity);
 			},
 			unlocked(){return player.m.best.gte(178)}, // The upgrade is only visible when this is true
