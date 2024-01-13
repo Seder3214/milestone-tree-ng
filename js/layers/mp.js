@@ -240,6 +240,13 @@ player.mp.perkPoints = new Decimal(0)
 for (i in player.mp.buyables){
 player.mp.buyables[i] = new Decimal(0)}
 player.mp.totalF = new Decimal(0)
+player.t.dChoose = false
+            player.t.sChoose = false
+            player.t.pdChoose = false
+            player.t.hChoose = false
+            player.t.sdChoose = false
+            player.t.phChoose = false
+player.t.choose = new Decimal(0)
         },
         respecMessage: "Are you sure you want to respec Multiversal Fusioners? This will reset all of multiversal progress to pre-Fusioners stage!",
         respecText: "Respec Multiversal Fusioners",
