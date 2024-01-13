@@ -135,7 +135,8 @@ addLayer("t", {
 		//if(amt.gte(Decimal.sub(4e14,player.t.points)) && !player.t.activeChallenge){
 		//	amt=Decimal.sub(4e14,player.t.points).ceil().max(0);
 		//}
-		return softcap(amt,new Decimal(1e300),0.01);
+if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
+		return amt;
 	},
 	getNextAt() {
 		if(player.ap.points.lt(tmp.t.requires1))return new Decimal(tmp.t.requires1);
