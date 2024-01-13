@@ -105,7 +105,7 @@ addLayer("ep", {
 		12: {
 			title: "Exotic Prestige Upgrade 12",
             description: "179th milestone effect is better based on Exotic Booster level",
-            cost: new Decimal('e925360'),
+            cost: new Decimal('e890360'),
             unlocked() { return player.mp.buyables[21].gte(1)}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=1.82;
