@@ -135,7 +135,7 @@ addLayer("t", {
 		//if(amt.gte(Decimal.sub(4e14,player.t.points)) && !player.t.activeChallenge){
 		//	amt=Decimal.sub(4e14,player.t.points).ceil().max(0);
 		//}
-		return amt;
+		return softcap(amt,new Decimal(1e300),0.01);
 	},
 	getNextAt() {
 		if(player.ap.points.lt(tmp.t.requires1))return new Decimal(tmp.t.requires1);
@@ -149,7 +149,7 @@ addLayer("t", {
 		let amt=player.t.specialPoints[player.t.activeChallenge].plus(1).div(tmp.t.gainMult);
 		amt=Decimal.pow(10,amt.pow(1/2).mul(250).add(600));
 		if(amt.lt(tmp.t.requires1))return new Decimal(tmp.t.requires1);
-		return amt.min(1e50);
+		return amt;
 	},
 	upgrades: {
         rows: 7,
