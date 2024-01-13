@@ -149,7 +149,7 @@ addLayer("t", {
 		let amt=player.t.specialPoints[player.t.activeChallenge].plus(1).div(tmp.t.gainMult);
 		amt=Decimal.pow(10,amt.pow(1/2).mul(250).add(600));
 		if(amt.lt(tmp.t.requires1))return new Decimal(tmp.t.requires1);
-		return amt;
+		return softcap(amt,new Decimal(1e50),0.001);
 	},
 	upgrades: {
         rows: 7,
