@@ -173,7 +173,7 @@ var systemComponents = {
 				</tr> 
 				<tr>
                 <td></td>
-                <td><button class="opt" onclick="toggleOpt('reverseMilestones'); needsCanvasUpdate = true">Single-Tab Mode: {{ options.reverseMilestones?"LAST TO FIRST":"FIRST TO LAST" }}</button></td>
+                <td><button class="opt" onclick="toggleOpt('reverseMilestones'); needsCanvasUpdate = true">Milestones Order: {{ options.reverseMilestones?"LAST TO FIRST":"FIRST TO LAST" }}</button></td>
 				</tr> 
         </table>`
     },
