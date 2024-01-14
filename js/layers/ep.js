@@ -110,7 +110,7 @@ addLayer("ep", {
             unlocked() { return player.mp.activeChallenge!=21}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=1.2;
-                let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.25).add(1)).max(1)
+                let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.275).add(1)).max(1)
                 return softcap(ret,new Decimal(1e9),0.1);
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
