@@ -206,9 +206,6 @@ ret = softcap(new Decimal(ret), new Decimal(7),0.1)
 		layerDataReset("mm",[])
 		layerDataReset("m",[])
 	},
-	onExit() {
-		player.mp.perkPoints = player.mp.buyables[13]
-	},
 	name: "Enter The Prestige Multiverse",
 	completionLimit: new Decimal(1),
 	challengeDescription() {return "On enter resets all progress except for Milestones, 1st Milestone now divides points gain based on Multiverse Points."+"<br>"+format(challengeCompletions(this.layer, this.id)) +"/1 completions"},
