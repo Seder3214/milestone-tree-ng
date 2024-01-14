@@ -181,7 +181,8 @@ addLayer("mp", {
 	},
 	rewardEffect() {
 		let ret = (player.mp.challenges[13])*4
-		return softcap(new Decimal(ret),new Decimal(7),0.1);
+ret = softcap(new Decimal(ret), new Decimal(7),0.1)
+		return softcap(new Decimal(ret),new Decimal(7.5),0.01);
 	},
 	goalAfter120(x=player.mp.challenges[13]){
 		if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.01,Decimal.pow(x,1.02)).mul(950000));
