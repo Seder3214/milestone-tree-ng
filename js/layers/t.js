@@ -5,7 +5,7 @@ addLayer("t", {
     startData() { return {
         unlocked: false,
 	points: new Decimal(0),
-	choose: new Decimal(2),
+	choose: new Decimal(0),
 	dChoose: false,
 	sChoose: false,
 	pdChoose: false,
