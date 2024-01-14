@@ -117,7 +117,7 @@ addLayer("mp", {
             layerDataReset("t",['challenges','upgrades'])
             layerDataReset("ep",["buyables"])
             doReset("hp")
-            player.t.choose = new Decimal(0)
+            player.t.choose = new Decimal(2)
         },
         onExit() {
             player.t.dChoose = false
