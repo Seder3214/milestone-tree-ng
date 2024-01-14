@@ -1702,7 +1702,7 @@ addLayer("m", {
     milestone154Effect(){
 		var p=player.pp.points;
 		if(player.m.best.gte(152)){
-			p=Decimal.mul(0.1,p).pow(0.85);
+			p=Decimal.mul(0.1,p).add(1).pow(0.85);
 		}
         if (hasUpgrade('pp', 21)) {
             p=p.pow(layers.t.getSpecialEffect(31));   
@@ -1712,7 +1712,7 @@ addLayer("m", {
 		return softcap(p,new Decimal('1e1000'),0.01);
 	},
     milestone179Effect(){
-		var p=player.m.best.add(player.m.best.gte(182)?player.ep.buyables[11]:0).sub(getCostOverflowStart()).pow(25).pow(player.ep.points.add(1).log10().add(1).log(2));
+		var p=player.m.best.add(player.m.best.gte(182)?player.ep.buyables[11]:0).sub(getCostOverflowStart()).pow(25).pow(player.ep.points.add(1).log10().add(1).log(2)).max(1);
 		if((player.ap.activeChallenge==42)) return new Decimal(1)
 		if (hasUpgrade('ep',12)) p = p.pow(upgradeEffect('ep',12))
 		p = softcap(p,new Decimal('1e800'),0.1)
