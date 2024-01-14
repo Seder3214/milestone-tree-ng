@@ -174,7 +174,7 @@ addLayer("mp", {
 		let p=player.ep.points;
 		if(player.m.best.gte(130)){
 			if(p.lte("1e950000"))return 0;
-			return p.log10().div(950000).log(1.01).pow(1/1.01).toNumber();
+			return p.log10().div(950000).log(1.01).pow(1/1.02).toNumber();
 		}
 	},
 	rewardEffect() {
@@ -182,7 +182,7 @@ addLayer("mp", {
 		return softcap(new Decimal(ret),new Decimal(7),0.15);
 	},
 	goalAfter120(x=player.mp.challenges[13]){
-		if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.01,Decimal.pow(x,1.01)).mul(950000));
+		if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.01,Decimal.pow(x,1.02)).mul(950000));
 	},
 	currencyDisplayName: "Exotic Prestige Points",
 	rewardDescription() { return "Prestige Power Upgrade 12 softcap starts "+ format(this.rewardEffect())+" later." },
