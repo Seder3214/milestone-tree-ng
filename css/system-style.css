@@ -96,6 +96,48 @@
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-timing-function: linear;
   }
+  .mr {
+	text-align: center;
+	font-size: 18px;
+	color: #000;
+	max-width: 700px;
+	background: rgba(255,253,160,1);
+	background: -webkit-linear-gradient( left, #d03800 0%, #f35319 25%, #f17142 50%, #d03800 100% ) repeat;
+	border-color: -webkit-linear-gradient( left, #d03800 0%, #f35319 25%, #f17142 50%, #d03800 100% ) repeat;
+	-webkit-background-clip: text;
+	-ms-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-ms-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	text-fill-color: transparent;
+	-webkit-animation-name: masked-animation;
+	-webkit-animation-duration: 50s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+  }
+  .pmr {
+	text-align: center;
+	font-size: 18px;
+	color: #000;
+	max-width: 700px;
+	background: rgba(255,253,160,1);
+	background: -webkit-linear-gradient( left, #f71c50 0%, #e23b62 25%, #e75d7d 50%, #f71c50 100% ) repeat;
+	border-color: -webkit-linear-gradient( left, #f71c50 0%, #e23b62 25%, #e75d7d 50%, #f71c50 100% ) repeat;
+	-webkit-background-clip: text;
+	-ms-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-ms-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	text-fill-color: transparent;
+	-webkit-animation-name: masked-animation;
+	-webkit-animation-duration: 50s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+  }
   .saveState {
 	width: 100%;
 	border: 2px solid #ffffff7f;
@@ -160,6 +202,26 @@
 	max-width: 700px;
 	background: rgba(255,253,160,1);
 	background: -webkit-linear-gradient( left, lime 0%, rgb(133, 235, 133) 25%, rgb(94, 201, 94) 50%, lime 100% ) repeat;
+	-webkit-background-clip: text;
+	-ms-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-ms-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	text-fill-color: transparent;
+	-webkit-animation-name: masked-animation;
+	-webkit-animation-duration: 50s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+  }
+  .pef {
+	text-align: center;
+	font-size: 18px;
+	color: #000;
+	max-width: 700px;
+	background: rgba(255,253,160,1);
+	background: -webkit-linear-gradient( left, #c89646 0%, #ebae4d 25%, #f3bd65 50%, #c89646 100% ) repeat;
 	-webkit-background-clip: text;
 	-ms-background-clip: text;
 	-moz-background-clip: text;
