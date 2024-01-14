@@ -78,7 +78,7 @@ if(hasUpgrade("hp",12))b=b.mul(upgradeEffect("hp",12));
 if(hasUpgrade("ap",11))b=b.mul(upgradeEffect("ap",11));
 if(player.t.activeChallenge==11||player.t.activeChallenge==21||player.t.activeChallenge==31)b=b.pow(tmp.t.dilationEffect);
 if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41||player.ap.activeChallenge==42 )b=b.add(1).log10().pow(player.m.best.gte(122)?player.m.points:100);
-if (player.mp.activeChallenge==21) b = new Decimal(1).div(tmp.pm.reduce)
+if (player.mp.activeChallenge==21) b = b.div(tmp.pm.reduce)
 if (player.pm.essence.gte(1)) b = b.mul(tmp.pm.essenceBoost)
 return b.div(player.m.best.gte(180)?2:1)
 }
