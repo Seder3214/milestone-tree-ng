@@ -6,6 +6,7 @@ addLayer("pm", {
         unlocked: true,
 		points: new Decimal(0),
         essence: new Decimal(0),
+        best: new Decimal(0),
     }},
     color: "#f71c50",
     requires(){
@@ -22,17 +23,30 @@ addLayer("pm", {
     },
     gain() {
         let gain = new Decimal(0)
-        if (player.pm.best.gte(1)) gain=gain.add(player.mp.points.log2().pow(0.5))
+        if (player.pm.best.gte(1)) gain=gain.add(tmp.pm.reduce)
+        gain = gain.mul(buyableEffect('mp',22))
+        if (player.pm.best.gte(4)) gain = gain.mul(tmp.pm.pMilestone4Effect)
+        if (player.ep.buyables[12].gte(1)) gain = gain.mul(tmp.ep.prOneEffect)
         return gain
     },
+    reduce() {
+		let base = 0.5
+		if (player.mp.buyables[23].gte(1)) base += buyableEffect('mp',23).toNumber()
+		let eff=player.mp.points.log2().pow(base)
+		if (player.pm.best.gte(3)) eff = eff.mul(2)
+        if (player.ep.buyables[12].gte(1)) eff = eff.mul(tmp.ep.prOneEffect.pow(0.5))
+        return eff
+	},
     essenceBoost() {
         let eff = player.pm.essence.add(1).log2().pow(2).mul(0.1)
+        eff = eff.mul(buyableEffect('mp',22))
         return eff.max(1)
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
-    row: 0, // Row the layer is in on the tree (0 is the first row)
+    newRow: 0,
+    row:0, // Row the layer is in on the tree (0 is the first row)
 	base: new Decimal(12),
 	exponent: function(){
 		return new Decimal(1)
@@ -59,13 +73,38 @@ addLayer("pm", {
 				return "Unlock more Multiverse Fusioners."
 			},
         },
+        {
+			requirementDescription: "3rd Prestige Milestone",
+            unlocked() {return player[this.layer].best.gte(2)},
+            done() {return player[this.layer].best.gte(3)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Make 1st milestone reducing effect 2.00x stronger."
+			},
+        },
+        {
+			requirementDescription: "4th Prestige Milestone",
+            unlocked() {return player[this.layer].best.gte(3)},
+            done() {return player[this.layer].best.gte(4)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Points affects prestige essence gain. Currently: "+format(tmp.pm.pMilestone4Effect)+"x"
+			},
+        },
+        {
+			requirementDescription: "5th Prestige Milestone",
+            unlocked() {return player[this.layer].best.gte(4)},
+            done() {return player[this.layer].best.gte(5)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Prestigify Exotic Prestige Points. (Unlock the layer again but with new content)"
+			},
+        },
 	],
     tabFormat: {
         "Main": {
             content:[
                 function() { if (player.tab == "pm")  return ["column", [
     				"main-display","prestige-button","resource-display",
-    ["display-text", "You have <h2 style='color:  #f71c50; text-shadow: #f71c50 0px 0px 10px;'>"+format(player.pm.essence)+"</h2> (+" + format(tmp.pm.gain)+ "/s) prestige essences,that multiply points gain by "+format(tmp.pm.essenceBoost)+"x"],
+                    ["display-text", "1st milestone effect reduces your points gain by <h2 style='color:  #f71c50; text-shadow: #f71c50 0px 0px 10px;'> "+format(tmp.pm.reduce)+"x</h2>"],
+    ["display-text", "You have <h2 style='color: #f71c50; text-shadow: #f71c50 0px 0px 10px;'>"+format(player.pm.essence)+"</h2> (+" + format(tmp.pm.gain)+ "/s) prestige essences, which multiply points gain by <h2 style='color:  #f71c50; text-shadow: #f71c50 0px 0px 10px;'>"+format(tmp.pm.essenceBoost)+"x</h2>"],
                 "blank",
                 "milestones",
                 "blank",
@@ -75,6 +114,11 @@ addLayer("pm", {
      ]
             },
 		},
+
+    	pMilestone4Effect(){
+            let p=player.points.add(1).log10().mul(1.75);
+            return p;
+        },
     update(diff) {
         if (player.pm.best.gte(1) && player.mp.activeChallenge==21) player.pm.essence = player.pm.essence.add(tmp.pm.gain.times(diff))
     },

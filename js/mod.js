@@ -14,16 +14,18 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.002",
-	name: "Prestige Multiverse",
+	num: "2.005a",
+	name: "Further into Prestige Universe",
 }
 
 let changelog = `<h3>Changelog:</h3><br><br>
 Note: v<h3 style="color: green">A</h3>.<h3 style='color: blue'>B</h3><h3 style='color: yellow'>C</h3>  <br>
-<h3 style='color: green'>A</h3> is a number of <h3 style='color:yellow'>major</h3> updates like <h3 style='color: #f71c50;'>Prestige Milestone Tree</h3>, <br>
+<h3 style='color: green'>A</h3> is a number of <h3 style='color:yellow'>major</h3> updates like <h3 class='pmr'>Prestige Milestone Tree</h3>, <br>
 <h3 style='color: blue'>B</h3> is a number of <h3 style="color:#793784">milestones</h3> in current version, <br>
 <h3 style='color: yellow'>C</h3> is a letter that used to show <h3 style='color: cyan'>bugfix/rebalance</h3> updates<br><br>
-<h3 style='color: #f71c50;'>v2.002 - Prestige Milestones</h3><br>
+<h3 class='pmr'>v2.005a - Prestige Fusioners</h3><br>
+<span style='color: #808080'> - 2 more Multiverse Fusioners!<br></span>
+<h3 class='pmr'>v2.002 - Prestige Milestones</h3><br>
 <span style='color: #808080'> - Prestige Milestone Tree is here!<br></span>
 <br><h3 class='mr'>v1.185 - Multiverse Fusioners</h3><br>
 <span style='color: #808080'> - Added four new fusioners! <i>Almost the end, huh?</i><br>
@@ -76,7 +78,7 @@ if(hasUpgrade("hp",12))b=b.mul(upgradeEffect("hp",12));
 if(hasUpgrade("ap",11))b=b.mul(upgradeEffect("ap",11));
 if(player.t.activeChallenge==11||player.t.activeChallenge==21||player.t.activeChallenge==31)b=b.pow(tmp.t.dilationEffect);
 if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41||player.ap.activeChallenge==42 )b=b.add(1).log10().pow(player.m.best.gte(122)?player.m.points:100);
-if (player.mp.activeChallenge==21) b = new Decimal(1).div(player.mp.points.log2().pow(0.5))
+if (player.mp.activeChallenge==21) b = new Decimal(1).div(tmp.pm.reduce)
 if (player.pm.essence.gte(1)) b = b.mul(tmp.pm.essenceBoost)
 return b.div(player.m.best.gte(180)?2:1)
 }
