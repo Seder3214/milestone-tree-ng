@@ -43,7 +43,7 @@ addLayer("mp", {
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=0.2;
                 let ret = player.pp.power.add(1).div('1e1000').pow(base)
-                return ret;
+                return ret.max(1);
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
