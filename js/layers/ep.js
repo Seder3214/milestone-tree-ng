@@ -16,7 +16,7 @@ addLayer("ep", {
 		else return "exotic prestige points"},
     baseResource() {if (player.mp.activeChallenge==21) return 'prestige essence'
 		else return "prestige power"}, // Name of resource prestige is based on
-    baseAmount() {if (player.pm.best.gte(5)) return player.pm.essence
+    baseAmount() {if (player.pm.best.gte(5)&& player.mp.activeChallenge==21) return player.pm.essence
 		else return player.pp.points}, // Get the current amount of baseResource
     type() {if (player.mp.activeChallenge==21) return "static"
 			else return 'normal'}, // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
