@@ -55,7 +55,7 @@ addLayer("ep", {
         let eff = player.ep.points.add(1).log10().max(1).pow(0.01).div(500)
 		if (player.m.best.gte(171)) eff = eff.mul(1.075)
 		if (player.m.best.gte(172)) eff = eff.mul(1.1)
-		if (player.mp.buyables[12].gte(2)) eff = eff.mul(3)
+		if (player.mp.buyables[12].gte(2)) eff = eff.mul(4)
 		if (player.mp.activeChallenge==13) return new Decimal(0)
         return eff.toNumber();
     },
@@ -147,7 +147,7 @@ addLayer("ep", {
 		21: {
 			title: "Exotic Prestige Upgrade 21",
             description: "Reduce goal scaling of <b>Dilation</b> challenges by sum of this challenge completions and Exotic Prestige Points",
-            cost: new Decimal('e8590000'),
+            cost: new Decimal('e7490000'),
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
                 let ret = (player.t.challenges[11]*2)+(player.t.challenges[21]*10)+(player.t.challenges[31]*10)+(player.ep.points.add(1).log(10).add(1).pow(0.5).toNumber())
                 return ret;

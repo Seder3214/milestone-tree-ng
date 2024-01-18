@@ -175,17 +175,17 @@ addLayer("mp", {
 	completionsAfter120(){
 		let p=player.ep.points;
 		if(player.m.best.gte(130)){
-			if(p.lte("1e1000000"))return 0;
-			return p.log10().div(1000000).log(1.01).pow(1/1.02).toNumber();
+			if(p.lte("1e950000"))return 0;
+			return p.log10().div(950000).log(1.01).pow(1/2.5).toNumber();
 		}
 	},
 	rewardEffect() {
-		let ret = (player.mp.challenges[13])*4
-ret = softcap(new Decimal(ret), new Decimal(7),0.1)
-		return softcap(new Decimal(ret),new Decimal(7.5),0.01);
+		let ret = (player.mp.challenges[13])*1.5
+ret = softcap(new Decimal(ret), new Decimal(7),0.25)
+		return softcap(new Decimal(ret),new Decimal(7.5),0.5);
 	},
 	goalAfter120(x=player.mp.challenges[13]){
-		if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.01,Decimal.pow(x,1.02)).mul(950000));
+		if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.01,Decimal.pow(x,2.5)).mul(950000));
 	},
 	currencyDisplayName: "Exotic Prestige Points",
 	rewardDescription() { return "Prestige Power Upgrade 12 softcap starts "+ format(this.rewardEffect())+" later." },
@@ -353,7 +353,7 @@ player.t.choose = new Decimal(0)
 				"Cost for Next Level: "+format(data.cost)+" Multiversal Prestige Points";
 			},
 			cost(x) {
-				return new Decimal(7).add(x.mul(2)).add(player.mp.totalF);
+				return new Decimal(7).add(x.mul(2)).add(player.mp.totalF.div(2));
 			},
 			canAfford() {
                    return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
