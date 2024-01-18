@@ -265,7 +265,7 @@ player.t.choose = new Decimal(0)
 				"Cost for Next Level: "+format(data.cost)+" Multiversal Prestige Points";
 			},
 			cost(x) {
-				return new Decimal(6).add(x).add(player.mp.totalF);
+				return new Decimal(6).add(x).add(player.mp.totalF.div(2));
 			},
 			canAfford() {
                    return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
@@ -309,7 +309,7 @@ player.t.choose = new Decimal(0)
 				"Cost for Next Level: "+format(data.cost)+" Multiversal Prestige Points";
 			},
 			cost(x) {
-				return new Decimal(7).add(x).add(player.mp.totalF);
+				return new Decimal(7).add(x.div(5)).add(player.mp.totalF.mul(2).div(1.75));
 			},
 			canAfford() {
                    return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
@@ -353,7 +353,7 @@ player.t.choose = new Decimal(0)
 				"Cost for Next Level: "+format(data.cost)+" Multiversal Prestige Points";
 			},
 			cost(x) {
-				return new Decimal(8).add(x.div(1.5)).add(player.mp.totalF);
+				return new Decimal(7).add(x.mul(2)).add(player.mp.totalF);
 			},
 			canAfford() {
                    return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)

@@ -141,7 +141,7 @@ addLayer("ep", {
 		14: {
 			title: "Exotic Prestige Upgrade 14",
             description: "Change the formula for Power Scaler.",
-            cost: new Decimal('e46500000'),
+            cost: new Decimal('e4650000'),
             unlocked() { return player.mp.buyables[21].gte(2)&& player.mp.activeChallenge!=21},
         },
 		21: {
