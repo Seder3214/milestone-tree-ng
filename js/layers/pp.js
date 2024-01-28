@@ -48,7 +48,7 @@ addLayer("pp", {
                 let ret = Decimal.mul(base,Decimal.log10(player[this.layer].power.add(1)).pow(0.5).add(1))
                 return softcap(ret,new Decimal(1.01),0.5);
             },
-            effectDisplay() { return format(this.effect())+"x later" }, // Add formatting to the effect
+            effectDisplay() { return format(this.effect(),4)+"x later" }, // Add formatting to the effect
         },
         12: {
 			title: "Prestige Power Upgrade 12",
@@ -60,11 +60,11 @@ addLayer("pp", {
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=0.30;
-                let ret = Decimal.mul(base,Decimal.log10(player[this.layer].power.add(1)).pow(0.5).add(1)).max(1)
+                let ret = Decimal.mul(base,Decimal.log10(player[this.layer].power.add(1)).pow(2).add(1)).max(1)
                 ret = softcap(ret, new Decimal(1.25).add(player.mp.challenges[13]>0?challengeEffect('mp',13):0), new Decimal(0.001))
                 return ret;
             },
-            effectDisplay() { return "^"+format(this.effect()) }, // Add formatting to the effect
+            effectDisplay() { return "^"+format(this.effect(),4) }, // Add formatting to the effect
         },
         13: {
 			title: "Prestige Power Upgrade 13",
