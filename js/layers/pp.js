@@ -46,7 +46,7 @@ addLayer("pp", {
 				let base=0.51;
                 if (hasUpgrade('pp', 23)) base += 0.15
                 let ret = Decimal.mul(base,Decimal.log10(player[this.layer].power.add(1)).pow(0.5).add(1))
-                return softcap(ret,new Decimal(1.01),0.5);
+                return softcap(ret,new Decimal(1.05),0.1);
             },
             effectDisplay() { return format(this.effect(),4)+"x later" }, // Add formatting to the effect
         },
@@ -60,7 +60,7 @@ addLayer("pp", {
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=0.30;
-                let ret = Decimal.mul(base,Decimal.log10(player[this.layer].power.add(1)).pow(2).add(1)).max(1)
+                let ret = Decimal.mul(base,Decimal.log10(player[this.layer].power.add(1)).pow(1.5).add(1)).max(1)
                 ret = softcap(ret, new Decimal(1.25).add(player.mp.challenges[13]>0?challengeEffect('mp',13):0), new Decimal(0.001))
                 return ret;
             },
@@ -181,7 +181,7 @@ unlocked() {return player.m.best.gte(155)},
                },
 			  effect(){
 				  let b=0.23;
-				  let eff=new Decimal(0).add(player[this.layer].buyables[this.id].mul(b).mul(player.m.points.pow(0.15))).mul(3.5);
+				  let eff=new Decimal(0).add(player[this.layer].buyables[this.id].mul(b).mul(player.m.points.pow(0.15))).mul(2);
                   if (hasUpgrade('ep',14))eff=(player[this.layer].buyables[this.id].mul(player.m.points.pow(0.35))).pow(player[this.layer].buyables[this.id].pow(0.75));
                   if (player.m.best.gte(154)) eff = eff.times(tmp.m.milestone154Effect)
                   if (player.m.best.gte(163)) eff= eff.pow(1.5)
