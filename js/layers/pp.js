@@ -45,7 +45,7 @@ addLayer("pp", {
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=0.51;
                 if (hasUpgrade('pp', 23)) base += 0.15
-                let ret = Decimal.mul(base,Decimal.log10(player[this.layer].power.add(1)).pow(0.3).add(1))
+                let ret = Decimal.mul(base,Decimal.log10(player[this.layer].power.add(1)).pow(0.1).add(1))
                 return softcap(ret,new Decimal(1.01),0.5);
             },
             effectDisplay() { return format(this.effect())+"x later" }, // Add formatting to the effect
