@@ -186,8 +186,8 @@ unlocked() {return player.m.best.gte(155)},
                   if (player.m.best.gte(154)) eff = eff.times(tmp.m.milestone154Effect)
                   if (player.m.best.gte(163)) eff= eff.pow(1.5)
                   if (player.m.best.gte(164)) eff= eff.pow(1.5)
-                  eff = softcap(eff,new Decimal('e5000000'),0.5)
-				  return softcap(eff,new Decimal('e10000000'),0.25);
+                  eff = softcap(eff,new Decimal('e5000000'),0.25)
+				  return softcap(eff,new Decimal('e10000000'),0.1);
 			  },
 			  unlocked(){
 				  return player.m.best.gte(123);
