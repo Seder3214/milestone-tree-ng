@@ -180,7 +180,7 @@ addLayer("mp", {
 		}
 	},
 	rewardEffect() {
-		let ret = (player.mp.challenges[13])*1.5
+		let ret = (player.mp.challenges[13])*0.5
 ret = softcap(new Decimal(ret), new Decimal(7),0.25)
 		return softcap(new Decimal(ret),new Decimal(7.5),0.5);
 	},
