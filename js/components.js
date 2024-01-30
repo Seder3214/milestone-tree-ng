@@ -374,6 +374,7 @@ function loadVue() {
 	`
 	})
 
+
 	// data = optionally, array of rows for the grid to show
 	Vue.component('grid', {
 		props: ['layer', 'data'],
@@ -400,7 +401,7 @@ function loadVue() {
 		v-on:click="clickGrid(layer, data)"  @mousedown="start" @mouseleave="stop" @mouseup="stop" @touchstart="start" @touchend="stop" @touchcancel="stop">
 			<span v-if= "layers[layer].grid.getTitle"><h3 v-html="gridRun(this.layer, 'getTitle', player[this.layer].grid[this.data], this.data)"></h3><br></span>
 			<span v-bind:style="{'white-space': 'pre-line'}" v-html="gridRun(this.layer, 'getDisplay', player[this.layer].grid[this.data], this.data)"></span>
-			<tooltip v-if="layers[layer].grid.getTooltip" :text="gridRun(this.layer, 'getTooltip', player[this.layer].grid[this.data], this.data)" v-bind:style="gridRun(layer, 'getTooltipStyle', player[this.layer].grid[this.data], this.data)"></tooltip>
+			<tooltip v-if="layers[layer].grid.getTooltip" :text="gridRun(this.layer, 'getTooltip', player[this.layer].grid[this.data], this.data)"></tooltip>
 
 		</button>
 		`,

@@ -73,9 +73,3 @@ function achievementEffect(layer, id) {
 function gridEffect(layer, id) {
 	return (gridRun(layer, 'getEffect', player[layer].grid[id], id))
 }
-function gridCost(layer, id) {
-	return (gridRun(layer, 'getCost', player[layer].grid[id], id))
-}
-function gridEssence(layer, id) {
-	return (gridRun(layer, 'getEssence', player[layer].grid[id], id))
-}

@@ -359,7 +359,7 @@ var activePopups = [];
 var popupID = 0;
 
 // Function to show popups
-function doPopup(type = "none", text = "This is a test popup.", title = "", timer = 3, color = "",bColor='') {
+function doPopup(type = "none", text = "This is a test popup.", title = "", timer = 3, color = "") {
 	switch (type) {
 		case "achievement":
 			popupTitle = "Achievement Unlocked!";
@@ -378,7 +378,7 @@ function doPopup(type = "none", text = "This is a test popup.", title = "", time
 	popupMessage = text;
 	popupTimer = timer;
 
-	activePopups.push({ "time": popupTimer, "type": popupType, "title": popupTitle, "message": (popupMessage + "\n"), "id": popupID, "color": color,'bColor':bColor })
+	activePopups.push({ "time": popupTimer, "type": popupType, "title": popupTitle, "message": (popupMessage + "\n"), "id": popupID, "color": color })
 	popupID++;
 }
 

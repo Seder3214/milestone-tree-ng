@@ -24,10 +24,9 @@ addLayer("pm", {
     gain() {
         let gain = new Decimal(0)
         if (player.pm.best.gte(1)) gain=gain.add(tmp.pm.reduce)
-        if (player.mp.modeE==true) gain = gain.mul(buyableEffect('mp',22))
+        gain = gain.mul(buyableEffect('mp',22))
         if (player.pm.best.gte(4)) gain = gain.mul(tmp.pm.pMilestone4Effect)
-        if (player.pep.buyables[11].gte(1)) gain = gain.mul(tmp.pep.prOneEffect)
-        if (player.cp.formatted.gte(1)) gain = gain.mul(corruptEffect())
+        if (player.ep.buyables[12].gte(1)) gain = gain.mul(tmp.ep.prOneEffect)
         return gain
     },
     reduce() {
@@ -35,13 +34,12 @@ addLayer("pm", {
 		if (player.mp.buyables[23].gte(1)) base += buyableEffect('mp',23).toNumber()
 		let eff=player.mp.points.log2().pow(base)
 		if (player.pm.best.gte(3)) eff = eff.mul(2)
-        if (player.pep.buyables[11].gte(1)) eff = eff.mul(tmp.pep.prOneEffect.pow(0.5))
+        if (player.ep.buyables[12].gte(1)) eff = eff.mul(tmp.ep.prOneEffect.pow(0.5))
         return eff
 	},
     essenceBoost() {
         let eff = player.pm.essence.add(1).log2().pow(2).mul(0.1)
         eff = eff.mul(buyableEffect('mp',22))
-        if (player.mp.modeP==true) eff = eff.mul(buyableEffect('mp',22).div(5))
         return eff.max(1)
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -51,8 +49,7 @@ addLayer("pm", {
     row:0, // Row the layer is in on the tree (0 is the first row)
 	base: new Decimal(12),
 	exponent: function(){
-        if (player.pm.points.gte(7)) return new Decimal(1.25)
-		else return new Decimal(1)
+		return new Decimal(1)
 	},
     hotkeys: [
         {key: "ctrl+p", description: "Ctrl+P: Get Prestige Milestone", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
@@ -98,22 +95,6 @@ addLayer("pm", {
             done() {return player[this.layer].best.gte(5)}, // Used to determine when to give the milestone
             effectDescription: function(){
 				return "Prestigify Exotic Prestige Points. (Unlock the layer again but with new content)"
-			},
-        },
-        {
-			requirementDescription: "6th Prestige Milestone",
-            unlocked() {return player[this.layer].best.gte(5)},
-            done() {return player[this.layer].best.gte(6)}, // Used to determine when to give the milestone
-            effectDescription: function(){
-				return "Unlock a new layer."
-			},
-        },
-        {
-			requirementDescription: "7th Prestige Milestone",
-            unlocked() {return player[this.layer].best.gte(6)},
-            done() {return player[this.layer].best.gte(7)}, // Used to determine when to give the milestone
-            effectDescription: function(){
-				return "Unlock 2 corrupted upgrades."
 			},
         },
 	],
