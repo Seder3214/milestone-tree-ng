@@ -1,3 +1,4 @@
+
 function formatRoman(num) {
     var roman = {
       M: 1000, CM: 900, D: 500, CD: 400,
@@ -98,6 +99,26 @@ addLayer("cp", {
             currencyDisplayName: "corruption essences",
             currencyInternalName: "formatted",
             currencyLayer:"cp",
+            style() {
+                if (hasUpgrade('cp',11)) return {
+                    'background':'darkgreen',
+                    'border-color':'lime',
+                    'color':'lime',
+                    'border-radius':'0%'
+                }
+                if (player.cp.formatted.gte(this.cost)) return {
+                    'background':'gray',
+                    'border-color':'lime',
+                    'color':'lime',
+                    'border-radius':'0%'
+                }
+               else return {
+                    'background':'#0f0f0f',
+                    'border-color':'lime',
+                    'color':'lime',
+                    'border-radius':'0%'
+                }
+            },
         },
 	},
     grid: {
