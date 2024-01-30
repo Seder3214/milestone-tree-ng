@@ -439,7 +439,7 @@ player.t.choose = new Decimal(0)
 			display(){
 				let data = tmp[this.layer].buyables[this.id];
 				return "Level: "+format(player[this.layer].buyables[this.id])+"<br>"+
-				(player.mp.modeE==true?"Triple Prestige Essence gain and its effect.":"1.50x Points gain and double Prestige Essence effect.")+"<br>Currently: "+format(data.effect)+"x.<br>"+
+				(player.mp.modeE==true?"Triple Prestige Essence gain and its effect.":"Double Points gain and double Prestige Essence effect.")+"<br>Currently: "+format(data.effect)+"x.<br>"+
 				"Cost for Next Level: "+format(data.cost)+" Prestige Essence";
 			},
 			cost(x) {return new Decimal(500).mul(x.max(1)).pow(x.div(5).add(1)).mul(x.sub(5).add(1).mul(5).max(1));
@@ -453,7 +453,7 @@ player.t.choose = new Decimal(0)
 				   player.pm.essence=player.pm.essence.sub(cost)
                },
 			  effect(x){
-				let base = new Decimal(player.mp.modeE==true?3:1.5)
+				let base = new Decimal(player.mp.modeE==true?3:2)
                 let eff = base.pow(x)
 				  return eff;
 			  },
