@@ -167,18 +167,52 @@ addLayer("cp", {
             if (data.level<1) return {
                 'background-color':"rgba(0,0,0,0)"
             }
-               else return {
-                    'border':'2px solid lime',
-                    'border-color':'linear-gradient(to left top, lime, #52f552)',
-                    'background':'#0f0f0f',
-                    'left': '-140%',
-                    'bottom': '0%',
-                    'width':'250px',
+               else {
+                switch (options.changeCorruptTooltipPlace) {
+                    case "right":
+                        return {  
+                        'border':'2px solid lime',
+                        'border-color':'linear-gradient(to left top, lime, #52f552)',
+                        'background':'#0f0f0f',
+                        'right': '0%',
+                        'left':'240%',
+                        'bottom': '0%',
+                        'width':'250px',
+                    };
+                    case "left":
+                        return {  
+                            'border':'2px solid lime',
+                            'border-color':'linear-gradient(to left top, lime, #52f552)',
+                            'background':'#0f0f0f',
+                            'right': '0%',
+                            'left':'-140%',
+                            'bottom': '0%',
+                            'width':'250px',
+                        };
+                    case "bottom":
+                        return {  
+                            'border':'2px solid lime',
+                            'border-color':'linear-gradient(to left top, lime, #52f552)',
+                            'background':'#0f0f0f',
+                            'right': '0%',
+                            'bottom': '-100%',
+                            'width':'250px',
+                        };
+                    case "top":
+                        return {  
+                            'border':'2px solid lime',
+                            'border-color':'linear-gradient(to left top, lime, #52f552)',
+                            'background':'#0f0f0f',
+                            'right': '0%',
+                            'bottom': '100%',
+                            'width':'250px',
+                        };
+                }
                 }
         },
         getCost(data,id) {
             let eff = 1
-            eff = new Decimal(5e12).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(10).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(100).add(1))
+            eff = new Decimal(5e12).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(30).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(100).add(1))
             return eff
         },
         getEssence(data,id) {

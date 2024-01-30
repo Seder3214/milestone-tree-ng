@@ -15,6 +15,7 @@ function getStartOptions() {
 		oldStyle: false,
 		tooltipForcing: true,
 		reverseMilestones: true,
+		changeCorruptTooltipPlace:"right",
 	}
 }
 
@@ -48,11 +49,15 @@ function toggleAuto(toggle) {
 }
 
 const MS_DISPLAYS = ["ALL", "LAST, AUTO, INCOMPLETE", "AUTOMATION, INCOMPLETE", "INCOMPLETE", "NONE"];
-
+const CCTP_DISPLAYS=["AT THE RIGHT","AT THE LEFT","AT THE TOP","AT THE BOTTOM"]
+const CCTP_SETTINGS=["right","left","top","bottom"]
 const MS_SETTINGS = ["always", "last", "automation", "incomplete", "never"];
 
 function adjustMSDisp() {
 	options.msDisplay = MS_SETTINGS[(MS_SETTINGS.indexOf(options.msDisplay) + 1) % 5];
+}
+function adjustCCTP() {
+	options.changeCorruptTooltipPlace = CCTP_SETTINGS[(CCTP_SETTINGS.indexOf(options.changeCorruptTooltipPlace) + 1) % 4];
 }
 function milestoneShown(layer, id) {
 	complete = player[layer].milestones.includes(id);

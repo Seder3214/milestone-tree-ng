@@ -172,7 +172,7 @@ var systemComponents = {
 				<td><button class="opt" onclick="toggleOpt('forceTooltips'); needsCanvasUpdate = true">Shift-Click to Toggle Tooltips: {{ options.forceTooltips?"ON":"OFF" }}</button></td>
 				</tr> 
 				<tr>
-                <td></td>
+                <td><button class="opt" onclick="adjustCCTP()">Corruption Tooltip Position: {{ CCTP_DISPLAYS[CCTP_SETTINGS.indexOf(options.changeCorruptTooltipPlace)]}}</button></td>
                 <td><button class="opt" onclick="toggleOpt('reverseMilestones'); needsCanvasUpdate = true">Milestones Order: {{ options.reverseMilestones?"LAST TO FIRST":"FIRST TO LAST" }}</button></td>
 				</tr> 
         </table>`
