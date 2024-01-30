@@ -41,7 +41,7 @@ addLayer("pm", {
     essenceBoost() {
         let eff = player.pm.essence.add(1).log2().pow(2).mul(0.1)
         eff = eff.mul(buyableEffect('mp',22))
-        if (player.mp.modeP==true) eff = eff.mul(buyableEffect('mp',22).div(5))
+        if (player.mp.modeP==true) eff = eff.mul(buyableEffect('mp',22).div(2).add(3))
         return eff.max(1)
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
