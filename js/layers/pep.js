@@ -72,10 +72,10 @@ addLayer("pep", {
 				return [new Decimal("1"),new Decimal("2"),Decimal.dInf][player.pep.buyables[11]]
 			},
 			canAfford() {
-                   return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
+                   return player.pep.points.gte(tmp[this.layer].buyables[this.id].cost)
 			},
                buy() { 
-                player.ep.points = player.ep.points.sub(this.cost())
+                player.pep.points = player.ep.points.sub(this.cost())
                    player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
                },
 			  effect(){
@@ -87,7 +87,7 @@ addLayer("pep", {
 				  return player.mp.activeChallenge==21;
 			  },
 			  style() {
-				if (player.ep.points.lt(this.cost())) return {
+				if (player.pep.points.lt(this.cost())) return {
 					'border-radius': '0%',
 					'color':'white',
 					'background-color':'black',
