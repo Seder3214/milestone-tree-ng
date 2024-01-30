@@ -172,7 +172,7 @@ addLayer("mp", {
 		if(player.m.best.gte(120))return this.goalAfter120(Math.ceil(player.mp.challenges[13]+0.001));
 	},
 	canComplete(){
-		return player.ep.points.gte(tmp.mp.challenges[this.id].goal)&&player.m.points.lt(110);
+		return player.pep.points.gte(tmp.mp.challenges[this.id].goal)&&player.m.points.lt(110);
 	},
 	completionsAfter120(){
 		let p=player.ep.points;
