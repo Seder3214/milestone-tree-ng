@@ -34,7 +34,7 @@ addLayer("pm", {
 		let base = 0.5
 		if (player.mp.buyables[23].gte(1)) base += buyableEffect('mp',23).toNumber()
 		let eff=player.mp.points.log2().pow(base)
-		if (player.pm.best.gte(3)) eff = eff.mul(2)
+		if (player.pm.best.gte(3)) eff = eff.mul(5)
         if (player.pep.buyables[11].gte(1)) eff = eff.mul(tmp.pep.prOneEffect.pow(0.5))
         return eff
 	},
@@ -81,7 +81,7 @@ addLayer("pm", {
             unlocked() {return player[this.layer].best.gte(2)},
             done() {return player[this.layer].best.gte(3)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Make 1st milestone reducing effect 2.00x stronger."
+				return "Make 1st milestone reducing effect 5.00x stronger."
 			},
         },
         {
