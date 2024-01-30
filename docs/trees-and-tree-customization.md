@@ -21,7 +21,7 @@ nodes in the main tree (but branches between nodes will only work on the first n
 
 Here is an example tree:
 ```js
-[["p"],
+[["m"],
  ["left", "blank", "right", "blank"]
  ["a", "b", "blank", "c", "weirdButton"]]
 ```

@@ -14,12 +14,6 @@ addNode("blank", {
     layerShown: "ghost",
 }, 
 )
-addNode("blank", {
-    layerShown() {if (player.mp.activeChallenge==21) return 'ghost'},
-    row: 1,
-    position: 1,
-}, 
-)
 
 
 addLayer("tree-tab", {
