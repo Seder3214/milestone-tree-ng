@@ -6,20 +6,15 @@ addLayer("ep", {
         unlocked: false,
 		points: new Decimal(0),
     }},
-    color() {if (player.pm.best.gte(5)) return '#c89646'
-		else return "#648c11"},
+    color() {return "#648c11"},
     requires(){
 		if (player.pm.best.gte(5)) return new Decimal(20000000)
 		else return new Decimal(1e15);
 	},
-    resource() {if (player.mp.activeChallenge==21) return 'prestiged-exotic prestige points'
-		else return "exotic prestige points"},
-    baseResource() {if (player.mp.activeChallenge==21) return 'prestige essence'
-		else return "prestige power"}, // Name of resource prestige is based on
-    baseAmount() {if (player.pm.best.gte(5)) return player.pm.essence
-		else return player.pp.points}, // Get the current amount of baseResource
-    type() {if (player.mp.activeChallenge==21) return "static"
-			else return 'normal'}, // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+    resource() {return "exotic prestige points"},
+    baseResource() {return "prestige power"}, // Name of resource prestige is based on
+    baseAmount() {return player.pp.points}, // Get the current amount of baseResource
+    type() {return 'normal'}, // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
 		if (player.p.buyables[12].gte(1)&& player.mp.activeChallenge!=21) mult = mult.mul(buyableEffect('p', 12))
@@ -31,36 +26,69 @@ addLayer("ep", {
 		if(player.mp.activeChallenge==21)return new Decimal(0.3)
 		return m;
     },
+	exponent: function(){
+		return new Decimal(1)
+	},
     oneEffect() {
-        let eff = new Decimal(player.ep.points.add(1).pow(player.m.points.gte(165)?4:3.25)).max(1)
-		if (player.m.points.gte(167)) eff = eff.pow(1.1)
-		if (player.m.points.gte(168)) eff = eff.pow(1.1)
-        return eff;
+        let eff = new Decimal(player.ep.points.add(1).pow(player.m.best.gte(165)?4:3.25)).max(1)
+		if (player.m.best.gte(167)) eff = eff.pow(1.1)
+		if (player.m.best.gte(168)) eff = eff.pow(1.1)
+		if (player.mp.activeChallenge==13) return new Decimal(1)
+		eff=softcap(eff,new Decimal('1e1000000'),0.075)
+        return softcap(eff,new Decimal('1e2500000'),0.075);
     },
 	prOneEffect() {
         let eff = player.ep.points.add(1).mul(3).pow(1.15)
         return eff;
     },
     twoEffect() {
-        let eff = player.ep.points.add(1).pow(player.m.points.gte(166)?2.5:2.2).mul(4).max(1)
-        return softcap(eff,new Decimal('1e100'),0.05);
+        let eff = player.ep.points.add(1).pow(player.m.best.gte(166)?2.5:2.2).mul(4).max(1)
+		eff=softcap(eff,new Decimal('1e100'),0.075)
+		soft = player.mp.buyables[12].gte(1)?new Decimal('1e25000').mul(new Decimal('1e25000').mul(player.mp.buyables[12]).max(1)):new Decimal('1e25000')
+		if (player.mp.activeChallenge==13) return new Decimal(1)
+		eff = softcap(eff,soft,0.075)
+        return softcap(eff,new Decimal('1e100000'),0.22);
     },
 	threeEffect() {
-        let eff = player.ep.points.add(1).log10().pow(0.01).max(1)
-		if (player.m.points.gte(171)) eff = eff.mul(1.3)
-		if (player.m.points.gte(172)) eff = eff.mul(1.1)
-        return eff;
+        let eff = player.ep.points.add(1).log10().max(1).pow(0.01).div(500)
+		if (player.m.best.gte(171)) eff = eff.mul(1.075)
+		if (player.m.best.gte(172)) eff = eff.mul(1.1)
+		if (player.mp.buyables[12].gte(2)) eff = eff.mul(4)
+		if (player.mp.activeChallenge==13) return new Decimal(0)
+        return eff.toNumber();
     },
 	fourEffect() {
         let eff = player.ep.points.add(1).pow(0.35).max(1)
-		if (player.m.points.gte(173)) eff = eff.pow(1.05)
-        return eff;
+		if (player.m.best.gte(173)) eff = eff.pow(1.05)
+		if (player.mp.activeChallenge==13) return new Decimal(1)
+		if (player.mp.activeChallenge==11) {eff = eff.pow(0.15)
+			eff=softcap(eff,new Decimal('1e40000'),0.275)}
+        return softcap(eff,new Decimal('1e100000'),0.075);
     },
 	fiveEffect() {
-        let eff = player.ep.points.add(1).log10().log(10).pow(0.5).max(1)
-		let start = new Decimal('e5.6e12').mul(player.ep.points.add(1).log10().log(10).pow(0.5))
-		if (player.m.points.gte(174)) start = start.pow(0.1)
+        let eff = player.ep.points.add(1).log10().add(1).log(10).pow(0.5).max(1)
+		let start = new Decimal('e5.6e12').mul(player.ep.points.add(1).log10().add(1).log(10).pow(0.5))
+		if (player.m.best.gte(174)) start = start.pow(0.1)
+		if (player.mp.activeChallenge==13) eff = new Decimal(1)
+		start=start.add(tmp.ap.challenges[42].effect)
         return {eff: eff, start: start};
+    },
+	sixEffect() {
+		let eff=player.ep.points.add(1).log(1.1).pow(2.15)
+		if (player.mp.challenges[11]>0) eff=eff.mul(tmp.mp.challenges[11].rewardEffect)
+		if (player.mp.activeChallenge==13) return new Decimal(1)
+		return eff.max(1)
+	},
+	sevenEffect() {
+        let eff = player.ep.points.add(1).log10().max(1).pow(0.1).mul(0.382).div(20)
+		if (player.mp.challenges[12]>0) eff=eff.add(tmp.mp.challenges[12].rewardEffect)
+		if (player.mp.activeChallenge==13) return new Decimal(0)
+        return eff;
+    },
+	eightEffect() {
+        let eff = player.ep.points.add(1).log10().max(1).pow(0.1).div(10)
+		if (player.mp.activeChallenge==13) return new Decimal(0)
+    return softcap(eff,new Decimal(0.5),0.1);
     },
     row: 3,
 	newRow: 1, // Row the layer is in on the tree (0 is the first row)
@@ -68,8 +96,7 @@ addLayer("ep", {
     hotkeys: [
         {key: "x", description: "X: Reset for exotic prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){if (player.pm.best.gte(5)) return (player.pm.best.gte(5))
-		else return (player.m.best.gte(160)&& (player.mp.activeChallenge!=21))},
+    layerShown(){return (player.m.best.gte(160)&& (player.mp.activeChallenge!=21))},
 	upgrades: {
         rows: 4,
         cols: 4,
@@ -80,8 +107,8 @@ addLayer("ep", {
             unlocked() { return player.mp.activeChallenge!=21}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=1.2;
-                let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.3).add(1))
-                return ret;
+                let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.275).add(1)).max(1)
+                return softcap(ret,new Decimal(1e9),0.1);
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
@@ -111,13 +138,13 @@ addLayer("ep", {
 		14: {
 			title: "Exotic Prestige Upgrade 14",
             description: "Change the formula for Power Scaler.",
-            cost: new Decimal('e5227000'),
+            cost: new Decimal('e4650000'),
             unlocked() { return player.mp.buyables[21].gte(2)&& player.mp.activeChallenge!=21},
         },
 		21: {
 			title: "Exotic Prestige Upgrade 21",
             description: "Reduce goal scaling of <b>Dilation</b> challenges by sum of this challenge completions and Exotic Prestige Points",
-            cost: new Decimal('e8590000'),
+            cost: new Decimal('e7490000'),
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
                 let ret = (player.t.challenges[11]*2)+(player.t.challenges[21]*10)+(player.t.challenges[31]*10)+(player.ep.points.add(1).log(10).add(1).pow(0.5).toNumber())
                 return ret;
@@ -140,7 +167,7 @@ addLayer("ep", {
 				"Cost for Next Tier: "+format(data.cost,0)+" Exotic Prestige points";
 			},
 			cost(){
-				return [new Decimal("2"),new Decimal("8"),new Decimal("512"),new Decimal("1e55"),new Decimal("1e120"), new Decimal('1e450')][player.ep.buyables[11]]
+				return [new Decimal("2"),new Decimal("8"),new Decimal("512"),new Decimal("1e55"),new Decimal("1e170"), new Decimal('1e2000'),new Decimal('1e150000'),new Decimal('1e3330000'),Decimal.dInf][player.ep.buyables[11]]
 			},
 			canAfford() {
                    return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
@@ -233,8 +260,6 @@ addLayer("ep", {
 				if (player.ep.buyables[11].gte(6)) table += '<br>6th effect: Transcend Points gain in Transcend Challenges is x' + format(tmp.ep.sixEffect,4) + " better."
 				if (player.ep.buyables[11].gte(7)) table += "<br>7th effect: Softcap of Prestige Boost's effect starts +" + format(tmp.ep.sevenEffect,4) + " later."
 				if (player.ep.buyables[11].gte(8)) table += "<br>8th effect: Add +" + format(tmp.ep.eightEffect,4) + " to prestige energy gain exponent."
-				if (player.ep.buyables[12].gte(1)) table += '1st effect: Boost points gain by ' + format(tmp.ep.prOneEffect) + "x, but boost 1st milestone reducing effect by "+ format(tmp.ep.prOneEffect.pow(0.5))+ "x"
-                if (player.ep.buyables[12].gte(2)) table += '<br>2nd effect: Transcend Points gain is ' + format(tmp.ep.twoEffect) + "x better (only outside of T challenges)"
 				return table}],
 				"buyables",
                 "upgrades"
@@ -243,7 +268,7 @@ addLayer("ep", {
     },
 	branches: ["pp"],
 	passiveGeneration(){
-		if (player.em.best.gte(6)&& player.mp.activeChallenge!=21) return 0.1
+		if (player.em.best.gte(6)) return 0.1
 		return 0;
 	},
 	softcap(){
@@ -253,10 +278,7 @@ addLayer("ep", {
 		return new Decimal(1);
 	},
 		doReset(l){
-			if(player.mp.activeChallenge==21) player.pm.essence = new Decimal(0)
-			else{
-			if(l=="ep")if(player.m.best.gte(162))layerDataReset("pp",["upgrades", 'buyables']);else layerDataReset("pp",[]);
-			}
+			if(l=="ep")if(player.m.best.gte(162))layerDataReset("pp",["upgrades", 'buyables']);else layerDataReset("pp",[])
 		},
 	update(){
 	}

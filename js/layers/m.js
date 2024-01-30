@@ -8,7 +8,7 @@ addLayer("m", {
     }},
     color: "#793784",
     requires(){
-		//if(player.m.points.gte(99))return new Decimal(Infinity);
+		//if(player.m.best.gte(99))return new Decimal(Infinity);
 		return new Decimal(10);
 	},
     resource: "milestones", // Name of prestige currency
@@ -42,7 +42,7 @@ addLayer("m", {
 		if(hasUpgrade("ap",23))firstScaling=firstScaling.div(upgradeEffect("ap",23));
 		if(hasUpgrade("pe",12))firstScaling=firstScaling.div(upgradeEffect("pe",12));
 		if(hasUpgrade("se",12))firstScaling=firstScaling.div(upgradeEffect("se",12));
-		return new Decimal(2).add(firstScaling.mul(player.m.points.gte(getCostOverflowStart())?getCostOverflowEff():1));
+		return new Decimal(2).add(firstScaling).mul(player.m.points.gte(getCostOverflowStart())?getCostOverflowEff():1);
 	},
     getScalingStart(){
         let start=new Decimal(14);
@@ -52,9 +52,9 @@ addLayer("m", {
     hotkeys: [
         {key: "m", description: "M: Get Milestone", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return true},
+    layerShown(){return (player.mp.activeChallenge!=21)},
 	resetsNothing(){return true},
-	autoPrestige(){return player.mm.points.gte(1)},
+	autoPrestige(){return player.mm.best.gte(1)},
 	milestones: [
 		{
 			requirementDescription: "1st Milestone",
@@ -1447,7 +1447,7 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(173)},
             done() {return player[this.layer].best.gte(174)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Hyper-Prestige inflation starts ^0.1 earlier, Milestone Overflow starts 5 later.";
+				return "Hyper-Prestige inflation starts ^0.1 earlier, Milestone Overflow starts 2 later.";
 			},
         },
 		{
@@ -1463,7 +1463,7 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(175)},
             done() {return player[this.layer].best.gte(176)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Milestone Overflow Scale starts 3 later.";
+				return "Milestone Overflow Scale starts 1 later.";
 			},
         },
 		{
@@ -1471,7 +1471,7 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(176)},
             done() {return player[this.layer].best.gte(177)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Milestone Overflow Scale starts 3 later.";
+				return "Milestone Overflow Scale starts 1 later.";
 			},
         },
 		{
@@ -1479,7 +1479,63 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(177)},
             done() {return player[this.layer].best.gte(178)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Milestone Overflow Scale starts 2 later.";
+				return "Unlock last Atomic Prestige Challenge and a row of Hyper Boost Upgrades.";
+			},
+        },
+        {
+			requirementDescription: "179th Milestone",
+            unlocked() {return player[this.layer].best.gte(178)},
+            done() {return player[this.layer].best.gte(179)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Exotic Booster effect is better by Milestones amount<b> After Overflow</b> and Exotic Prestige Points amount.<br>Currently: " + format(tmp.m.milestone179Effect) + "x";
+			},
+        },
+        {
+			requirementDescription: "180th Milestone",
+            unlocked() {return player[this.layer].best.gte(179)},
+            done() {return player[this.layer].best.gte(180)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "<b>Challenge Slayer'</b> effect is better.";
+			},
+        },
+        {
+			requirementDescription: "181st Milestone",
+            unlocked() {return player[this.layer].best.gte(180)},
+            done() {return player[this.layer].best.gte(181)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Unlock a new layer.";
+			},
+        },
+        {
+			requirementDescription: "182nd Milestone",
+            unlocked() {return player[this.layer].best.gte(181)},
+            done() {return player[this.layer].best.gte(182)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Add Exotic Fusioner Tier to 179th milestone effect.";
+			},
+        },
+        {
+			requirementDescription: "183rd Milestone",
+            unlocked() {return player[this.layer].best.gte(182)},
+            done() {return player[this.layer].best.gte(183)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "Unlock a Multiverse Challenge (ENDGAME).";
+			},
+        },
+        {
+			requirementDescription: "184th Milestone",
+            unlocked() {return player[this.layer].best.gte(183)},
+            done() {return player[this.layer].best.gte(184)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "<b>Unlock another Multiverse Challenge.";
+			},
+        },
+        {
+			requirementDescription: "185th Milestone",
+            unlocked() {return player[this.layer].best.gte(184)},
+            done() {return player[this.layer].best.gte(185)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return "<b>Unlock Prestige Milestone Tree.";
 			},
         },
 	],
@@ -1523,7 +1579,7 @@ addLayer("m", {
 		if(player.m.best.gte(91))m=m.pow(1.0005);
 		if(player.m.best.gte(96))m=m.pow(1.0005);
 		if(player.m.best.gte(107))m=m.pow(1.002);//0.91298476860857272607902105461039
-        if(player.em.points.gte(2))m=m.pow(1.01);
+        if(player.em.best.gte(2))m=m.pow(1.01);
 		var b=new Decimal(2);
 		if(player.m.best.gte(4)){
 			b=b.add(layers.m.milestone4Effect());
@@ -1646,13 +1702,21 @@ addLayer("m", {
     milestone154Effect(){
 		var p=player.pp.points;
 		if(player.m.best.gte(152)){
-			p=Decimal.mul(0.1,p).pow(0.85);
+			p=Decimal.mul(0.1,p).add(1).pow(0.85);
 		}
         if (hasUpgrade('pp', 21)) {
             p=p.pow(layers.t.getSpecialEffect(31));   
         }
-		p=p.mul(tmp.ap.challenges[41].rewardEffect);
+		p=p.mul(tmp.ap.challenges[41].rewardEffect).max(1);
 		p = softcap(p,new Decimal('1e800'),0.1)
+		return softcap(p,new Decimal('1e1000'),0.01);
+	},
+    milestone179Effect(){
+		var p=player.m.best.add(player.m.best.gte(182)?player.ep.buyables[11]:0).sub(getCostOverflowStart()).pow(25).pow(player.ep.points.add(1).log10().add(1).log(2)).max(1);
+		if((player.ap.activeChallenge==42)) return new Decimal(1)
+		if (hasUpgrade('ep',12)) p = p.pow(upgradeEffect('ep',12))
+		p = softcap(p,new Decimal('1e800'),0.1)
+		
 		return softcap(p,new Decimal('1e1000'),0.01);
 	},
     resetDescription: "Get ",

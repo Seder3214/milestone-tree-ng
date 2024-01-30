@@ -32,9 +32,9 @@ addLayer("mm", {
     hotkeys: [
         {key: "M", description: "Shift+M: Get Meta-Milestone", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(40)},
+    layerShown(){return player.m.best.gte(40)&& (player.mp.activeChallenge!=21)},
 	resetsNothing(){return true},
-	autoPrestige(){return player.em.points.gte(1)},
+	autoPrestige(){return player.em.best.gte(1)},
 	milestones: [
 		{
 			requirementDescription: "1st Meta-Milestone",
@@ -282,7 +282,7 @@ addLayer("mm", {
 	doReset(){},
 	meta25Effect(){
 		let ret=player.mm.points.div(10);
-		if(player.mm.points.gte(30))ret=ret.pow(2);
+		if(player.mm.best.gte(30))ret=ret.pow(2);
 		return ret;
 	},
 })

@@ -3,7 +3,8 @@ let modInfo = {
 	id: "c2nv4in9eusojg59bmo",
 	author: "Seder3214",
 	pointsName: "points",
-	modFiles: ["/layers/m.js","/layers/p.js","/layers/sp.js","/layers/hp.js","/layers/pb.js","/layers/hb.js","/layers/ap.js","/layers/t.js","/layers/mm.js","/layers/em.js","/layers/pe.js","/layers/se.js","/layers/pp.js","/layers/ep.js", "tree.js",'modal.js'],
+	modFiles: ["/layers/m.js","/layers/p.js","/layers/sp.js","/layers/hp.js","/layers/pb.js","/layers/hb.js","/layers/ap.js",
+	"/layers/t.js","/layers/mm.js","/layers/em.js","/layers/pe.js","/layers/se.js","/layers/pp.js","/layers/ep.js","/layers/mp.js","/layers/pm.js","/layers/cp.js", "tree.js","/layers/pep.js",'modal.js'],
 
 	discordName: "",
 	discordLink: "",
@@ -13,8 +14,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.005a",
-	name: "Further into Prestige Universe",
+	num: "2.035 beta I",
+	name: "Corrupted Game?!",
 }
 
 let changelog = `<h3>Changelog:</h3><br><br>
@@ -77,8 +78,15 @@ if(hasUpgrade("hp",12))b=b.mul(upgradeEffect("hp",12));
 if(hasUpgrade("ap",11))b=b.mul(upgradeEffect("ap",11));
 if(player.t.activeChallenge==11||player.t.activeChallenge==21||player.t.activeChallenge==31)b=b.pow(tmp.t.dilationEffect);
 if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41||player.ap.activeChallenge==42 )b=b.add(1).log10().pow(player.m.best.gte(122)?player.m.points:100);
-if (player.mp.activeChallenge==21) b = new Decimal(1).div(tmp.pm.reduce)
+if (player.mp.activeChallenge==21) b = new Decimal(1).mul(player.pep.buyables[11].gte(2)?tmp.pep.prTwoEffect:1).div(tmp.pm.reduce)
 if (player.pm.essence.gte(1)) b = b.mul(tmp.pm.essenceBoost)
+for (p in player.cp.grid) {
+	if (getGridData('cp',p).active==true) {
+		b=b.div(gridEffect('cp',p))
+	}
+}
+if (player.mp.modeP==true) b = b.mul(buyableEffect('mp',22))
+if (player.cp.formatted.gte(1)) b = b.mul(corruptEffect())
 return b.div(player.m.best.gte(180)?2:1)
 }
 
@@ -110,21 +118,23 @@ return sc;
 }
 
 function getCostOverflowStart(){
+	if(player.ap.activeChallenge==42){
+		return new Decimal(player.points.log(10).pow(0.585))
+	}
 	var sc=new Decimal(170);
-	if (player.m.points.gte(174)) sc = sc.add(5)
+	if (player.m.best.gte(174)) sc = sc.add(2)
 	return sc;
 	}
 	function getCostOverflowScale(){
 		var sc=new Decimal(172);
-		if (player.m.points.gte(176)) sc = sc.add(3)
-		if (player.m.points.gte(177)) sc = sc.add(3)
-		if (player.m.points.gte(178)) sc = sc.add(2)
+		if (player.m.best.gte(176)) sc = sc.add(1)
+		if (player.m.best.gte(177)) sc = sc.add(1)
 		return sc;
 		}
 	function getCostOverflowEff(){
-		let eff=player.m.points.sub(getCostOverflowStart()).div(2).pow(0.3)
-		if(player.m.best.gte(getCostOverflowScale)){
-			eff=player.m.points.sub(getCostOverflowScale()).div(2).pow(0.5)
+		let eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(1.075).sub(hasUpgrade("mp",12)?upgradeEffect("mp",12):1)
+		if (player.m.points.gte(getCostOverflowScale())){
+		eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(player.m.points.gte(181)?new Decimal(1.7).add(player.m.points.sub(181).div(10)):1.2).sub(hasUpgrade("mp",12)?upgradeEffect("mp",12):1)
 		}
 		return eff;
 		}
@@ -139,7 +149,7 @@ function(){let table = ''
 	if(getPointGen().gte(getPointSoftcapStart().sqrt())){
 		table += "1st milestone's effect ^"+format(getPointGen().log(getPointGenBeforeSoftcap()),4)+" because of softcap.<br>1st milestone's softcap starts at "+format(getPointSoftcapStart());
 	}
-	if(player.m.points.gte(getCostOverflowStart())){
+	if(player.m.best.gte(getCostOverflowStart())){
 		table += "<br>Milestone cost exponent is x"+format(getCostOverflowEff(),4)+" because of overflow.<br> Starts at "+format(getCostOverflowStart()) + " milestones, scales at " +format(getCostOverflowScale()) + " milestones";
    }
 	return table

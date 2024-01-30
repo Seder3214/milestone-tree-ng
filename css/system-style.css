@@ -1,7 +1,7 @@
 * {
 	transition-duration: 0.5s;
 	text-align: center;
-	font-family: "Inconsolata", monospace;
+	font-family: "Roboto Mono",monospace;
 	font-weight: bold;
 	table-align: center;
 	margin: auto;
@@ -186,7 +186,7 @@
 	margin: 0;
 	font-size: 21px;
 	font-weight: bold;
-	font-family:Verdana, Geneva, Tahoma, sans-serif ;
+	font-family:'Bahnshcrift' ;
 	color: black;
 	background-color: transparent;
 	border: none;
@@ -201,7 +201,27 @@
 	color: #000;
 	max-width: 700px;
 	background: rgba(255,253,160,1);
-	background: -webkit-linear-gradient( left, lime 0%, rgb(133, 235, 133) 25%, rgb(94, 201, 94) 50%, lime 100% ) repeat;
+	background: -webkit-linear-gradient( left, #648c11 0%, #81b31f 25%, #96d31e 50%, #648c11 100% ) repeat;
+	-webkit-background-clip: text;
+	-ms-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-ms-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	text-fill-color: transparent;
+	-webkit-animation-name: masked-animation;
+	-webkit-animation-duration: 50s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+  }
+  .pef {
+	text-align: center;
+	font-size: 18px;
+	color: #000;
+	max-width: 700px;
+	background: rgba(255,253,160,1);
+	background: -webkit-linear-gradient( left, #c89646 0%, #ebae4d 25%, #f3bd65 50%, #c89646 100% ) repeat;
 	-webkit-background-clip: text;
 	-ms-background-clip: text;
 	-moz-background-clip: text;

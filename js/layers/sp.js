@@ -17,7 +17,7 @@ addLayer("sp", {
     gainMult() { // Calculate the multiplier for main currency from bonuses
         mult = new Decimal(1)
 		if(player.ap.activeChallenge==12 || player.ap.activeChallenge==41)return new Decimal(0);
-		if(player.m.points.gte(27))mult=mult.mul(tmp.m.milestone27Effect);
+		if(player.m.best.gte(27))mult=mult.mul(tmp.m.milestone27Effect);
 		if(hasUpgrade("sp",21))mult=mult.mul(upgradeEffect("sp",21));
 		if(hasUpgrade("sp",22))mult=mult.mul(upgradeEffect("sp",22));
 		if(hasUpgrade("hp",21))mult=mult.mul(upgradeEffect("hp",21));
@@ -28,7 +28,7 @@ addLayer("sp", {
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
         mult = new Decimal(1)
-		if(player.m.points.gte(27))mult=mult.mul(tmp.ap.challenges[12].rewardEffect);
+		if(player.m.best.gte(27))mult=mult.mul(tmp.ap.challenges[12].rewardEffect);
 		if(hasUpgrade("t",13))mult=mult.mul(1.005);
 		if(hasUpgrade("t",33))mult=mult.mul(1.005);
 		if(player.t.activeChallenge==31)mult=mult.mul(tmp.t.dilationEffect);
@@ -39,7 +39,7 @@ addLayer("sp", {
     hotkeys: [
         {key: "s", description: "S: Reset for super-prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(25)},
+    layerShown(){return player.m.best.gte(25) && (player.mp.activeChallenge!=21)},
 	upgrades: {
         rows: 4,
         cols: 4,
@@ -50,12 +50,12 @@ addLayer("sp", {
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=50;
-				if(player.m.points.gte(31))base+=5;
-				if(player.m.points.gte(49))base+=5;
-				if(player.m.points.gte(59))base+=5;
-				if(player.m.points.gte(69))base+=5;
-				if(player.m.points.gte(79))base+=10;
-				if(player.m.points.gte(89))base+=5;
+				if(player.m.best.gte(31))base+=5;
+				if(player.m.best.gte(49))base+=5;
+				if(player.m.best.gte(59))base+=5;
+				if(player.m.best.gte(69))base+=5;
+				if(player.m.best.gte(79))base+=10;
+				if(player.m.best.gte(89))base+=5;
 				if(hasUpgrade("sp",44))base+=10;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
                 return ret;
@@ -69,15 +69,15 @@ addLayer("sp", {
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=10;
-				if(player.m.points.gte(32))base+=1;
-				if(player.m.points.gte(49))base+=1;
-				if(player.m.points.gte(59))base+=2;
-				if(player.m.points.gte(69))base+=1;
-				if(player.m.points.gte(79))base+=2;
-				if(player.m.points.gte(89))base+=1;
+				if(player.m.best.gte(32))base+=1;
+				if(player.m.best.gte(49))base+=1;
+				if(player.m.best.gte(59))base+=2;
+				if(player.m.best.gte(69))base+=1;
+				if(player.m.best.gte(79))base+=2;
+				if(player.m.best.gte(89))base+=1;
 				if(hasUpgrade("sp",44))base+=2;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
-                return ret;
+                return softcap(ret,new Decimal('e5e14'),0.2);
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
@@ -85,18 +85,18 @@ addLayer("sp", {
 			title: "Super-Prestige Upgrade 13",
             description: "Prestige Point gain is boosted by your super-prestige points.",
             cost: new Decimal(1e15),
-            unlocked() { return player.m.points.gte(30)}, // The upgrade is only visible when this is true
+            unlocked() { return player.m.best.gte(30)}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=3;
-				if(player.m.points.gte(33))base+=0.5;
-				if(player.m.points.gte(49))base+=0.5;
-				if(player.m.points.gte(59))base+=0.92;
-				if(player.m.points.gte(69))base+=0.58;
-				if(player.m.points.gte(79))base+=1;
-				if(player.m.points.gte(89))base+=0.5;
+				if(player.m.best.gte(33))base+=0.5;
+				if(player.m.best.gte(49))base+=0.5;
+				if(player.m.best.gte(59))base+=0.92;
+				if(player.m.best.gte(69))base+=0.58;
+				if(player.m.best.gte(79))base+=1;
+				if(player.m.best.gte(89))base+=0.5;
 				if(hasUpgrade("sp",44))base+=1;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
-                return ret;
+                return softcap(ret,new Decimal('e5e14'),0.2);
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
@@ -104,18 +104,18 @@ addLayer("sp", {
 			title: "Super-Prestige Upgrade 14",
             description: "Prestige Point gain is boosted by your super-prestige points.",
             cost: new Decimal(1e37),
-            unlocked() { return player.m.points.gte(30)}, // The upgrade is only visible when this is true
+            unlocked() { return player.m.best.gte(30)}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=1.5;
-				if(player.m.points.gte(34))base+=0.5;
-				if(player.m.points.gte(49))base+=0.5;
-				if(player.m.points.gte(59))base+=0.5;
-				if(player.m.points.gte(69))base+=0.5;
-				if(player.m.points.gte(79))base+=0.766;
-				if(player.m.points.gte(89))base+=0.234;
+				if(player.m.best.gte(34))base+=0.5;
+				if(player.m.best.gte(49))base+=0.5;
+				if(player.m.best.gte(59))base+=0.5;
+				if(player.m.best.gte(69))base+=0.5;
+				if(player.m.best.gte(79))base+=0.766;
+				if(player.m.best.gte(89))base+=0.234;
 				if(hasUpgrade("sp",44))base+=1;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
-                return ret;
+                return softcap(ret,new Decimal('e5e14'),0.2);
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
@@ -123,7 +123,7 @@ addLayer("sp", {
 			title: "Super-Prestige Upgrade 21",
             description: "Super-Prestige Point gain is boosted by your super-prestige points.",
             cost: new Decimal(1e63),
-            unlocked() { return player.m.points.gte(35)}, // The upgrade is only visible when this is true
+            unlocked() { return player.m.best.gte(35)}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=1.3;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
@@ -135,7 +135,7 @@ addLayer("sp", {
 			title: "Super-Prestige Upgrade 22",
             description: "Super-Prestige Point gain is boosted by your super-prestige points.",
             cost: new Decimal(1e110),
-            unlocked() { return player.m.points.gte(35)}, // The upgrade is only visible when this is true
+            unlocked() { return player.m.best.gte(35)}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=1.1;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
@@ -147,13 +147,13 @@ addLayer("sp", {
 			title: "Super-Prestige Upgrade 23",
             description: "6th and 27th Milestone's effect ^(2+(meta-milestones))",
             cost: new Decimal(1e185),
-            unlocked() { return player.m.points.gte(40)}, // The upgrade is only visible when this is true、
+            unlocked() { return player.m.best.gte(40)}, // The upgrade is only visible when this is true、
         },
 		24: {
 			title: "Super-Prestige Upgrade 24",
             description: "Third Milestone's effect is boosted by your super-prestige points.",
             cost: new Decimal(1e227),
-            unlocked() { return player.m.points.gte(40)}, // The upgrade is only visible when this is true、
+            unlocked() { return player.m.best.gte(40)}, // The upgrade is only visible when this is true、
         },
 		31: {
 			title: "Super-Prestige Upgrade 31",
@@ -167,26 +167,26 @@ addLayer("sp", {
 				if(hasUpgrade("t",21))p=p.mul(1.1);
 				return p.add(1);
 			},
-            unlocked() { return player.m.points.gte(55)}, // The upgrade is only visible when this is true
+            unlocked() { return player.m.best.gte(55)}, // The upgrade is only visible when this is true
             effectDisplay() { return format(this.effect(),4)+"x weaker" }, // Add formatting to the effect
         },
 		32: {
 			title: "Super-Prestige Upgrade 32",
             description: "Super-Prestige Upgrade 31 is boosted.",
             cost: new Decimal("1e9617"),
-            unlocked() { return player.m.points.gte(55)}, // The upgrade is only visible when this is true
+            unlocked() { return player.m.best.gte(55)}, // The upgrade is only visible when this is true
         },
 		33: {
 			title: "Super-Prestige Upgrade 33",
             description: "Super-Prestige Upgrade 31 is boosted.",
             cost: new Decimal("1e13713"),
-            unlocked() { return player.m.points.gte(55)}, // The upgrade is only visible when this is true
+            unlocked() { return player.m.best.gte(55)}, // The upgrade is only visible when this is true
         },
 		34: {
 			title: "Super-Prestige Upgrade 34",
             description: "Super-Prestige Upgrade 31 is boosted.",
             cost: new Decimal("1e13839"),
-            unlocked() { return player.m.points.gte(55)}, // The upgrade is only visible when this is true
+            unlocked() { return player.m.best.gte(55)}, // The upgrade is only visible when this is true
         },
 		41: {
 			title: "Super-Prestige Upgrade 41",
@@ -195,7 +195,7 @@ addLayer("sp", {
 				if(player.ap.challenges[12]<15)return new Decimal(Infinity);
 				return new Decimal("e447e8");
 			},
-            unlocked() { return player.m.points.gte(127)}, // The upgrade is only visible when this is true
+            unlocked() { return player.m.best.gte(127)}, // The upgrade is only visible when this is true
         },
 		42: {
 			title: "Super-Prestige Upgrade 42",
@@ -204,7 +204,7 @@ addLayer("sp", {
 				if(player.ap.challenges[22]<21)return new Decimal(Infinity);
 				return new Decimal("e478e8");
 			},
-            unlocked() { return player.m.points.gte(127)}, // The upgrade is only visible when this is true
+            unlocked() { return player.m.best.gte(127)}, // The upgrade is only visible when this is true
         },
 		43: {
 			title: "Super-Prestige Upgrade 43",
@@ -213,7 +213,7 @@ addLayer("sp", {
 				if(player.ap.activeChallenge!=32)return new Decimal(Infinity);
 				return new Decimal("e401e8");
 			},
-            unlocked() { return player.m.points.gte(127)}, // The upgrade is only visible when this is true
+            unlocked() { return player.m.best.gte(127)}, // The upgrade is only visible when this is true
         },
 		44: {
 			title: "Super-Prestige Upgrade 44",
@@ -222,7 +222,7 @@ addLayer("sp", {
 				if(player.t.activeChallenge!=31)return new Decimal(Infinity);
 				return new Decimal("e1293e4");
 			},
-            unlocked() { return player.m.points.gte(127)}, // The upgrade is only visible when this is true
+            unlocked() { return player.m.best.gte(127)}, // The upgrade is only visible when this is true
         },
 	},
 	buyables: {
@@ -261,7 +261,7 @@ addLayer("sp", {
 				  return eff;
 			  },
 			  unlocked(){
-				  return player.m.points.gte(77);
+				  return player.m.best.gte(77);
 			  },
 			  style() {
 				if (player.sp.points.lt(this.cost())) return {
@@ -304,13 +304,13 @@ addLayer("sp", {
 			  effect(){
 				  if(player.ap.activeChallenge==32 || player.ap.activeChallenge==41 )return new Decimal(1);
 				  let b=0.02;
-				  if(player.m.points.gte(132))b+=0.01;
+				  if(player.m.best.gte(132))b+=0.01;
 				  let eff=new Decimal(1).add(player[this.layer].buyables[this.id].mul(b));
 				  eff=eff.pow(tmp.ap.challenges[32].rewardEffect);
 				  return eff;
 			  },
 			  unlocked(){
-				  return player.m.points.gte(129);
+				  return player.m.best.gte(129);
 			  },
 			  style() {
 				if (player.sp.points.lt(this.cost())) return {
@@ -332,21 +332,21 @@ addLayer("sp", {
 	},
 	branches: ["p"],
 	passiveGeneration(){
-		if(player.m.points.gte(135))return 1e10;
-		if(player.m.points.gte(57))return 1;
+		if(player.m.best.gte(135))return 1e10;
+		if(player.m.best.gte(57))return 1;
 		return 0;
 	},
 	softcap:new Decimal(Infinity),
 	softcapPower:new Decimal(1),
 		doReset(l){
 			if(l=="sp"){return;}
-			if(l=="hp")if(player.m.points.gte(65))layerDataReset("sp",["upgrades"]);else layerDataReset("sp",[]);
-			if(l=="ap")if(player.m.points.gte(81))layerDataReset("sp",["upgrades"]);else layerDataReset("sp",[]);
-			if(l=="t")if(player.m.points.gte(100))layerDataReset("sp",["upgrades"]);else layerDataReset("sp",[]);
-			if(l=="hb")if(player.m.points.gte(104))layerDataReset("sp",["upgrades"]);else layerDataReset("sp",[]);
+			if(l=="hp")if(player.m.best.gte(65))layerDataReset("sp",["upgrades"]);else layerDataReset("sp",[]);
+			if(l=="ap")if(player.m.best.gte(81))layerDataReset("sp",["upgrades"]);else layerDataReset("sp",[]);
+			if(l=="t")if(player.m.best.gte(100))layerDataReset("sp",["upgrades"]);else layerDataReset("sp",[]);
+			if(l=="hb")if(player.m.best.gte(104))layerDataReset("sp",["upgrades"]);else layerDataReset("sp",[]);
 		},
 	update(){
-		if(player.m.points.gte(83)){
+		if(player.m.best.gte(83)){
 			var target=player.sp.points.add(1).div("1e652955").log("1e12345");
 			if(target.gte(3)){
 				let p=1.309;
@@ -358,7 +358,7 @@ addLayer("sp", {
 				player.sp.buyables[11]=target;
 			}
 		}
-		if(player.m.points.gte(130)){
+		if(player.m.best.gte(130)){
 			var target=player.sp.points.add(1).div(1).log("ee10").max(0.1).log(2);
 			target=target.add(1).floor();
 			if(target.gt(player.sp.buyables[12])){
