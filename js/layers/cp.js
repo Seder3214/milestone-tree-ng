@@ -58,8 +58,10 @@ canBuyMax() {return true},
         let slots = Object.keys(grid).filter(x => grid[x].level<1)
         if (slots.length) {
             let slot = slots[Math.floor(Math.random() * slots.length)]
-            let range = 10
-            let tier = Math.floor(Math.random() * range)
+            let rangeMul = Math.floor(player.cp.totalCorrupt/4)*5
+            let range = 10+rangeMul
+   
+            let tier = Math.floor(Math.random() * range)+rangeMul
             if (tier==0) tier = 1
             player.cp.grid[slot] = { level: tier,active:false,fixed:false }
     }
