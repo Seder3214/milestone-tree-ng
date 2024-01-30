@@ -33,6 +33,7 @@ addLayer("cp", {
     tooltip() {
         return format(player.cp.points,0)+ " corrupted prestige points"
     },
+canBuyMax() {return true},
     nodeStyle() {
         return {
             'border': '5px solid green',
