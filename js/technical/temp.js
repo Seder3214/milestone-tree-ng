@@ -6,8 +6,17 @@ var NaNalert = false;
 // Tmp will not call these
 var activeFunctions = [
 	"startData", "onPrestige", "doReset", "update", "automate",
+<<<<<<< Updated upstream
 	"buy", "buyMax", "respec", "onComplete", "onPurchase", "onPress", "onClick", "masterButtonPress",
 	"sellOne", "sellAll", "pay",
+=======
+	"buy", "buyMax", "respec", "onPress", "onClick", "onHold", "masterButtonPress",
+	"sellOne", "sellAll", "pay", "actualCostFunction", "actualEffectFunction",
+	"effectDescription", "display", "fullDisplay", "effectDisplay", "rewardDisplay",
+	"tabFormat", "content",
+	"onComplete", "onPurchase", "onEnter", "onExit", "done",
+	"getUnlocked", "getStyle", "getCanClick", "getTitle", "getDisplay",'getCost','getEffect','getEssence','getTooltip','getTooltipStyle'
+>>>>>>> Stashed changes
 ]
 
 var noCall = doNotCallTheseFunctionsEveryTick
