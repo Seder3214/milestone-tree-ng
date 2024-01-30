@@ -175,7 +175,7 @@ canBuyMax() {return true},
                     case "right":
                         return {  
                         'border':'2px solid lime',
-                        'border-color':'linear-gradient(to left top, lime, #52f552)',
+                        'border-image':'linear-gradient(to left, lime, #52f552)',
                         'background':'#0f0f0f',
                         'right': '0%',
                         'left':'240%',
