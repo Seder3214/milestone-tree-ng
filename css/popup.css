@@ -3,7 +3,7 @@
 	border-radius: 7px;
 	width: 300px;
 	min-height: 60px;
-	color: #000000;
+	color: #ffffff;
 	display: block;
 	margin-top: 30px;
 	padding-top: 15px;
@@ -38,7 +38,6 @@ modal-text {
 	border: 2px solid rgb(255, 255, 255);
 	z-index: 100000;
 }
-
 .popup-container {
 	position: absolute;
 	z-index: 9999999999999999999999999999999999;

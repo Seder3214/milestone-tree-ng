@@ -4,7 +4,7 @@ let modInfo = {
 	author: "Seder3214",
 	pointsName: "points",
 	modFiles: ["/layers/m.js","/layers/p.js","/layers/sp.js","/layers/hp.js","/layers/pb.js","/layers/hb.js","/layers/ap.js",
-	"/layers/t.js","/layers/mm.js","/layers/em.js","/layers/pe.js","/layers/se.js","/layers/pp.js","/layers/ep.js","/layers/mp.js",,"/layers/pm.js", "tree.js",'modal.js'],
+	"/layers/t.js","/layers/mm.js","/layers/em.js","/layers/pe.js","/layers/se.js","/layers/pp.js","/layers/ep.js","/layers/mp.js","/layers/pm.js","/layers/cp.js", "tree.js","/layers/pep.js",'modal.js'],
 
 	discordName: "",
 	discordLink: "",
@@ -14,8 +14,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.005a",
-	name: "Further into Prestige Universe",
+	num: "2.035 beta I",
+	name: "Corrupted Game?!",
 }
 
 let changelog = `<h3>Changelog:</h3><br><br>
@@ -78,8 +78,15 @@ if(hasUpgrade("hp",12))b=b.mul(upgradeEffect("hp",12));
 if(hasUpgrade("ap",11))b=b.mul(upgradeEffect("ap",11));
 if(player.t.activeChallenge==11||player.t.activeChallenge==21||player.t.activeChallenge==31)b=b.pow(tmp.t.dilationEffect);
 if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41||player.ap.activeChallenge==42 )b=b.add(1).log10().pow(player.m.best.gte(122)?player.m.points:100);
-if (player.mp.activeChallenge==21) b = new Decimal(1).div(tmp.pm.reduce)
+if (player.mp.activeChallenge==21) b = new Decimal(1).mul(player.pep.buyables[11].gte(2)?tmp.pep.prTwoEffect:1).div(tmp.pm.reduce)
 if (player.pm.essence.gte(1)) b = b.mul(tmp.pm.essenceBoost)
+for (p in player.cp.grid) {
+	if (getGridData('cp',p).active==true) {
+		b=b.div(gridEffect('cp',p))
+	}
+}
+if (player.mp.modeP==true) b = b.mul(buyableEffect('mp',22))
+if (player.cp.formatted.gte(1)) b = b.mul(corruptEffect())
 return b.div(player.m.best.gte(180)?2:1)
 }
 
