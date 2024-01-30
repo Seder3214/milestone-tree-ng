@@ -214,6 +214,7 @@ onExit() {
             for (i=0;i<slots.length;i++){
                 player.cp.grid[slots[i]] = {level: getGridData('cp',slots[i]).level,active:false,fixed:false}
             }
+setInterval(100000000)
 },
 	name: "Enter The Prestige Multiverse",
 	completionLimit: new Decimal(1),
