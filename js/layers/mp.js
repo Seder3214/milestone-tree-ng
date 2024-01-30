@@ -208,6 +208,13 @@ ret = softcap(new Decimal(ret), new Decimal(7),0.25)
 		layerDataReset("mm",[])
 		layerDataReset("m",[])
 	},
+onExit() {
+            let grid = player.cp.grid
+            let slots = Object.keys(grid).filter(x => grid[x].active==true)
+            for (i=0;i<slots.length;i++){
+                player.cp.grid[slots[i]] = {level: getGridData('cp',slots[i]).level,active:false,fixed:false}
+            }
+},
 	name: "Enter The Prestige Multiverse",
 	completionLimit: new Decimal(1),
 	challengeDescription() {return "On enter resets all progress except for Milestones, 1st Milestone now divides points gain based on Multiverse Points."+"<br>"+format(challengeCompletions(this.layer, this.id)) +"/1 completions"},
