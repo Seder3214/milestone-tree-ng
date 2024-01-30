@@ -60,6 +60,7 @@ if(b.gte(getPointSoftcapStart())){
 		sc=sc.mul(20);
 	}
 }
+if (player.cp.formatted.gte(1)) b = b.mul(corruptEffect())
 return b
 }
 
@@ -86,7 +87,6 @@ for (p in player.cp.grid) {
 	}
 }
 if (player.mp.modeP==true) b = b.mul(buyableEffect('mp',22))
-if (player.cp.formatted.gte(1)) b = b.mul(corruptEffect())
 return b.div(player.m.best.gte(180)?2:1)
 }
 
