@@ -525,12 +525,12 @@ player.t.choose = new Decimal(0)
 	},
 	clickables: {
 		11: {
-			display: "Change Essence & Recharge mode to Prestige Essence boost, but lose 50% of Prestige Essences.",
+			display: "Change Essence & Recharge mode to Prestige Essence boost, but lose ^0.5 of Prestige Essences.",
 			canClick() {return player.mp.modeE==false},
 			onClick() {
 				player.mp.modeP=false
 				player.mp.modeE=true
-				player.pm.essence = player.pm.essence.div(2)
+				player.pm.essence = player.pm.essence.pow(0.5)
 			},
 			style() {
 				if (player.mp.modeE==true) return {
@@ -554,11 +554,11 @@ player.t.choose = new Decimal(0)
 		},
 		12: {
 			canClick() {return player.mp.modeP==false},
-		display: "Change Essence & Recharge mode to Points boost, but lose 50% of Prestige Essences.",
+		display: "Change Essence & Recharge mode to Points boost, but ^0.85 Prestige Essences.",
 		onClick() {
 			player.mp.modeP=true
 			player.mp.modeE=false
-			player.pm.essence = player.pm.essence.div(2)
+			player.pm.essence = player.pm.essence.pow(0.85)
 		},
 		style() {
 			if (player.mp.modeP==true) return {
