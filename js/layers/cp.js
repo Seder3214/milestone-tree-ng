@@ -179,7 +179,7 @@ canBuyMax() {return true},
                         'background':'#0f0f0f',
                         'right': '0%',
                         'left':'280%',
-                        'bottom': '0%',
+                        'bottom': '-20%',
                         'width':'300px',
                     };
                     case "left":
@@ -189,7 +189,7 @@ canBuyMax() {return true},
                             'background':'#0f0f0f',
                             'right': '0%',
                             'left':'-100%',
-                            'bottom': '0%',
+                            'bottom': '-20%',
                             'width':'300px',
                         };
                     case "bottom":
