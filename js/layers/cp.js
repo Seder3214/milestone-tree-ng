@@ -178,8 +178,8 @@ canBuyMax() {return true},
                         'border-color':'linear-gradient(to left top, lime, #52f552)',
                         'background':'#0f0f0f',
                         'right': '0%',
-                        'left':'280%',
-                        'bottom': '-10%',
+                        'left':'260%',
+                        'bottom': '-15%',
                         'width':'300px',
                     };
                     case "left":
@@ -189,7 +189,7 @@ canBuyMax() {return true},
                             'background':'#0f0f0f',
                             'right': '0%',
                             'left':'-170%',
-                            'bottom': '-10%',
+                            'bottom': '-15%',
                             'width':'300px',
                         };
                     case "bottom":
