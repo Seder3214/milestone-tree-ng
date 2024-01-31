@@ -180,7 +180,7 @@ canBuyMax() {return true},
                         'right': '0%',
                         'left':'240%',
                         'bottom': '0%',
-                        'width':'250px',
+                        'width':'300px',
                     };
                     case "left":
                         return {  
@@ -190,7 +190,7 @@ canBuyMax() {return true},
                             'right': '0%',
                             'left':'-140%',
                             'bottom': '0%',
-                            'width':'250px',
+                            'width':'300px',
                         };
                     case "bottom":
                         return {  
@@ -199,7 +199,7 @@ canBuyMax() {return true},
                             'background':'#0f0f0f',
                             'right': '0%',
                             'bottom': '-100%',
-                            'width':'250px',
+                            'width':'300px',
                         };
                     case "top":
                         return {  
@@ -208,7 +208,7 @@ canBuyMax() {return true},
                             'background':'#0f0f0f',
                             'right': '0%',
                             'bottom': '100%',
-                            'width':'250px',
+                            'width':'300px',
                         };
                 }
                 }
