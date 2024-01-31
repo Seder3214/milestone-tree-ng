@@ -75,7 +75,7 @@ addLayer("pep", {
                    return player.pep.points.gte(tmp[this.layer].buyables[this.id].cost)
 			},
                buy() { 
-                player.pep.points = player.ep.points.sub(this.cost())
+                player.pep.points = player.pep.points.sub(this.cost())
                    player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
                },
 			  effect(){
