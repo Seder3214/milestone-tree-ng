@@ -175,10 +175,10 @@ canBuyMax() {return true},
                     case "right":
                         return {  
                         'border':'2px solid lime',
-                        'border-image':'linear-gradient(to left, lime, #52f552)',
+                        'border-image':'linear-gradient(to left top, lime, #52f552)',
                         'background':'#0f0f0f',
                         'right': '0%',
-                        'left':'280%',
+                        'left':'200%',
                         'bottom': '-20%',
                         'width':'300px',
                     };
@@ -188,7 +188,7 @@ canBuyMax() {return true},
                             'border-color':'linear-gradient(to left top, lime, #52f552)',
                             'background':'#0f0f0f',
                             'right': '0%',
-                            'left':'-100%',
+                            'left':'-170%',
                             'bottom': '-20%',
                             'width':'300px',
                         };
