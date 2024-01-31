@@ -59,9 +59,10 @@ canBuyMax() {return true},
         if (slots.length) {
             let slot = slots[Math.floor(Math.random() * slots.length)]
             let rangeMul = Math.floor(player.cp.totalCorrupt/4)*5
+            let addLevel = Math.floor(player.cp.totalCorrupt/4)*2
             let range = 10+rangeMul
    
-            let tier = Math.floor(Math.random() * range)+rangeMul
+            let tier = Math.floor(Math.random() * range)+addLevel
             if (tier==0) tier = 1
             player.cp.grid[slot] = { level: tier,active:false,fixed:false }
     }
@@ -174,41 +175,45 @@ canBuyMax() {return true},
                 switch (options.changeCorruptTooltipPlace) {
                     case "right":
                         return {  
-                        'border':'2px solid lime',
-                        'border-color':'linear-gradient(to left top, lime, #52f552)',
+                        'border':'2px solid transparent',
+                        'border-image':'linear-gradient(to right, lime 0%, #52f552 50%,lime 100%)',
                         'background':'#0f0f0f',
                         'right': '0%',
                         'left':'260%',
                         'bottom': '5%',
                         'width':'300px',
+                        'border-image-slice': '1'
                     };
                     case "left":
                         return {  
                             'border':'2px solid lime',
-                            'border-color':'linear-gradient(to left top, lime, #52f552)',
+                            'border-image':'linear-gradient(to right, lime 0%, #52f552 50%,lime 100%)',
                             'background':'#0f0f0f',
                             'right': '0%',
                             'left':'-160%',
                             'bottom': '5%',
                             'width':'300px',
+                            'border-image-slice': '1'
                         };
                     case "bottom":
                         return {  
                             'border':'2px solid lime',
-                            'border-color':'linear-gradient(to left top, lime, #52f552)',
+                            'border-image':'linear-gradient(to right, lime 0%, #52f552 50%,lime 100%)',
                             'background':'#0f0f0f',
                             'right': '0%',
                             'bottom': '-100%',
                             'width':'300px',
+                            'border-image-slice': '1'
                         };
                     case "top":
                         return {  
                             'border':'2px solid lime',
-                            'border-color':'linear-gradient(to left top, lime, #52f552)',
+                            'border-image':'linear-gradient(to right, lime 0%, #52f552 50%,lime 100%)',
                             'background':'#0f0f0f',
                             'right': '0%',
                             'bottom': '100%',
                             'width':'300px',
+                            'border-image-slice': '1'
                         };
                 }
                 }
@@ -230,7 +235,7 @@ canBuyMax() {return true},
 
         getEffect(data,id) {
             let eff = 1
-            eff = new Decimal(data.level).add(1).mul(3)
+            eff = new Decimal(data.level).add(1).mul(3).pow(Math.floor(data.level/10)+0.5)
             return eff
         },
         onClick(data, id) { 
