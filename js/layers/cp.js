@@ -255,7 +255,7 @@ canBuyMax() {return true},
         getDisplay(data, id) {
             table=''
             if (data.level<1) table="This hard drive is stable. No corruptions detected."
-            else table= "<h3>Corruption <br>[ Level "+formatRoman(data.level)+" ]</h3><br>Progress to fix: [==========]"
+            else table= "<h3>Corruption <br>Level: <br> "+formatRoman(data.level)+"</h3><br>Progress to fix: [==========]"
             for(i=1;i<10;i++){
                 if (data.active==true) {
                 if (player.points.gte(gridCost('cp',id).mul(new Decimal(0.1).mul(i)))) {
