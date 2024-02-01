@@ -1,7 +1,7 @@
 
 function formatRoman(num) {
     var roman = {
-      M: 1000, CM: 900, D: 500, CD: 400,
+   C̅: 100000,X̅C̅MX̅CM:99900, X̅: 10000,MX̅CM: 9900,M: 1000, CM: 900, D: 500, CD: 400,
       C: 100, XC: 90, L: 50, XL: 40,
       X: 10, IX: 9, V: 5, IV: 4, I: 1
     };
