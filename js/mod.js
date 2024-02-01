@@ -83,7 +83,7 @@ if (player.mp.activeChallenge==21) b = new Decimal(1).mul(player.pep.buyables[11
 if (player.pm.essence.gte(1)) b = b.mul(tmp.pm.essenceBoost)
 let boost=new Decimal(1)
 for(var i in player.cp.grid) {
-	if (getGridData("cp", i).active==true) boost=(gridEffect('cp',i).gte(boost)?gridEffect('cp',i):1)
+	if (getGridData("cp", i).active==true) boost=(gridEffect('cp',i).gte(boost)?gridEffect('cp',i):boost)
   }
   b=b.div(boost)
 if (player.mp.modeP==true) b = b.mul(buyableEffect('mp',22))
