@@ -56,7 +56,7 @@ if(b.gte(getPointSoftcapStart())){
 	while(b.log10().gte(sc)){
 		let potency=0.4;
 		if(hasUpgrade("t",53))potency=potency*0.9;
-		b=Decimal.pow(10,b.log10().div(sc).pow(1-potency).mul(sc)
+		b=Decimal.pow(10,b.log10().div(sc).pow(1-potency).mul(sc))
 if (player.cp.formatted.gte(1)) b = b.mul(corruptEffect());
 		sc=sc.mul(20);
 	}
