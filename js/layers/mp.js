@@ -216,6 +216,7 @@ onExit() {
                 player.cp.grid[slots[i]] = {level: getGridData('cp',slots[i]).level,active:false,fixed:false}
             }
 setInterval(100000000)
+player.mp.perkPoints = player.mp.buyables[13]
 },
 	name: "Enter The Prestige Multiverse",
 	completionLimit: new Decimal(1),
