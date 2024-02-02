@@ -15,6 +15,10 @@ function formatRoman(num) {
   
     return str;
 }
+function activeCorruptions() {
+            let grid = player.cp.grid
+            let slots = Object.keys(grid).filter(x => grid[x].active==true)
+return slots}
 function corruptEffect() {
     let eff = new Decimal(1)
     eff = eff.add(player.cp.formatted.add(1).log10().mul(1.27).pow(1.5))
