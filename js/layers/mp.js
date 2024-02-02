@@ -207,6 +207,7 @@ ret = softcap(new Decimal(ret), new Decimal(7),0.25)
 		layerDataReset("em",[])
 		layerDataReset("mm",[])
 		layerDataReset("m",[])
+		layerDataReset('t',["upgrades","challenges"])
 	},
 onExit() {
             let grid = player.cp.grid
@@ -297,14 +298,16 @@ player.t.choose = new Decimal(0)
 					'color':'white',
 					'background-color':'black',
 					'border':'2px solid',
-					'height':'125px'
+					'height':'125px',
+					'width':'200px',
 				}
 				else return {
 					'border-radius': '0%',
 					'color':'white',
 					'background-color':'rgb(68, 68, 68)',
 					'border':'2px solid',
-					'height':'125px'
+					'height':'125px',
+					'width':'200px',
 				}
             }
         },
@@ -341,14 +344,16 @@ player.t.choose = new Decimal(0)
 					'color':'white',
 					'background-color':'black',
 					'border':'2px solid',
-					'height':'125px'
+					'height':'125px',
+					'width':'200px',
 				}
 				else return {
 					'border-radius': '0%',
 					'color':'white',
 					'background-color':'rgb(68, 68, 68)',
 					'border':'2px solid',
-					'height':'125px'
+					'height':'125px',
+					'width':'200px',
 				}
             }
         },
@@ -386,14 +391,16 @@ player.t.choose = new Decimal(0)
 					'color':'white',
 					'background-color':'black',
 					'border':'2px solid',
-					'height':'125px'
+					'height':'125px',
+					'width':'200px',
 				}
 				else return {
 					'border-radius': '0%',
 					'color':'white',
 					'background-color':'rgb(68, 68, 68)',
 					'border':'2px solid',
-					'height':'125px'
+					'height':'125px',
+					'width':'200px',
 				}
             }
         },
@@ -429,14 +436,16 @@ player.t.choose = new Decimal(0)
 					'color':'white',
 					'background-color':'black',
 					'border':'2px solid',
-					'height':'125px'
+					'height':'125px',
+					'width':'200px',
 				}
 				else return {
 					'border-radius': '0%',
 					'color':'white',
 					'background-color':'rgb(68, 68, 68)',
 					'border':'2px solid',
-					'height':'125px'
+					'height':'125px',
+					'width':'200px',
 				}
             }
         },
@@ -474,14 +483,16 @@ player.t.choose = new Decimal(0)
 					'color':'white',
 					'background-color':'black',
 					'border':'2px solid',
-					'height':'125px'
+					'height':'125px',
+					'width':'200px',
 				}
 				else return {
 					'border-radius': '0%',
 					'color':'white',
 					'background-color':'rgb(68, 68, 68)',
 					'border':'2px solid',
-					'height':'125px'
+					'height':'125px',
+					'width':'200px',
 				}
             }
         },
@@ -519,14 +530,16 @@ player.t.choose = new Decimal(0)
 					'color':'white',
 					'background-color':'black',
 					'border':'2px solid',
-					'height':'125px'
+					'height':'125px',
+					'width':'200px',
 				}
 				else return {
 					'border-radius': '0%',
 					'color':'white',
 					'background-color':'rgb(68, 68, 68)',
 					'border':'2px solid',
-					'height':'125px'
+					'height':'125px',
+					'width':'200px',
 				}
             }
         },

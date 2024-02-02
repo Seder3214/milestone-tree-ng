@@ -27,6 +27,7 @@ addLayer("pep", {
 	},
 	prOneEffect() {
         let eff = player.pep.points.add(1).mul(3).pow(1.5)
+		if (hasUpgrade('cp',11)) eff = eff.mul(upgradeEffect('pep',11))
         return eff;
     },
 	prTwoEffect() {
@@ -44,14 +45,22 @@ addLayer("pep", {
         cols: 4,
 		11: {
 			title: "Prestiged-Exotic Prestige Upgrade 11",
-            description: "4th Milestone's effect is boosted by your exotic prestige points.<br>Req: Fusion Tier 2",
-            cost: new Decimal(25),
-            unlocked() { return player.mp.activeChallenge!=21}, // The upgrade is only visible when this is true
+            description: "Prestige Milestones boosts 1st effect at reduced rate",
+            cost: new Decimal(6),
+			costDescription() {return "Cost: 6 pr-exotic prestige points<br>1e13 Prestige Essences"},
+            unlocked() { return player.pm.best.gte(7)}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
-				let base=1.2;
-                let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.275).add(1)).max(1)
-                return softcap(ret,new Decimal(1e9),0.1);
+				let base=1.5;
+				let ret = player.pm.best.log(5).pow(base)
+                return ret;
             },
+			canAfford() {
+				return player.pm.essence.gte(1e13)
+			},
+			buy() {
+				player.pep.points = player.pep.points.sub(this.cost())
+				player.pm.essence = player.pm.essence.sub(1e13)
+			},
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
 	},
@@ -74,7 +83,7 @@ addLayer("pep", {
 			canAfford() {
                    return player.pep.points.gte(tmp[this.layer].buyables[this.id].cost)
 			},
-               buy() { 
+               pay() { 
                 player.pep.points = player.pep.points.sub(this.cost())
                    player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
                },
@@ -112,10 +121,20 @@ addLayer("pep", {
 				if (player.pep.buyables[11].gte(1)) table += '1st effect: Boost points gain by ' + format(tmp.pep.prOneEffect) + "x, but boost 1st milestone reducing effect by "+ format(tmp.pep.prOneEffect.pow(0.5))+ "x."
                 if (player.pep.buyables[11].gte(2)) table += '<br>2nd effect: Multiply points gain <b>before</b> 1st milestone reduce by ' + format(tmp.pep.prTwoEffect) + "x."
 				return table}],
-				"buyables",
-                "upgrades"
+				"buyables"
 			]
 		},
+		"Upgrades": {
+			unlocked() {return player.pm.best.gte(7)},
+			content:[
+				function() { if (player.tab == "pep")  return ["column", [
+					"main-display","prestige-button","resource-display",
+				"upgrades",
+				]
+			]
+	 },
+	 ]
+			},
     },
 	branches: ["pm"],
 	softcap(){

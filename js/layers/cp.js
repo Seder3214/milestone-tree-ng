@@ -1,4 +1,8 @@
 
+const typeName = {
+    div: "Trojan",
+    pow: "Backdoor",
+}
 function formatRoman(num) {
     var roman = {
    C̅: 100000,X̅C̅:90000,L̅:50000,X̅L̅:40000, X̅: 10000,MX̅: 9000,V̅:5000,MV̅:4000,M: 1000, CM: 900, D: 500, CD: 400,
@@ -32,6 +36,7 @@ addLayer("cp", {
         unlocked: true,
 		points: new Decimal(0),
         formatted: new Decimal(0),
+        pool: ["div","pow"],
         totalCorrupt:0,
     }},
     tooltip() {
@@ -62,13 +67,14 @@ canBuyMax() {return true},
         let slots = Object.keys(grid).filter(x => grid[x].level<1)
         if (slots.length) {
             let slot = slots[Math.floor(Math.random() * slots.length)]
-            let rangeMul = Math.floor(player.cp.totalCorrupt/4)*5
+            let rangeMul = Math.floor(player.cp.totalCorrupt/4)*4
             let addLevel = Math.floor(player.cp.totalCorrupt/4)*2
+            let ranType = Math.floor(Math.random()*2)
             let range = 10+rangeMul
    
             let tier = Math.floor(Math.random() * range)+addLevel
             if (tier==0) tier = 1
-            player.cp.grid[slot] = { level: tier,active:false,fixed:false }
+            player.cp.grid[slot] = { level: tier,active:false,fixed:false,type:player.cp.pool[ranType] }
     }
 }
 }
@@ -108,32 +114,77 @@ canBuyMax() {return true},
             currencyInternalName: "formatted",
             currencyLayer:"cp",
             style() {
-                if (hasUpgrade('cp',11)) return {
-                    'background':'darkgreen',
-                    'border-color':'lime',
-                    'color':'lime',
-                    'border-radius':'0%'
-                }
-                if (player.cp.formatted.gte(this.cost)) return {
-                    'background':'gray',
-                    'border-color':'lime',
-                    'color':'lime',
-                    'border-radius':'0%'
-                }
-               else return {
-                    'background':'#0f0f0f',
-                    'border-color':'lime',
-                    'color':'lime',
-                    'border-radius':'0%'
-                }
+                    if (hasUpgrade('cp',11)) return {
+                        'background':'#00520b',
+                        'border-color':'lime',
+                        'color':'lime',
+                        'border-radius':'0%',
+                    }
+                    
+                    else if (player.cp.formatted.gte(this.cost)) return {
+                        'background':'#444',
+                        'border-color':'lime',
+                        'color':'lime',
+                        'border-radius':'0%',
+                        'cursor':'pointer',
+                    }
+                   else return {
+                        'background':'#0f0f0f',
+                        'border-color':'lime',
+                        'color':'lime',
+                        'border-radius':'0%',
+                    }
             },
         },
+		12: {
+			title: "Corrupted Upgrade 12",
+            description: "Prestige Milestones boosts Corruption's Reward.",
+            costDescription() {return "Cost: 370 corruption essences<br>1e14 Points"},
+            unlocked() {return player.pm.best.gte(7)},
+            cost: new Decimal(370),
+            effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
+				let base=2;
+				let ret = player.pm.best.div(10).add(1)
+                return ret;
+            },
+			canAfford() {
+				return player.points.gte(1e14)
+			},
+			pay() {
+				player.cp.formatted = player.cp.formatted.sub(this.cost)
+				player.points = player.points.sub(1e14)
+			},
+            effectDisplay() { return format(this.effect())+"x" },
+        style() {
+            if (hasUpgrade('cp',12)) return {
+                'background':'#00520b',
+                'border-color':'lime',
+                'color':'lime',
+                'border-radius':'0%'
+            }
+            
+            if (player.cp.formatted.gte(this.cost)) return {
+                'background':'#444',
+                'border-color':'lime',
+                'color':'lime',
+                'border-radius':'0%',
+                'cursor':'pointer',
+            }
+           return {
+                'background':'#0f0f0f',
+                'border-color':'lime',
+                'color':'lime',
+                'border-radius':'0%',
+            }
+        },
+    },
+
 	},
     grid: {
         rows: 4, // If these are dynamic make sure to have a max value as well!
         cols: 4,
         getStartData(id) {
-            return {level: 0,active: false,fixed: false}
+            return {level: 0,active: false,fixed: false,type:"div"}
         },
         getUnlocked(id) { // Default
             return (player.cp.grid[id].fixed==false)
@@ -157,7 +208,7 @@ canBuyMax() {return true},
                     'color':'lime',
                     'width':'100px',
                     'height':'100px',
-                    'border-radius':'0%'
+                    'border-radius':'0%',
                 }
             }
             else{
@@ -224,22 +275,25 @@ canBuyMax() {return true},
         },
         getCost(data,id) {
             let eff = 1
-            eff = new Decimal(5e12).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(30).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(100).add(1))
+            eff = new Decimal(5e12).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(75).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1))
+            if (data.type=='pow') eff = eff.pow(1.25)
             return eff
         },
         getEssence(data,id) {
             let gain = 0
-            gain = new Decimal(1).mul(data.level).add(1)
+            if (data.type=='pow') gain = new Decimal(1).mul(data.level).pow(1.2).add(1)
+            else gain = new Decimal(1).mul(data.level).add(1)
             return gain
         },
         getTooltip(data,id) {
             if (data.level<1) return
-            else return "<h5>To fix, get "+format(gridCost('cp',id))+" points while corruption is active.<br>When active, /"+ format(gridEffect('cp',id))+" to points gain.<br>"+"Reward: Get " + format(gridEssence('cp',id),0)+" corruption essences on fix."
+            else return "<h5>To fix, get "+format(gridCost('cp',id))+" points while corruption is active.<br>When active, " + (data.type=='pow'?"^":"/")+ format(gridEffect('cp',id))+" to points gain.<br>"+"Reward: Get " + format(gridEssence('cp',id),0)+" corruption essences on fix."
         },
 
         getEffect(data,id) {
             let eff = 1
-            eff = new Decimal(data.level).add(1).mul(3).pow(Math.floor(data.level/10)+0.5)
+           if (data.type=='div') eff = new Decimal(data.level).add(1).mul(3).pow(1+data.level/10)
+           if (data.type=='pow') eff = new Decimal(1).sub(new Decimal(data.level).pow(0.05).div(2))
             return eff
         },
         onClick(data, id) { 
@@ -250,7 +304,7 @@ canBuyMax() {return true},
             if (hasUpgrade('cp',11)) activeNum++
             for (i=0;i<slots.length;i++){
             if (slots[i]!=id && activeNum!=slots.length) {
-                player.cp.grid[slots[i]] = {level: getGridData('cp',slots[i]).level,active:false,fixed:false}
+                player.cp.grid[slots[i]] = {level: getGridData('cp',slots[i]).level,active:false,fixed:false,type: getGridData('cp',slots[i]).type}
             }
         }
         }
@@ -258,7 +312,7 @@ canBuyMax() {return true},
         getDisplay(data, id) {
             table=''
             if (data.level<1) table="This hard drive is stable. No corruptions detected."
-            else table= "<h3>Corruption <br>Level: <br> "+formatRoman(data.level)+"</h3><br>Progress to fix: [==========]"
+            else table= `<h3>${typeName[data.type]}</h3> Corruption <br>Level: `+formatRoman(data.level)+"<br>Progress to fix: [==========]"
             for(i=1;i<10;i++){
                 if (data.active==true) {
                 if (player.points.gte(gridCost('cp',id).mul(new Decimal(0.1).mul(i)))) {
@@ -290,6 +344,7 @@ canBuyMax() {return true},
      ]
             },
             "Upgrades": {
+                unlocked() {return player.pm.best.gte(7)},
                 content:[
                     function() { if (player.tab == "cp")  return ["column", [
                         ["display-text", "You caused <h2 style='color:  black; text-shadow: white 0px 0px 10px;'> "+format(player.cp.points,0)+"</h2> corruptions."],
@@ -319,6 +374,6 @@ canBuyMax() {return true},
             }
         },
     prestigeButtonText() {
-        return "CORRUPT"+(player.points.gte(tmp.cp.nextAt)?" (You can corrupt)":" (Not enough points)")+"<br>Cost: "+format(tmp.cp.nextAt)+" points."
+        return "CORRUPT"+(player.points.gte(tmp.cp.nextAt)?" (You can corrupt "+format(tmp.cp.resetGain,0)+ " times)":" (Not enough points)")+"<br>Next at: "+format(tmp.cp.nextAtDisp)+" points."
     },
 })

@@ -1,7 +1,7 @@
 .upg {
-	min-height: 120px;
-	width: 120px;
-	border-radius: 25%;
+	height: 115px;
+	width: 200px;
+	border-radius: 0%;
 	border: 2px solid;
 	border-color: rgba(0, 0, 0, 0.125);
 	font-size: 10px;

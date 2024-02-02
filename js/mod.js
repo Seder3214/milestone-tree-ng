@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.035 beta I",
+	num: "2.035 beta II",
 	name: "Corrupted Game?!",
 }
 
@@ -23,6 +23,12 @@ Note: v<h3 style="color: green">A</h3>.<h3 style='color: blue'>B</h3><h3 style='
 <h3 style='color: green'>A</h3> is a number of <h3 style='color:yellow'>major</h3> updates like <h3 class='pmr'>Prestige Milestone Tree</h3>, <br>
 <h3 style='color: blue'>B</h3> is a number of <h3 style="color:#793784">milestones</h3> in current version, <br>
 <h3 style='color: yellow'>C</h3> is a letter that used to show <h3 style='color: cyan'>bugfix/rebalance</h3> updates<br><br>
+<h3 class="corr">v2.035 beta II - Corruptions pt.2!</h3><br>
+<span style='color: #808080'> - A whole new layer is playable now. Corruptions are fully working now!<br></span>
+<span style='color: #808080'> - 2 prestige milestones added!<br></span>
+<h3 class="corr">v2.035 beta I - Corruptions!</h3><br>
+<span style='color: #808080'> - Most of corruption's style and functional part are finished!<br></span>
+<span style='color: #808080'> - 2 prestige milestones added!<br></span>
 <h3 class='pmr'>v2.005a - Prestige Fusioners</h3><br>
 <span style='color: #808080'> - 2 more Multiverse Fusioners!<br></span>
 <h3 class='pmr'>v2.002 - Prestige Milestones</h3><br>
@@ -81,11 +87,13 @@ if(player.t.activeChallenge==11||player.t.activeChallenge==21||player.t.activeCh
 if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41||player.ap.activeChallenge==42 )b=b.add(1).log10().pow(player.m.best.gte(122)?player.m.points:100);
 if (player.mp.activeChallenge==21) b = new Decimal(1).mul(player.pep.buyables[11].gte(2)?tmp.pep.prTwoEffect:1).div(tmp.pm.reduce)
 if (player.pm.essence.gte(1)) b = b.mul(tmp.pm.essenceBoost)
-let boost=new Decimal(1)
+let div=new Decimal(1)
+let pow=new Decimal(1)
 for(var i in player.cp.grid) {
-	if (getGridData("cp", i).active==true) boost=(gridEffect('cp',i).gte(boost)?gridEffect('cp',i):boost)
+	if (getGridData("cp", i).active==true && getGridData("cp", i).type=='div') div=(gridEffect('cp',i).gte(div)?gridEffect('cp',i):div)
+	else if (getGridData("cp", i).active==true && getGridData("cp", i).type=='pow') pow=(gridEffect('cp',i).lte(pow)?gridEffect('cp',i):pow)
   }
-  b=b.div(boost)
+  b=b.div(div).pow(pow)
 if (player.mp.modeP==true) b = b.mul(buyableEffect('mp',22))
 return b.div(player.m.best.gte(180)?2:1)
 }

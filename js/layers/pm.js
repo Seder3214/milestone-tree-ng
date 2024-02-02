@@ -107,13 +107,40 @@ addLayer("pm", {
             effectDescription: function(){
 				return "Unlock a new layer."
 			},
+            style() {
+                if (hasMilestone('pm',5)) return {
+                    'background':'#00520b',
+                    'border-color':'lime',
+                    'color':'lime',
+                    'border-radius':'0%',
+                    'height': '30px',
+                    'width': '100%',
+                }
+            
+               return {
+                    'background':'#0f0f0f',
+                    'border-color':'lime',
+                    'color':'lime',
+                    'border-radius':'0%',
+                    'height': '30px',
+                    'width': '100%',
+                }
+            },
         },
         {
 			requirementDescription: "7th Prestige Milestone",
             unlocked() {return player[this.layer].best.gte(6)},
             done() {return player[this.layer].best.gte(7)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Unlock 2 corrupted upgrades."
+				return "Unlock 1 more upgrade on row 2 layers."
+			},
+        },
+        {
+			requirementDescription: "8th Prestige Milestone",
+            unlocked() {return player[this.layer].best.gte(7)},
+            done() {return player[this.layer].best.gte(8)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Unlock 1 more upgrade on row 2 layers."
 			},
         },
 	],
