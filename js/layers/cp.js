@@ -245,8 +245,7 @@ canBuyMax() {return true},
         onClick(data, id) { 
             if (data.level>=1) {player[this.layer].grid[id].active=!player[this.layer].grid[id].active
             player.points=new Decimal(0)
-            let grid = player.cp.grid
-            let slots = Object.keys(grid).filter(x => grid[x].active==true)
+            let slots = activeCorruptions()
             let activeNum = 1
             if (hasUpgrade('cp',11)) activeNum++
             for (i=0;i<slots.length;i++){
@@ -308,19 +307,17 @@ canBuyMax() {return true},
 		},
 	branches: ["pm"],
     update(diff) {
-        for (p in player.cp.grid) {
-            if (getGridData('cp',p).active==true) {
+    let slots=activeCorruptions()
+        for (i=0;i<slots.length;i++) {
                 setTimeout(100000)
-                if (player.points.gte(gridCost('cp',p))) {
-                    player.cp.formatted = player.cp.formatted.add(gridEssence('cp',p))
-                    player.cp.grid[p]={level: 0,active:false,fixed:false}
+                if (player.points.gte(gridCost('cp',slots[i]))) {
+                    player.cp.formatted = player.cp.formatted.add(gridEssence('cp',slots[i]))
+                    player.cp.grid[slots[i]]={level: 0,active:false,fixed:false}
                     doPopup("none","Corruption was fixed!","Corruption Info",3,"black","lime")
                     player.cp.totalCorrupt += 1
-                }
-                
+                } 
             }
-        }
-    },
+        },
     prestigeButtonText() {
         return "CORRUPT"+(player.points.gte(tmp.cp.nextAt)?" (You can corrupt)":" (Not enough points)")+"<br>Cost: "+format(tmp.cp.nextAt)+" points."
     },
