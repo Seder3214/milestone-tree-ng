@@ -278,7 +278,7 @@ canBuyMax() {return true},
         getCost(data,id) {
             let eff = 1
             eff = new Decimal(5e12).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(75).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1))
-            if (data.type=='pm') eff = new Decimal(1e12).mul(data.level).pow(0.5)
+            if (data.type=='pm') eff = new Decimal(1e16).mul(data.level).pow(0.75)
             return eff
         },
         getEssence(data,id) {
@@ -290,7 +290,7 @@ canBuyMax() {return true},
         },
         getTooltip(data,id) {
             if (data.level<1) return
-            else return "<h5>To fix, get "+format(gridCost('cp',id))+(data.type=="pm"?" prestige essences":"points")+" while corruption is active.<br>When active, " + "/"+ format(gridEffect('cp',id),5)+" to" +(data.type=="pm"?" prestige essences":" points") +"  gain.<br>"+"Reward: Get " + format(gridEssence('cp',id),0)+" corruption essences on fix."
+            else return "<h5>To fix, get "+format(gridCost('cp',id))+(data.type=="pm"?" prestige essences":" points")+" while corruption is active.<br>When active, " + "/"+ format(gridEffect('cp',id),5)+" to" +(data.type=="pm"?" prestige essences":" points") +"  gain.<br>"+"Reward: Get " + format(gridEssence('cp',id),0)+" corruption essences on fix."
         },
 
         getEffect(data,id) {
