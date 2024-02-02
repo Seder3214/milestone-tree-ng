@@ -88,12 +88,10 @@ if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41||player.ap.acti
 if (player.mp.activeChallenge==21) b = new Decimal(1).mul(player.pep.buyables[11].gte(2)?tmp.pep.prTwoEffect:1).div(tmp.pm.reduce)
 if (player.pm.essence.gte(1)) b = b.mul(tmp.pm.essenceBoost)
 let div=new Decimal(1)
-let pow=new Decimal(1)
 for(var i in player.cp.grid) {
 	if (getGridData("cp", i).active==true && getGridData("cp", i).type=='div') div=(gridEffect('cp',i).gte(div)?gridEffect('cp',i):div)
-	else if (getGridData("cp", i).active==true && getGridData("cp", i).type=='pow') pow=(gridEffect('cp',i).lte(pow)?gridEffect('cp',i):pow)
   }
-  b=b.div(div).pow(pow)
+  b=b.div(div)
 if (player.mp.modeP==true) b = b.mul(buyableEffect('mp',22))
 return b.div(player.m.best.gte(180)?2:1)
 }

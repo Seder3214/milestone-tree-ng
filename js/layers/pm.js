@@ -28,7 +28,11 @@ addLayer("pm", {
         if (player.pm.best.gte(4)) gain = gain.mul(tmp.pm.pMilestone4Effect)
         if (player.pep.buyables[11].gte(1)) gain = gain.mul(tmp.pep.prOneEffect)
         if (player.cp.formatted.gte(1)) gain = gain.mul(corruptEffect())
-        return gain
+        let s = new Decimal(1)
+        for(var i in player.cp.grid) {
+            if (getGridData("cp", i).active==true && getGridData("cp", i).type=='pm') s=(gridEffect('cp',i).gte(s)?gridEffect('cp',i):s)
+          }
+        return gain.div(s)
     },
     reduce() {
 		let base = 0.5

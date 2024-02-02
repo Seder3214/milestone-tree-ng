@@ -1,7 +1,7 @@
 
 const typeName = {
     div: "Trojan",
-    pow: "Backdoor",
+    pm: "Backdoor",
 }
 function formatRoman(num) {
     var roman = {
@@ -37,7 +37,7 @@ addLayer("cp", {
         unlocked: true,
 		points: new Decimal(0),
         formatted: new Decimal(0),
-        pool: ["div","pow"],
+        pool: ["div","pm"],
         totalCorrupt:0,
     }},
     tooltip() {
@@ -194,6 +194,7 @@ canBuyMax() {return true},
             return true
         },
         getStyle(data,id) {
+
             if (data.level<1) {
                 return {
                     'background':'#3b3939',
@@ -277,30 +278,31 @@ canBuyMax() {return true},
         getCost(data,id) {
             let eff = 1
             eff = new Decimal(5e12).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(75).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1))
-            if (data.type=='pow') eff = new Decimal(5e18).div(data.level).pow(0.5)
+            if (data.type=='pm') eff = new Decimal(1e12).mul(data.level).pow(0.5)
             return eff
         },
         getEssence(data,id) {
             let gain = 0
-            if (data.type=='pow') gain = new Decimal(1).mul(data.level).pow(1.2).add(1)
+            if (data.type=='pm') gain = new Decimal(1).mul(data.level).pow(1.2).add(1)
             else gain = new Decimal(1).mul(data.level).add(1)
         if (hasUpgrade('cp',12)) gain = gain.mul(upgradeEffect('cp',12))
             return gain
         },
         getTooltip(data,id) {
             if (data.level<1) return
-            else return "<h5>To fix, get "+format(gridCost('cp',id))+" points while corruption is active.<br>When active, " + (data.type=='pow'?"^":"/")+ format(gridEffect('cp',id))+" to points gain.<br>"+"Reward: Get " + format(gridEssence('cp',id),0)+" corruption essences on fix."
+            else return "<h5>To fix, get "+format(gridCost('cp',id))+(data.type=="pm"?" prestige essences":"points")+" while corruption is active.<br>When active, " + "/"+ format(gridEffect('cp',id),5)+" to" +(data.type=="pm"?" prestige essences":" points") +"  gain.<br>"+"Reward: Get " + format(gridEssence('cp',id),0)+" corruption essences on fix."
         },
 
         getEffect(data,id) {
             let eff = 1
            if (data.type=='div') eff = new Decimal(data.level).add(1).mul(3).pow(1+data.level/10)
-           if (data.type=='pow') eff = new Decimal(1).div(new Decimal(data.level).mul(2).pow(0.2))
+           if (data.type=='pm') eff = new Decimal(data.level).add(1).mul(1.5).pow(1+data.level/10)
             return eff
         },
         onClick(data, id) { 
             if (data.level>=1) {player[this.layer].grid[id].active=!player[this.layer].grid[id].active
-            player.points=new Decimal(0)
+             if (data.type=='pm') player.pm.essence=new Decimal(0)
+             if (data.type=='div')player.points=new Decimal(0)
             let slots = activeCorruptions()
             let activeNum = 1
             if (hasUpgrade('cp',11)) activeNum++
@@ -316,14 +318,22 @@ canBuyMax() {return true},
             if (data.level<1) table="This hard drive is stable. No corruptions detected."
             else table= `<h3>${typeName[data.type]}</h3> Corruption <br>Level: <h3>`+formatRoman(data.level)+"</h3><br>Progress to fix: [==========]"
             for(i=1;i<10;i++){
-                if (data.active==true) {
+                if (data.active==true && data.type=='div') {
                 if (player.points.gte(gridCost('cp',id).mul(new Decimal(0.1).mul(i)))) {
                     table = table.replace('=','█')        
                  }
             }
+            else if (data.active==true && data.type=='pm') {
+                if (player.pm.essence.gte(gridCost('cp',id).mul(new Decimal(0.1).mul(i)))) {
+                    table = table.replace('=','█')        
+                 }
             }
-            if (data.active==true){
+            }
+            if (data.active==true&& data.type=='div'){
                 table+="<br>-< "+format(player.points.div(gridCost('cp',id)).mul(100))+"% >-" 
+            }
+            if (data.active==true&& data.type=='pm'){
+                table+="<br>-< "+format(player.pm.essence.div(gridCost('cp',id)).mul(100))+"% >-" 
             }
             return table
         },
@@ -367,7 +377,14 @@ canBuyMax() {return true},
     let slots=activeCorruptions()
         for (i=0;i<slots.length;i++) {
                 setTimeout(100000)
-                if (player.points.gte(gridCost('cp',slots[i]))) {
+                if (player.points.gte(gridCost('cp',slots[i])) && getGridData('cp',slots[i]).type=='div') {
+                    player.cp.formatted = player.cp.formatted.add(gridEssence('cp',slots[i]))
+                    player.cp.grid[slots[i]]={level: 0,active:false,fixed:false}
+                    doPopup("none","Corruption was fixed!","Corruption Info",3,"black","lime")
+                    player.cp.totalCorrupt += 1
+                } 
+                setTimeout(100000)
+                if (player.pm.essence.gte(gridCost('cp',slots[i])) && getGridData('cp',slots[i]).type=='pm') {
                     player.cp.formatted = player.cp.formatted.add(gridEssence('cp',slots[i]))
                     player.cp.grid[slots[i]]={level: 0,active:false,fixed:false}
                     doPopup("none","Corruption was fixed!","Corruption Info",3,"black","lime")
