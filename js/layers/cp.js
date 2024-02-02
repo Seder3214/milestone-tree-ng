@@ -374,6 +374,7 @@ canBuyMax() {return true},
 		},
 	branches: ["pm"],
     update(diff) {
+        player.cp.pool = ["div","pm"]
     let slots=activeCorruptions()
         for (i=0;i<slots.length;i++) {
                 setTimeout(100000)
