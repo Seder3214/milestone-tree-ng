@@ -5,9 +5,10 @@ const typeName = {
 }
 function formatRoman(num) {
     var roman = {
-   C̅: 100000,X̅C̅:90000,L̅:50000,X̅L̅:40000, X̅: 10000,MX̅: 9000,V̅:5000,MV̅:4000,M: 1000, CM: 900, D: 500, CD: 400,
+        M̅̅:1000000000,L̅̅M̅̅:900000000,L̅̅:500000000,C̅̅L̅̅:400000000, C̅̅:100000000, L̅̅C̅̅:90000000,L̅̅:50000000,X̅̅L̅̅:40000000, X̅̅:10000000,M̅X̅̅:9000000,V̅̅:5000000,M̅V̅̅:4000000,M̅:1000000,C̅M̅:900000,D̅:500000,C̅D̅:400000,C̅: 100000,X̅C̅:90000,L̅:50000,X̅L̅:40000, X̅: 10000,MX̅: 9000,V̅:5000,MV̅:4000,M: 1000, CM: 900, D: 500, CD: 400,
       C: 100, XC: 90, L: 50, XL: 40,
-      X: 10, IX: 9, V: 5, IV: 4, I: 1
+      X: 10, IX: 9, V: 5, IV: 4, I: &nbsp 1
+      
     };
     var str = '';
   
@@ -144,7 +145,7 @@ canBuyMax() {return true},
             cost: new Decimal(370),
             effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=2;
-				let ret = player.pm.best.div(10).add(1)
+				let ret = player.pm.best.div(20).add(1)
                 return ret;
             },
 			canAfford() {
@@ -276,13 +277,14 @@ canBuyMax() {return true},
         getCost(data,id) {
             let eff = 1
             eff = new Decimal(5e12).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(75).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1))
-            if (data.type=='pow') eff = eff.pow(1.25)
+            if (data.type=='pow') eff = new Decimal(5e18).div(data.level).pow(0.5)
             return eff
         },
         getEssence(data,id) {
             let gain = 0
             if (data.type=='pow') gain = new Decimal(1).mul(data.level).pow(1.2).add(1)
             else gain = new Decimal(1).mul(data.level).add(1)
+        if (hasUpgrade('cp',12)) gain = gain.mul(upgradeEffect('cp',12))
             return gain
         },
         getTooltip(data,id) {
@@ -293,7 +295,7 @@ canBuyMax() {return true},
         getEffect(data,id) {
             let eff = 1
            if (data.type=='div') eff = new Decimal(data.level).add(1).mul(3).pow(1+data.level/10)
-           if (data.type=='pow') eff = new Decimal(1).sub(new Decimal(data.level).pow(0.05).div(2))
+           if (data.type=='pow') eff = new Decimal(1).div(new Decimal(data.level).mul(2).pow(0.2))
             return eff
         },
         onClick(data, id) { 
@@ -312,7 +314,7 @@ canBuyMax() {return true},
         getDisplay(data, id) {
             table=''
             if (data.level<1) table="This hard drive is stable. No corruptions detected."
-            else table= `<h3>${typeName[data.type]}</h3> Corruption <br>Level: `+formatRoman(data.level)+"<br>Progress to fix: [==========]"
+            else table= `<h3>${typeName[data.type]}</h3> Corruption <br>Level: <h3>`+formatRoman(data.level)+"</h3><br>Progress to fix: [==========]"
             for(i=1;i<10;i++){
                 if (data.active==true) {
                 if (player.points.gte(gridCost('cp',id).mul(new Decimal(0.1).mul(i)))) {
