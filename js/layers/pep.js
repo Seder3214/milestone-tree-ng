@@ -27,11 +27,12 @@ addLayer("pep", {
 	},
 	prOneEffect() {
         let eff = player.pep.points.add(1).mul(3).pow(1.5)
-		if (hasUpgrade('cp',11)) eff = eff.mul(upgradeEffect('pep',11))
+		if (hasUpgrade('pep',11)) eff = eff.mul(upgradeEffect('pep',11))
         return eff;
     },
 	prTwoEffect() {
         let eff = player.pep.points.add(1).mul(2).pow(0.6)
+		if (hasUpgrade('pep',12)) eff = eff.mul(upgradeEffect('pep',12))
         return eff;
     },
     row: 1, // Row the layer is in on the tree (0 is the first row)
@@ -55,11 +56,31 @@ addLayer("pep", {
                 return ret;
             },
 			canAfford() {
-				return player.pm.essence.gte(1e13)
+				return player.pm.essence.gte(1e13)&&player.pep.points.gte(this.cost)
 			},
 			pay() {
 				player.pep.points = player.pep.points.sub(this.cost)
 				player.pm.essence = player.pm.essence.sub(1e13)
+			},
+            effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
+        },
+		12: {
+			title: "Prestiged-Exotic Prestige Upgrade 12",
+            description: "Prestige Milestones boosts 2nd effect at reduced rate",
+            cost: new Decimal(7),
+			costDescription() {return "Cost: 7 pr-exotic prestige points<br>3e16 Prestige Essences"},
+            unlocked() { return player.pm.best.gte(8)}, // The upgrade is only visible when this is true
+			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
+				let base=3;
+				let ret = player.pm.best.div(20).mul(base).add(1)
+                return ret;
+            },
+			canAfford() {
+				return (player.pm.essence.gte(3e16)&&player.pep.points.gte(this.cost))
+			},
+			pay() {
+				player.pep.points = player.pep.points.sub(this.cost)
+				player.pm.essence = player.pm.essence.sub(3e16)
 			},
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
