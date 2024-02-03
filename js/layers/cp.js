@@ -70,7 +70,7 @@ canBuyMax() {return true},
             let slot = slots[Math.floor(Math.random() * slots.length)]
             let rangeMul = Math.floor(player.cp.totalCorrupt/4)*4
             let addLevel = Math.floor(player.cp.totalCorrupt/4)*2
-            let ranType = Math.floor(Math.random()*2)
+            let ranType = Math.floor(Math.random()*1.5)
             let range = 10+rangeMul
    
             let tier = Math.floor(Math.random() * range)+addLevel
