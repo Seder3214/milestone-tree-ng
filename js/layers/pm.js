@@ -116,8 +116,6 @@ addLayer("pm", {
                     'background':'#00520b',
                     'border-color':'lime',
                     'color':'lime',
-                    'border-radius':'0%',
-                    'height': '30px',
                     'width': '100%',
                 }
             
@@ -125,8 +123,6 @@ addLayer("pm", {
                     'background':'#0f0f0f',
                     'border-color':'lime',
                     'color':'lime',
-                    'border-radius':'0%',
-                    'height': '30px',
                     'width': '100%',
                 }
             },
@@ -138,6 +134,17 @@ addLayer("pm", {
             effectDescription: function(){
 				return "Unlock 1 more upgrade on row 2 layers."
 			},
+            style() {
+                if (hasMilestone('pm',6)) return {
+                    'background':'linear-gradient(to right, #00520b 0%, #3C2D15 50%)',
+                    'border-color':'transparent',
+                    'background-color':'transparent',
+                    'border-image':'linear-gradient(to right, lime 0%, lime 20%,#c89646 50%)',
+                    'color':'white',
+                    'width': '100%',
+                    'border-image-slice': '1'
+                }
+            },
         },
         {
 			requirementDescription: "8th Prestige Milestone",
@@ -146,6 +153,40 @@ addLayer("pm", {
             effectDescription: function(){
 				return "Unlock 1 more upgrade on row 2 layers."
 			},
+            style() {
+                if (hasMilestone('pm',7)) return {
+                    'background':'linear-gradient(to right, #00520b 0%, #3C2D15 50%)',
+                    'border-color':'transparent',
+                    'background-color':'transparent',
+                    'border-image':'linear-gradient(to right, lime 0%, lime 20%,#c89646 50%)',
+                    'color':'white',
+                    'width': '100%',
+                    'border-image-slice': '1'
+                }
+            },
+        },
+        {
+			requirementDescription: "9th Prestige Milestone",
+            unlocked() {return player[this.layer].best.gte(8)},
+            done() {return player[this.layer].best.gte(9)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Half post-10th level corruption goals."
+			},
+            style() {
+                if (hasMilestone('pm',8)) return {
+                    'background':'#00520b',
+                    'border-color':'lime',
+                    'color':'lime',
+                    'width': '100%',
+                }
+            
+               return {
+                    'background':'#0f0f0f',
+                    'border-color':'lime',
+                    'color':'lime',
+                    'width': '100%',
+                }
+            },
         },
 	],
     tabFormat: {
