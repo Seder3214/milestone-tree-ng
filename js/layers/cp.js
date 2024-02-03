@@ -68,7 +68,7 @@ canBuyMax() {return true},
         let slots = Object.keys(grid).filter(x => grid[x].level<1)
         if (slots.length) {
             let slot = slots[Math.floor(Math.random() * slots.length)]
-            let rangeMul = Math.floor(player.cp.totalCorrupt/4)*4
+            let rangeMul = Math.floor(player.cp.totalCorrupt/4)
             let addLevel = Math.floor(player.cp.totalCorrupt/4)*2
             let ranType = Math.floor(Math.random()*1.5)
             let range = 10+rangeMul
@@ -98,7 +98,7 @@ canBuyMax() {return true},
     row: 1, // Row the layer is in on the tree (0 is the first row)
 	base: new Decimal(12),
 	exponent: function(){
-		return new Decimal(0.75)
+		return new Decimal(0.7)
 	},
     hotkeys: [
         {key: "ctrl+c", description: "Ctrl+C: Corrupt prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
@@ -283,8 +283,8 @@ canBuyMax() {return true},
         },
         getEssence(data,id) {
             let gain = 0
-            if (data.type=='pm') gain = new Decimal(1).mul(data.level).pow(1.2).add(1)
-            else gain = new Decimal(1).mul(data.level).add(1)
+            if (data.type=='pm') gain = new Decimal(1).mul(data.level).pow(1.5).add(1)
+            else gain = new Decimal(1).mul(data.level).mul(1.5).add(1)
         if (hasUpgrade('cp',12)) gain = gain.mul(upgradeEffect('cp',12))
             return gain
         },
