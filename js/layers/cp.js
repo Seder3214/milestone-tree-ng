@@ -100,7 +100,7 @@ canBuyMax() {return true},
     row: 1, // Row the layer is in on the tree (0 is the first row)
 	base: new Decimal(12),
 	exponent: function(){
-		return new Decimal(0.7)
+		return new Decimal(0.625)
 	},
     hotkeys: [
         {key: "ctrl+c", description: "Ctrl+C: Corrupt prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
