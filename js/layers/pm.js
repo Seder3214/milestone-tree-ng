@@ -104,7 +104,7 @@ addLayer("pm", {
 				return "Prestigify Exotic Prestige Points. (Unlock the layer again but with new content)"
 			},
             style() {
-                if (hasMilestone('pm',7)) return {
+                if (hasMilestone('pm',4)) return {
                     'background':'#3C2D15',
                     'border-color':'#c89646',
                     'color':'#c89646',
