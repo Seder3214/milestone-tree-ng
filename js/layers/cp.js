@@ -281,7 +281,7 @@ canBuyMax() {return true},
             let eff = 1
             eff = new Decimal(1e17).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(75).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1)).div(new Decimal(data.cautPower).add(1))
             if (data.type=='pm') eff = new Decimal(1e17).mul(data.level).pow(0.75).div(new Decimal(data.cautPower).add(1))
-            if (data.level>=10 && data.type=='div') eff = eff.div(20)
+            if (data.level>=15 && data.type=='div') eff = eff.div(20)
             if (data.level>=15 && data.type=='pm') eff = eff.div(2)
             return eff
         },
