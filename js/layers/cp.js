@@ -27,6 +27,7 @@ return slots}
 function corruptEffect() {
     let eff = new Decimal(1)
     eff = eff.add(player.cp.formatted.add(1).log10().mul(1.27).pow(1.5))
+    if (hasUpgrade('cp',12)) eff = eff.mul(upgradeEffect('cp',12))
     return eff
 }
 addLayer("cp", {
@@ -71,9 +72,10 @@ canBuyMax() {return true},
             let rangeMul = Math.floor(player.cp.totalCorrupt/4)
             let addLevel = Math.floor(player.cp.totalCorrupt/4)*2
             let ranType = Math.floor(Math.random()*1.5)
-            let range = 10+rangeMul
+            let range = 10+addLevel
+            let start = new Decimal(1).add(rangeMul)
    
-            let tier = Math.floor(Math.random() * range)+addLevel
+            let tier = Math.random() * (start - range) + range;
             if (tier==0) tier = 1
             player.cp.grid[slot] = { level: tier,active:false,fixed:false,type:player.cp.pool[ranType] }
     }
@@ -139,21 +141,21 @@ canBuyMax() {return true},
         },
 		12: {
 			title: "Corrupted Upgrade 12",
-            description: "Prestige Milestones boosts Corruption's Reward.",
-            costDescription() {return "Cost: 370 corruption essences<br>1e14 Points"},
+            description: "Prestige Milestones boosts Corruption's Reward and corruption essences effect.",
+            costDescription() {return "Cost: 350 corruption essences<br>1e16 Points"},
             unlocked() {return player.pm.best.gte(8)},
-            cost: new Decimal(370),
+            cost: new Decimal(350),
             effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=2;
 				let ret = player.pm.best.div(20).add(1)
                 return ret;
             },
 			canAfford() {
-				return player.points.gte(1e14)
+				return (player.points.gte(1e16)&&player.cp.formatted.gte(this.cost))
 			},
 			pay() {
 				player.cp.formatted = player.cp.formatted.sub(this.cost)
-				player.points = player.points.sub(1e14)
+				player.points = player.points.sub(1e16)
 			},
             effectDisplay() { return format(this.effect())+"x" },
         style() {
@@ -164,7 +166,7 @@ canBuyMax() {return true},
                 'border-radius':'0%'
             }
             
-            if (player.cp.formatted.gte(this.cost)) return {
+            if (this.canAfford()) return {
                 'background':'#444',
                 'border-color':'lime',
                 'color':'lime',
@@ -279,6 +281,8 @@ canBuyMax() {return true},
             let eff = 1
             eff = new Decimal(1e17).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(75).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1))
             if (data.type=='pm') eff = new Decimal(1e16).mul(data.level).pow(0.75)
+            if (data.level>=15 && data.type=='div') eff = eff.div(20)
+            if (data.level>=15 && data.type=='pm') eff = eff.div(2)
             return eff
         },
         getEssence(data,id) {
