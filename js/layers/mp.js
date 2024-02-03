@@ -553,6 +553,7 @@ player.t.choose = new Decimal(0)
 				player.mp.modeP=false
 				player.mp.modeE=true
 				player.pm.essence = player.pm.essence.pow(0.5)
+player.points = new Decimal(0)
 			},
 			style() {
 				if (player.mp.modeE==true) return {
