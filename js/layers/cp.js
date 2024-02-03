@@ -366,7 +366,7 @@ canBuyMax() {return true},
                    let slots = Object.keys(grid).filter(x=>grid[x].level>0)
                    if (slots.length) {
                        let slot = slots[Math.floor(Math.random() * slots.length)]
-                       player.cp.grid[slot] = { level: getGridData('cp',slots[i]),active:false,fixed:false,type:getGridData('cp',slots[i]),cautPower:1 }
+                       player.cp.grid[slot] = { level: getGridData('cp',slots[i]),active:false,fixed:false,type:getGridData('cp',slots[i]).type,cautPower:1 }
                }
                },
 			  unlocked(){
