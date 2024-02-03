@@ -58,7 +58,7 @@ addLayer("pep", {
 				return player.pm.essence.gte(1e13)
 			},
 			pay() {
-				player.pep.points = player.pep.points.sub(this.cost())
+				player.pep.points = player.pep.points.sub(this.cost)
 				player.pm.essence = player.pm.essence.sub(1e13)
 			},
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
