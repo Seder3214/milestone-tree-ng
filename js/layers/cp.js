@@ -277,7 +277,7 @@ canBuyMax() {return true},
         },
         getCost(data,id) {
             let eff = 1
-            eff = new Decimal(5e12).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(75).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1))
+            eff = new Decimal(5e13).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(75).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1))
             if (data.type=='pm') eff = new Decimal(1e16).mul(data.level).pow(0.75)
             return eff
         },
