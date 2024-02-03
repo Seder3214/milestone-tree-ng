@@ -279,19 +279,17 @@ canBuyMax() {return true},
         },
         getCost(data,id) {
             let eff = 1
-            eff = new Decimal(1e17).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(85).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1)).div(new Decimal(data.cautPower).add(1))
-            if (data.type=='pm') eff = new Decimal(1e17).mul(data.level).pow(0.75).div(new Decimal(data.cautPower).add(1))
+            eff = new Decimal(1e17).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(85).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1))
+            if (data.type=='pm') eff = new Decimal(1e17).mul(data.level).pow(0.75)
             if (data.level>=15 && data.type=='div') eff = eff.div(20)
             if (data.level>=15 && data.type=='pm') eff = eff.div(2)
-            return eff
-        },
+            return eff.div(new Decimal(data.cautPower).add(1)) },
         getEssence(data,id) {
             let gain = 0
-            if (data.type=='pm') gain = new Decimal(1).mul(data.level).pow(1.5).add(1).mul(new Decimal(data.cautPower).div(2).add(1))
-            else gain = new Decimal(1).mul(data.level).mul(1.5).add(1).mul(new Decimal(data.cautPower).div(2).add(1))
+            if (data.type=='pm') gain = new Decimal(1).mul(data.level).pow(1.5).add(1)
+            else gain = new Decimal(1).mul(data.level).mul(1.5).add(1)
         if (hasUpgrade('cp',12)) gain = gain.mul(upgradeEffect('cp',12))
-            return gain
-        },
+            return gain.div(new Decimal(data.cautPower).div(2).add(1))},
         getTooltip(data,id) {
             if (data.level<1) return
             else return "<h5>To fix, get "+format(gridCost('cp',id))+(data.type=="pm"?" prestige essences":" points")+" while corruption is active.<br>When active, " + "/"+ format(gridEffect('cp',id),5)+" to" +(data.type=="pm"?" prestige essences":" points") +"  gain.<br>"+"Reward: Get " + format(gridEssence('cp',id),0)+" corruption essences on fix."
