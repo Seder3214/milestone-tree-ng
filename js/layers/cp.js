@@ -141,7 +141,7 @@ canBuyMax() {return true},
 			title: "Corrupted Upgrade 12",
             description: "Prestige Milestones boosts Corruption's Reward.",
             costDescription() {return "Cost: 370 corruption essences<br>1e14 Points"},
-            unlocked() {return player.pm.best.gte(7)},
+            unlocked() {return player.pm.best.gte(8)},
             cost: new Decimal(370),
             effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=2;
@@ -277,7 +277,7 @@ canBuyMax() {return true},
         },
         getCost(data,id) {
             let eff = 1
-            eff = new Decimal(5e13).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(75).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1))
+            eff = new Decimal(1e17).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(75).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1))
             if (data.type=='pm') eff = new Decimal(1e16).mul(data.level).pow(0.75)
             return eff
         },
