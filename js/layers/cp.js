@@ -459,7 +459,7 @@ canBuyMax() {return true},
                 setTimeout(100000)
                 if (player.pm.essence.gte(gridCost('cp',slots[i])) && getGridData('cp',slots[i]).type=='pm') {
                     player.cp.formatted = player.cp.formatted.add(gridEssence('cp',slots[i]))
-                    player.cp.grid[slots[i]]={level: 0,active:false,fixed:false}
+                    player.cp.grid[slots[i]]={level: 0,active:false,fixed:false,type: getGridData('cp',slots[i]).type,cautPower: getGridData('cp',slots[i]).cautPower}
                     doPopup("none","Corruption was fixed!","Corruption Info",3,"black","lime")
                     player.cp.totalCorrupt += 1
                 } 
