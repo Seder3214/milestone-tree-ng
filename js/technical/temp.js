@@ -11,7 +11,7 @@ var activeFunctions = [
 	"effectDescription", "display", "fullDisplay", "effectDisplay", "rewardDisplay",
 	"tabFormat", "content",
 	"onComplete", "onPurchase", "onEnter", "onExit", "done",
-	"getUnlocked", "getStyle", "getCanClick", "getTitle", "getDisplay",'getCost','getEffect','getEssence','getTooltip','getTooltipStyle','activeCorruptions'
+	"getUnlocked", "getStyle", "getCanClick", "getTitle", "getDisplay",'getCost','getEffect','getEssence','getTooltip','getTooltipStyle','activeCorruptions',"getMark"
 ]
 
 var noCall = doNotCallTheseFunctionsEveryTick
@@ -107,7 +107,7 @@ function updateTemp() {
 		tmp[layer].notify = shouldNotify(layer)
 		tmp[layer].prestigeNotify = prestigeNotify(layer)
 		if (tmp[layer].passiveGeneration === true) tmp[layer].passiveGeneration = 1 // new Decimal(true) = decimalZero
-
+		if (player.cp.grid[101].cautPower==undefined) fixOldSave()
 	}
 
 	tmp.pointGen = getPointGen()

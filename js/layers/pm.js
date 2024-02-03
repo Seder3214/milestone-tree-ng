@@ -103,6 +103,15 @@ addLayer("pm", {
             effectDescription: function(){
 				return "Prestigify Exotic Prestige Points. (Unlock the layer again but with new content)"
 			},
+            style() {
+                if (hasMilestone('pm',7)) return {
+                    'background':'#3C2D15',
+                    'border-color':'#c89646',
+                    'color':'#c89646',
+                    'width': '100%',
+                    'border-image-slice': '1'
+                }
+            },
         },
         {
 			requirementDescription: "6th Prestige Milestone",
@@ -114,13 +123,6 @@ addLayer("pm", {
             style() {
                 if (hasMilestone('pm',5)) return {
                     'background':'#00520b',
-                    'border-color':'lime',
-                    'color':'lime',
-                    'width': '100%',
-                }
-            
-               return {
-                    'background':'#0f0f0f',
                     'border-color':'lime',
                     'color':'lime',
                     'width': '100%',
@@ -170,7 +172,7 @@ addLayer("pm", {
             unlocked() {return player[this.layer].best.gte(8)},
             done() {return player[this.layer].best.gte(9)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Massively reduce post-15th level Trojan corruption goals and slightly reduce Backdoor corruption goals."
+				return "Massively reduce post-10th level Trojan corruption goals and slightly reduce Backdoor corruption goals."
 			},
             style() {
                 if (hasMilestone('pm',8)) return {
@@ -179,11 +181,20 @@ addLayer("pm", {
                     'color':'lime',
                     'width': '100%',
                 }
-            
-               return {
-                    'background':'#0f0f0f',
-                    'border-color':'lime',
-                    'color':'lime',
+            },
+        },
+        {
+			requirementDescription: "10th Prestige Milestone",
+            unlocked() {return player[this.layer].best.gte(9)},
+            done() {return player[this.layer].best.gte(10)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Unlock Corruption Power (new Corruptions tab)."
+			},
+            style() {
+                if (hasMilestone('pm',9)) return {
+                    'background':'#330000',
+                    'border-color':'red',
+                    'color':'red',
                     'width': '100%',
                 }
             },

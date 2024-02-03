@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.035 beta II",
+	num: "2.035 beta III",
 	name: "Corrupted Game?!",
 }
 
@@ -23,6 +23,9 @@ Note: v<h3 style="color: green">A</h3>.<h3 style='color: blue'>B</h3><h3 style='
 <h3 style='color: green'>A</h3> is a number of <h3 style='color:yellow'>major</h3> updates like <h3 class='pmr'>Prestige Milestone Tree</h3>, <br>
 <h3 style='color: blue'>B</h3> is a number of <h3 style="color:#793784">milestones</h3> in current version, <br>
 <h3 style='color: yellow'>C</h3> is a letter that used to show <h3 style='color: cyan'>bugfix/rebalance</h3> updates<br><br>
+<h3 class="corr">v2.035 beta III - Corruptions pt.3 - Cautions!</h3><br>
+<span style='color: #808080'> - Added a new mechanic!<br></span>
+<span style='color: #808080'> - 2 prestige milestones added!<br></span>
 <h3 class="corr">v2.035 beta II - Corruptions pt.2!</h3><br>
 <span style='color: #808080'> - A whole new layer is playable now. Corruptions are fully working now!<br></span>
 <span style='color: #808080'> - 2 prestige milestones added!<br></span>
@@ -186,4 +189,7 @@ function maxTickLength() {
 // Use this if you need to undo inflation from an older version. If the version is older than the version that fixed the issue,
 // you can cap their current resources with this.
 function fixOldSave(oldVersion){
+	for (p in player.cp.grid) {
+		player.cp.grid[p]= {level : getGridData('cp',p).level,active:false,fixed:false,type:"div",cautPower:0}
+		}
 }
