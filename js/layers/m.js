@@ -1722,7 +1722,7 @@ addLayer("m", {
     resetDescription: "Get ",
 	doReset(){},
 	tabFormat: ["main-display","prestige-button","resource-display",
-				["display-text",function(){return "Milestone cost scaling starts at "+format(tmp.m.getScalingStart,4)}],
+				["display-text",function(){if (!hasUpgrade('mp',14)) return "Milestone cost scaling starts at "+format(tmp.m.getScalingStart,4)}],
 				["display-text",function(){return "Milestone cost exponent is "+format(tmp.m.exponent,4)}],
 				"milestones"
 				],

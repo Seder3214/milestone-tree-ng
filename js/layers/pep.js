@@ -50,8 +50,8 @@ addLayer("pep", {
 			costDescription() {return "Cost: 6 pr-exotic prestige points<br>1e13 Prestige Essences"},
             unlocked() { return player.pm.best.gte(7)}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
-				let base=1.5;
-				let ret = player.pm.best.log(5).pow(base)
+				let base=5;
+				let ret = player.pm.best.div(10).mul(base).add(1)
                 return ret;
             },
 			canAfford() {
@@ -118,7 +118,7 @@ addLayer("pep", {
 			content:[
 				"main-display","prestige-button","resource-display",
 				["display-text",function(){table = ''
-				if (player.pep.buyables[11].gte(1)) table += '1st effect: Boost points gain by ' + format(tmp.pep.prOneEffect) + "x, but boost 1st milestone reducing effect by "+ format(tmp.pep.prOneEffect.pow(0.5))+ "x."
+				if (player.pep.buyables[11].gte(1)) table += '1st effect: Boost prestige essences gain by ' + format(tmp.pep.prOneEffect) + "x and boost 1st milestone reducing effect by "+ format(tmp.pep.prOneEffect.pow(0.5))+ "x."
                 if (player.pep.buyables[11].gte(2)) table += '<br>2nd effect: Multiply points gain <b>before</b> 1st milestone reduce by ' + format(tmp.pep.prTwoEffect) + "x."
 				return table}],
 				"buyables"
