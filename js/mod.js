@@ -190,6 +190,6 @@ function maxTickLength() {
 // you can cap their current resources with this.
 function fixOldSave(oldVersion){
 	for (p in player.cp.grid) {
-		player.cp.grid[p]= {level : getGridData('cp',p).level,active:false,fixed:false,type:"div",cautPower:0}
+		player.cp.grid[p]= {level : getGridData('cp',p).level,active:false,fixed:false,type:getGridData('cp',p),cautPower:0}
 		}
 }
