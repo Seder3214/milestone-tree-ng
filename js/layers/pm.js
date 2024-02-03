@@ -172,7 +172,7 @@ addLayer("pm", {
             unlocked() {return player[this.layer].best.gte(8)},
             done() {return player[this.layer].best.gte(9)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Massively reduce post-10th level Trojan corruption goals and slightly reduce Backdoor corruption goals."
+				return "Massively reduce post-15th level Trojan corruption goals and slightly reduce Backdoor corruption goals."
 			},
             style() {
                 if (hasMilestone('pm',8)) return {
