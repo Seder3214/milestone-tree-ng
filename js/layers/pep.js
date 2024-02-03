@@ -57,7 +57,7 @@ addLayer("pep", {
 			canAfford() {
 				return player.pm.essence.gte(1e13)
 			},
-			buy() {
+			pay() {
 				player.pep.points = player.pep.points.sub(this.cost())
 				player.pm.essence = player.pm.essence.sub(1e13)
 			},
@@ -83,7 +83,7 @@ addLayer("pep", {
 			canAfford() {
                    return player.pep.points.gte(tmp[this.layer].buyables[this.id].cost)
 			},
-               pay() { 
+               buy() { 
                 player.pep.points = player.pep.points.sub(this.cost())
                    player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
                },
