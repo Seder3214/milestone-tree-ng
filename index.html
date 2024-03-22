@@ -44,14 +44,14 @@
 			<hr>
 			[ Misc ]
 			<button class="menuButton" style="margin-top:4px"onclick="showTab('info-tab')"><span class="buttonText">Information</span></button>
-			<button class="menuButton" onclick="showTab('options-tab')"><span class="buttonText">Options</span></button><br>
+			<button class="menuButton" onclick="showTab('options-tab')"><span class="buttonText">Options</span></button>
+<button onclick="showTab('changelog-tab')" class="menuButton">Changelog</button>	<br>
 			<hr>
 			
 			<span v-if="layerShown('m')==true">[ Milestones (Normal Universe) ]</span>
 				<button class="menuButton" v-if="layerShown('m')==true" style="margin-top:4px" v-bind:style="constructMenuButtonStyle('m') " onclick="showTab('m')"><span class="buttonText">Milestone (+{{player.points.gte(tmp.m.nextAtDisp)?1:0}})</span></button>
 				<button class="menuButton" v-if="layerShown('mm')==true" v-bind:style="constructMenuButtonStyle('mm') " onclick="showTab('mm')"><span class="buttonText">Meta Milestone (+{{player.m.points.gte(tmp.mm.nextAtDisp)?1:0}})</span></button>
 				<button class="menuButton" v-if="layerShown('em')==true" v-bind:style="constructMenuButtonStyle('em') " onclick="showTab('em')"><span class="buttonText">Extra Milestone (+{{player.em.points.gte(tmp.em.nextAtDisp)?1:0}})</span></button>
-<button onclick="showTab('changelog-tab')" class="menuButton">Changelog</button>	
 				<br><hr v-if="layerShown('m')==true">
 			
 			<span v-if="layerShown('p')==true">[ Row 1 ]</span>
