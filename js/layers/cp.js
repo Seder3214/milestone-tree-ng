@@ -100,7 +100,7 @@ canBuyMax() {return true},
     row: 1, // Row the layer is in on the tree (0 is the first row)
 	base: new Decimal(12),
 	exponent: function(){
-		return new Decimal(0.7)
+		return new Decimal(0.625)
 	},
     hotkeys: [
         {key: "ctrl+c", description: "Ctrl+C: Corrupt prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
@@ -278,20 +278,18 @@ canBuyMax() {return true},
                 }
         },
         getCost(data,id) {
-            let eff = 1
-            eff = new Decimal(1e17).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(75).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1)).div(new Decimal(data.cautPower).add(1))
-            if (data.type=='pm') eff = new Decimal(1e16).mul(data.level).pow(0.75).div(new Decimal(data.cautPower).add(1))
-            if (data.level>=10 && data.type=='div') eff = eff.div(20)
+            let eff = new Decimal(1)
+            eff = new Decimal(1e17).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(85).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1))
+            if (data.type=='pm') eff = new Decimal(1e17).mul(data.level).pow(0.75)
+            if (data.level>=15 && data.type=='div') eff = eff.div(20)
             if (data.level>=15 && data.type=='pm') eff = eff.div(2)
-            return eff
-        },
+            return eff.div(new Decimal(data.cautPower).add(1)) },
         getEssence(data,id) {
-            let gain = 0
-            if (data.type=='pm') gain = new Decimal(1).mul(data.level).pow(1.5).add(1).mul(new Decimal(data.cautPower).div(2).add(1))
-            else gain = new Decimal(1).mul(data.level).mul(1.5).add(1).mul(new Decimal(data.cautPower).div(2).add(1))
+            let gain = new Decimal(0)
+            if (data.type=='pm') gain = new Decimal(1).mul(data.level).pow(1.5).add(1)
+            else gain = new Decimal(1).mul(data.level).mul(1.5).add(1)
         if (hasUpgrade('cp',12)) gain = gain.mul(upgradeEffect('cp',12))
-            return gain
-        },
+            return gain.div(new Decimal(data.cautPower).div(2).add(1))},
         getTooltip(data,id) {
             if (data.level<1) return
             else return "<h5>To fix, get "+format(gridCost('cp',id))+(data.type=="pm"?" prestige essences":" points")+" while corruption is active.<br>When active, " + "/"+ format(gridEffect('cp',id),5)+" to" +(data.type=="pm"?" prestige essences":" points") +"  gain.<br>"+"Reward: Get " + format(gridEssence('cp',id),0)+" corruption essences on fix."
@@ -300,11 +298,10 @@ canBuyMax() {return true},
             if (data.cautPower>0) return "resources/warning.png"
         },
         getEffect(data,id) {
-            let eff = 1
-           if (data.type=='div') eff = new Decimal(data.level).add(1).mul(3).pow(1+data.level/10).mul(new Decimal(data.cautPower).add(1))
-           if (data.type=='pm') eff = new Decimal(data.level).add(1).mul(1.5).pow(1+data.level/10).mul(new Decimal(data.cautPower).add(1))
-            return eff
-        },
+            let eff = new Decimal(1)
+           if (data.type=='div') eff = new Decimal(data.level).add(1).mul(3).pow(1+data.level/10)
+           if (data.type=='pm') eff = new Decimal(data.level).add(1).mul(1.5).pow(1+data.level/10)
+            return eff.mul(new Decimal(data.cautPower).add(1))},
         onClick(data, id) { 
             if (data.level>=1) {player[this.layer].grid[id].active=!player[this.layer].grid[id].active
              if (data.type=='pm') player.pm.essence=new Decimal(0)
@@ -366,7 +363,7 @@ canBuyMax() {return true},
                    let slots = Object.keys(grid).filter(x=>grid[x].level>0)
                    if (slots.length) {
                        let slot = slots[Math.floor(Math.random() * slots.length)]
-                       player.cp.grid[slot] = { level: getGridData('cp',slots[i]),active:false,fixed:false,type:getGridData('cp',slots[i]),cautPower:1 }
+                       player.cp.grid[slot] = { level: getGridData('cp',slots[i]).level,active:false,fixed:false,type:getGridData('cp',slots[i]).type,cautPower:1 }
                }
                },
 			  unlocked(){
