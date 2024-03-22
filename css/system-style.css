@@ -178,6 +178,7 @@
 	background: #414141;
 	border: 3px solid rgb(122, 122, 122);
 	display: flexbox;
+overflow-y: auto;
 	flex-direction:column;
 } 
 .menuButton {
