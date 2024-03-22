@@ -51,6 +51,7 @@
 				<button class="menuButton" v-if="layerShown('m')==true" style="margin-top:4px" v-bind:style="constructMenuButtonStyle('m') " onclick="showTab('m')"><span class="buttonText">Milestone (+{{player.points.gte(tmp.m.nextAtDisp)?1:0}})</span></button>
 				<button class="menuButton" v-if="layerShown('mm')==true" v-bind:style="constructMenuButtonStyle('mm') " onclick="showTab('mm')"><span class="buttonText">Meta Milestone (+{{player.m.points.gte(tmp.mm.nextAtDisp)?1:0}})</span></button>
 				<button class="menuButton" v-if="layerShown('em')==true" v-bind:style="constructMenuButtonStyle('em') " onclick="showTab('em')"><span class="buttonText">Extra Milestone (+{{player.em.points.gte(tmp.em.nextAtDisp)?1:0}})</span></button>
+<button onclick="showTab('changelog-tab')" class="menuButton">Changelog</button>	
 				<br><hr v-if="layerShown('m')==true">
 			
 			<span v-if="layerShown('p')==true">[ Row 1 ]</span>
@@ -87,9 +88,7 @@
 				<button class="menuButton" v-if="layerShown('cp')==true" style="margin-top:4px; color: lime; border: 2px solid lime; background: black" onclick="showTab('cp')"><span class="buttonText">Corrupted Prestige (+{{format(tmp.cp.resetGain-1)}})</button>
 				<button class="menuButton" v-if="layerShown('pm')==true" v-bind:style="constructMenuButtonStyle('pm') " onclick="showTab('pm')"><span class="buttonText">Prestige Milestone (+{{player.points.gte(tmp.pm.nextAtDisp)?1:0}})</span></button>
 				<button class="menuButton" v-if="layerShown('pep')==true" v-bind:style="constructMenuButtonStyle('pep') " onclick="showTab('pep')"><span class="buttonText">Prestiged-Exotic Prestige (+{{player.pm.essence.gte(tmp.pep.nextAtDisp)?1:0}})</span></button>
-					<br><hr v-if="layerShown('pm')==true">		
-					<div id="version2" onclick="showTab('changelog-tab')" style="margin-right:150px" class="overlayThing">
-						{{VERSION.withoutName}}</div>		
+					<br><hr v-if="layerShown('pm')==true">			
 		</div>
 		<canvas id="treeCanvas" class="canvas" v-if="!(tmp.gameEnded && !player.keepGoing)"></canvas>
 
