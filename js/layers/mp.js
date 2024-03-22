@@ -581,6 +581,7 @@ player.points = new Decimal(0)
 		onClick() {
 			player.mp.modeP=true
 			player.mp.modeE=false
+   setTimeout(100000)
 			player.pm.essence = player.pm.essence.pow(0.85)
 player.points = new Decimal(0)
 		},
