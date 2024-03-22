@@ -19,6 +19,7 @@
 	top: 50px;
 	left: 4px;
 	cursor: pointer;
+	text-align: center;
 	width: 40px;
 	height: 40px;
 	-webkit-text-stroke-width: 1px;
@@ -71,7 +72,19 @@
 	transform: scale(1.1, 1.1);
 	right: 4.8px;
 }
+#version2 {
+	position: absolute;
+	right: 4px;
+	bottom: 4px;
+	text-align: right;
+	color: var(--points);
+	text-shadow: 0 0 10px var(--points);
+	cursor: pointer;
+}
 
+#version2:hover {
+	transform: scale(1.1, 1.1);
+}
 a {
 	color: #007fff;
 	text-decoration-line: none;

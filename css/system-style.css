@@ -169,6 +169,34 @@
 	line-height: 0.9;
 	margin-bottom: 10px;
 }
+.menu {
+	position: absolute;
+	z-index:1000;
+	width: 450px;
+	height: 99%;
+	left:1px;
+	background: #414141;
+	border: 3px solid rgb(122, 122, 122);
+	display: flexbox;
+	flex-direction:column;
+} 
+.menuButton {
+	width: 445px;
+	height: 35px;
+	margin-bottom: 5px;
+	color: rgb(0, 0, 0);
+	font-size:16px;
+	z-index:10000;
+	cursor: pointer;
+	pointer-events: auto;
+	background: #a3a3a3;
+	border: 2px solid black;
+	transition: all 0.5s;
+} 
+.menuButton:hover{
+	color: rgb(75, 75, 75);
+	height: 45px;
+}
 .import {
 	width: 80px;
 	height: 40px;

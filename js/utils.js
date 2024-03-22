@@ -143,7 +143,6 @@ function inChallenge(layer, id) {
 var onTreeTab = true
 
 function showTab(name, prev) {
-	if (LAYERS.includes(name) && !layerunlocked(name)) return
 	if (player.tab !== name) clearParticles(function(p) {return p.layer === player.tab})
 	if (tmp[name] && player.tab === name && isPlainObject(tmp[name].tabFormat)) {
 		player.subtabs[name].mainTabs = Object.keys(layers[name].tabFormat)[0]

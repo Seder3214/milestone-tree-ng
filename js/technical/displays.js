@@ -23,7 +23,12 @@ function constructNodeStyle(layer){
 	style.push(tmp[layer].nodeStyle)
     return style
 }
-
+function constructMenuButtonStyle(layer){
+	let style = []
+	if (layerShown(layer)==true)
+		style.push({'background-color': tmp[layer].color})
+    return style
+}
 
 function challengeStyle(layer, id) {
 	if (player[layer].activeChallenge == id && canCompleteChallenge(layer, id)) return "canComplete"

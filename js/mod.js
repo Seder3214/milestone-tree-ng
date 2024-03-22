@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.035 beta III",
+	num: "2.035 Revamp Update",
 	name: "Corrupted Game?!",
 }
 
@@ -23,6 +23,9 @@ Note: v<h3 style="color: green">A</h3>.<h3 style='color: blue'>B</h3><h3 style='
 <h3 style='color: green'>A</h3> is a number of <h3 style='color:yellow'>major</h3> updates like <h3 class='pmr'>Prestige Milestone Tree</h3>, <br>
 <h3 style='color: blue'>B</h3> is a number of <h3 style="color:#793784">milestones</h3> in current version, <br>
 <h3 style='color: yellow'>C</h3> is a letter that used to show <h3 style='color: cyan'>bugfix/rebalance</h3> updates<br><br>
+<h3 class="corr">v2.035 Revamp Update</h3><br>
+<span style='color: #808080'> - Change the whole game overlay<br></span>
+<span style='color: #808080'> - You can change to default style in options<br></span>
 <h3 class="corr">v2.035 beta III - Corruptions pt.3 - Cautions!</h3><br>
 <span style='color: #808080'> - Added a new mechanic!<br></span>
 <span style='color: #808080'> - 2 prestige milestones added!<br></span>
