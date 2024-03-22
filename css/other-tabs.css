@@ -74,7 +74,6 @@
 }
 #version2 {
 	position: absolute;
-	right: 4px;
 	bottom: 4px;
 	text-align: right;
 	color: var(--points);
