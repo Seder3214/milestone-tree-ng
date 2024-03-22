@@ -141,7 +141,7 @@
 							v-bind:style="{'font-size': '16px'}">Main Prestige Tree server</a></li>
 				</ul>
 			</div>
-			<overlay-head v-if="!(tmp.gameEnded && !player.keepGoing)"></overlay-head>
+			<overlay-head v-if="!(tmp.gameEnded && !player.keepGoing) && options.forceOneTab==false"></overlay-head>
 			<div class="sideLayers">
 				<div v-for="(node, index) in OTHER_LAYERS['side']">
 					<tree-node :layer='node' :abb='tmp[node].symbol' :size="'small'" :key="'side' + index"></tree-node>
