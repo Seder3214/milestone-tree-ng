@@ -89,8 +89,8 @@
 				<button class="menuButton" v-if="layerShown('pm')==true" v-bind:style="constructMenuButtonStyle('pm') " onclick="showTab('pm')"><span class="buttonText">Prestige Milestone (+{{player.points.gte(tmp.pm.nextAtDisp)?1:0}}) [ NG+ ]</span></button>
 				<button class="menuButton" v-if="layerShown('pep')==true" v-bind:style="constructMenuButtonStyle('pep') " onclick="showTab('pep')"><span class="buttonText">Prestiged-Exotic Prestige (+{{player.pm.essence.gte(tmp.pep.nextAtDisp)?1:0}}) [ NG+ ]</span></button>
 					<br><hr v-if="layerShown('pm')==true"></div>
-		<canvas id="treeCanvas" class="canvas" v-if="!(tmp.gameEnded && !player.keepGoing) && options.forceOneTab==true"></canvas>
-<div id="version" class="overlayThing">
+		<canvas id="treeCanvas" class="canvas" v-if="!(tmp.gameEnded && !player.keepGoing)"></canvas>
+<div id="version" v-if="options.forceOneTab==true" class="overlayThing">
 						{{VERSION.num}}</div>		
 		<div v-if="false" id="loadingSection" class="fullWidth">
 			<h1>Loading... (If this takes too long it means there was a serious error!)←</h1>
