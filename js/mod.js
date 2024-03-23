@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "2.035A Revamp Update",
+	num: "pre-release v2.035 Update 2",
 	name: "Corrupted Game?!",
 }
 
@@ -23,6 +23,10 @@ Note: v<h3 style="color: green">A</h3>.<h3 style='color: blue'>B</h3><h3 style='
 <h3 style='color: green'>A</h3> is a number of <h3 style='color:yellow'>major</h3> updates like <h3 class='pmr'>Prestige Milestone Tree</h3>, <br>
 <h3 style='color: blue'>B</h3> is a number of <h3 style="color:#793784">milestones</h3> in current version, <br>
 <h3 style='color: yellow'>C</h3> is a letter that used to show <h3 style='color: cyan'>bugfix/rebalance</h3> updates<br><br>
+<h3 class="corr">pre-release v2.035 Update 2</h3><br>
+<span style='color: #808080'> - Rebalanced post-170th milestone content<br></span>
+<span style='color: #808080'> - Reduced Corruptions Level increase based on total fixed corruptions<br></span>
+<span style='color: #808080'> - Reduced Corruption Upgrade 12 cost (350 => 150)<br></span>
 <h3 class="corr">v2.035A - Default Style Fix</h3><br>
 <span style='color: #808080'> -Fixed the whole being moved right on default theme<br></span>
 <h3 class="corr">v2.035 Revamp Update</h3><br>
@@ -148,11 +152,11 @@ function getCostOverflowStart(){
 		return sc;
 		}
 	function getCostOverflowEff(){
-		let eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(1.075).sub(hasUpgrade("mp",12)?upgradeEffect("mp",12):1)
+		let eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.5).div(10)).pow(1.075).sub(hasUpgrade("mp",12)?upgradeEffect("mp",12):1)
 		if (player.m.points.gte(getCostOverflowScale())){
-		eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(player.m.points.gte(181)?new Decimal(1.7).add(player.m.points.sub(181).div(10)):1.2).sub(hasUpgrade("mp",12)?upgradeEffect("mp",12):1)
+		eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(player.m.points.gte(181)?new Decimal(1.5).add(player.m.points.sub(181).div(10)):1.2).sub(hasUpgrade("mp",12)?upgradeEffect("mp",12):1)
 		}
-		return eff;
+		return eff.add(1);
 		}
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
 function addedPlayerData() { return {

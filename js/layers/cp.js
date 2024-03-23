@@ -70,7 +70,7 @@ canBuyMax() {return true},
         if (slots.length) {
             let slot = slots[Math.floor(Math.random() * slots.length)]
             let rangeMul = Math.floor(player.cp.totalCorrupt/4)
-            let addLevel = Math.floor(player.cp.totalCorrupt/4)*1.5
+            let addLevel = Math.floor(player.cp.totalCorrupt/8)*2
             let ranType = Math.floor(Math.random()*1.5)
             let range = 10+addLevel
             let start = new Decimal(1).add(rangeMul)
@@ -142,9 +142,9 @@ canBuyMax() {return true},
 		12: {
 			title: "Corrupted Upgrade 12",
             description: "Prestige Milestones boosts Corruption's Reward and corruption essences effect.",
-            costDescription() {return "Cost: 350 corruption essences<br>1e16 Points"},
+            costDescription() {return "Cost: 150 corruption essences<br>1e16 Points"},
             unlocked() {return player.pm.best.gte(8)},
-            cost: new Decimal(350),
+            cost: new Decimal(150),
             effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=2;
 				let ret = player.pm.best.div(20).add(1)

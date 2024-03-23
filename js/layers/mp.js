@@ -69,15 +69,15 @@ addLayer("mp", {
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=0.05;
                 let ret = player.mp.best.add(1).pow(base).sub(1)
-				if (hasUpgrade('mp',14)) ret = ret.mul(2)
+				if (hasUpgrade('mp',14)) ret = ret.mul(5)
                 return ret.max(0);
             },
             effectDisplay() { return "+"+format(this.effect()) }, // Add formatting to the effect
         },
         14:  {
 			title: "Multiverse Prestige Upgrade 14",
-            description: "Milestone Cost Scaling is disabled, and double prev. upgrade effect",
-            cost: new Decimal(13),
+            description: "Milestone Cost Scaling is disabled, and 5.00x prev. upgrade effect",
+            cost: new Decimal(11),
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
 	},
@@ -100,8 +100,8 @@ addLayer("mp", {
             completionsAfter120(){
                 let p=player.ep.points;
                 if(player.m.best.gte(130)){
-                    if(p.lte("1e10000"))return 0;
-                    return p.log10().div(10000).log(1.1).pow(1/1.1).toNumber();
+                    if(p.lte("1e4500"))return 0;
+                    return p.log10().div(4500).log(1.1).pow(1/1.1).toNumber();
                 }
             },
             rewardEffect() {
@@ -109,7 +109,7 @@ addLayer("mp", {
                 return ret;
             },
             goalAfter120(x=player.mp.challenges[11]){
-                if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.1,Decimal.pow(x,1.1)).mul(10000));
+                if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.1,Decimal.pow(x,1.1)).mul(4500));
             },
             currencyDisplayName: "Exotic Prestige Points",
             rewardDescription() { return "6th Exotic Fusioner effect is x"+ format(this.rewardEffect())+" better." },
@@ -132,7 +132,7 @@ addLayer("mp", {
         },
         name: "Weaker Transcend",
         completionLimit: Infinity,
-        challengeDescription() {return "While entering this challenge, you should choose 2 Special Transcend Points (others will be unable to get)."+"<br>"+format(challengeCompletions(this.layer, this.id),4) +" completions.<br>At 35 completions, unlock a <b>New Challenge</b>."},
+        challengeDescription() {return "While entering this challenge, you should choose 2 Special Transcend Points (others will be unable to get)."+"<br>"+format(challengeCompletions(this.layer, this.id),4) +" completions."},
         unlocked() { return player.m.best.gte(183) },
         goal: function(){
             if(player.m.best.gte(120))return this.goalAfter120(Math.ceil(player.mp.challenges[12]+0.001));
@@ -143,8 +143,8 @@ addLayer("mp", {
         completionsAfter120(){
             let p=player.ep.points;
             if(player.m.best.gte(130)){
-                if(p.lte("1e28000"))return 0;
-                return p.log10().div(28000).log(1.1).pow(1/1.1).toNumber();
+                if(p.lte("1e3000"))return 0;
+                return p.log10().div(3000).log(1.15).pow(1/1.15).toNumber();
             }
         },
         rewardEffect() {
@@ -152,7 +152,7 @@ addLayer("mp", {
             return ret;
         },
         goalAfter120(x=player.mp.challenges[12]){
-            if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.1,Decimal.pow(x,1.1)).mul(28000));
+            if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.15,Decimal.pow(x,1.15)).mul(3000));
         },
         currencyDisplayName: "Exotic Prestige Points",
         rewardDescription() { return "7th Exotic Fusioner effect is +"+ format(this.rewardEffect())+" better." },
@@ -167,7 +167,7 @@ addLayer("mp", {
 	name: "Exotic-less and No Transcend",
 	completionLimit: Infinity,
 	challengeDescription() {return "All of Exotic Fusioner effects are useless, Transcend Points hardcap is always at 1e10."+"<br>"+format(challengeCompletions(this.layer, this.id),4) +" completions"},
-	unlocked() { return player.mp.challenges[12]>=35 },
+	unlocked() { return player.m.best.gte(184) },
 	goal: function(){
 		if(player.m.best.gte(120))return this.goalAfter120(Math.ceil(player.mp.challenges[13]+0.001));
 	},
@@ -182,7 +182,7 @@ addLayer("mp", {
 		}
 	},
 	rewardEffect() {
-		let ret = (player.mp.challenges[13])*0.5
+		let ret = (player.mp.challenges[13])*0.55
 ret = softcap(new Decimal(ret), new Decimal(7),0.25)
 		return softcap(new Decimal(ret),new Decimal(7.5),0.5);
 	},
@@ -323,7 +323,7 @@ player.t.choose = new Decimal(0)
 				"Cost for Next Level: "+format(data.cost)+" Multiversal Prestige Points";
 			},
 			cost(x) {
-				return new Decimal(7).add(x.div(5)).add(player.mp.totalF.mul(2).div(1.75));
+				return new Decimal(7).add(x.div(5)).add(player.mp.totalF.mul(2).div(3));
 			},
 			canAfford() {
                    return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)

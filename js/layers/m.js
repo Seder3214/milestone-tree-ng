@@ -1519,7 +1519,7 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(182)},
             done() {return player[this.layer].best.gte(183)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Unlock a Multiverse Challenge (ENDGAME).";
+				return "Unlock a Multiverse Challenge.";
 			},
         },
         {

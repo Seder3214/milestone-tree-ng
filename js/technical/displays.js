@@ -27,6 +27,8 @@ function constructMenuButtonStyle(layer){
 	let style = []
 	if (layerShown(layer)==true)
 		style.push({'background-color': tmp[layer].color})
+	if(tmp[layer].notify && player[layer].unlocked)
+		style.push({'box-shadow': 'var(--hqProperty2a), 0 0 20px ' + tmp[layer].trueGlowColor})
     return style
 }
 
