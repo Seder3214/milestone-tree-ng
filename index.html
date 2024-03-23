@@ -91,7 +91,7 @@
 					<br><hr v-if="layerShown('pm')==true">				
 		<canvas id="treeCanvas" class="canvas" v-if="!(tmp.gameEnded && !player.keepGoing)"></canvas>
 <div id="version" onclick="showTab('changelog-tab')" class="overlayThing">
-						{{VERSION.withoutName}}</div>		
+						{{VERSION.num}}</div>		
 		</div>
 		<div v-if="false" id="loadingSection" class="fullWidth">
 			<h1>Loading... (If this takes too long it means there was a serious error!)←</h1>
