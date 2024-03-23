@@ -582,7 +582,7 @@ player.points = new Decimal(0)
 			player.mp.modeP=true
 			player.mp.modeE=false
 			player.pm.essence = player.pm.essence.pow(0.85)
-setTimeout(100000)
+setTimeout(400000)
 player.points = new Decimal(0)
 		},
 		style() {
