@@ -36,7 +36,7 @@ addLayer("pep", {
         return eff;
     },
 	prThreeEffect() {
-        let eff = player.pep.points.log10().pow(0.35).mul(player.pep.points.div(100))
+        let eff = player.pep.points.add(1).log10().pow(0.35).mul(player.pep.points.div(100))
         return eff;
     },
     row: 1, // Row the layer is in on the tree (0 is the first row)
