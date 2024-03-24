@@ -360,7 +360,8 @@ canBuyMax() {return true},
            if (data.level>=15 && data.type=='pm') eff = eff.mul(25)
            if (data.level>=18 && data.type=='pm') eff = eff.mul(15)
            if (data.level>=20 && data.type=='pm') eff = eff.mul(25)
-           if (data.level>=20 && data.type=='div') eff = eff.div(5)
+if (data.level>=15 && data.type=='div') eff = eff.mul(5)
+           if (data.level>=20 && data.type=='div') eff = eff.mul(1.25)
            if (data.level>=30 && data.type=='div') eff = eff.div(25)
             return eff.mul(new Decimal(data.cautPower).add(1))},
         onClick(data, id) { 
