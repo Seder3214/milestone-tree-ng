@@ -92,7 +92,7 @@ addLayer("pep", {
 		13: {
 			title: "Prestiged-Exotic Prestige Upgrade 13",
             description: "Prestige Essences boosts Pr-Exotic Upgrade 12 effect's base.",
-            cost: new Decimal(7),
+            cost: new Decimal(10),
 			costDescription() {return "Cost: 10 pr-exotic prestige points<br>5e24 Prestige Essences"},
             unlocked() { return player.pm.best.gte(11)}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
