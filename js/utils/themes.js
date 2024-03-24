@@ -1,5 +1,6 @@
 // ************ Themes ************
 var themes = ["default", "aqua","nature","steel"]
+var themeNames = ["Default", "Aqua","Nature","Steel"]
 
 var colors = {
 	default: {
@@ -53,18 +54,21 @@ function changeTheme() {
 	document.body.style.setProperty("--locked", colors_theme["locked"]);
 }
 function getThemeName() {
-	return options.theme? options.theme : "default";
+	return options.themeName? options.themeName : "Default";
 }
 
 function switchTheme() {
 	let index = themes.indexOf(options.theme)
 	if (options.theme === null || index >= themes.length-1 || index < 0) {
 		options.theme = themes[0];
+		options.themeName = themeNames[0];
 	}
 	else {
 		index ++;
 		options.theme = themes[index];
 		options.theme = themes[index];
+		options.themeName = themeNames[index];
+		options.themeName = themeNames[index];
 	}
 	changeTheme();
 	resizeCanvas();

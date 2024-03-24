@@ -1,7 +1,7 @@
 addLayer("pep", {
     name: "prestiged-exotic prestige", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "PEP", // This appears on the layer's node. Default is the id with the first letter capitalized
-    position: 3, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: false,
 		points: new Decimal(0),
@@ -33,6 +33,10 @@ addLayer("pep", {
 	prTwoEffect() {
         let eff = player.pep.points.add(1).mul(2).pow(0.6)
 		if (hasUpgrade('pep',12)) eff = eff.mul(upgradeEffect('pep',12))
+        return eff;
+    },
+	prThreeEffect() {
+        let eff = player.pep.points.log10().pow(0.35).mul(player.pep.points.div(100))
         return eff;
     },
     row: 1, // Row the layer is in on the tree (0 is the first row)
@@ -72,6 +76,7 @@ addLayer("pep", {
             unlocked() { return player.pm.best.gte(8)}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=3;
+				if (hasUpgrade("pep",13)) base*=(new Decimal(1).add(upgradeEffect('pep',13)))
 				let ret = player.pm.best.div(20).mul(base).add(1)
                 return ret;
             },
@@ -83,6 +88,26 @@ addLayer("pep", {
 				player.pm.essence = player.pm.essence.sub(3e16)
 			},
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
+        },
+		13: {
+			title: "Prestiged-Exotic Prestige Upgrade 13",
+            description: "Prestige Essences boosts Pr-Exotic Upgrade 12 effect's base.",
+            cost: new Decimal(7),
+			costDescription() {return "Cost: 10 pr-exotic prestige points<br>5e24 Prestige Essences"},
+            unlocked() { return player.pm.best.gte(11)}, // The upgrade is only visible when this is true
+			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
+				let base=3;
+				let ret = player.pm.essence.add(1).log10().add(1).log(10).div(3)
+                return ret;
+            },
+			canAfford() {
+				return (player.pm.essence.gte(3e16)&&player.pep.points.gte(this.cost))
+			},
+			pay() {
+				player.pep.points = player.pep.points.sub(this.cost)
+				player.pm.essence = player.pm.essence.sub(5e24)
+			},
+            effectDisplay() { return format(this.effect()*100,4)+"%" }, // Add formatting to the effect
         },
 	},
 	buyables: {
@@ -99,7 +124,7 @@ addLayer("pep", {
 				"Cost for Next Tier: "+format(data.cost,0)+" Exotic Prestige points";
 			},
 			cost(){
-				return [new Decimal("1"),new Decimal("2"),Decimal.dInf][player.pep.buyables[11]]
+				return [new Decimal("1"),new Decimal("2"),new Decimal("8"),Decimal.dInf][player.pep.buyables[11]]
 			},
 			canAfford() {
                    return player.pep.points.gte(tmp[this.layer].buyables[this.id].cost)
@@ -141,6 +166,7 @@ addLayer("pep", {
 				["display-text",function(){table = ''
 				if (player.pep.buyables[11].gte(1)) table += '1st effect: Boost prestige essences gain by ' + format(tmp.pep.prOneEffect) + "x and boost 1st milestone reducing effect by "+ format(tmp.pep.prOneEffect.pow(0.5))+ "x."
                 if (player.pep.buyables[11].gte(2)) table += '<br>2nd effect: Multiply points gain <b>before</b> 1st milestone reduce by ' + format(tmp.pep.prTwoEffect) + "x."
+                if (player.pep.buyables[11].gte(3)) table += '<br>3rd effect: Add +' + format(tmp.pep.prThreeEffect) + " to the base of <b>Essence Fusioner</b> effect."
 				return table}],
 				"buyables"
 			]

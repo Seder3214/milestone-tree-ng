@@ -7,6 +7,7 @@ function getStartOptions() {
 		autosave: true,
 		msDisplay: "always",
 		theme: "default",
+		themeName: "Default",
 		hqTree: false,
 		offlineProd: true,
 		hideChallenges: false,
@@ -49,7 +50,7 @@ function toggleAuto(toggle) {
 }
 
 const MS_DISPLAYS = ["ALL", "LAST, AUTO, INCOMPLETE", "AUTOMATION, INCOMPLETE", "INCOMPLETE", "NONE"];
-const CCTP_DISPLAYS=["AT THE RIGHT","AT THE LEFT","AT THE TOP","AT THE BOTTOM"]
+const CCTP_DISPLAYS=["AT RIGHT","AT LEFT","AT TOP","AT BOTTOM"]
 const CCTP_SETTINGS=["right","left","top","bottom"]
 const MS_SETTINGS = ["always", "last", "automation", "incomplete", "never"];
 

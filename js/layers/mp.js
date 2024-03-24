@@ -213,10 +213,11 @@ onExit() {
             let grid = player.cp.grid
             let slots = Object.keys(grid).filter(x => grid[x].active==true)
             for (i=0;i<slots.length;i++){
-                player.cp.grid[slots[i]] = {level: getGridData('cp',slots[i]).level,active:false,fixed:false}
+                player.cp.grid[slots[i]] = {level: getGridData('cp',slots[i]).level,active:false,fixed:false,type:getGridData('cp',slots[i]).type}
             }
 setInterval(100000000)
 player.mp.perkPoints = player.mp.buyables[13]
+player.tab='m'
 },
 	name: "Enter The Prestige Multiverse",
 	completionLimit: new Decimal(1),
@@ -300,7 +301,7 @@ player.t.choose = new Decimal(0)
 					'background-color':'black',
 					'border':'2px solid',
 					'height':'125px',
-					'width':'200px',
+					'width':'300px',
 				}
 				else return {
 					'border-radius': '0%',
@@ -308,7 +309,7 @@ player.t.choose = new Decimal(0)
 					'background-color':'rgb(68, 68, 68)',
 					'border':'2px solid',
 					'height':'125px',
-					'width':'200px',
+					'width':'300px',
 				}
             }
         },
@@ -346,7 +347,7 @@ player.t.choose = new Decimal(0)
 					'background-color':'black',
 					'border':'2px solid',
 					'height':'125px',
-					'width':'200px',
+					'width':'300px',
 				}
 				else return {
 					'border-radius': '0%',
@@ -354,7 +355,7 @@ player.t.choose = new Decimal(0)
 					'background-color':'rgb(68, 68, 68)',
 					'border':'2px solid',
 					'height':'125px',
-					'width':'200px',
+					'width':'300px',
 				}
             }
         },
@@ -393,7 +394,7 @@ player.t.choose = new Decimal(0)
 					'background-color':'black',
 					'border':'2px solid',
 					'height':'125px',
-					'width':'200px',
+					'width':'300px',
 				}
 				else return {
 					'border-radius': '0%',
@@ -401,7 +402,7 @@ player.t.choose = new Decimal(0)
 					'background-color':'rgb(68, 68, 68)',
 					'border':'2px solid',
 					'height':'125px',
-					'width':'200px',
+					'width':'300px',
 				}
             }
         },
@@ -438,7 +439,7 @@ player.t.choose = new Decimal(0)
 					'background-color':'black',
 					'border':'2px solid',
 					'height':'125px',
-					'width':'200px',
+					'width':'300px',
 				}
 				else return {
 					'border-radius': '0%',
@@ -446,21 +447,21 @@ player.t.choose = new Decimal(0)
 					'background-color':'rgb(68, 68, 68)',
 					'border':'2px solid',
 					'height':'125px',
-					'width':'200px',
+					'width':'300px',
 				}
             }
         },
         22:{
 			title(){
-				return "<h3 class='pmr'>Essence Fusioner</h3>";
+				return (player[this.layer].buyables[this.id].gte(20)?"<h3>[ Scaled ] </h3> ":"")+"<h3 class='pmr'>Essence Fusioner</h3>";
 			},
 			display(){
 				let data = tmp[this.layer].buyables[this.id];
 				return "Level: "+format(player[this.layer].buyables[this.id])+"<br>"+
-				(player.mp.modeE==true?"Triple Prestige Essence gain and its effect.":"Double Points gain and double Prestige Essence effect.")+"<br>Currently: "+format(data.effect)+"x.<br>"+
+				format(data.effect.base)+" Points gain and double Prestige Essence effect."+"<br>Currently: "+format(data.effect.eff)+"x.<br>"+
 				"Cost for Next Level: "+format(data.cost)+" Prestige Essence";
 			},
-			cost(x) {return new Decimal(500).mul(x.max(1)).pow(x.div(5).add(1)).mul(x.sub(5).add(1).mul(5).max(1));
+			cost(x) {return new Decimal(500).mul(x.max(1)).pow(x.div(5).add(1)).mul(x.sub(5).add(1).mul(5).max(1)).pow(x.gte(20)?x.div(16).mul(hasUpgrade('cp',13)?new Decimal(1).sub(upgradeEffect('cp',13)):1):1);
 			},
 			canAfford() {
                    return player.pm.essence.gte(tmp[this.layer].buyables[this.id].cost)
@@ -472,8 +473,9 @@ player.t.choose = new Decimal(0)
                },
 			  effect(x){
 				let base = new Decimal(player.mp.modeE==true?3:2)
+				if (player.pep.buyables[11].gte(3)) base = base.add(tmp.pep.prThreeEffect)
                 let eff = base.pow(x)
-				  return eff;
+				  return {eff:eff,base:base}
 			  },
 			  unlocked(){
 				  return player.pm.best.gte(2);
@@ -485,7 +487,7 @@ player.t.choose = new Decimal(0)
 					'background-color':'black',
 					'border':'2px solid',
 					'height':'125px',
-					'width':'200px',
+					'width':'300px',
 				}
 				else return {
 					'border-radius': '0%',
@@ -493,7 +495,7 @@ player.t.choose = new Decimal(0)
 					'background-color':'rgb(68, 68, 68)',
 					'border':'2px solid',
 					'height':'125px',
-					'width':'200px',
+					'width':'300px',
 				}
             }
         },
@@ -532,7 +534,7 @@ player.t.choose = new Decimal(0)
 					'background-color':'black',
 					'border':'2px solid',
 					'height':'125px',
-					'width':'200px',
+					'width':'300px',
 				}
 				else return {
 					'border-radius': '0%',
@@ -540,7 +542,7 @@ player.t.choose = new Decimal(0)
 					'background-color':'rgb(68, 68, 68)',
 					'border':'2px solid',
 					'height':'125px',
-					'width':'200px',
+					'width':'300px',
 				}
             }
         },
@@ -577,12 +579,12 @@ player.points = new Decimal(0)
 		},
 		12: {
 			canClick() {return player.mp.modeP==false},
-		display: "Change Essence & Recharge mode to Points boost, but ^0.85 Prestige Essences.",
+		display: "Change Essence & Recharge mode to Points boost, but nullify Prestige Essences.",
 		onClick() {
 			player.mp.modeP=true
 			player.mp.modeE=false
-			player.pm.essence = player.pm.essence.pow(0.85)
-setTimeout(400000)
+			player.pm.essence = new Decimal(0)
+setTimeout(100000000)
 player.points = new Decimal(0)
 		},
 		style() {

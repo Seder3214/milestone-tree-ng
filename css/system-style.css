@@ -179,14 +179,15 @@
 	border: 3px solid rgb(122, 122, 122);
 	display: flexbox;
 overflow-y: auto;
+overflow-y: hidden;
 	flex-direction:column;
 } 
 .menuButton {
 	width: 395px;
-	height: 35px;
+	height: 40px;
 	margin-bottom: 5px;
 	color: rgb(0, 0, 0);
-	font-size:16px;
+	font-size:18px;
 	z-index:10000;
 	cursor: pointer;
 	pointer-events: auto;

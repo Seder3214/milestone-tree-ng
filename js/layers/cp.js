@@ -33,7 +33,7 @@ function corruptEffect() {
 addLayer("cp", {
     name: "prestige points", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "CP", // This appears on the layer's node. Default is the id with the first letter capitalized
-    position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+    position: -1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: true,
 		points: new Decimal(0),
@@ -44,6 +44,11 @@ addLayer("cp", {
     tooltip() {
         return format(player.cp.points,0)+ " corrupted prestige points"
     },
+cap() {
+    let cap = 0
+    cap=tmp.cp.grid.rows*tmp.cp.grid.cols
+    return cap
+},
 canBuyMax() {return true},
     nodeStyle() {
         return {
@@ -70,7 +75,7 @@ canBuyMax() {return true},
         if (slots.length) {
             let slot = slots[Math.floor(Math.random() * slots.length)]
             let rangeMul = Math.floor(player.cp.totalCorrupt/4)
-            let addLevel = Math.floor(player.cp.totalCorrupt/8)*2
+            let addLevel = Math.floor(player.cp.totalCorrupt/5)*2
             let ranType = Math.floor(Math.random()*1.5)
             let range = 10+addLevel
             let start = new Decimal(1).add(rangeMul)
@@ -100,14 +105,18 @@ canBuyMax() {return true},
     row: 1, // Row the layer is in on the tree (0 is the first row)
 	base: new Decimal(12),
 	exponent: function(){
-		return new Decimal(0.625)
+		return new Decimal(0.65)
 	},
     hotkeys: [
         {key: "ctrl+c", description: "Ctrl+C: Corrupt prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     upgrades: {
-        rows: 4,
-        cols: 4,
+        rows() {
+        let rows = 4
+        return rows},
+        cols() {
+        let cols = 4
+        return cols},
 		11: {
 			title: "Corrupted Upgrade 11",
             description: "You can fix 2 corruptions at the same time.<br>(Point divider will be the highest from active ones).",
@@ -147,7 +156,7 @@ canBuyMax() {return true},
             cost: new Decimal(150),
             effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=2;
-				let ret = player.pm.best.div(20).add(1)
+				let ret = player.pm.best.div(20).add(1).add(player.pm.best.mul(player.cm.points.gte(1)?tmp.cm.cMilestone1Effect:0))
                 return ret;
             },
 			canAfford() {
@@ -181,11 +190,58 @@ canBuyMax() {return true},
             }
         },
     },
-
+    13: {
+        title: "Corrupted Upgrade 13",
+        description: "Prestige Milestones and Points reduces Essence Fusioner <b>Scaled</b> scaling strength.",
+        costDescription() {return "Cost: 5000 corruption essences<br>1e23 Points"},
+        unlocked() {return player.pm.best.gte(11)},
+        cost: new Decimal(5000),
+        effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
+            let ret = (player.pm.best.pow(0.375)).div(10).mul(player.points.add(1).log10().add(1).log(5))
+            return ret.min(1);
+        },
+        canAfford() {
+            return (player.points.gte(1e23)&&player.cp.formatted.gte(this.cost))
+        },
+        pay() {
+            player.cp.formatted = player.cp.formatted.sub(this.cost)
+            player.points = player.points.sub(1e23)
+        },
+        effectDisplay() { return format(this.effect().mul(100))+"%" },
+    style() {
+        if (hasUpgrade('cp',13)) return {
+            'background':'#00520b',
+            'border-color':'lime',
+            'color':'lime',
+            'border-radius':'0%'
+        }
+        
+        if (this.canAfford()) return {
+            'background':'#444',
+            'border-color':'lime',
+            'color':'lime',
+            'border-radius':'0%',
+            'cursor':'pointer',
+        }
+       return {
+            'background':'#0f0f0f',
+            'border-color':'lime',
+            'color':'lime',
+            'border-radius':'0%',
+        }
+    },
+},
 	},
     grid: {
-        rows: 4, // If these are dynamic make sure to have a max value as well!
-        cols: 4,
+        maxRows:4,
+        maxCols:5,
+        rows() {
+        let rows = 4
+        return rows},
+        cols() {
+        let cols = 4
+        if (player.cm.points.gte(2)) cols+=1
+        return cols},
         getStartData(id) {
             return {level: 0,active: false,fixed: false,type:"div",cautPower:0}
         },
@@ -228,7 +284,7 @@ canBuyMax() {return true},
         },
         getTooltipStyle(data,id) {
             if (data.level<1) return {
-                'background-color':"rgba(0,0,0,0)"
+                'background':'rgba(0,0,0,0)',
             }
                else {
                 switch (options.changeCorruptTooltipPlace) {
@@ -281,8 +337,8 @@ canBuyMax() {return true},
             let eff = new Decimal(1)
             eff = new Decimal(1e17).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(85).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1))
             if (data.type=='pm') eff = new Decimal(1e17).mul(data.level).pow(0.75)
-            if (data.level>=15 && data.type=='div') eff = eff.div(20)
-            if (data.level>=15 && data.type=='pm') eff = eff.div(2)
+            if (data.level>=15 && data.type=='div') eff = eff.div(player.cm.points.gte(2)?5**4:5)
+            if (data.level>=15 && data.type=='pm') eff = eff.div(player.cm.points.gte(2)?5**2:1.25)
             return eff.div(new Decimal(data.cautPower).add(1)) },
         getEssence(data,id) {
             let gain = new Decimal(0)
@@ -291,7 +347,7 @@ canBuyMax() {return true},
         if (hasUpgrade('cp',12)) gain = gain.mul(upgradeEffect('cp',12))
             return gain.div(new Decimal(data.cautPower).div(2).add(1))},
         getTooltip(data,id) {
-            if (data.level<1) return
+            if (data.level<1) return ""
             else return "<h5>To fix, get "+format(gridCost('cp',id))+(data.type=="pm"?" prestige essences":" points")+" while corruption is active.<br>When active, " + "/"+ format(gridEffect('cp',id),5)+" to" +(data.type=="pm"?" prestige essences":" points") +"  gain.<br>"+"Reward: Get " + format(gridEssence('cp',id),0)+" corruption essences on fix."
         },
         getMark(data,id) {
@@ -301,6 +357,11 @@ canBuyMax() {return true},
             let eff = new Decimal(1)
            if (data.type=='div') eff = new Decimal(data.level).add(1).mul(3).pow(1+data.level/10)
            if (data.type=='pm') eff = new Decimal(data.level).add(1).mul(1.5).pow(1+data.level/10)
+           if (data.level>=15 && data.type=='pm') eff = eff.mul(25)
+           if (data.level>=18 && data.type=='pm') eff = eff.mul(15)
+           if (data.level>=20 && data.type=='pm') eff = eff.mul(25)
+           if (data.level>=20 && data.type=='div') eff = eff.div(5)
+           if (data.level>=30 && data.type=='div') eff = eff.div(25)
             return eff.mul(new Decimal(data.cautPower).add(1))},
         onClick(data, id) { 
             if (data.level>=1) {player[this.layer].grid[id].active=!player[this.layer].grid[id].active
@@ -367,7 +428,7 @@ canBuyMax() {return true},
                }
                },
 			  unlocked(){
-				  return player.pm.best.gte(10);
+				  return player.pm.best.gte(15);
 			  },
 			  style() {
 				if (player.cp.formatted.lt(this.cost())) return {
@@ -424,7 +485,7 @@ canBuyMax() {return true},
          ]
                 },
                 "Caution": {
-                    unlocked() {return player.pm.best.gte(10)},
+                    unlocked() {return player.pm.best.gte(15)},
                     content:[
                         function() { if (player.tab == "cp")  return ["column", [
                             ["display-text", "You caused <h2 style='color:  black; text-shadow: white 0px 0px 10px;'> "+format(player.cp.points,0)+"</h2> corruptions."],
@@ -463,6 +524,6 @@ canBuyMax() {return true},
             }
         },
     prestigeButtonText() {
-        return "CORRUPT"+(player.points.gte(tmp.cp.nextAt)?" (You can corrupt "+format(tmp.cp.resetGain,0)+ " times)":" (Not enough points)")+"<br>Next at: "+format(tmp.cp.nextAtDisp)+" points."
+        return "CORRUPT"+(player.points.gte(tmp.cp.nextAt)?" (You can corrupt "+format(tmp.cp.resetGain,0)+ " / "+ format(tmp.cp.cap,0)+" times)":" (Not enough points)")+"<br>Next at: "+format(tmp.cp.nextAtDisp)+" points."
     },
 })

@@ -24,7 +24,7 @@ addLayer("pm", {
     gain() {
         let gain = new Decimal(0)
         if (player.pm.best.gte(1)) gain=gain.add(tmp.pm.reduce)
-        if (player.mp.modeE==true) gain = gain.mul(buyableEffect('mp',22))
+        if (player.mp.modeE==true) gain = gain.mul((buyableEffect('mp',22).eff))
         if (player.pm.best.gte(4)) gain = gain.mul(tmp.pm.pMilestone4Effect)
         if (player.pep.buyables[11].gte(1)) gain = gain.mul(tmp.pep.prOneEffect)
         if (player.cp.formatted.gte(1)) gain = gain.mul(corruptEffect())
@@ -44,8 +44,8 @@ addLayer("pm", {
 	},
     essenceBoost() {
         let eff = player.pm.essence.add(1).log2().pow(2).mul(0.1)
-        eff = eff.mul(buyableEffect('mp',22))
-        if (player.mp.modeP==true) eff = eff.mul(buyableEffect('mp',22).div(2).add(3))
+        eff = eff.mul(buyableEffect('mp',22).eff)
+        if (player.mp.modeP==true) eff = eff.mul((buyableEffect('mp',22).eff).div(2).add(3))
         return eff.max(1)
     },
     gainExp() { // Calculate the exponent on main currency from bonuses
@@ -55,6 +55,7 @@ addLayer("pm", {
     row:0, // Row the layer is in on the tree (0 is the first row)
 	base: new Decimal(12),
 	exponent: function(){
+        if (player.pm.points.gte(9)) return player.pm.points.div(10).add(0.31)
         if (player.pm.points.gte(7)) return new Decimal(1.25)
 		else return new Decimal(1)
 	},
@@ -134,7 +135,7 @@ addLayer("pm", {
             unlocked() {return player[this.layer].best.gte(6)},
             done() {return player[this.layer].best.gte(7)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Unlock 1 more upgrade on row 2 layers."
+				return "Unlock 1 more upgrade on row 1 layers."
 			},
             style() {
                 if (hasMilestone('pm',6)) return {
@@ -153,7 +154,7 @@ addLayer("pm", {
             unlocked() {return player[this.layer].best.gte(7)},
             done() {return player[this.layer].best.gte(8)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Unlock 1 more upgrade on row 2 layers."
+				return "Unlock 1 more upgrade on row 1 layers."
 			},
             style() {
                 if (hasMilestone('pm',7)) return {
@@ -188,14 +189,33 @@ addLayer("pm", {
             unlocked() {return player[this.layer].best.gte(9)},
             done() {return player[this.layer].best.gte(10)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Unlock Corruption Power (new Corruptions tab)."
+				return "Unlock Corruption Milestones."
 			},
             style() {
                 if (hasMilestone('pm',9)) return {
-                    'background':'#330000',
-                    'border-color':'red',
-                    'color':'red',
+                    'background':'#00520b',
+                    'border-color':'lime',
+                    'color':'lime',
                     'width': '100%',
+                }
+            },
+        },
+        {
+			requirementDescription: "11st Prestige Milestone",
+            unlocked() {return player[this.layer].best.gte(10)},
+            done() {return player[this.layer].best.gte(11)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Unlock 1 more upgrade on row 1 layers."
+			},
+            style() {
+                if (hasMilestone('pm',10)) return {
+                    'background':'linear-gradient(to right, #00520b 0%, #3C2D15 50%)',
+                    'border-color':'transparent',
+                    'background-color':'transparent',
+                    'border-image':'linear-gradient(to right, lime 0%, lime 20%,#c89646 50%)',
+                    'color':'white',
+                    'width': '100%',
+                    'border-image-slice': '1'
                 }
             },
         },

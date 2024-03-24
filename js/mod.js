@@ -4,7 +4,7 @@ let modInfo = {
 	author: "Seder3214",
 	pointsName: "points",
 	modFiles: ["/layers/m.js","/layers/p.js","/layers/sp.js","/layers/hp.js","/layers/pb.js","/layers/hb.js","/layers/ap.js",
-	"/layers/t.js","/layers/mm.js","/layers/em.js","/layers/pe.js","/layers/se.js","/layers/pp.js","/layers/ep.js","/layers/mp.js","/layers/pm.js","/layers/cp.js", "tree.js","/layers/pep.js",'modal.js'],
+	"/layers/t.js","/layers/mm.js","/layers/em.js","/layers/pe.js","/layers/se.js","/layers/pp.js","/layers/ep.js","/layers/mp.js","/layers/pm.js","/layers/cp.js","/layers/cm.js","tree.js","/layers/pep.js",'modal.js'],
 
 	discordName: "",
 	discordLink: "",
@@ -23,6 +23,10 @@ Note: v<h3 style="color: green">A</h3>.<h3 style='color: blue'>B</h3><h3 style='
 <h3 style='color: green'>A</h3> is a number of <h3 style='color:yellow'>major</h3> updates like <h3 class='pmr'>Prestige Milestone Tree</h3>, <br>
 <h3 style='color: blue'>B</h3> is a number of <h3 style="color:#793784">milestones</h3> in current version, <br>
 <h3 style='color: yellow'>C</h3> is a letter that used to show <h3 style='color: cyan'>bugfix/rebalance</h3> updates<br><br>
+<h3 class="corr"> v2.013 (pre-release v2.035 Update 3)</h3><br>
+<span style='color: #808080'> - Added 2 more milestones<br></span>
+<span style='color: #808080'> - New milestones type<br></span>
+<span style='color: #808080'> - More Corruptions Balancing<br></span>
 <h3 class="corr">pre-release v2.035 Update 2</h3><br>
 <span style='color: #808080'> - Rebalanced post-170th milestone content<br></span>
 <span style='color: #808080'> - Reduced Corruptions Level increase based on total fixed corruptions<br></span>
@@ -106,7 +110,7 @@ for(i=0;i<slots.length;i++) {
 	else s=s
   }
   b=b.div(s)
-if (player.mp.modeP==true) b = b.mul(buyableEffect('mp',22))
+if (player.mp.modeP==true) b = b.mul(tmp.mp.buyables[22].effect.eff)
 return b.div(player.m.best.gte(180)?2:1)
 }
 

@@ -154,30 +154,30 @@ var systemComponents = {
     'options-tab': {
         template: `
         <table>
-            <tr>
-                <td><button class="opt" onclick="save()">Save</button></td>
-                <td><button class="opt" onclick="toggleOpt('autosave')">Autosave: {{ options.autosave?"ON":"OFF" }}</button></td>
-                <td><button class="opt" onclick="HardReset()">HARD RESET</button></td>
-            </tr>
-            <tr>
-                <td><button class="opt" onclick="exportSave()">Export to clipboard</button></td>
-                <td><button class="opt" onclick="ImportSave()">Import</button></td>
-                <td><button class="opt" onclick="toggleOpt('offlineProd')">Offline Prod: {{ options.offlineProd?"ON":"OFF" }}</button></td>
-            </tr>
-            <tr>
-                <td><button class="opt" onclick="switchTheme()">Theme: {{ getThemeName() }}</button></td>
-                <td><button class="opt" onclick="adjustMSDisp()">Show Milestones: {{ MS_DISPLAYS[MS_SETTINGS.indexOf(options.msDisplay)]}}</button></td>
-                <td><button class="opt" onclick="toggleOpt('hqTree')">High-Quality Tree: {{ options.hqTree?"ON":"OFF" }}</button></td>
-            </tr>
-            <tr>
-                <td><button class="opt" onclick="toggleOpt('hideChallenges')">Completed Challenges: {{ options.hideChallenges?"HIDDEN":"SHOWN" }}</button></td>
-                <td><button class="opt" onclick="toggleOpt('forceOneTab'); needsCanvasUpdate = true">Change Style: {{ options.forceOneTab?"REVAMPED":"TREE STYLE" }}</button></td>
-				<td><button class="opt" onclick="toggleOpt('forceTooltips'); needsCanvasUpdate = true">Shift-Click to Toggle Tooltips: {{ options.forceTooltips?"ON":"OFF" }}</button></td>
-				</tr> 
-				<tr>
-                <td><button class="opt" onclick="adjustCCTP()">Corruption Tooltip Position: {{ CCTP_DISPLAYS[CCTP_SETTINGS.indexOf(options.changeCorruptTooltipPlace)]}}</button></td>
-                <td><button class="opt" onclick="toggleOpt('reverseMilestones'); needsCanvasUpdate = true">Milestones Order: {{ options.reverseMilestones?"LAST TO FIRST":"FIRST TO LAST" }}</button></td>
-				</tr> 
+		<h2>[ Saving ]</h2><br><br>
+		<div>
+                <button class="opt" onclick="save()"><b>Save</b><br> <span style="font-size:12px">Save current progress</span></button>
+                <button class="opt" onclick="toggleOpt('autosave')"><b>Autosave</b> <b> - &nbsp&nbsp [ {{ options.autosave?"ON":"OFF" }} ]</b><br><span style="font-size:12px">Automatically save game</span></button>
+                <button class="opt" onclick="HardReset()"><b>Hard Reset</b><br> <span style="font-size:12px">Reset current progress</span></button>
+                <button class="opt" onclick="exportSave()"><b>Export to clipboard</b><br> <span style="font-size:12px">Export a save into clipboard</span></button>
+                <button class="opt" onclick="ImportSave()"><b>Import a save</b><br> <span style="font-size:12px">Import a save from clipboard</span></button>
+                <button class="opt" onclick="toggleOpt('offlineProd')"><b>Offline Production</b> <b> - &nbsp&nbsp [ {{ options.offlineProd?"ON":"OFF" }} ]</b><br><span style="font-size:12px">Produce resources when not in game</span></button>
+				<br><br>
+        </div>
+		<h2>[ Displays ]</h2><br><br>
+		<div>
+                <button class="opt" onclick="switchTheme()"><b>Theme</b><b>&nbsp&nbsp - &nbsp&nbsp [ {{ getThemeName() }} ]</b><br> <span style="font-size:12px">Choose a theme that you like!</span></b></button>
+                <button class="opt" onclick="adjustMSDisp()"><b>Milestone Showing Mode</b><br><span style="font-size:12px">[ {{ MS_DISPLAYS[MS_SETTINGS.indexOf(options.msDisplay)]}} ]</span></button>
+                <button class="opt" onclick="toggleOpt('hqTree')"><b>High Quality Tree</b><b>&nbsp&nbsp - &nbsp&nbsp [ {{ options.hqTree?"ON":"OFF" }} ]</b><br><span style="font-size:12px">Use more detailed tree style!</span></button>
+                <button class="opt" onclick="toggleOpt('hideChallenges')"><b>Completed Challenges</b><b>&nbsp&nbsp - &nbsp&nbsp [ {{ options.hideChallenges?"Hidden":"Shown" }} ]</b><br><span style="font-size:12px">Show or hide completed challenges</span></button>
+				<button class="opt" onclick="toggleOpt('forceTooltips'); needsCanvasUpdate = true"><b>Shift-Click To Toggle Tooltips</b><b>&nbsp&nbsp - &nbsp&nbsp [ {{ options.forceTooltips?"ON":"OFF" }} ]</b><br><span style="font-size:12px">Show or hide tree nodes tooltips</span></button><br>
+		</div><br><br>
+		<h2>[ NG+ Settings ]</h2><br><br>
+		<div>
+                <button class="opt" onclick="toggleOpt('forceOneTab'); needsCanvasUpdate = true"><b>Change Style</b> <b> - &nbsp&nbsp[ {{ options.forceOneTab?"Revamped":"Tree Style" }} ]</b><br><span style="font-size:12px">Choose between new and old styles</span></button>				
+                <button class="opt" onclick="adjustCCTP()"><b>Corrupt. Tooltip Pos.</b><b>&nbsp&nbsp - &nbsp&nbsp[ {{ CCTP_DISPLAYS[CCTP_SETTINGS.indexOf(options.changeCorruptTooltipPlace)]}} ]</b><br><span style="font-size:12px">Position of corruptions tooltip</span></button>
+                <button class="opt" onclick="toggleOpt('reverseMilestones'); needsCanvasUpdate = true"><b>Milestones Order</b><b>&nbsp&nbsp - &nbsp&nbsp [ {{ options.reverseMilestones?"LAST TO FIRST":"FIRST TO LAST" }} ]</b><br><span style="font-size:12px">Choose milestone ordering</span></button>
+		</div><br><br>
         </table>`
     },
 

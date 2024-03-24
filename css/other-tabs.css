@@ -108,16 +108,21 @@ a {
 }
 
 .opt {
-	height: 100px;
-	width: 100px;
-	border-radius: 25%;
-	border: 4px solid;
-	background-color: var(--color);
-	border-color: rgba(0, 0, 0, 0.125);
-	color: rgba(0, 0, 0, 0.5);
+	height: 60px;
+	width: 250px;
+	text-align:left;
+	background-color: rgb(22, 22, 22);
+	border-color:rgba(0,0,0,0);
+	color: white;
 	cursor: pointer;
 }
 
 .opt:hover {
-	background-color: #439ea3;
+	background-color: #5a5a5a;
+	border-color:rgba(0,0,0,0);
+}
+.opt:active {
+    background-color: rgba(255, 255, 255, 0.6);
+	transition: all 0s ease;
+	border-color:rgba(0,0,0,0);
 }
