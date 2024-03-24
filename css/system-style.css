@@ -179,7 +179,7 @@
 	border: 3px solid rgb(122, 122, 122);
 	display: flexbox;
 overflow-y: auto;
-overflow-y: hidden;
+overflow-x: hidden;
 	flex-direction:column;
 } 
 .menuButton {
