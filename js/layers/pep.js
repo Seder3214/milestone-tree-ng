@@ -101,7 +101,7 @@ addLayer("pep", {
                 return ret;
             },
 			canAfford() {
-				return (player.pm.essence.gte(3e16)&&player.pep.points.gte(this.cost))
+				return (player.pm.essence.gte(5e24)&&player.pep.points.gte(this.cost))
 			},
 			pay() {
 				player.pep.points = player.pep.points.sub(this.cost)
