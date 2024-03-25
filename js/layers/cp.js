@@ -358,7 +358,7 @@ canBuyMax() {return true},
            if (data.type=='div') eff = new Decimal(data.level).add(1).mul(3).pow(1+data.level/10)
            if (data.type=='pm') eff = new Decimal(data.level).add(1).mul(1.5).pow(1+data.level/10)
            if (data.level>=15 && data.type=='pm') eff = eff.mul(25)
-           if (data.level>=16 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(1.5))
+           if (data.level>=16 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(2.5))
 
 if (data.level>=10 && data.type=='div') eff = eff.mul(5)
 if (data.level>=15 && data.type=='div') eff = eff.mul(5)
