@@ -267,6 +267,7 @@ addLayer("pm", {
             goal: function(){
                 let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].active==true)
                 if(player.m.best.gte(130)&&player.pm.activeChallenge==11 && slots.length>0)return gridCost('cp',slots)
+else return new Decimal(1)
             },
             canComplete(){
                 return player.points.gte(tmp.pm.challenges[this.id].goal);
