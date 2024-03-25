@@ -463,7 +463,7 @@ player.t.choose = new Decimal(0)
 			display(){
 				let data = tmp[this.layer].buyables[this.id];
 				return "Level: "+format(player[this.layer].buyables[this.id])+"<br>"+
-				format(data.effect.base)+"x Points gain and double Prestige Essence effect."+"<br>Currently: "+format(data.effect.eff)+"x.<br>"+
+				format(data.effect.base)+"x "+(player.mp.modeE==true?"Prestige Essences":"Points) gain and double Prestige Essence effect."+"<br>Currently: "+format(data.effect.eff)+"x.<br>"+
 				"Cost for Next Level: "+format(data.cost)+" Prestige Essence";
 			},
 			cost(x) {
