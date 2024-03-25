@@ -33,7 +33,7 @@ addLayer("cm", {
     },
     cMilestone1Effect() {
         let eff = (Math.log2(player.cp.totalCorrupt)**0.25)*(Math.log2(player.cp.totalCorrupt)/50)
-        return eff
+        return new Decimal(eff).max(1)
     },
     newRow: 0,
     row:1, // Row the layer is in on the tree (0 is the first row)
