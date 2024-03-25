@@ -198,7 +198,7 @@ canBuyMax() {return true},
         cost: new Decimal(5000),
         effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
             let ret = (player.pm.best.pow(0.375)).div(10).mul(player.points.add(1).log10().add(1).log(5))
-            return ret.min(1);
+            return ret.min(0.9);
         },
         canAfford() {
             return (player.points.gte(1e23)&&player.cp.formatted.gte(this.cost))
@@ -364,7 +364,7 @@ canBuyMax() {return true},
 if (data.level>=10 && data.type=='div') eff = eff.mul(5)
 if (data.level>=15 && data.type=='div') eff = eff.mul(5)
            if (data.level>=20 && data.type=='div') eff = eff.mul(1.25)
-           if (data.level>=30 && data.type=='div') eff = eff.div(25)
+           if (data.level>=30 && data.type=='div') eff = eff.div(1250)
             return eff.mul(new Decimal(data.cautPower).add(1))},
         onClick(data, id) { 
             if (data.level>=1) {player[this.layer].grid[id].active=!player[this.layer].grid[id].active
@@ -397,10 +397,10 @@ if (data.level>=15 && data.type=='div') eff = eff.mul(5)
             }
             }
             if (data.active==true&& data.type=='div'){
-                table+="<br>-< "+format(player.points.div(gridCost('cp',id)).mul(100))+"% >-" 
+                table+="<br>-< "+format(player.points.div(gridCost('cp',id)).mul(100).min(100))+"% >-" 
             }
             if (data.active==true&& data.type=='pm'){
-                table+="<br>-< "+format(player.pm.essence.div(gridCost('cp',id)).mul(100))+"% >-" 
+                table+="<br>-< "+format(player.pm.essence.div(gridCost('cp',id)).mul(100).min(100))+"% >-" 
             }
             return table
         },
@@ -511,7 +511,7 @@ if (data.level>=15 && data.type=='div') eff = eff.mul(5)
     let slots=activeCorruptions()
         for (i=0;i<slots.length;i++) {
                 setTimeout(100000)
-                if (player.points.gte(gridCost('cp',slots[i])) && getGridData('cp',slots[i]).type=='div') {
+                if (player.points.gte(gridCost('cp',slots[i]))&&player.pm.activeChallenge!=11&& getGridData('cp',slots[i]).type=='div') {
                     player.cp.formatted = player.cp.formatted.add(gridEssence('cp',slots[i]))
                     player.cp.grid[slots[i]]={level: 0,active:false,fixed:false,type: getGridData('cp',slots[i]).type,cautPower: getGridData('cp',slots[i]).cautPower}
                     doPopup("none","Corruption was fixed!","Corruption Info",3,"black","lime")

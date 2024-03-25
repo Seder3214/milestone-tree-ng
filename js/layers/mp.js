@@ -224,7 +224,7 @@ player.tab='m'
 	challengeDescription() {return "On enter resets all progress except for Milestones, 1st Milestone now divides points gain based on Multiverse Points."+"<br>"+format(challengeCompletions(this.layer, this.id)) +"/1 completions"},
 	unlocked() { return player.m.best.gte(185) },
 	goal: function(){
-		if(player.m.best.gte(120))return this.goalAfter120(Math.ceil(player.mp.challenges[13]+0.001));
+		if(player.m.best.gte(120))return this.goalAfter120(Math.ceil(player.mp.challenges[21]+0.001));
 	},
 	canComplete(){
 		return player.pep.points.gte(tmp.mp.challenges[this.id].goal)&&player.m.points.lt(110);
@@ -237,10 +237,10 @@ player.tab='m'
 		}
 	},
 	rewardEffect() {
-		let ret = (player.mp.challenges[13])*4
+		let ret = (player.mp.challenges[21])*4
 		return softcap(new Decimal(ret),new Decimal(5),0.25);
 	},
-	goalAfter120(x=player.mp.challenges[13]){
+	goalAfter120(x=player.mp.challenges[21]){
 		if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.01,Decimal.pow(x,1.01)).mul(20));
 	},
 	goalDescription() {return "Goal: "+format(this.goalAfter120())+" Exotic Prestige Points in this challenge"},
@@ -452,8 +452,13 @@ player.t.choose = new Decimal(0)
             }
         },
         22:{
+			scaled() {
+				let a = new Decimal(20)
+				if (player.pm.points.gte(12)) a=a.add(tmp.pm.pMilestone11Effect)
+				return a
+			},
 			title(){
-				return (player[this.layer].buyables[this.id].gte(20)?"<h3>[ Scaled ] </h3> ":"")+"<h3 class='pmr'>Essence Fusioner</h3>";
+				return (player[this.layer].buyables[this.id].gte(tmp.mp.buyables[22].scaled)?"<h3>[ Scaled ] </h3> ":"")+"<h3 class='pmr'>Essence Fusioner</h3>";
 			},
 			display(){
 				let data = tmp[this.layer].buyables[this.id];
@@ -461,7 +466,8 @@ player.t.choose = new Decimal(0)
 				format(data.effect.base)+" Points gain and double Prestige Essence effect."+"<br>Currently: "+format(data.effect.eff)+"x.<br>"+
 				"Cost for Next Level: "+format(data.cost)+" Prestige Essence";
 			},
-			cost(x) {return new Decimal(500).mul(x.max(1)).pow(x.div(5).add(1)).mul(x.sub(5).add(1).mul(5).max(1)).pow(x.gte(20)?x.div(16).mul(hasUpgrade('cp',13)?new Decimal(1).sub(upgradeEffect('cp',13)):1):1);
+			cost(x) {
+				return new Decimal(500).mul(x.max(1)).pow(x.div(5).add(1)).mul(x.sub(5).add(1).mul(5).max(1)).pow(x.gte(tmp.mp.buyables[22].scaled)?new Decimal(0.75).add(x.add(1).sub(tmp.mp.buyables[22].scaled).div(25).mul(hasUpgrade('cp',13)?new Decimal(1).sub(upgradeEffect('cp',13)):1)):1);
 			},
 			canAfford() {
                    return player.pm.essence.gte(tmp[this.layer].buyables[this.id].cost)
@@ -522,6 +528,8 @@ player.t.choose = new Decimal(0)
 			  effect(x){
 				let base = new Decimal(player.mp.modeE==true?0.25:0.05)
                 let eff = base.mul(x)
+				if (tmp.pm.count.gte(1)) eff = player.mp.modeP==true?eff.sub(tmp.pm.pChalReward1):eff.add(tmp.pm.pChalReward1)
+				
 				  return eff;
 			  },
 			  unlocked(){
@@ -612,7 +620,7 @@ player.points = new Decimal(0)
 		"Main":{
 			content:[
 				"main-display","prestige-button","resource-display",
-				"challenges"
+				["challenges",[1,2]]
 			]
 		},
         "Upgrades": {
