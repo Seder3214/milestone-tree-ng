@@ -362,7 +362,7 @@ canBuyMax() {return true},
 
 if (data.level>=10 && data.type=='div') eff = eff.mul(5)
 if (data.level>=15 && data.type=='div') eff = eff.mul(5)
-           if (data.level>=16 && data.type=='div') eff = eff.mul(new Decimal(data.level).div(10).pow(1.5))
+           if (data.level>=16 && data.type=='div') eff = eff.mul(new Decimal(data.level).div(data.level>=25?20:10).pow(1.5))
             return eff.mul(new Decimal(data.cautPower).add(1))},
         onClick(data, id) { 
             if (data.level>=1) {player[this.layer].grid[id].active=!player[this.layer].grid[id].active
