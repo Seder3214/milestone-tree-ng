@@ -23,28 +23,18 @@ Note: v<h3 style="color: green">A</h3>.<h3 style='color: blue'>B</h3><h3 style='
 <h3 style='color: green'>A</h3> is a number of <h3 style='color:yellow'>major</h3> updates like <h3 class='pmr'>Prestige Milestone Tree</h3>, <br>
 <h3 style='color: blue'>B</h3> is a number of <h3 style="color:#793784">milestones</h3> in current version, <br>
 <h3 style='color: yellow'>C</h3> is a letter that used to show <h3 style='color: cyan'>bugfix/rebalance</h3> updates<br><br>
-<h3 class="corr"> v2.013 (pre-release v2.035 Update 3)</h3><br>
-<span style='color: #808080'> - Added 2 more milestones<br></span>
+<h3 class="corr"> v2.035 beta I - v2.014 (pre-release v2.035 Update 3.1)</h3><br>
+<span style='color: #808080'> - Added 8 more milestones<br></span>
 <span style='color: #808080'> - New milestones type<br></span>
-<span style='color: #808080'> - More Corruptions Balancing<br></span>
-<h3 class="corr">pre-release v2.035 Update 2</h3><br>
 <span style='color: #808080'> - Rebalanced post-170th milestone content<br></span>
 <span style='color: #808080'> - Reduced Corruptions Level increase based on total fixed corruptions<br></span>
 <span style='color: #808080'> - Reduced Corruption Upgrade 12 cost (350 => 150)<br></span>
-<h3 class="corr">v2.035A - Default Style Fix</h3><br>
-<span style='color: #808080'> -Fixed the whole being moved right on default theme<br></span>
-<h3 class="corr">v2.035 Revamp Update</h3><br>
+<span style='color: #808080'> - Fixed the whole tree being moved right on default theme<br></span>
 <span style='color: #808080'> - Change the whole game overlay<br></span>
 <span style='color: #808080'> - You can change to default style in options<br></span>
-<h3 class="corr">v2.035 beta III - Corruptions pt.3 - Cautions!</h3><br>
 <span style='color: #808080'> - Added a new mechanic!<br></span>
-<span style='color: #808080'> - 2 prestige milestones added!<br></span>
-<h3 class="corr">v2.035 beta II - Corruptions pt.2!</h3><br>
 <span style='color: #808080'> - A whole new layer is playable now. Corruptions are fully working now!<br></span>
-<span style='color: #808080'> - 2 prestige milestones added!<br></span>
-<h3 class="corr">v2.035 beta I - Corruptions!</h3><br>
 <span style='color: #808080'> - Most of corruption's style and functional part are finished!<br></span>
-<span style='color: #808080'> - 2 prestige milestones added!<br></span>
 <h3 class='pmr'>v2.005a - Prestige Fusioners</h3><br>
 <span style='color: #808080'> - 2 more Multiverse Fusioners!<br></span>
 <h3 class='pmr'>v2.002 - Prestige Milestones</h3><br>
