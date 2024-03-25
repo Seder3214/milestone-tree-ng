@@ -273,7 +273,7 @@ else return new Decimal(1)
                 return player.points.gte(tmp.pm.challenges[this.id].goal);
             },
             rewardEffect() {
-                let ret = 7.39**(player.pm.challenges[11]+1)
+                let ret = 7.39**(player.pm.challenges[11])
                 return ret
             },
             goalDescription() {return "Goal: Fix the corruption"+(player.pm.activeChallenge==11?" (Reach "+format(this.goal())+" Points in this challenge)":"")},
