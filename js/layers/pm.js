@@ -35,15 +35,15 @@ addLayer("pm", {
           }
         if (player.pm.activeChallenge==11) gain = gain.pow(0.3*(player.pm.challengeTimer.add(1).log10()))
         if (challengeCompletions('pm',11)>=1) gain = gain.mul(challengeEffect('pm',11))
-        return gain.div(s)
+        return gain.div(s).max(1)
     },
     reduce() {
 		let base = 0.5
 		if (player.mp.buyables[23].gte(1)) base += buyableEffect('mp',23).toNumber()
-		let eff=player.mp.points.log2().pow(base)
+		let eff=player.mp.points.add(1).log2().pow(base)
 		if (player.pm.best.gte(3)) eff = eff.mul(5)
         if (player.pep.buyables[11].gte(1)) eff = eff.mul(tmp.pep.prOneEffect.pow(0.5))
-        return eff
+        return eff.max(1(
 	},
     essenceBoost() {
         let eff = player.pm.essence.add(1).log2().pow(2).mul(0.1)
