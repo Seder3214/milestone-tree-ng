@@ -98,7 +98,7 @@ if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41||player.ap.acti
 if (player.pm.essence.gte(1)) b = b.mul(tmp.pm.essenceBoost)
 if (player.mp.modeP==true) b = b.mul(tmp.mp.buyables[22].effect.eff)
 if (challengeCompletions('pm',12)>=1) b = b.mul(challengeEffect('pm',12))
-if(player.m.best.gte(3))b=b.mul(tmp.m.milestone3Effect);
+if(player.m.best.gte(3)&&player.pm.activeChallenge==12)b=b.mul(tmp.m.milestone3Effect);
 let s=new Decimal(1)
 let slots=activeCorruptions()
 for(i=0;i<slots.length;i++) {
