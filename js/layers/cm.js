@@ -37,7 +37,7 @@ addLayer("cm", {
     },
     newRow: 0,
     row:1, // Row the layer is in on the tree (0 is the first row)
-	exponent: function(){return new Decimal(1.25)
+	exponent: function(){return new Decimal(0.8)
 	},
     hotkeys: [
         {key: "c+m", description: "C+M: Get Corrupted Milestone", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
@@ -70,6 +70,38 @@ addLayer("cm", {
 			},
             style() {
                 if (hasMilestone('cm',1)) return {
+                    'background':'#00520b',
+                    'border-color':'lime',
+                    'color':'lime',
+                    'width': '100%',
+                }
+            }
+        },
+        {
+			requirementDescription: "3rd Corrupted Milestone",
+            unlocked() {return player[this.layer].best.gte(2)},
+            done() {return player[this.layer].best.gte(3)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Auto-Fix pre-50th level corruptions. Prestige Milestone 9 is much better on post-50th level corruptions."
+			},
+            style() {
+                if (hasMilestone('cm',2)) return {
+                    'background':'#00520b',
+                    'border-color':'lime',
+                    'color':'lime',
+                    'width': '100%',
+                }
+            }
+        },
+        {
+			requirementDescription: "4th Corrupted Milestone",
+            unlocked() {return player[this.layer].best.gte(3)},
+            done() {return player[this.layer].best.gte(4)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Add +20 to auto-fix level range."
+			},
+            style() {
+                if (hasMilestone('cm',3)) return {
                     'background':'#00520b',
                     'border-color':'lime',
                     'color':'lime',

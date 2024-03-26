@@ -28,7 +28,7 @@ addLayer("ap", {
     hotkeys: [
         {key: "a", description: "A: Reset for atomic-prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(80)&& (player.mp.activeChallenge!=21)},
+    layerShown(){return player.m.best.gte(80)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12},
 	branches: ["hp"],
 	softcap:new Decimal(Infinity),
 	softcapPower:new Decimal(1),

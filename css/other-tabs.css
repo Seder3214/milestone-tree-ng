@@ -126,3 +126,22 @@ a {
 	transition: all 0s ease;
 	border-color:rgba(0,0,0,0);
 }
+.scale {
+	height: 60px;
+	width: 350px;
+	text-align:left;
+	background-color: rgb(22, 22, 22);
+	border-color:rgba(0,0,0,0);
+	color: white;
+	cursor: pointer;
+}
+
+.scale:hover {
+	background-color: #5a5a5a;
+	border-color:rgba(0,0,0,0);
+}
+.scale:active {
+    background-color: rgba(255, 255, 255, 0.6);
+	transition: all 0s ease;
+	border-color:rgba(0,0,0,0);
+}

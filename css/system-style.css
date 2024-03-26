@@ -172,7 +172,7 @@
 .menu {
 	position: absolute;
 	z-index:1000;
-	width: 400px;
+	width: 350px;
 	height: 99%;
 	left:1px;
 	background: #414141;
@@ -183,8 +183,8 @@ overflow-x: hidden;
 	flex-direction:column;
 } 
 .menuButton {
-	width: 395px;
-	height: 40px;
+	width: 345px;
+	height: 50px;
 	margin-bottom: 5px;
 	color: rgb(0, 0, 0);
 	font-size:18px;

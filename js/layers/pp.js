@@ -30,7 +30,7 @@ addLayer("pp", {
     hotkeys: [
         {key: "W", description: "W: Reset for prestige power", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(151)&& (player.mp.activeChallenge!=21)},
+    layerShown(){return player.m.best.gte(151)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12},
 	upgrades: {
         rows: 4,
         cols: 4,

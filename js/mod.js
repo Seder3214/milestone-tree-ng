@@ -9,7 +9,7 @@ let modInfo = {
 	discordName: "",
 	discordLink: "",
 	initialStartPoints: new Decimal (10), // Used for hard resets and new players
-	offlineLimit: 1,  // In hours
+	offlineLimit: 2400,  // In hours
 }
 
 // Set your version in num and name
@@ -23,9 +23,9 @@ Note: v<h3 style="color: green">A</h3>.<h3 style='color: blue'>B</h3><h3 style='
 <h3 style='color: green'>A</h3> is a number of <h3 style='color:yellow'>major</h3> updates like <h3 class='pmr'>Prestige Milestone Tree</h3>, <br>
 <h3 style='color: blue'>B</h3> is a number of <h3 style="color:#793784">milestones</h3> in current version, <br>
 <h3 style='color: yellow'>C</h3> is a letter that used to show <h3 style='color: cyan'>bugfix/rebalance</h3> updates<br><br>
-<h3 class="corr"> v2.035 beta I - v2.014 (pre-release v2.035 Update 3.1)</h3><br>
-<span style='color: #808080'> - Added 9 more milestones<br></span>
-<span style='color: #808080'> - New challenge!<br></span>
+<h3 class="corr"> v2.035 beta I - v2.017 (pre-release v2.035 Update 3.2)</h3><br>
+<span style='color: #808080'> - Added 11 more milestones<br></span>
+<span style='color: #808080'> - 2 new challenges!<br></span>
 <span style='color: #808080'> - New milestones type<br></span>
 <span style='color: #808080'> - Rebalanced post-170th milestone content<br></span>
 <span style='color: #808080'> - Reduced Corruptions Level increase based on total fixed corruptions<br></span>
@@ -80,6 +80,8 @@ return b.mul(corruptEffect());
 
 function getPointGenBeforeSoftcap() {
 var b=new Decimal(0)
+if (player.mp.activeChallenge==21) b = new Decimal(1).mul(player.pep.buyables[11].gte(2)?tmp.pep.prTwoEffect:1).div(tmp.pm.reduce)
+if(player.mp.activeChallenge!=21){
 if(player.m.best.gte(1))b=b.add(3);
 if(player.m.best.gte(2))b=b.mul(3);
 if(player.m.best.gte(3))b=b.mul(tmp.m.milestone3Effect);
@@ -90,18 +92,20 @@ if(hasUpgrade("sp",12))b=b.mul(upgradeEffect("sp",12));
 if(hasUpgrade("hp",11))b=b.mul(upgradeEffect("hp",11));
 if(hasUpgrade("hp",12))b=b.mul(upgradeEffect("hp",12));
 if(hasUpgrade("ap",11))b=b.mul(upgradeEffect("ap",11));
+}
 if(player.t.activeChallenge==11||player.t.activeChallenge==21||player.t.activeChallenge==31)b=b.pow(tmp.t.dilationEffect);
 if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41||player.ap.activeChallenge==42 )b=b.add(1).log10().pow(player.m.best.gte(122)?player.m.points:100);
-if (player.mp.activeChallenge==21) b = new Decimal(1).mul(player.pep.buyables[11].gte(2)?tmp.pep.prTwoEffect:1).div(tmp.pm.reduce)
 if (player.pm.essence.gte(1)) b = b.mul(tmp.pm.essenceBoost)
+if (player.mp.modeP==true) b = b.mul(tmp.mp.buyables[22].effect.eff)
+if (challengeCompletions('pm',12)>=1) b = b.mul(challengeEffect('pm',12))
+if(player.m.best.gte(3))b=b.mul(tmp.m.milestone3Effect);
 let s=new Decimal(1)
 let slots=activeCorruptions()
 for(i=0;i<slots.length;i++) {
 	if (getGridData("cp", slots[i]).type=='div') s=(gridEffect('cp',slots[i]).gte(s)?gridEffect('cp',slots[i]):s)
 	else s=s
   }
-  b=b.div(s)
-if (player.mp.modeP==true) b = b.mul(tmp.mp.buyables[22].effect.eff)
+b=b.div(s)
 return b.div(player.m.best.gte(180)?2:1)
 }
 

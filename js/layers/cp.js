@@ -20,6 +20,15 @@ function formatRoman(num) {
   
     return str;
 }
+function formatScale(num,precision) {
+    ends=["",'st','nd','rd']
+    ex=num.toNumber()
+    value=Math.floor(ex%10)
+    if (value<=3) ret=ends[value]
+    else ret="th"
+
+    return ex.toFixed(precision)+ret
+}
 function activeCorruptions() {
             let grid = player.cp.grid
             let slots = Object.keys(grid).filter(x => grid[x].active==true)
@@ -28,6 +37,7 @@ function corruptEffect() {
     let eff = new Decimal(1)
     eff = eff.add(player.cp.formatted.add(1).log10().mul(1.27).pow(1.5))
     if (hasUpgrade('cp',12)) eff = eff.mul(upgradeEffect('cp',12))
+    if (player.mp.modeP==true) eff = eff.mul(tmp.pm.pChalReward2)
     return eff
 }
 addLayer("cp", {
@@ -47,7 +57,8 @@ addLayer("cp", {
 cap() {
     let cap = 0
     cap=tmp.cp.grid.rows*tmp.cp.grid.cols
-    return cap
+    let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].level>1)
+    return cap-slots.length
 },
 canBuyMax() {return true},
     nodeStyle() {
@@ -56,6 +67,9 @@ canBuyMax() {return true},
             'border-style': 'dashed',
             'color':'green',
         }
+    },
+    canReset() {
+        return tmp.cp.resetGain>0&&player.pm.activeChallenge!=12
     },
     color: "black",
     componentStyles: {
@@ -71,13 +85,14 @@ canBuyMax() {return true},
         if(l=="cp"){
         for (i=0;i<tmp.cp.resetGain;i++) {
         let grid = player.cp.grid
-        let slots = Object.keys(grid).filter(x => grid[x].level<1)
+        let slots = Object.keys(grid).filter(x => grid[x].level<1 && (Math.floor(x/100)<=tmp.cp.grid.rows && (x%10)<=tmp.cp.grid.cols))
+        if (slots[slots.length]=="") slotsFixed=slots.pop()
         if (slots.length) {
             let slot = slots[Math.floor(Math.random() * slots.length)]
             let rangeMul = Math.floor(player.cp.totalCorrupt/4)
-            let addLevel = Math.floor(player.cp.totalCorrupt/5)*2
+            let addLevel = Math.floor(player.cp.totalCorrupt/5)*1.5
             let ranType = Math.floor(Math.random()*1.5)
-            let range = 10+addLevel
+            let range = 10+addLevel-(player.pm.best.gte(13)?tmp.pm.pMilestone13Effect+(player.cm.best.gte(4)?5:0):0)
             let start = new Decimal(1).add(rangeMul)
    
             let tier = Math.random() * (start - range) + range;
@@ -233,8 +248,8 @@ canBuyMax() {return true},
 },
 	},
     grid: {
-        maxRows:4,
-        maxCols:5,
+        maxRows:7,
+        maxCols:7,
         rows() {
         let rows = 4
         return rows},
@@ -246,7 +261,7 @@ canBuyMax() {return true},
             return {level: 0,active: false,fixed: false,type:"div",cautPower:0}
         },
         getUnlocked(id) { // Default
-            return (player.cp.grid[id].fixed==false)
+            return true
         },
         getCanClick(data, id) {
             return true
@@ -338,6 +353,8 @@ canBuyMax() {return true},
             eff = new Decimal(1e17).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(85).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1))
             if (data.type=='pm') eff = new Decimal(1e17).mul(data.level).pow(0.75)
             if (data.level>=15 && data.type=='div') eff = eff.div(player.cm.points.gte(2)?5**4:5)
+            if (player.cm.best.gte(3)&&data.level>=45 && data.type=='div') eff = eff.div(new Decimal(data.level).pow(player.cp.totalCorrupt/15))
+            if (player.cm.best.gte(3)&&data.level>=40 && data.type=='pm') eff = eff.mul(new Decimal(data.level/10).pow(player.cp.totalCorrupt/20))
             if (data.level>=15 && data.type=='pm') eff = eff.div(player.cm.points.gte(2)?5**2:1.25)
             return eff.div(new Decimal(data.cautPower).add(1)) },
         getEssence(data,id) {
@@ -359,11 +376,13 @@ canBuyMax() {return true},
            if (data.type=='pm') eff = new Decimal(data.level).add(1).mul(1.5).pow(1+data.level/10)
            if (data.level>=15 && data.type=='pm') eff = eff.mul(25)
            if (data.level>=20 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(5))
+           if (data.level>=30 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(3))
 
            if (data.level>=10 && data.type=='div') eff = eff.mul(new Decimal(data.level).div(data.level>=25?20:10)).div(10)
 if (data.level>=30 && data.type=='div') eff = eff.div(1000)
             return eff.mul(new Decimal(data.cautPower).add(1))},
         onClick(data, id) { 
+            if (player.pm.activeChallenge==undefined) {
             if (data.level>=1) {player[this.layer].grid[id].active=!player[this.layer].grid[id].active
              if (data.type=='pm') player.pm.essence=new Decimal(0)
              if (data.type=='div')player.points=new Decimal(0)
@@ -376,12 +395,13 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
             }
         }
         }
+        }
         },
         getDisplay(data, id) {
             table=''
             if (data.level<1) table="This hard drive is stable. No corruptions detected."
             else table= `<h3>${typeName[data.type]}</h3>`+(data.cautPower>0?"<br>(Caution "+formatRoman(data.cautPower)+")<br>":"<br>")+ `Corruption` +"<br>Level: <h3>"+formatRoman(data.level)+"</h3><br>Progress to fix: [==========]"
-            for(i=1;i<10;i++){
+            for(i=1;i<11;i++){
                 if (data.active==true && data.type=='div') {
                 if (player.points.gte(gridCost('cp',id).mul(new Decimal(0.1).mul(i)))) {
                     table = table.replace('=','█')        
@@ -506,22 +526,39 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
     update(diff) {
         if (player.cp.pool.includes("pow")) player.cp.pool = ["div","pm"]
     let slots=activeCorruptions()
+    let all = Object.keys(player.cp.grid).filter(x=>player.cp.grid[x].level<50+(player.cm.best.gte(4)?20:0) && player.cp.grid[x].level>0)
+    for (i=0;i<all.length;i++) {
+        if (player.cm.best.gte(3) && all.length>0) {
+            player.cp.formatted = player.cp.formatted.add(gridEssence('cp',all[i]))
+            player.cp.grid[all[i]]={level: 0,active:false,fixed:false,type: getGridData('cp',all[i]).type,cautPower: getGridData('cp',all[i]).cautPower}
+            doPopup("none","Corruption was fixed!","Corruption Info",3,"black","lime")
+            player.cp.totalCorrupt += 1
+        }
+    }
         for (i=0;i<slots.length;i++) {
+            if (player.pm.activeChallenge==undefined) {
                 setTimeout(100000)
-                if (player.points.gte(gridCost('cp',slots[i]))&&player.pm.activeChallenge!=11&& getGridData('cp',slots[i]).type=='div') {
+                if ((player.points.gte(gridCost('cp',slots[i]))&& getGridData('cp',slots[i]).type=='div')) {
                     player.cp.formatted = player.cp.formatted.add(gridEssence('cp',slots[i]))
                     player.cp.grid[slots[i]]={level: 0,active:false,fixed:false,type: getGridData('cp',slots[i]).type,cautPower: getGridData('cp',slots[i]).cautPower}
                     doPopup("none","Corruption was fixed!","Corruption Info",3,"black","lime")
                     player.cp.totalCorrupt += 1
                 } 
                 setTimeout(100000)
-                if (player.pm.essence.gte(gridCost('cp',slots[i])) && getGridData('cp',slots[i]).type=='pm') {
+                if ((player.pm.essence.gte(gridCost('cp',slots[i])) && getGridData('cp',slots[i]).type=='pm')) {
                     player.cp.formatted = player.cp.formatted.add(gridEssence('cp',slots[i]))
                     player.cp.grid[slots[i]]={level: 0,active:false,fixed:false,type: getGridData('cp',slots[i]).type,cautPower: getGridData('cp',slots[i]).cautPower}
                     doPopup("none","Corruption was fixed!","Corruption Info",3,"black","lime")
                     player.cp.totalCorrupt += 1
                 } 
             }
+        }
+        for (i in player.cp.grid) {
+            let addLevel = Math.floor(player.cp.totalCorrupt/5)*1.5
+            let ranType = Math.floor(Math.random()*1.5)
+            let range = 10+addLevel-(player.pm.best.gte(13)?tmp.pm.pMilestone13Effect:0)
+            if (player.cp.grid[i].level>range) player.cp.grid[i].level = getGridData('cp',i).level-(player.pm.best.gte(13)?tmp.pm.pMilestone13Effect:0)
+        }
         },
     prestigeButtonText() {
         return "CORRUPT"+(player.points.gte(tmp.cp.nextAt)?" (You can corrupt "+format(tmp.cp.resetGain,0)+ " / "+ format(tmp.cp.cap,0)+" times)":" (Not enough points)")+"<br>Next at: "+format(tmp.cp.nextAtDisp)+" points."

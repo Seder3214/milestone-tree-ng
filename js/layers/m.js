@@ -52,7 +52,7 @@ addLayer("m", {
     hotkeys: [
         {key: "m", description: "M: Get Milestone", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return (player.mp.activeChallenge!=21)},
+    layerShown(){return (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12},
 	resetsNothing(){return true},
 	autoPrestige(){return player.mm.best.gte(1)},
 	milestones: [
@@ -1564,7 +1564,7 @@ addLayer("m", {
 		return player.m.best.sub(2).pow(layers.m.milestone4EffectExponent());
 	},
 	milestone3Effect(){
-		if(player.ap.activeChallenge==21 || player.ap.activeChallenge==41 )return new Decimal(1);
+		if(player.ap.activeChallenge==21 || player.ap.activeChallenge==41 ||((player.mp.activeChallenge==21)&&(player.pm.activeChallenge==11)))return new Decimal(1);
 		var m=Decimal.log10(player.points.add(20)).pow(0.9);
 		if(player.m.best.gte(41))m=m.pow(1.003);
 		if(player.m.best.gte(46))m=m.pow(1.001);
@@ -1607,16 +1607,16 @@ addLayer("m", {
 			b=b.mul(player.sp.points.add(1e20).log10().log10().div(30).add(1));
 		}
 		if(player.mm.best.gte(5)){
-			b=b.mul(player.mm.points.sub(2).max(1).pow(0.5).div(75).add(1));
+			b=b.mul(player.mm.best.sub(2).max(1).pow(0.5).div(75).add(1));
 		}
 		if(player.mm.best.gte(10)){
-			b=b.mul(player.mm.points.sub(2).max(1).pow(0.5).div(100).add(1));
+			b=b.mul(player.mm.best.sub(2).max(1).pow(0.5).div(100).add(1));
 		}
 		if(player.mm.best.gte(15)){
-			b=b.mul(player.mm.points.sub(2).max(1).pow(0.5).div(125).add(1));
+			b=b.mul(player.mm.best.sub(2).max(1).pow(0.5).div(125).add(1));
 		}
 		if(player.mm.best.gte(20)){
-			b=b.mul(player.mm.points.sub(2).max(1).pow(0.5).div(150).add(1));
+			b=b.mul(player.mm.best.sub(2).max(1).pow(0.5).div(150).add(1));
 		}
 	b=b.mul(Decimal.pow(1.05,player.ap.challenges[21]+player.ap.challenges[22]+player.t.challenges[11]+player.t.challenges[21]+player.t.challenges[31]));
 		if(player.ap.challenges[21]>=1)b=b.mul(1.1/1.05);
@@ -1637,6 +1637,7 @@ addLayer("m", {
 		if(hasUpgrade("sp",42)){
 			b=b.mul(player.sp.points.add(1e20).log10().log10().div(30).add(1));
 		}
+		if (player.pm.activeChallenge==12) b=b.add(1).log2().add(1).log(5).pow(1.5)
 		return Decimal.pow(b,m);
 	},
 	milestone6Effect(){
@@ -1650,20 +1651,20 @@ addLayer("m", {
 		if(hasUpgrade("p",21))p=p.pow(1.5);
 		if(hasUpgrade("p",22))p=p.pow(1.5);
 		if(player.m.best.gte(35))p=p.pow(3.5);
-		if(hasUpgrade("sp",23))p=p.pow(player.mm.points.add(2));
-		if(player.m.best.gte(42))p=p.pow(player.mm.points.add(1));
-		if(player.m.best.gte(52))p=p.pow(player.mm.points.pow(0.1).add(1));
+		if(hasUpgrade("sp",23))p=p.pow(player.mm.best.add(2));
+		if(player.m.best.gte(42))p=p.pow(player.mm.best.add(1));
+		if(player.m.best.gte(52))p=p.pow(player.mm.best.pow(0.1).add(1));
 		if(player.mm.best.gte(9))p=p.pow(1.5);
-		if(player.m.best.gte(62))p=p.pow(player.mm.points.pow(0.129));
+		if(player.m.best.gte(62))p=p.pow(player.mm.best.pow(0.129));
 		if(player.mm.best.gte(13))p=p.pow(1.2);
-		if(player.m.best.gte(72))p=p.pow(player.mm.points.pow(0.1));
+		if(player.m.best.gte(72))p=p.pow(player.mm.best.pow(0.1));
 		if(player.mm.best.gte(14))p=p.pow(1.2);
-		if(player.m.best.gte(82))p=p.pow(player.mm.points.pow(0.2));
+		if(player.m.best.gte(82))p=p.pow(player.mm.best.pow(0.2));
 		if(player.mm.best.gte(17))p=p.pow(1.7);
-		if(player.m.best.gte(92))p=p.pow(player.mm.points.pow(0.3));
-		if(player.m.best.gte(106))p=p.pow(player.mm.points.pow(0.5));
-		if(player.m.best.gte(113))p=p.pow(player.mm.points.pow(0.3));
-        if (player.m.best.gte(156))p=p.pow(player.mm.points.pow(layers.t.getSpecialEffect(32)))
+		if(player.m.best.gte(92))p=p.pow(player.mm.best.pow(0.3));
+		if(player.m.best.gte(106))p=p.pow(player.mm.best.pow(0.5));
+		if(player.m.best.gte(113))p=p.pow(player.mm.best.pow(0.3));
+        if (player.m.best.gte(156))p=p.pow(player.mm.best.pow(layers.t.getSpecialEffect(32)))
 		return softcap(p,new Decimal('ee10'), 0.15);
 	},
 	milestone27Effect(){
@@ -1673,24 +1674,24 @@ addLayer("m", {
 		}
 		if(player.m.best.gte(28))p=p.pow(1.5);
 		if(player.m.best.gte(29))p=p.pow(1.2);
-		if(hasUpgrade("sp",23))p=p.pow(player.mm.points.add(2));
+		if(hasUpgrade("sp",23))p=p.pow(player.mm.best.add(2));
 		if(player.mm.best.gte(2))p=p.pow(2);
 		if(player.mm.best.gte(3))p=p.pow(2);
 		if(player.mm.best.gte(4))p=p.pow(2);
-		if(player.m.best.gte(47))p=p.pow(player.mm.points.pow(0.25).add(1));
+		if(player.m.best.gte(47))p=p.pow(player.mm.best.pow(0.25).add(1));
 		if(player.mm.best.gte(6))p=p.pow(1.5);
 		if(player.mm.best.gte(7))p=p.pow(1.5);
 		if(player.mm.best.gte(8))p=p.pow(1.5);
 		if(player.mm.best.gte(11))p=p.pow(1.2);
 		if(player.mm.best.gte(12))p=p.pow(1.2);
-		if(player.m.best.gte(67))p=p.pow(player.mm.points.pow(0.147));
+		if(player.m.best.gte(67))p=p.pow(player.mm.best.pow(0.147));
 		if(player.mm.best.gte(16))p=p.pow(1.2);
-		if(player.m.best.gte(87))p=p.pow(player.mm.points.pow(0.3));
+		if(player.m.best.gte(87))p=p.pow(player.mm.best.pow(0.3));
 		if(player.mm.best.gte(18))p=p.pow(1.8);
 		if(player.mm.best.gte(19))p=p.pow(1.9);
-		if(player.m.best.gte(97))p=p.pow(player.mm.points.pow(0.4));
-		if(player.m.best.gte(106))p=p.pow(player.mm.points.pow(0.5));
-		if(player.m.best.gte(113))p=p.pow(player.mm.points.pow(0.3));
+		if(player.m.best.gte(97))p=p.pow(player.mm.best.pow(0.4));
+		if(player.m.best.gte(106))p=p.pow(player.mm.best.pow(0.5));
+		if(player.m.best.gte(113))p=p.pow(player.mm.best.pow(0.3));
 		return p;
 	},
 	milestone105Effect(){

@@ -23,7 +23,7 @@ addLayer("pe", {
     hotkeys: [
         {key: "e", description: "E: Collect Prestige Energy", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(125)&& (player.mp.activeChallenge!=21)},
+    layerShown(){return player.m.best.gte(125)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12},
 	branches: ["p"],
 	base: function(){
 		let b=new Decimal("10");

@@ -29,7 +29,7 @@ addLayer("hb", {
     hotkeys: [
         {key: "B", description: "Shift+B: Reset for hyper boosts", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(104)&& (player.mp.activeChallenge!=21)},
+    layerShown(){return player.m.best.gte(104)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12},
 	branches: ["hp","pb"],
 	softcap:new Decimal(Infinity),
 	softcapPower:new Decimal(1),
@@ -186,7 +186,7 @@ addLayer("hb", {
 			unlocked(){return player.m.best.gte(178)}, // The upgrade is only visible when this is true
         },
 	},
-	resetsNothing(){return player.m.best.gte(111)},
+	resetsNothing(){return player.m.best.gte(111)||player.pm.activeChallenge==12},
 		doReset(l){
 			if(l=="hb"){return;}
 			if(l=="t")if(player.m.best.gte(134))layerDataReset("hb",["upgrades"]);else layerDataReset("hb",[]);

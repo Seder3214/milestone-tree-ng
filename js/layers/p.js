@@ -43,7 +43,7 @@ addLayer("p", {
     hotkeys: [
         {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(5) && (player.mp.activeChallenge!=21)},
+    layerShown(){return (player.m.best.gte(5) && (player.mp.activeChallenge!=21))||player.pm.activeChallenge==12},
 	upgrades: {
         rows: 4,
         cols: 4,
@@ -63,6 +63,7 @@ addLayer("p", {
 				if(player.m.best.gte(84))base+=0.156;
 				if(player.m.best.gte(94))base+=0.1;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
+				if (player.pm.activeChallenge==12) ret=ret.add(1).pow(0.85)
                 return softcap(ret,new Decimal('e5e16'),0.1);
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
@@ -84,6 +85,7 @@ addLayer("p", {
 				if(player.m.best.gte(94))base+=0.1;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
                 if (hasUpgrade('pp',12)) ret = ret.pow(upgradeEffect('pp', 12))
+				if (player.pm.activeChallenge==12) ret=ret.add(1).pow(0.95)
                 return ret;
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
@@ -333,7 +335,11 @@ addLayer("p", {
 	passiveGeneration(){
 		if(player.m.best.gte(135))return 1e10;
 		if(player.m.best.gte(20))return 100;
+		if(player.pm.activeChallenge==12)return 1;
 		return 0;
+	},
+	resetsNothing() {
+		return player.pm.activeChallenge==12
 	},
 	softcap(){
 		if(player.t.activeChallenge==32)return getPointSoftcapStart();

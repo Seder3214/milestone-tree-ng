@@ -90,7 +90,7 @@ addLayer("ep", {
     hotkeys: [
         {key: "x", description: "X: Reset for exotic prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return (player.m.best.gte(160)&& (player.mp.activeChallenge!=21))},
+    layerShown(){return (player.m.best.gte(160)&& (player.mp.activeChallenge!=21))||player.pm.activeChallenge==12},
 	upgrades: {
         rows: 4,
         cols: 4,

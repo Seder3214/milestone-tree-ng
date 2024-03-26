@@ -39,7 +39,7 @@ addLayer("sp", {
     hotkeys: [
         {key: "s", description: "S: Reset for super-prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(25) && (player.mp.activeChallenge!=21)},
+    layerShown(){return player.m.best.gte(25) && (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12},
 	upgrades: {
         rows: 4,
         cols: 4,
@@ -335,6 +335,9 @@ addLayer("sp", {
 		if(player.m.best.gte(135))return 1e10;
 		if(player.m.best.gte(57))return 1;
 		return 0;
+	},
+	resetsNothing() {
+		return player.pm.activeChallenge==12
 	},
 	softcap:new Decimal(Infinity),
 	softcapPower:new Decimal(1),
