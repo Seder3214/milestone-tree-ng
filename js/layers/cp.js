@@ -526,7 +526,7 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
     update(diff) {
         if (player.cp.pool.includes("pow")) player.cp.pool = ["div","pm"]
     let slots=activeCorruptions()
-    let all = Object.keys(player.cp.grid).filter(x=>player.cp.grid[x].level<50+(player.cm.best.gte(4)?20:0) && player.cp.grid[x].level>0)
+    let all = Object.keys(player.cp.grid).filter(x=>player.cp.grid[x].level<40+(player.cm.best.gte(4)?15:0) && player.cp.grid[x].level>0)
     for (i=0;i<all.length;i++) {
         if (player.cm.best.gte(3) && all.length>0) {
             player.cp.formatted = player.cp.formatted.add(gridEssence('cp',all[i]))
