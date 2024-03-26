@@ -82,7 +82,7 @@ addLayer("cm", {
             unlocked() {return player[this.layer].best.gte(2)},
             done() {return player[this.layer].best.gte(3)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Auto-Fix pre-50th level corruptions. Prestige Milestone 9 is much better on post-50th level corruptions."
+				return "Auto-Fix pre-40th level corruptions. Prestige Milestone 9 is much better on post-50th level corruptions."
 			},
             style() {
                 if (hasMilestone('cm',2)) return {
@@ -98,7 +98,7 @@ addLayer("cm", {
             unlocked() {return player[this.layer].best.gte(3)},
             done() {return player[this.layer].best.gte(4)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Add +20 to auto-fix level range."
+				return "Add +15 to auto-fix level range."
 			},
             style() {
                 if (hasMilestone('cm',3)) return {
