@@ -383,7 +383,7 @@ else return new Decimal(1)
             +"/3 completions."},
             unlocked() { return challengeCompletions('pm',11)>=2 },
             goal: function(){
-                let goal=new Decimal(1e28).pow(new Decimal(challengeCompletions('pm',12)/3).add(1))
+                let goal=new Decimal(1e30).pow(new Decimal(challengeCompletions('pm',12)).div(5).add(1))
                 return goal
             },
             canComplete(){
