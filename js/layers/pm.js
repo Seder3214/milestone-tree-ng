@@ -35,15 +35,15 @@ addLayer("pm", {
           }
         if (player.pm.activeChallenge==11) gain = gain.pow(0.3*(player.pm.challengeTimer.add(1).log10()))
         if (challengeCompletions('pm',11)>=1) gain = gain.mul(challengeEffect('pm',11))
-        return gain.div(s)
+        return gain.div(s).max(1)
     },
     reduce() {
 		let base = 0.5
 		if (player.mp.buyables[23].gte(1)) base += buyableEffect('mp',23).toNumber()
-		let eff=player.mp.points.log2().pow(base)
+		let eff=player.mp.points.add(1).log2().pow(base)
 		if (player.pm.best.gte(3)) eff = eff.mul(5)
         if (player.pep.buyables[11].gte(1)) eff = eff.mul(tmp.pep.prOneEffect.pow(0.5))
-        return eff
+        return eff.max(1)
 	},
     essenceBoost() {
         let eff = player.pm.essence.add(1).log2().pow(2).mul(0.1)
@@ -266,13 +266,14 @@ addLayer("pm", {
             unlocked() { return player.pm.best.gte(12) },
             goal: function(){
                 let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].active==true)
-                if(player.m.best.gte(130) && slots.length>0)return gridCost('cp',slots)
+                if(player.m.best.gte(130)&&player.pm.activeChallenge==11 && slots.length>0)return gridCost('cp',slots)
+else return new Decimal(1)
             },
             canComplete(){
                 return player.points.gte(tmp.pm.challenges[this.id].goal);
             },
             rewardEffect() {
-                let ret = 7.39**(player.mp.challenges[31]+1)
+                let ret = 7.39**(player.pm.challenges[11])
                 return ret
             },
             goalDescription() {return "Goal: Fix the corruption"+(player.pm.activeChallenge==11?" (Reach "+format(this.goal())+" Points in this challenge)":"")},
