@@ -96,7 +96,7 @@ if(hasUpgrade("ap",11))b=b.mul(upgradeEffect("ap",11));
 if(player.t.activeChallenge==11||player.t.activeChallenge==21||player.t.activeChallenge==31)b=b.pow(tmp.t.dilationEffect);
 if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41||player.ap.activeChallenge==42 )b=b.add(1).log10().pow(player.m.best.gte(122)?player.m.points:100);
 if (player.pm.essence.gte(1)) b = b.mul(tmp.pm.essenceBoost)
-if (player.mp.modeP==true) b = b.mul(tmp.mp.buyables[22].effect.eff)
+if (player.mp.modeP==true) b = b.mul(buyableEffect('mp',22).eff)
 if (challengeCompletions('pm',12)>=1) b = b.mul(challengeEffect('pm',12))
 if(player.m.best.gte(3)&&player.pm.activeChallenge==12)b=b.mul(tmp.m.milestone3Effect);
 let s=new Decimal(1)
