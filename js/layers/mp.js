@@ -489,9 +489,10 @@ player.t.choose = new Decimal(0)
 				   player.pm.essence=player.pm.essence.sub(cost)
                },
 			  effect(x){
+let eff = new Decimal(1)
 				let base = new Decimal(player.mp.modeE==true?3:2)
 				if (player.pep.buyables[11].gte(3)) base = base.add(tmp.pep.prThreeEffect)
-                let eff = base.pow(x)
+                eff = base.pow(x)
 				  return {eff:eff,base:base}
 			  },
 			  unlocked(){
