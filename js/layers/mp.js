@@ -693,6 +693,5 @@ player.points = new Decimal(0)
                 player.mp.challenges[player.mp.activeChallenge]=Math.max(player.mp.challenges[player.mp.activeChallenge],layers.mp.challenges[player.mp.activeChallenge].completionsAfter120());
             }
         }
-		if (player.mp.modeP==true)player.pm.essence = tmp.pm.gain.add(tmp.pm.gain.times(diff))
 	}
 })
