@@ -687,7 +687,7 @@ player.points = new Decimal(0)
 				layerDataReset('se',["upgrades"])
                 layerDataReset("ep",["buyables"])};
 		},
-	update(){
+	update(diff){
         if(player.m.best.gte(120)){
             if(player.mp.activeChallenge){
                 player.mp.challenges[player.mp.activeChallenge]=Math.max(player.mp.challenges[player.mp.activeChallenge],layers.mp.challenges[player.mp.activeChallenge].completionsAfter120());

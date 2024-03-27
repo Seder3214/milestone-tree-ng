@@ -37,7 +37,7 @@ function corruptEffect() {
     let eff = new Decimal(1)
     eff = eff.add(player.cp.formatted.add(1).log10().mul(1.27).pow(1.5))
     if (hasUpgrade('cp',12)) eff = eff.mul(upgradeEffect('cp',12))
-    if (player.mp.modeP==true) eff = eff.mul(tmp.pm.pChalReward2)
+    if (player.mp.modeP==true&&tmp.pm.count>=7) eff = eff.mul(tmp.pm.pChalReward2)
     return eff
 }
 addLayer("cp", {
