@@ -539,7 +539,8 @@ let base = new Decimal(3)
 				   player.pm.essence=player.pm.essence.sub(cost)
                },
 			  effect(x){
-				let base = new Decimal(player.mp.modeE==true?0.25:0.05)
+				let base = new Decimal(0.25)
+if (player.mp.modeP==true) base = new Decimal(0.05)
                 let eff = base.mul(x)
 				if (tmp.pm.count.gte(1)) eff = player.mp.modeP==true?eff.sub(tmp.pm.pChalReward1):eff.add(tmp.pm.pChalReward1)
 				
