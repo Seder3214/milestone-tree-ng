@@ -106,7 +106,7 @@ for(i=0;i<slots.length;i++) {
 	else s=s
   }
 b=b.div(s)
-return b.div(player.m.best.gte(180)?2:1)
+return b
 }
 
 function getPointGenString(){
