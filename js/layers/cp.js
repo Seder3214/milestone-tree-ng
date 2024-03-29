@@ -92,7 +92,7 @@ canBuyMax() {return true},
             let rangeMul = Math.floor(player.cp.totalCorrupt/4)
             let addLevel = Math.floor(player.cp.totalCorrupt/5)*1.5
             let ranType = Math.floor(Math.random()*1.5)
-            let range = 10+addLevel-(player.pm.best.gte(13)?tmp.pm.pMilestone13Effect+(player.cm.best.gte(4)?5:0):0)
+            let range = 10+addLevel-(player.pm.best.gte(13)?tmp.pm.pMilestone13Effect:0)
             let start = new Decimal(1).add(rangeMul)
    
             let tier = Math.random() * (start - range) + range;
