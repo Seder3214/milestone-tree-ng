@@ -394,7 +394,7 @@ else return new Decimal(1)
                 player.m.points = new Decimal(185)
             },
             name: "Corrupted Normal Universe",
-            completionLimit: new Decimal(5),
+            completionLimit: new Decimal(3),
             challengeDescription() {return (player.pm.activeChallenge==12?"You spent "+formatTime(player.pm.challengeTimer)+" in this challenge.":"")+ "<br>You are trapped in Level " + format(this.levelScaleTrojan()) + " Trojan"+ " and in Level " + format(this.levelScalePE())+" Prestige Essence Corruptions, All upgrades that affect First Milestone are much weaker, you're trapped in Normal Universe."+"<br>"+format(challengeCompletions(this.layer, this.id),0)
             +"/3 completions.<br>At 3 completions, unlock a new challenge!"},
             unlocked() { return challengeCompletions('pm',11)>=2 },
