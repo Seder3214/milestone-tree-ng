@@ -30,7 +30,7 @@ addLayer("em", {
     hotkeys: [
         {key: "ctrl+m", description: "Ctrl+M: Get Extra-Milestone", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.mm.best.gte(30)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12},
+    layerShown(){return player.mm.best.gte(30)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12||player.pm.activeChallenge==13},
 	resetsNothing(){return true},
 	autoPrestige(){return player.m.best.gte(170)},
 	milestones: [

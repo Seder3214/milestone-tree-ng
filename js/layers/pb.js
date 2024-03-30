@@ -26,7 +26,7 @@ addLayer("pb", {
     hotkeys: [
         {key: "b", description: "B: Reset for prestige boosts", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(50)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12},
+    layerShown(){return player.m.best.gte(50)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12||player.pm.activeChallenge==13},
 	branches: ["p"],
 	softcap:new Decimal(Infinity),
 	softcapPower:new Decimal(1),

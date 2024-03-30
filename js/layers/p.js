@@ -21,6 +21,7 @@ addLayer("p", {
 		if(hasUpgrade("p",13))mult=mult.mul(upgradeEffect("p",13));
 		if(hasUpgrade("p",14))mult=mult.mul(upgradeEffect("p",14));
 		if(player.m.best.gte(22))mult=mult.mul(22);
+		if (hasAchievement('ach',15)) mult = mult.mul(achievementEffect('ach', 15))
 		if(hasUpgrade("sp",13))mult=mult.mul(upgradeEffect("sp",13));
 		if(hasUpgrade("sp",14))mult=mult.mul(upgradeEffect("sp",14));
 		if(hasUpgrade("hp",13))mult=mult.mul(upgradeEffect("hp",13));
@@ -43,12 +44,12 @@ addLayer("p", {
     hotkeys: [
         {key: "p", description: "P: Reset for prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return (player.m.best.gte(5) && (player.mp.activeChallenge!=21))||player.pm.activeChallenge==12},
+    layerShown(){return (player.m.best.gte(5) && (player.mp.activeChallenge!=21))||player.pm.activeChallenge==12||player.pm.activeChallenge==13},
 	upgrades: {
         rows: 4,
         cols: 4,
 		11: {
-			title: "Prestige Upgrade 11",
+			title: "Prestige Boost I",
             description: "First Milestone's effect is boosted by your prestige points.",
             cost: new Decimal(1),
             unlocked() { return true}, // The upgrade is only visible when this is true
@@ -63,13 +64,13 @@ addLayer("p", {
 				if(player.m.best.gte(84))base+=0.156;
 				if(player.m.best.gte(94))base+=0.1;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
-				if (player.pm.activeChallenge==12) ret=ret.add(1).pow(0.85)
+				if (player.pm.activeChallenge==12||player.pm.activeChallenge==13) ret=ret.add(1).pow(0.85)
                 return softcap(ret,new Decimal('e5e16'),0.1);
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
 		12: {
-			title: "Prestige Upgrade 12",
+			title: "Prestige Boost II",
             description: "First Milestone's effect is boosted by your prestige points.",
             cost: new Decimal(4),
             unlocked() { return true}, // The upgrade is only visible when this is true
@@ -85,13 +86,13 @@ addLayer("p", {
 				if(player.m.best.gte(94))base+=0.1;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
                 if (hasUpgrade('pp',12)) ret = ret.pow(upgradeEffect('pp', 12))
-				if (player.pm.activeChallenge==12) ret=ret.add(1).pow(0.95)
+				if (player.pm.activeChallenge==12||player.pm.activeChallenge==13) ret=ret.add(1).pow(0.95)
                 return ret;
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
 		13: {
-			title: "Prestige Upgrade 13",
+			title: "Prestige Self-Synergy II",
             description: "Prestige Point gain is boosted by your prestige points.",
             cost: new Decimal(100000000),
             unlocked() { return player.m.best.gte(10)}, // The upgrade is only visible when this is true
@@ -111,7 +112,7 @@ addLayer("p", {
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
 		14: {
-			title: "Prestige Upgrade 14",
+			title: "Prestige Self-Synergy II",
             description: "Prestige Point gain is boosted by your prestige points.",
             cost: new Decimal(1e11),
             unlocked() { return player.m.best.gte(10)}, // The upgrade is only visible when this is true
@@ -131,31 +132,31 @@ addLayer("p", {
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
 		21: {
-			title: "Prestige Upgrade 21",
+			title: "Exponental Boost I",
             description: "6th Milestone's effect ^1.5",
             cost: new Decimal(1e25),
             unlocked() { return player.m.best.gte(15)}, // The upgrade is only visible when this is true
         },
 		22: {
-			title: "Prestige Upgrade 22",
+			title: "Exponental Boost II",
             description: "6th Milestone's effect ^1.5",
             cost: new Decimal(1e33),
             unlocked() { return player.m.best.gte(15)}, // The upgrade is only visible when this is true
         },
 		23: {
-			title: "Prestige Upgrade 23",
+			title: "Prestige Boost III",
             description: "Third Milestone's effect is boosted by your prestige points.",
             cost: new Decimal(1e63),
             unlocked() { return player.m.best.gte(21)}, // The upgrade is only visible when this is true
         },
 		24: {
-			title: "Prestige Upgrade 24",
+			title: "Prestige Boost IV",
             description: "Third Milestone's effect is boosted by your prestige points.",
             cost: new Decimal(1e80),
             unlocked() { return player.m.best.gte(21)}, // The upgrade is only visible when this is true
         },
 		31: {
-			title: "Prestige Upgrade 31",
+			title: "Prestige Scaling Reducer I",
             description: "Milestone Cost Scaling is weaker based on your prestige points.",
             cost: new Decimal("1e6810"),
 			effect(){
@@ -164,31 +165,32 @@ addLayer("p", {
 				if(hasUpgrade("p",33))p=p.mul(1.5);
 				if(hasUpgrade("p",34))p=p.mul(1.2);
 				if(hasUpgrade("t",21))p=p.mul(1.1);
+				if(hasAchievement('ach',22)) p=p.add(achievementEffect('ach',22))
 				return p.add(1);
 			},
             unlocked() { return player.m.best.gte(45)}, // The upgrade is only visible when this is true
             effectDisplay() { return format(this.effect(),4)+"x weaker" }, // Add formatting to the effect
         },
 		32: {
-			title: "Prestige Upgrade 32",
+			title: "Prestige Scaling Reducer II",
             description: "Prestige Upgrade 31 is boosted.",
             cost: new Decimal("1e8740"),
             unlocked() { return player.m.best.gte(45)}, // The upgrade is only visible when this is true
         },
 		33: {
-			title: "Prestige Upgrade 33",
+			title: "Prestige Scaling Reducer III",
             description: "Prestige Upgrade 31 is boosted.",
             cost: new Decimal("1e10927"),
             unlocked() { return player.m.best.gte(45)}, // The upgrade is only visible when this is true
         },
 		34: {
-			title: "Prestige Upgrade 34",
+			title: "Prestige Scaling Reducer IV",
             description: "Prestige Upgrade 31 is boosted.",
             cost: new Decimal("1e16335"),
             unlocked() { return player.m.best.gte(45)}, // The upgrade is only visible when this is true
         },
 		41: {
-			title: "Prestige Upgrade 41",
+			title: "Prestige Boost V",
             description: "Same as Prestige Upgrade 23. To buy this upgrade, You need to complete AP challenge 4 19.7 times.",
             cost(){
 				if(player.ap.challenges[22]<19.7)return new Decimal(Infinity);
@@ -197,7 +199,7 @@ addLayer("p", {
             unlocked() { return player.m.best.gte(124)}, // The upgrade is only visible when this is true
         },
 		42: {
-			title: "Prestige Upgrade 42",
+			title: "Prestige Boost VI",
             description: "Same as Prestige Upgrade 23. To buy this upgrade, You need to complete AP challenge 3 14.1 times.",
             cost(){
 				if(player.ap.challenges[21]<14.1)return new Decimal(Infinity);
@@ -206,7 +208,7 @@ addLayer("p", {
             unlocked() { return player.m.best.gte(124)}, // The upgrade is only visible when this is true
         },
 		43: {
-			title: "Prestige Upgrade 43",
+			title: "Prestige Buyable Boost I",
             description: "First Prestige buyable is boosted. You can buy this upgrade while you're in T challenge 2.",
             cost(){
 				if(player.t.activeChallenge!=12)return new Decimal(Infinity);
@@ -215,7 +217,7 @@ addLayer("p", {
             unlocked() { return player.m.best.gte(124)}, // The upgrade is only visible when this is true
         },
 		44: {
-			title: "Prestige Upgrade 44",
+			title: "Prestige Buyable Boost II",
             description: "First Prestige buyable is boosted. You can buy this upgrade while you're in T challenge 4.",
             cost(){
 				if(player.t.activeChallenge!=22)return new Decimal(Infinity);
@@ -335,11 +337,11 @@ addLayer("p", {
 	passiveGeneration(){
 		if(player.m.best.gte(135))return 1e10;
 		if(player.m.best.gte(20))return 100;
-		if(player.pm.activeChallenge==12)return 1;
+		if(player.pm.activeChallenge==12||player.pm.activeChallenge==13)return 1;
 		return 0;
 	},
 	resetsNothing() {
-		return player.pm.activeChallenge==12
+		return player.pm.activeChallenge==12||player.pm.activeChallenge==13
 	},
 	softcap(){
 		if(player.t.activeChallenge==32)return getPointSoftcapStart();

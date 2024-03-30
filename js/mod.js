@@ -4,7 +4,7 @@ let modInfo = {
 	author: "Seder3214",
 	pointsName: "points",
 	modFiles: ["/layers/m.js","/layers/p.js","/layers/sp.js","/layers/hp.js","/layers/pb.js","/layers/hb.js","/layers/ap.js",
-	"/layers/t.js","/layers/mm.js","/layers/em.js","/layers/pe.js","/layers/se.js","/layers/pp.js","/layers/ep.js","/layers/mp.js","/layers/pm.js","/layers/cp.js","/layers/cm.js","tree.js","/layers/pep.js",'modal.js'],
+	"/layers/t.js","/layers/mm.js","/layers/em.js","/layers/pe.js","/layers/se.js","/layers/pp.js","/layers/ep.js","/layers/mp.js","/layers/pm.js","/layers/cp.js","/layers/cm.js","tree.js","/layers/pep.js","/layers/ach.js",'modal.js'],
 
 	discordName: "",
 	discordLink: "",
@@ -86,6 +86,8 @@ if(player.mp.activeChallenge!=21){
 if(player.m.best.gte(1))b=b.add(3);
 if(player.m.best.gte(2))b=b.mul(3);
 if(player.m.best.gte(3))b=b.mul(tmp.m.milestone3Effect);
+if (hasAchievement('ach',12)) b = b.mul(achievementEffect('ach', 12))
+if (hasAchievement('ach',11)) b = b.mul(tmp.ach.achBoost)
 if(hasUpgrade("p",11))b=b.mul(upgradeEffect("p",11));
 if(hasUpgrade("p",12))b=b.mul(upgradeEffect("p",12));
 if(hasUpgrade("sp",11))b=b.mul(upgradeEffect("sp",11));

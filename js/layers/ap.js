@@ -28,7 +28,7 @@ addLayer("ap", {
     hotkeys: [
         {key: "a", description: "A: Reset for atomic-prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(80)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12},
+    layerShown(){return player.m.best.gte(80)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12||player.pm.activeChallenge==13},
 	branches: ["hp"],
 	softcap:new Decimal(Infinity),
 	softcapPower:new Decimal(1),
@@ -516,7 +516,8 @@ canComplete(){
 	},
 		doReset(l){
 			if(l=="ap"){return;}
-			if(l=="t")if(player.m.best.gte(102))layerDataReset("ap",["upgrades"]);else layerDataReset("ap",[]);
+			if(l=="t"){
+				if(player.m.best.gte(102))layerDataReset("ap",["upgrades"]);else layerDataReset("ap",[]);}
 		},
 		update(){
 			if(player.m.best.gte(103)&&!player.t.activeChallenge){
@@ -525,6 +526,7 @@ canComplete(){
 				if(player.m.best.gte(114))keep=9;
 				if(player.m.best.gte(121))keep=12;
 				if(player.m.best.gte(131))keep=15;
+				if(hasAchievement('ach',27))keep+=3
 				player.ap.challenges[11]=Math.max(player.ap.challenges[11],keep);
 				player.ap.challenges[12]=Math.max(player.ap.challenges[12],keep);
 				player.ap.challenges[21]=Math.max(player.ap.challenges[21],keep);

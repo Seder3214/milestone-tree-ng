@@ -519,16 +519,31 @@ let base = new Decimal(3)
             }
         },
         23:{
+			scaled() {
+				let a = new Decimal(20)
+				return a
+			},
+			ultraScaled() {
+				let a = new Decimal(33)
+				return a
+			},
 			title(){
-				return "<h3 class='pmr'>Recharge Fusioner</h3>";
+				let table=""
+				if (player[this.layer].buyables[this.id].gte(this.scaled())) table="<h3>[ Scaled ] </h3> "
+				if (player[this.layer].buyables[this.id].gte(this.ultraScaled())) table="<h3>[ Ultra Scaled ] </h3> "
+				return table+"<h3 class='pmr'>Recharge Fusioner</h3>";
 			},
 			display(){
+				
 				let data = tmp[this.layer].buyables[this.id];
 				return "Level: "+format(player[this.layer].buyables[this.id])+"<br>"+
 				"Add +"+format(player.mp.modeE==true?0.25:0.05)+" to exponent of 1st milestone reducing effect. <br>Currently: "+format(data.effect)+".<br>"+
 				"Cost for Next Level: "+format(data.cost)+" Prestige Essence";
 			},
-			cost(x) {return new Decimal(5500).mul(x.max(1)).pow(x.div(2).add(1));
+			cost(x) {				let pow = new Decimal(1)
+				if (x.gte(this.scaled())) pow = new Decimal(1).add(x.add(1).sub(this.scaled()).div(25).mul(hasUpgrade('cp',13)?new Decimal(1).sub(upgradeEffect('cp',13)):1))
+				if (x.gte(this.ultraScaled())) pow = new Decimal(1.5).add(x.add(1).sub(this.ultraScaled()).div(10))
+				return new Decimal(5500).mul(x.max(1)).pow(x.div(2).add(1)).pow(pow);
 			},
 			canAfford() {
                    return player.pm.essence.gte(tmp[this.layer].buyables[this.id].cost)

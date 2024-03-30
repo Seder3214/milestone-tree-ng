@@ -24,7 +24,7 @@ addLayer("se", {
     hotkeys: [
         {key: "E", description: "Shift+E: Collect Super Energy", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(140)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12},
+    layerShown(){return player.m.best.gte(140)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12||player.pm.activeChallenge==13},
 	branches: ["sp"],
 	base: function(){
 		let b=new Decimal("10");

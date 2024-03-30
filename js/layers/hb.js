@@ -29,7 +29,7 @@ addLayer("hb", {
     hotkeys: [
         {key: "B", description: "Shift+B: Reset for hyper boosts", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(104)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12},
+    layerShown(){return player.m.best.gte(104)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12||player.pm.activeChallenge==13},
 	branches: ["hp","pb"],
 	softcap:new Decimal(Infinity),
 	softcapPower:new Decimal(1),
@@ -70,7 +70,7 @@ addLayer("hb", {
 		if(hasUpgrade("hb",34)){
 			m+=0.02;
 		}
-		return new Decimal(1).add(player.hb.points.add(e).pow(p).mul(m));
+		return new Decimal(1).add(player.hb.points.add(e).pow(p).mul(m)).add(hasAchievement('ach',28)?0.015:0);
 	},
 	effectDescription(){
 		return "hyper-prestige points and prestige boost effect is powered by "+format(layers.hb.effect(),4)
@@ -186,7 +186,7 @@ addLayer("hb", {
 			unlocked(){return player.m.best.gte(178)}, // The upgrade is only visible when this is true
         },
 	},
-	resetsNothing(){return player.m.best.gte(111)||player.pm.activeChallenge==12},
+	resetsNothing(){return player.m.best.gte(111)||player.pm.activeChallenge==12||player.pm.activeChallenge==13},
 		doReset(l){
 			if(l=="hb"){return;}
 			if(l=="t")if(player.m.best.gte(134))layerDataReset("hb",["upgrades"]);else layerDataReset("hb",[]);

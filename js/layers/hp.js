@@ -30,7 +30,7 @@ addLayer("hp", {
     hotkeys: [
         {key: "h", description: "H: Reset for hyper-prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(60)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12},
+    layerShown(){return player.m.best.gte(60)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12||player.pm.activeChallenge==13},
 	branches: ["sp"],
 	softcap:new Decimal(Infinity),
 	softcapPower:new Decimal(1),
@@ -132,6 +132,7 @@ addLayer("hp", {
 				if(hasUpgrade("hp",24))p=p.mul(2);
 				if(hasUpgrade("hp",33))p=p.mul(1.5);
 				if(hasUpgrade("hp",34))p=p.mul(1.2);
+				if(hasAchievement('ach',23)) p=p.add(achievementEffect('ach',23))
 				return p.add(1);
             },
             effectDisplay() { return format(this.effect(),4)+"x weaker" }, // Add formatting to the effect
@@ -320,7 +321,7 @@ addLayer("hp", {
 		return 0;
 	},
 	resetsNothing() {
-		return player.pm.activeChallenge==12
+		return player.pm.activeChallenge==12||player.pm.activeChallenge==13
 	},
 		doReset(l){
 			if(l=="hp"){return;}

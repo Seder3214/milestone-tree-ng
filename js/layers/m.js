@@ -42,17 +42,18 @@ addLayer("m", {
 		if(hasUpgrade("ap",23))firstScaling=firstScaling.div(upgradeEffect("ap",23));
 		if(hasUpgrade("pe",12))firstScaling=firstScaling.div(upgradeEffect("pe",12));
 		if(hasUpgrade("se",12))firstScaling=firstScaling.div(upgradeEffect("se",12));
-		return new Decimal(2).add(firstScaling).mul(player.m.points.gte(getCostOverflowStart())?getCostOverflowEff():1);
+		return new Decimal(2).add(firstScaling).add(player.m.points.gte(145)?0.5:0).mul(player.m.points.gte(getCostOverflowStart())?getCostOverflowEff():1);
 	},
     getScalingStart(){
         let start=new Decimal(14);
+		if (hasAchievement('ach',13)) start = start.add(achievementEffect('ach',13))
 		if(hasUpgrade("t",52))start=start.add(upgradeEffect("t",52));
 		return start;
     },
     hotkeys: [
         {key: "m", description: "M: Get Milestone", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12},
+    layerShown(){return (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12||player.pm.activeChallenge==13},
 	resetsNothing(){return true},
 	autoPrestige(){return player.mm.best.gte(1)},
 	milestones: [
@@ -1637,7 +1638,7 @@ addLayer("m", {
 		if(hasUpgrade("sp",42)){
 			b=b.mul(player.sp.points.add(1e20).log10().log10().div(30).add(1));
 		}
-		if (player.pm.activeChallenge==12) b=b.add(1).log2().add(1).log(5).pow(1.5)
+		if (player.pm.activeChallenge==12||player.pm.activeChallenge==13) b=b.add(1).log2().add(1).log(5).pow(1.5)
 		return Decimal.pow(b,m);
 	},
 	milestone6Effect(){
@@ -1651,7 +1652,7 @@ addLayer("m", {
 		if(hasUpgrade("p",21))p=p.pow(1.5);
 		if(hasUpgrade("p",22))p=p.pow(1.5);
 		if(player.m.best.gte(35))p=p.pow(3.5);
-		if(hasUpgrade("sp",23))p=p.pow(player.mm.best.add(2));
+		if(hasUpgrade("sp",23))p=p.pow(player.mm.best.add(2+(hasAchievement('ach',21)?achievementEffect('ach',21):0)));
 		if(player.m.best.gte(42))p=p.pow(player.mm.best.add(1));
 		if(player.m.best.gte(52))p=p.pow(player.mm.best.pow(0.1).add(1));
 		if(player.mm.best.gte(9))p=p.pow(1.5);

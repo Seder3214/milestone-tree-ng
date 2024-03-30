@@ -37,7 +37,7 @@ addLayer("pm", {
             if (getGridData("cp", i).active==true && getGridData("cp", i).type=='pm') s=(gridEffect('cp',i).gte(s)?gridEffect('cp',i):s)
           }
         if (player.pm.activeChallenge==11) gain = gain.pow(0.3*(player.pm.challengeTimer.add(1).log10().add(1)))
-        if (player.pm.activeChallenge==12) gain = gain.mul(10*(player.pm.challengeTimer.add(1).pow(0.75).add(1)))
+        if (player.pm.activeChallenge==12||player.pm.activeChallenge==13) return player.pm.challengeTimer.add(1).pow(2.75).add(1)
         if (challengeCompletions('pm',11)>=1) gain = gain.mul(challengeEffect('pm',11))
         return gain.div(s).max(1)
     },
@@ -259,11 +259,27 @@ addLayer("pm", {
                 }
             },
         },
+        {
+			requirementDescription: "14th Prestige Milestone",
+            unlocked() {return player[this.layer].best.gte(13)},
+            done() {return player[this.layer].best.gte(14)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Reduce formula in corruption goals that bases on total corruptions by -"+format(tmp.pm.pMilestone14Effect,3)+" based on Prestige Milestones."
+			},
+            style() {
+                if (hasMilestone('pm',13)) return {
+                    'background':'#00520b',
+                    'border-color':'lime',
+                    'color':'lime',
+                    'width': '100%',
+                }
+            },
+        },
 	],
     challenges: {
         11:{
             levelScale() {
-                let scale= new Decimal(35).add(new Decimal(challengeCompletions('pm',11)>=4?8:5).mul(challengeCompletions('pm',11)))
+                let scale= new Decimal(35).add(new Decimal(challengeCompletions('pm',11)>=3?4:5).mul(challengeCompletions('pm',11)))
                 return scale
             },
             onEnter() {
@@ -380,10 +396,10 @@ else return new Decimal(1)
             name: "Corrupted Normal Universe",
             completionLimit: new Decimal(5),
             challengeDescription() {return (player.pm.activeChallenge==12?"You spent "+formatTime(player.pm.challengeTimer)+" in this challenge.":"")+ "<br>You are trapped in Level " + format(this.levelScaleTrojan()) + " Trojan"+ " and in Level " + format(this.levelScalePE())+" Prestige Essence Corruptions, All upgrades that affect First Milestone are much weaker, you're trapped in Normal Universe."+"<br>"+format(challengeCompletions(this.layer, this.id),0)
-            +"/3 completions."},
+            +"/3 completions.<br>At 3 completions, unlock a new challenge!"},
             unlocked() { return challengeCompletions('pm',11)>=2 },
             goal: function(){
-                let goal=new Decimal(1e13).pow(new Decimal(challengeCompletions('pm',12)).div(3).add(1))
+                let goal=new Decimal(1e13).pow(new Decimal(challengeCompletions('pm',12)/2.5).add(1))
                 return goal
             },
             canComplete(){
@@ -391,12 +407,104 @@ else return new Decimal(1)
             },
             rewardEffect() {
                 let ret = 15.46**(player.pm.challenges[12])*(challengeCompletions('pm',12)>=1?player.pm.essence.add(1).log2().add(1).log2().pow(1.5):1)
-                return ret
+                return ret*(challengeCompletions("pm",13)>=1?challengeEffect('pm',13):1)
             },
             goalDescription() {let req = " Prestige Points"
                 return "Get "+format(this.goal())+req},
             currencyDisplayName: "Points",
             rewardDescription() { return "Multiply Points gain (Affected by Prestige Essences).<br>Currently: "+format(challengeEffect('pm',12))+"x" },
+            style() {
+                    if (!this.canComplete()) return {
+                        'border-radius': '0%',
+                        'color':'lime',
+                        'background-color':'black',
+                        'border':'2px solid lime',
+                        'height':'330px',
+                        'width':'330px',
+                        "transition":" border 3s"
+                    }
+                    else return {
+                        'border-radius': '0%',
+                        'color':'gold',
+                        'background-color':'black',
+                        'border':'2px solid gold',
+                        'cursor':'pointer',
+                        'height':'330px',
+                        'width':'330px',
+                    }
+            },
+            buttonStyle() {
+                if (!this.canComplete()) return {
+                    'border-radius': '0%',
+                    'color':'lime',
+                    'background-color':'rgba(0,0,0,0)',
+                    'border':'2px solid lime',
+                    "transition":" all 1s"
+                }
+                    return {
+                    'border-radius': '0%',
+                    'color':'gold',
+                    'background-color':'rgba(0,0,0,0)',
+                    'border':'2px solid gold',
+                }
+        },
+        },
+        13:{
+            levelScaleTrojan() {
+                let scale= new Decimal(50).add(new Decimal(5).mul(challengeCompletions('pm',13)))
+                return scale
+            },
+            onEnter() {
+                layerDataReset('pp')
+                layerDataReset('p')
+                layerDataReset('sp')
+                layerDataReset('pe')
+                layerDataReset('hp')
+                layerDataReset('ap',["challenges"])
+                layerDataReset('pb')
+                layerDataReset('hb')
+                layerDataReset('se')
+                layerDataReset("ep",[])
+                layerDataReset("em",[])
+                layerDataReset("mm",[])
+                layerDataReset("m",[])
+                layerDataReset('t',["challenges"])
+                player.m.best = new Decimal(0)
+                player.mm.best = new Decimal(1)
+                player.pm.essence=new Decimal(0)
+                player.points=new Decimal(0)
+                let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].level<1 && x!=101)
+                player.cp.grid[slots[0]] = {level: this.levelScaleTrojan(),active:true,fixed:false,type:"div"}
+            },
+            onExit() {
+                let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].active==true)
+                player.cp.grid[slots[0]] = {level:0,active:false,fixed:false,type:"div"}           
+                player.pm.challengeTimer = new Decimal(0)
+                player.pm.essence=new Decimal(0)
+                player.points=new Decimal(0)
+                player.m.best = new Decimal(185)
+                player.m.points = new Decimal(185)
+            },
+            name: "Corrupted Normal Universe II",
+            completionLimit: new Decimal(3),
+            challengeDescription() {return (player.pm.activeChallenge==13?"You spent "+formatTime(player.pm.challengeTimer)+" in this challenge.":"")+ "<br>You are trapped in Level " + format(this.levelScaleTrojan()) + " Trojan"+ " Corruption, All upgrades that affect First Milestone are much weaker, you're trapped in Normal Universe."+"<br>"+format(challengeCompletions(this.layer, this.id),0)
+            +"/3 completions.<br>At 3 completions, unlock a new challenge!"},
+            unlocked() { return challengeCompletions('pm',12)>=3 },
+            goal: function(){
+                let goal=new Decimal(30).mul(new Decimal(challengeCompletions('pm',13)).add(1))
+                return goal
+            },
+            canComplete(){
+                return player.pe.points.gte(tmp.pm.challenges[this.id].goal) && player.pm.activeChallenge==13;
+            },
+            rewardEffect() {
+                let ret = 15.46**(player.pm.challenges[13])*(challengeCompletions('pm',12)>=1?player.pm.essence.add(1).log2().add(1).log2().pow(1.5):1)
+                return ret
+            },
+            goalDescription() {let req = " Prestige Energy"
+                return "Get "+format(this.goal())+req},
+            currencyDisplayName: "Points",
+            rewardDescription() { return "Multiply CNU I reward (Affected by Prestige Essences).<br>Currently: "+format(challengeEffect('pm',13))+"x" },
             style() {
                     if (!this.canComplete()) return {
                         'border-radius': '0%',
@@ -489,7 +597,11 @@ else return new Decimal(1)
             return p;
         },
     	pMilestone13Effect(){
-            let p=player.pm.points.add(1).log10().add(1).div(1.5);
+            let p=player.pm.points.add(1).log2().add(1);
+            return p;
+        },
+    	pMilestone14Effect(){
+            let p=player.pm.points.add(1).pow(0.5).add(1);
             return p;
         },
     	pChalReward1(){

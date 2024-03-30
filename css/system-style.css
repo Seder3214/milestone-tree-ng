@@ -173,6 +173,7 @@
 	position: absolute;
 	z-index:1000;
 	width: 350px;
+	justify-content: auto;
 	height: 99%;
 	left:1px;
 	background: #414141;
@@ -185,6 +186,7 @@ overflow-x: hidden;
 .menuButton {
 	width: 345px;
 	height: 50px;
+	justify-content: auto;
 	margin-bottom: 5px;
 	color: rgb(0, 0, 0);
 	font-size:18px;
@@ -199,6 +201,7 @@ overflow-x: hidden;
 	color: rgb(75, 75, 75);
 	height: 45px;
 }
+  
 .import {
 	width: 80px;
 	height: 40px;

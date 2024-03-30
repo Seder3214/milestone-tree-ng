@@ -98,7 +98,7 @@ addLayer("cm", {
             unlocked() {return player[this.layer].best.gte(3)},
             done() {return player[this.layer].best.gte(4)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Add +15 to auto-fix level range."
+				return "Add +20 to auto-fix level range. Unlock Antivirus"
 			},
             style() {
                 if (hasMilestone('cm',3)) return {

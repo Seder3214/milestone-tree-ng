@@ -18,6 +18,7 @@ addLayer("sp", {
         mult = new Decimal(1)
 		if(player.ap.activeChallenge==12 || player.ap.activeChallenge==41)return new Decimal(0);
 		if(player.m.best.gte(27))mult=mult.mul(tmp.m.milestone27Effect);
+		if (hasAchievement('ach',19)) mult = mult.mul(achievementEffect('ach', 19))
 		if(hasUpgrade("sp",21))mult=mult.mul(upgradeEffect("sp",21));
 		if(hasUpgrade("sp",22))mult=mult.mul(upgradeEffect("sp",22));
 		if(hasUpgrade("hp",21))mult=mult.mul(upgradeEffect("hp",21));
@@ -39,7 +40,7 @@ addLayer("sp", {
     hotkeys: [
         {key: "s", description: "S: Reset for super-prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    layerShown(){return player.m.best.gte(25) && (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12},
+    layerShown(){return player.m.best.gte(25) && (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12||player.pm.activeChallenge==13},
 	upgrades: {
         rows: 4,
         cols: 4,
@@ -337,7 +338,7 @@ addLayer("sp", {
 		return 0;
 	},
 	resetsNothing() {
-		return player.pm.activeChallenge==12
+		return player.pm.activeChallenge==12||player.pm.activeChallenge==13
 	},
 	softcap:new Decimal(Infinity),
 	softcapPower:new Decimal(1),
