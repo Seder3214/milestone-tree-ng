@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "v2.017a Patch 1",
+	num: "v2.017 Massive Update",
 	name: "Corrupted Game?!",
 }
 
@@ -23,7 +23,9 @@ Note: v<h3 style="color: green">A</h3>.<h3 style='color: blue'>B</h3><h3 style='
 <h3 style='color: green'>A</h3> is a number of <h3 style='color:yellow'>major</h3> updates like <h3 class='pmr'>Prestige Milestone Tree</h3>, <br>
 <h3 style='color: blue'>B</h3> is a number of <h3 style="color:#793784">milestones</h3> in current version, <br>
 <h3 style='color: yellow'>C</h3> is a letter that used to show <h3 style='color: cyan'>bugfix/rebalance</h3> updates<br><br>
-<h3 class="corr"> v2.035 beta I - v2.017a Patch 1</h3><br>
+<h3 class="corr"> v2.035 beta I - v2.017 Massive Update</h3><br>
+<span style='color: #808080'> - Added Achievements<br></span>
+
 <span style='color: #808080'> - Fixed game freezing bug<br></span>
 <span style='color: #808080'> - Added 11 more milestones<br></span>
 <span style='color: #808080'> - 2 new challenges!<br></span>

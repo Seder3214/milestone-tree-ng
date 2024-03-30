@@ -184,7 +184,7 @@ addLayer("pep", {
 	 ]
 			},
     },
-	branches: ["pr"],
+	branches: ["pm"],
 	softcap(){
 		return new Decimal(Infinity);
 	},

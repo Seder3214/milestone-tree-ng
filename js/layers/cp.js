@@ -20,6 +20,10 @@ function formatRoman(num) {
   
     return str;
 }
+function antiCorrupt() {
+    let base=40+(player.cm.best.gte(4)?16:0)
+    return base
+}
 function formatScale(num,precision) {
     ends=["",'st','nd','rd']
     ex=num.toNumber()
@@ -38,6 +42,7 @@ function corruptEffect() {
     eff = eff.add(player.cp.formatted.add(1).log10().mul(1.27).pow(1.5))
     if (hasUpgrade('cp',12)) eff = eff.mul(upgradeEffect('cp',12))
     if (player.mp.modeP==true&&tmp.pm.count>=7) eff = eff.mul(tmp.pm.pChalReward2)
+    if (player.cp.buyables[21].gte(1)) eff = eff.mul(buyableEffect("cp",21))
     return eff
 }
 addLayer("cp", {
@@ -104,6 +109,7 @@ canBuyMax() {return true},
 },
     requires(){
 		let b=new Decimal(2e6);
+        if (player.cp.points.gte(250)) b=new Decimal(1e29)
 		return b;
 	}, // Can be a function that takes requirement increases into account
     resource: " prestige points", // Name of prestige currency
@@ -350,11 +356,11 @@ canBuyMax() {return true},
         },
         getCost(data,id) {
             let eff = new Decimal(1)
-            eff = new Decimal(1e17).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt).div(85).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1))
+            eff = new Decimal(1e17).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt-(player.pm.best.gte(14)?tmp.pm.pMilestone14Effect:0)).div(85).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1)).div(player.cp.buyables[22].gte(1)?buyableEffect('cp',22):1)
             if (data.type=='pm') eff = new Decimal(1e17).mul(data.level).pow(0.75)
             if (data.level>=15 && data.type=='div') eff = eff.div(player.cm.points.gte(2)?5**4:5)
-            if (player.cm.best.gte(3)&&data.level>=45 && data.type=='div') eff = eff.div(new Decimal(data.level).pow(player.cp.totalCorrupt/15))
-            if (player.cm.best.gte(3)&&data.level>=40 && data.type=='pm') eff = eff.mul(new Decimal(data.level/10).pow(player.cp.totalCorrupt/20))
+            if (player.cm.best.gte(3)&&data.level>=40 && data.type=='div') eff = eff.div(new Decimal(data.level).pow(player.cp.totalCorrupt/100))
+            if (player.cm.best.gte(3)&&data.level>=40 && data.type=='pm') eff = eff.mul(new Decimal(data.level/10).pow(player.cp.totalCorrupt/15))
             if (data.level>=15 && data.type=='pm') eff = eff.div(player.cm.points.gte(2)?5**2:1.25)
             return eff.div(new Decimal(data.cautPower).add(1)) },
         getEssence(data,id) {
@@ -377,6 +383,7 @@ canBuyMax() {return true},
            if (data.level>=15 && data.type=='pm') eff = eff.mul(25)
            if (data.level>=20 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(5))
            if (data.level>=30 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(3))
+           if (data.level>=50 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(10))
 
            if (data.level>=10 && data.type=='div') eff = eff.mul(new Decimal(data.level).div(data.level>=25?20:10)).div(10)
 if (data.level>=30 && data.type=='div') eff = eff.div(1000)
@@ -431,7 +438,7 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
 				let data = tmp[this.layer].buyables[this.id];
 				return "Total buyed: "+format(player[this.layer].buyables[this.id])+"<br>"+"Increase Caution Level on random corruption. <br>Cost: "+format(data.cost)+" Corruption Essences";
 			},
-			cost(x) {return new Decimal(500).mul(x.add(1).pow(2));
+			cost(x) {return new Decimal(1000000).mul(x.add(1).pow(x/10));
 			},
 			canAfford() {
                    return player.cp.formatted.gte(tmp[this.layer].buyables[this.id].cost)
@@ -450,6 +457,96 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
 			  unlocked(){
 				  return player.pm.best.gte(15);
 			  },
+			  style() {
+				if (player.cp.formatted.lt(this.cost())) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'black',
+					'border':'2px solid',
+					'height':'125px',
+					'width':'200px',
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'rgb(68, 68, 68)',
+					'border':'2px solid',
+					'height':'125px',
+					'width':'200px',
+                    'cursor':'pointer',
+				}
+            }
+        },
+        21:{
+			title(){
+				return "<h3 class='corr'>Corruption Booster</h3>";
+			},
+			display(){
+				let data = tmp[this.layer].buyables[this.id];
+				return "Total buyed: "+format(player[this.layer].buyables[this.id])+"<br>"+"Boosts corruption essences effect. <br>Cost: "+format(data.cost)+" Corruption Essences"+"<br>Currently: "+format(this.effect())+"x";
+			},
+			cost(x) {return new Decimal(100000).mul(x.add(1).pow(new Decimal(x/5).add(1)));
+			},
+			canAfford() {
+                   return player.cp.formatted.gte(tmp[this.layer].buyables[this.id].cost)
+			},
+               buy() { 
+                cost = tmp[this.layer].buyables[this.id].cost
+                   player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
+                   player.cp.formatted=player.cp.formatted.sub(cost)
+               },
+			  unlocked(){
+				  return player.cm.best.gte(4);
+			  },
+            effect(x) {
+                let eff = x*100.56*(11**x)+1
+                return eff
+            },
+			  style() {
+				if (player.cp.formatted.lt(this.cost())) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'black',
+					'border':'2px solid',
+					'height':'125px',
+					'width':'200px',
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'rgb(68, 68, 68)',
+					'border':'2px solid',
+					'height':'125px',
+					'width':'200px',
+                    'cursor':'pointer',
+				}
+            }
+        },
+        22:{
+			title(){
+				return "<h3 class='corr'>Corruption Simplifier</h3>";
+			},
+			display(){
+				let data = tmp[this.layer].buyables[this.id];
+				return "Total buyed: "+format(player[this.layer].buyables[this.id])+"<br>"+"Reduces corruptions goals. <br>Cost: "+format(data.cost)+" Corruption Essences"+"<br>Currently: "+format(this.effect())+"x";
+			},
+			cost(x) {return new Decimal(200000).mul(x.add(1).pow(new Decimal(x/5).add(1)));
+			},
+			canAfford() {
+                   return player.cp.formatted.gte(tmp[this.layer].buyables[this.id].cost)
+			},
+               buy() { 
+                cost = tmp[this.layer].buyables[this.id].cost
+                   player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
+                   player.cp.formatted=player.cp.formatted.sub(cost)
+               },
+			  unlocked(){
+				  return player.cm.best.gte(4);
+			  },
+            effect(x) {
+                let eff = x*3.23*(5**x)+1
+                return eff
+            },
 			  style() {
 				if (player.cp.formatted.lt(this.cost())) return {
 					'border-radius': '0%',
@@ -513,12 +610,28 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
                             ["display-text", "You have <h2 style='color:  green; text-shadow: green 0px 0px 10px;'> "+format(player.cp.formatted)+"</h2> corruption essences, which boosts points and Prestige Essences gain by "+ format(corruptEffect())+ "x (points boost works outside of prestige universe)"],
                             ["display-text", "Caution Power affects corruption's goal, reward, and debuff. Also it stays on disk permanently, even if it has no corruption."],
                              "blank",
-                        "buyables",
+                        ["buyable",11],
                         "blank",
                         ]
                     ]
              },
              ]
+                },
+                "Antivirus": {
+                    unlocked() {return player.cm.best.gte(4)},
+                    content:[
+                        function() { if (player.tab == "cp")  return ["column", [
+                            ["display-text", "You caused <h2 style='color:  black; text-shadow: white 0px 0px 10px;'> "+format(player.cp.points,0)+"</h2> corruptions."],
+                            "prestige-button",
+                            ["display-text", "You have <h2 style='color:  green; text-shadow: green 0px 0px 10px;'> "+format(player.cp.formatted)+"</h2> corruption essences, which boosts points and Prestige Essences gain by "+ format(corruptEffect())+ "x (points boost works outside of prestige universe)"],
+                            ["display-text", "Antivirus auto-detects and fixes level 0-"+format(antiCorrupt(),0)+" corruptions"],
+                            "blank",
+                            ["buyables",[2]],
+                            "blank",
+                        ]
+                    ]
+                },
+                ]
                     },
 		},
 
@@ -526,7 +639,7 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
     update(diff) {
         if (player.cp.pool.includes("pow")) player.cp.pool = ["div","pm"]
     let slots=activeCorruptions()
-    let all = Object.keys(player.cp.grid).filter(x=>player.cp.grid[x].level<40+(player.cm.best.gte(4)?15:0) && player.cp.grid[x].level>0)
+    let all = Object.keys(player.cp.grid).filter(x=>player.cp.grid[x].level<antiCorrupt() && player.cp.grid[x].level>0)
     for (i=0;i<all.length;i++) {
         if (player.cm.best.gte(3) && all.length>0) {
             player.cp.formatted = player.cp.formatted.add(gridEssence('cp',all[i]))
@@ -556,8 +669,8 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
         for (i in player.cp.grid) {
             let addLevel = Math.floor(player.cp.totalCorrupt/5)*1.5
             let ranType = Math.floor(Math.random()*1.5)
-            let range = 10+addLevel-(player.pm.best.gte(13)?tmp.pm.pMilestone13Effect:0)
-            if (player.cp.grid[i].level>range) player.cp.grid[i].level = getGridData('cp',i).level-(player.pm.best.gte(13)?tmp.pm.pMilestone13Effect:0)
+            let range = addLevel-(player.pm.best.gte(13)?tmp.pm.pMilestone13Effect:0)
+            if (player.cp.grid[i].level>range&&player.pm.activeChallenge==undefined) player.cp.grid[i].level = getGridData('cp',i).level-(player.pm.best.gte(13)?tmp.pm.pMilestone13Effect:0)
         }
         },
     prestigeButtonText() {
