@@ -28,7 +28,7 @@ addLayer("pep", {
 	prOneEffect() {
         let eff = player.pep.points.add(1).mul(3).pow(1.5)
 		if (hasUpgrade('pep',11)) eff = eff.mul(upgradeEffect('pep',11))
-		if (player.mp.modeP==false) eff = eff.mul(tmp.pm.pChalReward2)
+		if (player.mp.modeP==false && tmp.pm.count>=7) eff = eff.mul(tmp.pm.pChalReward2)
         return eff;
     },
 	prTwoEffect() {
