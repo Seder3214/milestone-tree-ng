@@ -42,7 +42,7 @@ addLayer("m", {
 		if(hasUpgrade("ap",23))firstScaling=firstScaling.div(upgradeEffect("ap",23));
 		if(hasUpgrade("pe",12))firstScaling=firstScaling.div(upgradeEffect("pe",12));
 		if(hasUpgrade("se",12))firstScaling=firstScaling.div(upgradeEffect("se",12));
-		return new Decimal(2).add(firstScaling).add(player.m.points.gte(145)&&?0.5:0).mul(player.m.points.gte(getCostOverflowStart())?getCostOverflowEff():1);
+		return new Decimal(2).add(firstScaling).add(player.m.points.gte(145)?0.5:0).mul(player.m.points.gte(getCostOverflowStart())?getCostOverflowEff():1);
 	},
     getScalingStart(){
         let start=new Decimal(14);
