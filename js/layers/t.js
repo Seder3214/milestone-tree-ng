@@ -251,7 +251,7 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
             cost: new Decimal(60000),
 			unlocked(){return player.m.best.gte(111);},
 			effect(){
-				return softcap(new Decimal(9).plus(player.t.points.add(10).log10().sqrt().mul(1.2)),new Decimal(9),0.5);
+				return new Decimal(9).plus(player.t.points.add(10).log10().sqrt().mul(1.2));
 			},
             effectDisplay() { return "+"+format(this.effect(),4) },
         },
