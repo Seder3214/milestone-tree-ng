@@ -49,7 +49,7 @@
 			<hr>
 			
 			<span v-if="layerShown('m')==true">[ Milestones (Normal Universe) ]</span>
-<button class="menuButton" v-if="layerShown('ach')==true" v-bind:style="constructMenuButtonStyle('ach') " onclick="showTab('ach')"><span class="buttonText">{{format(player.ach.achievements.length,2)+/+format(Object.keys(tmp.ach.achievements).length-3)}} Achievements</span></button>
+<button class="menuButton" v-if="layerShown('ach')==true" v-bind:style="constructMenuButtonStyle('ach') " onclick="showTab('ach')"><span class="buttonText">{{format(player.ach.achievements.length,2)+"/"+format(Object.keys(tmp.ach.achievements).length-3)}} Achievements</span></button>
 				<button class="menuButton" v-if="layerShown('m')==true" style="margin-top:4px" v-bind:style="constructMenuButtonStyle('m') " onclick="showTab('m')"><span class="buttonText">[{{format(player.m.points,0)}}] Milestone (+{{player.points.gte(tmp.m.nextAtDisp)?1:0}})</span></button>
 				<button class="menuButton" v-if="layerShown('mm')==true" v-bind:style="constructMenuButtonStyle('mm') " onclick="showTab('mm')"><span class="buttonText">[{{format(player.mm.points,0)}}] Meta Milestone (+{{player.m.points.gte(tmp.mm.nextAtDisp)?1:0}})</span></button>
 				<button class="menuButton" v-if="layerShown('em')==true" v-bind:style="constructMenuButtonStyle('em') " onclick="showTab('em')"><span class="buttonText">[{{format(player.em.points,0)}}] Extra Milestone (+{{player.em.points.gte(tmp.em.nextAtDisp)?1:0}})</span></button>
