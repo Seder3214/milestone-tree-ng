@@ -20,7 +20,7 @@ addLayer("se", {
 		let b = new Decimal(1)
         return b
     },
-    row: 3, // Row the layer is in on the tree (0 is the first row)
+    row: 7, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
         {key: "E", description: "Shift+E: Collect Super Energy", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],

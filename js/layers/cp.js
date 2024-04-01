@@ -123,7 +123,7 @@ canBuyMax() {return true},
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
-    row: 1, // Row the layer is in on the tree (0 is the first row)
+    row: 10, // Row the layer is in on the tree (0 is the first row)
 	base: new Decimal(12),
 	exponent: function(){
 		return new Decimal(0.65)

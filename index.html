@@ -54,29 +54,30 @@
 				<button class="menuButton" v-if="layerShown('em')==true" v-bind:style="constructMenuButtonStyle('em') " onclick="showTab('em')"><span class="buttonText">[{{format(player.em.points,0)}}] Extra Milestone (+{{player.em.points.gte(tmp.em.nextAtDisp)?1:0}})</span></button>
 				<br v-if="layerShown('m')==true"><hr v-if="layerShown('m')==true">
 			
-			<span v-if="layerShown('p')==true">[ Row 1 ]</span>
+			<span v-if="layerShown('p')==true">[ Row ./asd ]</span>
 				<button class="menuButton" v-if="layerShown('p')==true" style="margin-top:4px" v-bind:style="constructMenuButtonStyle('p') " onclick="showTab('p')"><span class="buttonText">[{{format(player.p.points,2)}}] Prestige (+{{format(tmp.p.resetGain.mul(player.m.best.gte(135)?1e10:player.m.best.gte(25)?100:1))}}{{player.m.best.gte(25)||player.pm.activeChallenge==12?'/s':''}})</span></button>
 					<br v-if="layerShown('p')==true"><hr v-if="layerShown('p')==true">
 			
-			<span v-if="layerShown('sp')==true">[ Row 2 ]</span>
+			<span v-if="layerShown('sp')==true">[ Row ./asddsf]</span>
 				<button class="menuButton" v-if="layerShown('pe')==true" style="margin-top:4px" v-bind:style="constructMenuButtonStyle('pe') " onclick="showTab('pe')"><span class="buttonText">[{{format(player.pe.points,0)}}] Prestige Energy (+{{format(tmp.pe.resetGain)}})</span></button>
+				<button class="menuButton" v-if="layerShown('hp')==true" v-bind:style="constructMenuButtonStyle('hp') " onclick="showTab('hp')"><span class="buttonText">[{{format(player.hp.points,2)}}]  Hyper Prestige (+{{format(tmp.hp.resetGain)}})</span></button>
+				<button class="menuButton" v-if="layerShown('ap')==true" v-bind:style="constructMenuButtonStyle('ap') " onclick="showTab('ap')"><span class="buttonText">[{{format(player.ap.points,2)}}]  Atomic Prestige (+{{format(tmp.ap.resetGain)}})</span></button				<br v-if="layerShown('sp')==true"><hr v-if="layerShown('sp')==true">
+			<span v-if="layerShown('hp')==true">[ Row ./asddsadf ]</span>
+				<button class="menuButton" v-if="layerShown('se')==true" style="margin-top:4px" v-bind:style="constructMenuButtonStyle('se') " onclick="showTab('se')"><span class="buttonText">[{{format(player.se.points,2)}}]  Super Energy (+{{format(tmp.se.resetGain)}})</span></button>
+				<button class="menuButton" v-if="layerShown('ep')==true" v-bind:style="constructMenuButtonStyle('ep') " onclick="showTab('ep')"><span class="buttonText">[{{format(player.ep.points,2)}}]  Exotic Prestige (+{{format(tmp.ep.resetGain)}}) </span></button>
 				<button class="menuButton" v-if="layerShown('sp')==true" v-bind:style="constructMenuButtonStyle('sp') " onclick="showTab('sp')"><span class="buttonText">[{{format(player.sp.points,2)}}] Super Prestige (+{{format(tmp.sp.resetGain)}})</span></button>
+				<br v-if="layerShown('hp')==true"><hr v-if="layerShown('hp')==true">
+			<span v-if="layerShown('ap')==true">[ Row ./asdsadkjdsa ]</span>
+				<button class="menuButton" v-if="layerShown('hb')==true" style="margin-top:4px" v-bind:style="constructMenuButtonStyle('hb') " onclick="showTab('hb')"><span class="buttonText">[{{format(player.hb.points,0)}}]  Hyper Boosts (+{{player.hp.points.gte(tmp.hb.nextAtDisp)?1:0}})</span></button>
+				
 				<button class="menuButton" v-if="layerShown('pb')==true" v-bind:style="constructMenuButtonStyle('pb') " onclick="showTab('pb')"><span class="buttonText">[{{format(player.pb.points,0)}}] Prestige Boosts (+{{player.p.points.gte(tmp.pb.nextAtDisp)?1:0}})</span></button>
 				<button class="menuButton" v-if="layerShown('pp')==true" v-bind:style="constructMenuButtonStyle('pp') " onclick="showTab('pp')"><span class="buttonText">[{{format(player.pp.points,2)}}] Prestige Power (+{{format(tmp.pp.resetGain)}}) </span></button>
-				<br v-if="layerShown('sp')==true"><hr v-if="layerShown('sp')==true">
-			<span v-if="layerShown('hp')==true">[ Row 3 ]</span>
-				<button class="menuButton" v-if="layerShown('se')==true" style="margin-top:4px" v-bind:style="constructMenuButtonStyle('se') " onclick="showTab('se')"><span class="buttonText">[{{format(player.se.points,2)}}]  Super Energy (+{{format(tmp.se.resetGain)}})</span></button>
-				<button class="menuButton" v-if="layerShown('hp')==true" v-bind:style="constructMenuButtonStyle('hp') " onclick="showTab('hp')"><span class="buttonText">[{{format(player.hp.points,2)}}]  Hyper Prestige (+{{format(tmp.hp.resetGain)}})</span></button>
-				<button class="menuButton" v-if="layerShown('ep')==true" v-bind:style="constructMenuButtonStyle('ep') " onclick="showTab('ep')"><span class="buttonText">[{{format(player.ep.points,2)}}]  Exotic Prestige (+{{format(tmp.ep.resetGain)}}) </span></button>
-				<br v-if="layerShown('hp')==true"><hr v-if="layerShown('hp')==true">
-			<span v-if="layerShown('ap')==true">[ Row 4 ]</span>
-				<button class="menuButton" v-if="layerShown('hb')==true" style="margin-top:4px" v-bind:style="constructMenuButtonStyle('hb') " onclick="showTab('hb')"><span class="buttonText">[{{format(player.hb.points,0)}}]  Hyper Boosts (+{{player.hp.points.gte(tmp.hb.nextAtDisp)?1:0}})</span></button>
-				<button class="menuButton" v-if="layerShown('ap')==true" v-bind:style="constructMenuButtonStyle('ap') " onclick="showTab('ap')"><span class="buttonText">[{{format(player.ap.points,2)}}]  Atomic Prestige (+{{format(tmp.ap.resetGain)}})</span></button>
+
+				<br v-if="layerShown('ap')==true"><hr v-if="layerShown('ap')==true">			
+			<span v-if="layerShown('t')==true">[ Row ./asdlkasdjfnknfds ]</span>
+				<button class="menuButton" v-if="layerShown('t')==true" v-bind:style="constructMenuButtonStyle('t') " style="color:black;margin-top: 4px;" onclick="showTab('t')"><span class="buttonText">[{{format(player.t.points,2)}}]  Transcend (+{{format(tmp.t.resetGain)}})</span></button>
 				<button class="menuButton" v-if="layerShown('mp')==true && player.mp.activeChallenge!=21" v-bind:style="constructMenuButtonStyle('mp') " onclick="showTab('mp')"><span class="buttonText">[{{format(player.mp.points,0)}}]  Multiverse Prestige (+{{player.ep.points.gte(tmp.hb.nextAtDisp)?1:0}}) </span></button>
 				<button class="menuButton" v-if="player.m.best.gte(185) && player.mp.activeChallenge!=21" v-bind:style="constructMenuButtonStyle('mp') " onclick="startChallenge('mp', 21)"><span class="buttonText">Enter Prestige Multiverse </span></button>
-				<br v-if="layerShown('ap')==true"><hr v-if="layerShown('ap')==true">			
-			<span v-if="layerShown('t')==true">[ Row 5 ]</span>
-				<button class="menuButton" v-if="layerShown('t')==true" v-bind:style="constructMenuButtonStyle('t') " style="color:black;margin-top: 4px;" onclick="showTab('t')"><span class="buttonText">[{{format(player.t.points,2)}}]  Transcend (+{{format(tmp.t.resetGain)}})</span></button>
 				<hr v-if="player.tab=='t'"><span v-if="player.tab=='t'">[ Special Transcend Points ]</span>
 				<button class="menuButton" v-if="layerShown('t')==true && player.tab=='t'" v-bind:style="constructMenuButtonStyle('t') " style="color:black"><span class="buttonText">Dilated Special Points ({{format(player.t.specialPoints[11])}})</span></button>
 				<button class="menuButton" v-if="layerShown('t')==true && player.tab=='t'" v-bind:style="constructMenuButtonStyle('t') " style="color:black"><span class="buttonText">Softcapped Special Points ({{format(player.t.specialPoints[12])}})</span></button>
@@ -85,12 +86,12 @@
 				<button class="menuButton" v-if="layerShown('t')==true && player.tab=='t'" v-bind:style="constructMenuButtonStyle('t') " style="color:black"><span class="buttonText">Super-Dilated SP ({{format(player.t.specialPoints[31])}}) </span></button>
 				<button class="menuButton" v-if="layerShown('t')==true && player.tab=='t'" v-bind:style="constructMenuButtonStyle('t') " style="color:black"><span class="buttonText">Prestige-Hardcapped SP ({{format(player.t.specialPoints[32])}}) </span></button>
 				<br v-if="layerShown('t')==true"><hr v-if="layerShown('t')==true">		
-				<span v-if="layerShown('pm')==true">[ Prestige Multiverse ]</span><br>
-				<span v-if="player.mp.activeChallenge==21">[ Main ]</span>
+				<span v-if="layerShown('pm')==true">[ Persitge Mtliervse ]</span><br>
+				<span v-if="player.mp.activeChallenge==21">[ Iman ]</span>
 				<button class="menuButton" v-if="layerShown('mp')==true && player.mp.activeChallenge==21" v-bind:style="constructMenuButtonStyle('mp') " onclick="showTab('mp')"><span class="buttonText">Multiverse Prestige (+{{player.ep.points.gte(tmp.hb.nextAtDisp)?1:0}}) </span></button>
 				<button class="menuButton" v-if="player.m.best.gte(185) && player.mp.activeChallenge==21" v-bind:style="constructMenuButtonStyle('mp') " onclick="startChallenge('mp', 21)"><span class="buttonText">Leave Prestige Multiverse </span></button>
 				<hr v-if="layerShown('pm')==true">
-				<span v-if="layerShown('pm')==true">[ Row 0 ]</span>
+				<span v-if="layerShown('pm')==true">[ Row ./ ]</span>
 				<button class="menuButton" v-if="layerShown('pm')==true" v-bind:style="constructMenuButtonStyle('pm') " onclick="showTab('pm')"><span class="buttonText">Prestige Milestone (+{{player.points.gte(tmp.pm.nextAtDisp)?1:0}}) </span></button>
 				<br v-if="layerShown('pm')==true"><hr v-if="layerShown('pm')==true">	
 				<span v-if="layerShown('pep')==true || layerShown('cp')==true">[ Row 1 ]</span>

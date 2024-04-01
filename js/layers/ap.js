@@ -23,7 +23,7 @@ addLayer("ap", {
 		if(hasUpgrade("t",22))m=m.mul(1.01);
 		return m;
     },
-    row: 4, // Row the layer is in on the tree (0 is the first row)
+    row: 9, // Row the layer is in on the tree (0 is the first row)
 	exponent: 0.005,
     hotkeys: [
         {key: "a", description: "A: Reset for atomic-prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},

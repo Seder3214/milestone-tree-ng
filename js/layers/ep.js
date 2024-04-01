@@ -84,7 +84,7 @@ addLayer("ep", {
 		if (player.mp.activeChallenge==13) return new Decimal(0)
     return softcap(eff,new Decimal(0.5),0.1);
     },
-    row: 3,
+    row: 6,
 	newRow: 1, // Row the layer is in on the tree (0 is the first row)
 	exponent: 0.5,
     hotkeys: [

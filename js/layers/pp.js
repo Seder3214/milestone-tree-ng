@@ -25,7 +25,7 @@ addLayer("pp", {
 		let m= new Decimal(1)
 		return m;
     },
-    row: 2, // Row the layer is in on the tree (0 is the first row)
+    row: 1, // Row the layer is in on the tree (0 is the first row)
 	exponent: 0.00000000000001,
     hotkeys: [
         {key: "W", description: "W: Reset for prestige power", onPress(){if (canReset(this.layer)) doReset(this.layer)}},

@@ -60,7 +60,7 @@ addLayer("pm", {
         return new Decimal(1)
     },
     newRow: 0,
-    row:0, // Row the layer is in on the tree (0 is the first row)
+    row:10, // Row the layer is in on the tree (0 is the first row)
 	base: new Decimal(12),
 	exponent: function(){
         if (player.pm.points.gte(9)) return player.pm.points.div(10).add(0.31)

@@ -22,7 +22,7 @@ addLayer("m", {
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
-    row: 0, // Row the layer is in on the tree (0 is the first row)
+    row: 6, // Row the layer is in on the tree (0 is the first row)
 	base: new Decimal(1.5),
 	exponent: function(){
 		if(player.m.points.lt(5))return new Decimal(1.7);

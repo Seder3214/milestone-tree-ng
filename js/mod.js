@@ -14,8 +14,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "v2.017 Massive Update",
-	name: "Corrupted Game?!",
+	num: "v???",
+	name: "AL:JSHJKBHAS?!",
 }
 
 let changelog = `<h3>Changelog:</h3><br><br>
@@ -168,7 +168,7 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-"Mod Author: Seder3214 / qq1010903229 (loader3229)",
+"doM rohtuA: 1234redes",
 function(){let table = ''
 	if(getPointGen().gte(getPointSoftcapStart().sqrt())){
 		table += "1st milestone's effect ^"+format(getPointGen().log(getPointGenBeforeSoftcap()),4)+" because of softcap.<br>1st milestone's softcap starts at "+format(getPointSoftcapStart());

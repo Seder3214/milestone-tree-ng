@@ -27,7 +27,7 @@ addLayer("mp", {
 		let m=new Decimal(1);
 		return m;
     },
-    row: 4,
+    row: 15,
 	newRow: 2, // Row the layer is in on the tree (0 is the first row)
 	exponent: 7.5,
     hotkeys: [

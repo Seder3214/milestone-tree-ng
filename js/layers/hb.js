@@ -25,7 +25,7 @@ addLayer("hb", {
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
-    row: 4, // Row the layer is in on the tree (0 is the first row)
+    row: 25, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
         {key: "B", description: "Shift+B: Reset for hyper boosts", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],

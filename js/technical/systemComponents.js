@@ -67,7 +67,9 @@ var systemComponents = {
 	'layer-tab': {
 		props: ['layer', 'back', 'spacing', 'embedded'],
 		template: `
-		<div v-bind:style="[tmp[layer].style ? tmp[layer].style : {}, (tmp[layer].tabFormat && !Array.isArray(tmp[layer].tabFormat)) ? tmp[layer].tabFormat[player.subtabs[layer].mainTabs].style : {}, options.forceOneTab==true?{'margin-left':'350px'}:{}]" class="noBackground">
+		<div style="	-moz-transform: scale(-1, 1);
+		-webkit-transform: scale(-1, 1);
+		transform: scale(-1, 1);" v-bind:style="[tmp[layer].style ? tmp[layer].style : {}, (tmp[layer].tabFormat && !Array.isArray(tmp[layer].tabFormat)) ? tmp[layer].tabFormat[player.subtabs[layer].mainTabs].style : {}, options.forceOneTab==true?{'margin-left':'350px'}:{}]" class="noBackground">
 		<overlay-head v-if="options.forceOneTab==true"></overlay-head><br>
 		<hr style="width:100% overflow-x:hidden" v-if="options.forceOneTab==true">
 		<div v-if="back"><button v-bind:class="back == 'big' ? 'other-back' : 'back'" v-on:click="goBack(layer)">←</button></div>

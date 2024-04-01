@@ -25,7 +25,7 @@ addLayer("mm", {
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
-    row: 1, // Row the layer is in on the tree (0 is the first row)
+    row: 9, // Row the layer is in on the tree (0 is the first row)
 	base: new Decimal(1.047),
 	exponent: function(){
 		return new Decimal(1)

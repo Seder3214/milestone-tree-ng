@@ -22,7 +22,7 @@ addLayer("pb", {
     gainExp() { // Calculate the exponent on main currency from bonuses
         return new Decimal(1)
     },
-    row: 2, // Row the layer is in on the tree (0 is the first row)
+    row: 7, // Row the layer is in on the tree (0 is the first row)
     hotkeys: [
         {key: "b", description: "B: Reset for prestige boosts", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],

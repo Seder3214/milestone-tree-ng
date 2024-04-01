@@ -68,7 +68,7 @@ function format(decimal, precision = 2, small) {
         return val.replace(/([^(?:e|F)]*)$/, '-$1')
     }
     else   
-        return format(decimal, precision) + "⁻¹"
+        return "???"
 
 }
 
@@ -76,15 +76,11 @@ function formatWhole(decimal) {
     decimal = new Decimal(decimal)
     if (decimal.gte(1e9)) return format(decimal, 2)
     if (decimal.lte(0.99) && !decimal.eq(0)) return format(decimal, 2)
-    return format(decimal, 0)
+    return "???"
 }
 
 function formatTime(s) {
-    if (s < 60) return format(s) + "s"
-    else if (s < 3600) return formatWhole(Math.floor(s / 60)) + "m " + format(s % 60) + "s"
-    else if (s < 86400) return formatWhole(Math.floor(s / 3600)) + "h " + formatWhole(Math.floor(s / 60) % 60) + "m " + format(s % 60) + "s"
-    else if (s < 31536000) return formatWhole(Math.floor(s / 86400) % 365) + "d " + formatWhole(Math.floor(s / 3600) % 24) + "h " + formatWhole(Math.floor(s / 60) % 60) + "m " + format(s % 60) + "s"
-    else return formatWhole(Math.floor(s / 31536000)) + "y " + formatWhole(Math.floor(s / 86400) % 365) + "d " + formatWhole(Math.floor(s / 3600) % 24) + "h " + formatWhole(Math.floor(s / 60) % 60) + "m " + format(s % 60) + "s"
+        return "???"
 }
 
 function toPlaces(x, precision, maxAccepted) {

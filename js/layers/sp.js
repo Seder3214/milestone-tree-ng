@@ -35,7 +35,7 @@ addLayer("sp", {
 		if(player.t.activeChallenge==31)mult=mult.mul(tmp.t.dilationEffect);
         return mult
     },
-    row: 2, // Row the layer is in on the tree (0 is the first row)
+    row: 7, // Row the layer is in on the tree (0 is the first row)
 	exponent: 0.1,
     hotkeys: [
         {key: "s", description: "S: Reset for super-prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},

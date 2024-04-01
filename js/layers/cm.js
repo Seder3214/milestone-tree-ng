@@ -36,7 +36,7 @@ addLayer("cm", {
         return new Decimal(eff).max(1)
     },
     newRow: 0,
-    row:1, // Row the layer is in on the tree (0 is the first row)
+    row:12, // Row the layer is in on the tree (0 is the first row)
 	exponent: function(){return new Decimal(0.8)
 	},
     hotkeys: [

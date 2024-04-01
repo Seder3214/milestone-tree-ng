@@ -5,7 +5,8 @@ body {
 	--background: #0f0f0f;
 	--color: #dfdfdf;
 	--points: #ffffff;
-	background: var(--background)
+	background: var(--background);
+	
 }
 
 /* General text */
@@ -18,6 +19,9 @@ h1, h2, h3, b, input {
 .locked {
 	background-color: #bf8f8f;
 	cursor: not-allowed;
+	-moz-transform: scale(-1, 1);
+	-webkit-transform: scale(-1, 1);
+	transform: scale(-1, 1);
 }
 
 /* Can meens can be clicked/bought/etc */
@@ -33,6 +37,9 @@ h1, h2, h3, b, input {
 .bought {
 	background-color: #77bf5f;
 	cursor: default;
+	-moz-transform: scale(-1, 1);
+	-webkit-transform: scale(-1, 1);
+	transform: scale(-1, 1);
 }
 
 #points {
