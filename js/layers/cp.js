@@ -103,6 +103,7 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
             let tier = Math.random() * (start - range) + range;
             if (tier==0) tier = 1
             player.cp.grid[slot] = { level: tier,active:false,fixed:false,type:player.cp.pool[ranType],cautPower:getGridData('cp',slots[i]).cautPower }
+slotsFixed = slots.pop(slot)
     }
 }
 }
