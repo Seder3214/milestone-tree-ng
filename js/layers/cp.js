@@ -91,9 +91,9 @@ canBuyMax() {return true},
         for (i=0;i<tmp.cp.resetGain;i++) {
         let grid = player.cp.grid
         let slots = Object.keys(grid).filter(x => grid[x].level<1 && (Math.floor(x/100)<=tmp.cp.grid.rows && (x%10)<=tmp.cp.grid.cols))
-        if (slots[slots.length]=="") slotsFixed=slots.pop()
         if (slots.length) {
-            let slot = slots[Math.floor(Math.random() * slots.length)]
+                        let slot = slots[Math.floor(Math.random() * slots.length)]
+if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots.length)]
             let rangeMul = Math.floor(player.cp.totalCorrupt/4)
             let addLevel = Math.floor(player.cp.totalCorrupt/5)*1.5
             let ranType = Math.floor(Math.random()*1.5)
@@ -102,7 +102,7 @@ canBuyMax() {return true},
    
             let tier = Math.random() * (start - range) + range;
             if (tier==0) tier = 1
-            player.cp.grid[slot] = { level: tier,active:false,fixed:false,type:player.cp.pool[ranType],cautPower:getGridData('cp',slots[i]).cautPower }
+            player.cp.grid[slot] = { level: tier,active:false,fixed:false,type:player.cp.pool[ranType],cautPower:getGridData('cp',slot).cautPower }
     }
 }
 }
