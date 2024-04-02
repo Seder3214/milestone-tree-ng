@@ -11,7 +11,7 @@ var activeFunctions = [
 	"effectDescription", "display", "fullDisplay", "effectDisplay", "rewardDisplay",
 	"tabFormat", "content",
 	"onComplete", "onPurchase", "onEnter", "onExit", "done",
-	"getUnlocked", "getStyle", "getCanClick", "getTitle", "getDisplay",'getCost','getEffect','getEssence','getTooltip','getTooltipStyle','activeCorruptions',"getMark"
+	"getUnlocked", "getStyle", "getCanClick", "getTitle", "getDisplay",'getCost','getEffect','getEffects','getEssence','getTooltip','getTooltipStyle','activeCorruptions',"getMark"
 ]
 
 var noCall = doNotCallTheseFunctionsEveryTick
