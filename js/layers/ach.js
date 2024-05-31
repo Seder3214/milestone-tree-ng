@@ -86,7 +86,7 @@ addLayer("ach", {
             name: "I can handle it without you :)",
             done() {return player.p.upgrades.length==0 && player.p.points.gte('1e12500')}, // Used to determine when to give the milestone   
             tooltip() {return "Get 1e12500 Prestige Points without prestige upgrades.<br>Reward: Super Prestige Upgrade 23 base is +"+format(this.effect(),4)+" better by prestige points."},
-            effect() {return player.p.points.add(1).log10().add(1).log2().add(1).div(100)},
+            effect() {return player.p.points.add(1).log10().add(1).log2().add(1).div(1000)},
         },
         22:{
             name: "Would you rather be automated too?",
