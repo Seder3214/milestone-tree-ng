@@ -409,3 +409,20 @@ function gridRun(layer, func, data, id) {
 	else
 		return layers[layer].grid[func];
 }
+function unlockBuy(layer, id) {
+    if (!player[layer].unlocked)
+        return
+    if (!tmp[layer].milestones[id].pseudoUnl)
+        return
+    if (tmp[layer].milestones[id].unlocked)
+        return
+    if (player[layer].pseudoBuys.includes(id))
+        return
+    let upg = tmp[layer].milestones[id]
+    if (!upg.pseudoCan)
+        return;
+    player[layer].pseudoBuys.push(id);
+}
+function pseudoUnl(layer, id) {
+    return tmp[layer].milestones[id].pseudoUnl && tmp[layer].milestones[id].unlocked;
+} 

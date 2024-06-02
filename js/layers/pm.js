@@ -14,7 +14,12 @@ addLayer("pm", {
 		let b=new Decimal(25);
 		return b;
 	}, // Can be a function that takes requirement increases into account
-    resource: "prestige milestones", // Name of prestige currency
+    resource() {
+        if(player[this.layer].best.gte(15)){//unstable
+            if(Date.now()%1400<350)return "p███t█ge m██e█to██s.";
+            if(Date.now()%1400<700)return "p██s██g█ █i███ton██";
+        }
+        return "prestige milestones"}, // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "static", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -47,6 +52,8 @@ addLayer("pm", {
 		let eff=player.mp.points.add(1).log2().pow(base)
 		if (player.pm.best.gte(3)) eff = eff.mul(5)
         if (player.pep.buyables[11].gte(1)) eff = eff.mul(tmp.pep.prOneEffect.pow(0.5))
+        if (player.mp.modeP==true&&tmp.pm.count>=11) eff = eff.div(tmp.pm.pChalReward3)
+        if (player.mp.modeE==true&&tmp.pm.count>=11) eff = eff.mul(tmp.pm.pChalReward3)
         return eff
 	},
     essenceBoost() {
@@ -209,7 +216,12 @@ addLayer("pm", {
             },
         },
         {
-			requirementDescription: "11st Prestige Milestone",
+			requirementDescription() {
+                if(player[this.layer].best.gte(15)){//unstable
+                    if(Date.now()%1400<350)return "11th Pres████ ██l█s██n█.";
+                    if(Date.now()%1400<700)return "11th P███████ M███s█o██.";
+                }
+                return "11th Prestige Milestone"},
             unlocked() {return player[this.layer].best.gte(10)},
             done() {return player[this.layer].best.gte(11)}, // Used to determine when to give the milestone
             effectDescription: function(){
@@ -228,7 +240,12 @@ addLayer("pm", {
             },
         },
         {
-			requirementDescription: "12nd Prestige Milestone",
+			requirementDescription() {
+                if(player[this.layer].best.gte(15)){//unstable
+                    if(Date.now()%1400<350)return "12th Pres████ ██l█s██n█.";
+                    if(Date.now()%1400<700)return "12th P███████ M███s█o██.";
+                }
+                return "12th Prestige Milestone"},
             unlocked() {return player[this.layer].best.gte(11)},
             done() {return player[this.layer].best.gte(12)}, // Used to determine when to give the milestone
             effectDescription: function(){
@@ -244,7 +261,12 @@ addLayer("pm", {
             },
         },
         {
-			requirementDescription: "13rd Prestige Milestone",
+			requirementDescription() {
+                if(player[this.layer].best.gte(15)){//unstable
+                    if(Date.now()%1400<350)return "13th Pres████ M███st██e.";
+                    if(Date.now()%1400<700)return "13th P███████ M███s██ne.";
+                }
+                return "13th Prestige Milestone"},
             unlocked() {return player[this.layer].best.gte(12)},
             done() {return player[this.layer].best.gte(13)}, // Used to determine when to give the milestone
             effectDescription: function(){
@@ -260,11 +282,50 @@ addLayer("pm", {
             },
         },
         {
-			requirementDescription: "14th Prestige Milestone",
+			requirementDescription() {
+                                if(player[this.layer].best.gte(15)){//unstable
+
+
+                    if(Date.now()%1400<350)return "14th Pres████ M█s█o█e.";
+
+
+                    if(Date.now()%1400<700)return "14th P███████ ███es█o██.";
+                }
+                return "14th Prestige Milestone"},
             unlocked() {return player[this.layer].best.gte(13)},
             done() {return player[this.layer].best.gte(14)}, // Used to determine when to give the milestone
             effectDescription: function(){
 				return "Reduce formula in corruption goals that bases on total corruptions by -"+format(tmp.pm.pMilestone14Effect,3)+" based on Prestige Milestones."
+			},
+            style() {
+                if (hasMilestone('pm',13)) return {
+                    'background':'#00520b',
+                    'border-color':'lime',
+                    'color':'lime',
+                    'width': '100%',
+                }
+            },
+        },
+        {
+			requirementDescription: "15th Prestige Milestone",
+            unlocked() {return player[this.layer].best.gte(14)},
+            done() {return player[this.layer].best.gte(15)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+                if(player[this.layer].best.gte(15)){//unstable
+
+
+                    if(Date.now()%1400<350)return "S̖̗̮̖̠̏̈̆̈́õ͖̯͚̗̊m̜̱̎e̹͙̫̬ͥ̌ͦ̓ͪ̔t̲͕̽ͥ͆́ͨͫĥ̳̣̦̟̟͗̄̂ḭ̠̌̎͌ͫn͆͑̽g̓͌ ͙͗̊̒͌ͨ̚î̻̜͓͖͇̝̲̓̿̇ͪͨ͌ṡ͚̼̒̔ͮ ͓̈͑͊̌̇ͨw͕̲̏̿ͣ̈ͭ̿r̞̉o̘̝̱̗͙ͬn̺̜̤͐ͭͯ̽g̖͚̩̓̌̅͋̌̿̽ in Prestige Universe...<br>Prestige Essences effect is applied in Normal Universe (after the softcap).";
+
+
+                    if(Date.now()%1400<700)return "S̮̠̫̭͉͗͋o͖̤̖̗͎̪͊̍ͬ̏̌̚m̙̰̜ͤ̉̓̈̉͑ͫ̀e̖̪̜ͨ͛ͫ͛ͤt͇̦̥̦̭̳̺ͫ̈ḣ͂͊͗͐i̺̟̳̓͊͋n̩̼̹̠̲̆͒̿ͯg͍͈̅̐͑ͯ̚ͅ ͈̪̠̳͕̣͍̓̈ͯ͐̇̿̽ͭ̐i͚͚͊s̹͇͆̋ ͚̝̺͖̦̐̽̅ͬ̄ͭw̭̾ͣ͂̇͌ͫͅr̺͚̤̞̎̀ͤͥ̚o̬̣͇̱ͮ͒ṉ̮̭̟̍͋ͫͬ͂̾ͥǧ̪̞͇͓̥ͤ́͐̇̏ in Prestige Universe...<br>Prestige Essences effect is applied in Normal Universe (after the softcap).";
+
+
+                    
+                    if(Date.now()%1400<1050)return "S͉̯̦͔̟̬͙ͦ̋̂̓̎ͤ̓ͣ̇̚ͅͅọ͎͎͈͈̙̘ͪ̿̍̋m̳̪̖̮̻̻͔̱̰̦̬͈̦͓̳͚̬̞ͬ̃ͮ͛ͤ̌̍ͮ͐̄ë͙̙̞̼̮̰̩̗͛̂̇̄̓͗̿̏̽̈ͦ͛t̙͈̗̩͛ͧ͂̄͊͗ͮ̂̾̑̌h̬̳͍̥̺̣̙̹̬̤̣͎ͧ̑̾́ͭͩ̊͑ͬ̽̅́́̍̇̔ͭi̘̹̹̙̺̞̠͍̗̖̪̮̽̇͑͆̒ͭ̋͋͑̏ͧͅn̺̙̺̖̬̘̱̠̠̺̻͑̌̅ͪ́̉̒͊ͧ̈́ͦͥͦ̏͊g̠͍̠͖̖͙͉̮͉͍͚͈͎͗͐ͫ̀ͣ̀̿̾ͦ̉͐́ͦ̍̔ͨͥ͆ ̻̫͈̼̣͖̫͕͎̿͛̈́͗̆̍̊̂ͬ̓̍ͥ̄̆̌i̗̞̤͇͎̪͈͙̦͕̟̬͍ͭ͂ͧ́̐̇͆ͅs͓̰͍͖̭̭ͨ͌̎ͭ̊̓̓͐̔ͫ̓̊ͭͅ ͇̗̹̮̪̼̳͎̹̔͂̂̔̉̓ͦ̊͂̋́ͤ̍̂̚̚ẇ̼͙̼̟̪̇̄͑ͫͤ̒ͧ̈́̐͒͑̌̀̉ͤ̓ͮr̞͔̖͔̩͉̻͖̙̺̪̯͙͓̞ͯ̈͛ͮͨͯͪ͐ͨ̅͋̇͑ͫ́̓ͯͪ͆ŏ̞̺͎͍̟̭̞͍̯̩̣͉̦͚͚̥ͭ̊ͮ̈̈́̐̄̚ṅ̬͔̠̫̣̺̫͖̺͕͖̰̗͔̗̌̒̀̏ͬ̏̓͌̊͒̄̉̌̅͆̋͛͗ͅg͈͖̳͉̳͍ͨ̽ͩ̽̑̓ͥ̍̈ͩ̈͐̄͒́͗ͦ in Prestige Universe...<br>Prestige Essences effect is applied in Normal Universe (after the softcap).";
+
+
+                }
+				return "Something is wrong in Prestige Universe...<br>Prestige Essences effect is applied in Normal Universe (after the softcap)."
 			},
             style() {
                 if (hasMilestone('pm',13)) return {
@@ -547,7 +608,7 @@ else return new Decimal(1)
             content:[
                 function() { if (player.tab == "pm")  return ["column", [
     				"main-display","prestige-button","resource-display",
-                    ["display-text", "1st milestone effect reduces your points gain by <h2 style='color:  #f71c50; text-shadow: #f71c50 0px 0px 10px;'> "+format(tmp.pm.reduce)+"x</h2>"],
+                    ["display-text", "1st milestone effect reduces your points gain by <h2 style='color:  #f71c50; text-shadow: #f71c50 0px 0px 10px;'> "+exponentialFormat(tmp.pm.reduce,2)+"x</h2>"],
     ["display-text", "You have <h2 style='color: #f71c50; text-shadow: #f71c50 0px 0px 10px;'>"+format(player.pm.essence)+"</h2> (+" + format(tmp.pm.gain)+ "/s) prestige essences, which multiply points gain by <h2 style='color:  #f71c50; text-shadow: #f71c50 0px 0px 10px;'>"+format(tmp.pm.essenceBoost)+"x</h2>"],
                 "blank",
                 "milestones",
@@ -566,6 +627,7 @@ else return new Decimal(1)
                     ["display-text",function(){table = '<div style="width:500px;border: 2px solid white;"><h2 style="color:  #f71c50; text-shadow: #f71c50 0px 0px 10px;">Current Unlocked Boosts</h2><br>'
                     if (tmp.pm.count.gte(3)) table+=(player.mp.modeP==true?"Points Mode:<br> Reduce Recharge Fusioner effect by <h3 style='color:#f71c50'>-"+format(tmp.pm.pChalReward1)+"</h3>":"Prestige Essence Mode:<br> Increase Recharge Fusioner effect by <h3 style='color:#f71c50'>+"+format(tmp.pm.pChalReward1)+"</h3>")
                     if (tmp.pm.count.gte(7)) table+=(player.mp.modeP==true?"<br>Corruption Essences effect are boosted by <h3 style='color:#f71c50'>"+format(tmp.pm.pChalReward2)+"x</h3>":"<br> Boost Prestiged-Exotic Fusioner 1st Effect by <h3 style='color:#f71c50'>"+format(tmp.pm.pChalReward2)+"x</h3>")
+                        if (tmp.pm.count.gte(7)) table+=(player.mp.modeP==true?"<br>Second Pr-Exotic Fusioner effect is <h3 style='color:#f71c50'>/"+format(tmp.pm.pChalReward3)+"</h3> weaker (boosted by Prestige Essences)":"<br>Second Pr-Exotic Fusioner effect is <h3 style='color:#f71c50'>"+format(tmp.pm.pChalReward3)+"x</h3> better")
                     return table+"</div><br>"}],
                     ["challenges",[1]]
                 ],
@@ -584,8 +646,8 @@ else return new Decimal(1)
             let req=new Decimal(1)
             if (count.gte(1)) req=req.mul(3)
             if (count.gte(3)) req=req.add(4)
-            if (count.gte(7)) req=req.add(7)     
-            if (count.gte(14)) req=req.add(9)  
+            if (count.gte(7)) req=req.add(4)     
+            if (count.gte(11)) req=req.add(9)  
             return req;
         },
     	pMilestone4Effect(){
@@ -613,6 +675,12 @@ else return new Decimal(1)
         pChalReward2(){
             let base=tmp.pm.count
             let p=player.mp.modeP==true?base.pow(1.85).div(1.75):base.pow(1.85).div(3)
+            
+            return p;
+        },
+        pChalReward3(){
+            let base=tmp.pm.count
+            let p=player.mp.modeP==true?base.pow(3.45).div(1.75).mul(player.pm.essence.add(1).pow(0.1).add(1).pow(0.25).mul(1.5)):base.pow(3.85).div(3)
             
             return p;
         },

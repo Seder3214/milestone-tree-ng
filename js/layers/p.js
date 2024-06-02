@@ -146,7 +146,8 @@ addLayer("p", {
 		23: {
 			title: "Prestige Boost III",
             description: "Third Milestone's effect is boosted by your prestige points.",
-            cost: new Decimal(1e63),
+            cost() { if (inChallenge("pm",13)) return new Decimal(1e57)
+                else return new Decimal(1e63)},
             unlocked() { return player.m.best.gte(21)}, // The upgrade is only visible when this is true
         },
 		24: {
@@ -258,7 +259,6 @@ addLayer("p", {
 				  let b=0.03;
 				  if(hasUpgrade("p",43))b+=0.011;
 				  if(hasUpgrade("p",44))b+=0.011;
-                  if (hasUpgrade('se', 13))b+=upgradeEffect('se', 13)
 				  let eff=new Decimal(1).add(player[this.layer].buyables[this.id].mul(b));
 				  eff=eff.pow(tmp.ap.challenges[32].rewardEffect);
                   if (hasUpgrade('pp', 13))eff=eff.mul(upgradeEffect('pp', 13))

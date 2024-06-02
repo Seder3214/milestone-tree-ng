@@ -76,6 +76,7 @@ if(b.gte(getPointSoftcapStart())){
 		sc=sc.mul(20);
 	}
 }
+if (player.pm.essence.gte(1)&&player.mp.activeChallenge!=21) b = b.mul(tmp.pm.essenceBoost)
 return b.mul(corruptEffect());
 
 }
@@ -103,7 +104,7 @@ if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41||player.ap.acti
 if (player.pm.essence.gte(1)) b = b.mul(tmp.pm.essenceBoost)
 if (player.mp.modeP==true) b = b.mul(buyableEffect('mp',22).eff)
 if (challengeCompletions('pm',12)>=1) b = b.mul(challengeEffect('pm',12))
-if(player.m.best.gte(3)&&player.pm.activeChallenge==12)b=b.mul(tmp.m.milestone3Effect);
+if(player.m.best.gte(3)&&(player.pm.activeChallenge==12||player.pm.activeChallenge==13))b=b.mul(tmp.m.milestone3Effect);
 let s=new Decimal(1)
 let slots=activeCorruptions()
 for(i=0;i<slots.length;i++) {

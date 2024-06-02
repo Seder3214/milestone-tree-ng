@@ -92,7 +92,7 @@
 				<button class="menuButton" v-if="player.m.best.gte(185) && player.mp.activeChallenge==21" v-bind:style="constructMenuButtonStyle('mp') " onclick="startChallenge('mp', 21)"><span class="buttonText">Leave Prestige Multiverse </span></button>
 				<hr v-if="layerShown('pm')==true">
 				<span v-if="layerShown('pm')==true">[ Row 0 ]</span>
-				<button class="menuButton" v-if="layerShown('pm')==true" v-bind:style="constructMenuButtonStyle('pm') " onclick="showTab('pm')"><span class="buttonText">Prestige Milestone (+{{player.points.gte(tmp.pm.nextAtDisp)?1:0}}) </span></button>
+				<button class="menuButton" v-if="layerShown('pm')==true" v-bind:style="constructMenuButtonStyle('pm') " onclick="showTab('pm')"><span class="buttonText">{{player.pm.best.gte(15)?`P███t█g█ M██e█t███`:`Prestige Milestone`}} (+{{player.points.gte(tmp.pm.nextAtDisp)?1:0}}) </span></button>
 				<br v-if="layerShown('pm')==true"><hr v-if="layerShown('pm')==true">	
 				<span v-if="layerShown('pep')==true || layerShown('cp')==true">[ Row 1 ]</span>
 				<button class="menuButton" v-if="layerShown('pep')==true" v-bind:style="constructMenuButtonStyle('pep') " onclick="showTab('pep')"><span class="buttonText">Prestiged-Exotic Prestige (+{{player.pm.essence.gte(tmp.pep.nextAtDisp)?1:0}}) </span></button>

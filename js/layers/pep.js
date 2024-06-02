@@ -40,6 +40,10 @@ addLayer("pep", {
         let eff = player.pep.points.add(1).log10().pow(0.35).mul(player.pep.points.div(100))
         return eff;
     },
+	prFourEffect() {
+        let eff = player.pep.points.add(1).log10().pow(0.85).mul(player.pep.points.div(10))
+        return eff;
+    },
     row: 1, // Row the layer is in on the tree (0 is the first row)
 	exponent: 0.5,
     hotkeys: [
@@ -108,7 +112,7 @@ addLayer("pep", {
 				player.pep.points = player.pep.points.sub(this.cost)
 				player.pm.essence = player.pm.essence.sub(5e24)
 			},
-            effectDisplay() { return format(this.effect()*100,4)+"%" }, // Add formatting to the effect
+            effectDisplay() { return "+"+format(this.effect()*100,4)+"%" }, // Add formatting to the effect
         },
 	},
 	buyables: {
@@ -125,7 +129,7 @@ addLayer("pep", {
 				"Cost for Next Tier: "+format(data.cost,0)+" Exotic Prestige points";
 			},
 			cost(){
-				return [new Decimal("1"),new Decimal("2"),new Decimal("8"),Decimal.dInf][player.pep.buyables[11]]
+				return [new Decimal("1"),new Decimal("2"),new Decimal("8"),new Decimal("35"),Decimal.dInf][player.pep.buyables[11]]
 			},
 			canAfford() {
                    return player.pep.points.gte(tmp[this.layer].buyables[this.id].cost)
@@ -168,6 +172,7 @@ addLayer("pep", {
 				if (player.pep.buyables[11].gte(1)) table += '1st effect: Boost prestige essences gain by ' + format(tmp.pep.prOneEffect) + "x and boost 1st milestone reducing effect by "+ format(tmp.pep.prOneEffect.pow(0.5))+ "x."
                 if (player.pep.buyables[11].gte(2)) table += '<br>2nd effect: Multiply points gain <b>before</b> 1st milestone reduce by ' + format(tmp.pep.prTwoEffect) + "x."
                 if (player.pep.buyables[11].gte(3)) table += '<br>3rd effect: Add +' + format(tmp.pep.prThreeEffect) + " to the base of <b>Essence Fusioner</b> effect."
+				if (player.pep.buyables[11].gte(4)) table += '<br>3rd effect: Ultra Scaled Essence Fusioner starts +' + format(tmp.pep.prFourEffect) + " later."
 				return table}],
 				"buyables"
 			]

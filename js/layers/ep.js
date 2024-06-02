@@ -33,7 +33,8 @@ addLayer("ep", {
 		if (player.m.best.gte(168)) eff = eff.pow(1.1)
 		if (player.mp.activeChallenge==13) return new Decimal(1)
 		eff=softcap(eff,new Decimal('1e1000000'),0.075)
-        return softcap(eff,new Decimal('1e2500000'),0.075);
+		eff=softcap(eff,new Decimal('1e2500000'),0.075)
+        return softcap(eff,new Decimal('1e5000000'),0.015);
     },
     twoEffect() {
         let eff = player.ep.points.add(1).pow(player.m.best.gte(166)?2.5:2.2).mul(4).max(1)
@@ -41,7 +42,8 @@ addLayer("ep", {
 		soft = player.mp.buyables[12].gte(1)?new Decimal('1e25000').mul(new Decimal('1e25000').mul(player.mp.buyables[12]).max(1)):new Decimal('1e25000')
 		if (player.mp.activeChallenge==13) return new Decimal(1)
 		eff = softcap(eff,soft,0.075)
-        return softcap(eff,new Decimal('1e100000'),0.22);
+		eff=softcap(eff,new Decimal('1e100000'),0.22)
+        return softcap(eff,new Decimal('1e200000'),0.02);
     },
 	threeEffect() {
         let eff = player.ep.points.add(1).log10().max(1).pow(0.01).div(500)
@@ -56,20 +58,23 @@ addLayer("ep", {
 		if (player.m.best.gte(173)) eff = eff.pow(1.05)
 		if (player.mp.activeChallenge==13) return new Decimal(1)
 		if (player.mp.activeChallenge==11) {eff = eff.pow(0.15)
-			eff=softcap(eff,new Decimal('1e40000'),0.275)}
-        return softcap(eff,new Decimal('1e100000'),0.075);
+			eff=softcap(eff,new Decimal('1e40000'),0.275)}		
+			eff=softcap(eff,new Decimal('1e100000'),0.075)
+        return softcap(eff,new Decimal('1e600000'),0.005);
     },
 	fiveEffect() {
         let eff = player.ep.points.add(1).log10().add(1).log(10).pow(0.5).max(1)
+		if (player.mp.buyables[12].gte(3)) eff = eff.mul(2)
 		let start = new Decimal('e5.6e12').mul(player.ep.points.add(1).log10().add(1).log(10).pow(0.5))
 		if (player.m.best.gte(174)) start = start.pow(0.1)
 		if (player.mp.activeChallenge==13) eff = new Decimal(1)
 		start=start.add(tmp.ap.challenges[42].effect)
-        return {eff: eff, start: start};
+        return {eff: softcap(eff,new Decimal(2.75),0.5), start: start};
     },
 	sixEffect() {
 		let eff=player.ep.points.add(1).log(1.1).pow(2.15)
 		if (player.mp.challenges[11]>0) eff=eff.mul(tmp.mp.challenges[11].rewardEffect)
+			if (player.mp.buyables[12].gte(3)) eff = eff.pow(2.5)
 		if (player.mp.activeChallenge==13) return new Decimal(1)
 		return eff.max(1)
 	},

@@ -48,11 +48,12 @@ addLayer("pe", {
 		11: {
 			title: "Prestige Energy Upgrade 11",
             description: "1st Milestone's softcap starts later based on your prestige energy.",
-            cost: new Decimal(2.48e11),
+            cost() { if (inChallenge("pm",13)) return new Decimal(45)
+                else return new Decimal(2.48e11)},
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() {
 				let b=player.pe.points.add(1).log10().div(100);
-				if(hasUpgrade("pe",13))b=b.mul(1.5);
+				if(hasUpgrade("pe",13)&& !inChallenge("pm",13))b=b.mul(1.5);
 				if(hasUpgrade("pe",23))b=b.mul(1.5);
 				return b.add(1);
             },
@@ -61,10 +62,13 @@ addLayer("pe", {
 		12: {
 			title: "Prestige Energy Upgrade 12",
             description: "Milestone Cost Scaling is weaker based on your prestige energy.",
-            cost: new Decimal(2.77e11),
+            cost() { if (inChallenge("pm",13)) return new Decimal(54)
+                else return new Decimal(2.77e11)},
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() {
 				let b=player.pe.points.add(1).log10().div(200);
+                if (inChallenge("pm",13)) b=b.mul(100);
+                if(hasUpgrade("pe",13)&&inChallenge("pm",13))b=b.mul(300);
 				if(hasUpgrade("pe",14))b=b.mul(1.5);
 				if(hasUpgrade("pe",22))b=b.mul(1.5);
 				return b.add(1);
@@ -73,14 +77,17 @@ addLayer("pe", {
         },
 		13: {
 			title: "Prestige Energy Upgrade 13",
-            description: "Prestige Energy Upgrade 11 is boosted.",
-            cost: new Decimal(5.98e11),
+            description() {if (inChallenge("pm",13)) return "Prestige Energy Upgrade 12 is greately boosted."
+               else return "Prestige Energy Upgrade 11 is boosted."},
+            cost() { if (inChallenge("pm",13)) return new Decimal(56)
+                else return new Decimal(5.98e11)},
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
 		14: {
 			title: "Prestige Energy Upgrade 14",
             description: "Prestige Energy Upgrade 12 is boosted.",
-            cost: new Decimal(7.94e11),
+            cost() { if (inChallenge("pm",13)) return new Decimal(89)
+                else return new Decimal(7.94e11)},
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
 		21: {

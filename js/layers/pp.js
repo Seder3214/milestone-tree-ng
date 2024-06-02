@@ -11,6 +11,8 @@ addLayer("pp", {
     requires(){
 		return new Decimal('e7e13');
 	},
+    softcap: new Decimal('e20000000'),
+    softcapPower: new Decimal(0.025),
     resource: "prestige power", // Name of prestige currency
     baseResource: "prestige points", // Name of resource prestige is based on
     baseAmount() {return player.p.points}, // Get the current amount of baseResource
@@ -167,10 +169,8 @@ unlocked() {return player.m.best.gte(155)},
 				"Strenghens Prestige Power by "+format(data.effect)+" Hz/s (based on milestones)<br>"+
 				"Cost for Next Level: "+format(data.cost)+" Prestige power";
 			},
-			cost(){
-				let a=player[this.layer].buyables[this.id];
-				a=Decimal.pow(2,a);
-				return new Decimal(3).mul(a.pow(1.4).ceil());
+			cost(x){
+				return Decimal.pow(2,x.pow(1.03))
 			},
 			canAfford() {
                    return player[this.layer].points.gte(tmp[this.layer].buyables[this.id].cost)
@@ -234,8 +234,8 @@ unlocked() {return player.m.best.gte(155)},
 		},
 	update(diff){
         let a=player.pp.buyables[11];
-        a=new Decimal(a.add(1).log(2).max(1));
+        x=new Decimal(x.add(1).log(2));
         if (player.pp.buyables[11].gte(1)) player.pp.power = player.pp.power.add(buyableEffect('pp', 11).times(diff))
-        if (player.m.best.gte(162) && player.pp.points.gte(layers.pp.buyables[11].cost())) player.pp.buyables[11] = player.pp.buyables[11].add(player.pp.power.add(1).log(3).div(a.add(1).log(1.4).ceil()).max(1))
+        if (player.m.best.gte(162)) player.pp.buyables[11] = player.pp.points.add(1).log(2).pow(1/1.03).floor()
 	}
 })

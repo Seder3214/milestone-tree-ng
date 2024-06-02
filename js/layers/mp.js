@@ -459,6 +459,7 @@ player.t.choose = new Decimal(0)
 			},
 			ultraScaled() {
 				let a = new Decimal(33)
+				if (player.pep.buyables[11].gte(4)) a=a.add(tmp.pep.prFourEffect)
 				return a
 			},
 			title(){

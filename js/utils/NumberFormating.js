@@ -1,4 +1,11 @@
 
+function addCommas(s){
+	if (s.length <= 3) return s
+	let rem = s.length % 3
+	if (rem == 0) rem = 3
+	return s.slice(0, rem) + "," + addCommas(s.slice(rem))
+}
+
 function exponentialFormat(num, precision, mantissa = true) {
     let e = num.log10().floor()
     let m = num.div(Decimal.pow(10, e))
@@ -11,7 +18,6 @@ function exponentialFormat(num, precision, mantissa = true) {
         return m.toStringWithDecimalPlaces(precision) + "e" + e
     else return "e" + e
 }
-
 function commaFormat(num, precision) {
     if (num === null || num === undefined) return "NaN"
     if (num.mag < 0.001) return (0).toFixed(precision)

@@ -357,11 +357,12 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
         getCost(data,id) {
             let eff = new Decimal(1)
             eff = new Decimal(1e17).div(data.level).pow(0.5).pow(new Decimal(player.cp.totalCorrupt-(player.pm.best.gte(14)?tmp.pm.pMilestone14Effect:0)).div(85).add(1)).pow(new Decimal(data.level/100).add(data.level%100).div(50).add(1)).div(player.cp.buyables[22].gte(1)?buyableEffect('cp',22):1)
-            if (data.type=='pm') eff = new Decimal(1e17).mul(data.level).pow(0.75)
+            if (data.type=='pm') eff = new Decimal(1e17).mul(data.level).pow(0.75).div(player.cp.buyables[22].gte(1)?buyableEffect('cp',22):1)
             if (data.level>=15 && data.type=='div') eff = eff.div(player.cm.points.gte(2)?5**4:5)
             if (player.cm.best.gte(3)&&data.level>=40 && data.type=='div') eff = eff.div(new Decimal(data.level).pow(player.cp.totalCorrupt/100))
             if (player.cm.best.gte(3)&&data.level>=40 && data.type=='pm') eff = eff.mul(new Decimal(data.level/10).pow(player.cp.totalCorrupt/15))
             if (data.level>=15 && data.type=='pm') eff = eff.div(player.cm.points.gte(2)?5**2:1.25)
+                if (player.cm.best.gte(3)&&data.level>=80 && data.type=='pm') eff = eff.mul(new Decimal(data.level/25).pow(player.cp.totalCorrupt/15))
             return eff.div(new Decimal(data.cautPower).add(1)) },
         getEssence(data,id) {
             let gain = new Decimal(0)
@@ -478,6 +479,12 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
             }
         },
         21:{
+            sellOne() {
+                let cost = new Decimal(100000).mul(player.cp.buyables[21].sub(1).add(1).pow(player.cp.buyables[21].sub(1)/5))
+                player.cp.formatted=player.cp.formatted.add(cost)
+                player.cp.buyables[21]=player.cp.buyables[21].sub(1).max(0)
+            },
+            canSellOne() {return true},
 			title(){
 				return "<h3 class='corr'>Corruption Booster</h3>";
 			},
@@ -499,8 +506,8 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
 				  return player.cm.best.gte(4);
 			  },
             effect(x) {
-                let eff = x*100.56*(11**x)+1
-                return eff
+                let eff = x*100.56*(3**(x+1))+1
+                return softcap(new Decimal(eff),new Decimal(1e14),0.5)
             },
 			  style() {
 				if (player.cp.formatted.lt(this.cost())) return {
@@ -523,12 +530,18 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
             }
         },
         22:{
+            sellOne() {
+                let cost=new Decimal(200000).mul(player.cp.buyables[22].sub(1).add(1).pow(new Decimal(player.cp.buyables[22].sub(1)/5).add(1)))
+                player.cp.formatted=player.cp.formatted.add(cost)
+                player.cp.buyables[22]=player.cp.buyables[22].sub(1).max(0)
+            },
+            canSellOne() {return true},
 			title(){
 				return "<h3 class='corr'>Corruption Simplifier</h3>";
 			},
 			display(){
 				let data = tmp[this.layer].buyables[this.id];
-				return "Total buyed: "+format(player[this.layer].buyables[this.id])+"<br>"+"Reduces corruptions goals. <br>Cost: "+format(data.cost)+" Corruption Essences"+"<br>Currently: "+format(this.effect())+"x";
+				return "Total buyed: "+format(player[this.layer].buyables[this.id])+"<br>"+"Reduces corruptions goals. <br>Cost: "+format(data.cost)+" Corruption Essences"+"<br>Currently: /"+format(this.effect());
 			},
 			cost(x) {return new Decimal(200000).mul(x.add(1).pow(new Decimal(x/5).add(1)));
 			},
@@ -544,8 +557,8 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
 				  return player.cm.best.gte(4);
 			  },
             effect(x) {
-                let eff = x*3.23*(5**x)+1
-                return eff
+                let eff = x*20.85*(2.5**(x+1))+1
+                return softcap(new Decimal(eff),new Decimal(1e6),0.25)
             },
 			  style() {
 				if (player.cp.formatted.lt(this.cost())) return {

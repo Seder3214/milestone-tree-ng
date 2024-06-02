@@ -41,6 +41,12 @@
     opacity: 0.35;
     z-index: 0;
 }
+.pseudo {
+	border: 2px dotted white;
+}
+.pseudo:not(.plocked) {
+	background-color: #f5b942;
+}
 .achievement:hover {
 	box-shadow: 0 0 10px var(--points);
 	z-index: 7;

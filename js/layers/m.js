@@ -4,6 +4,7 @@ addLayer("m", {
     position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
     startData() { return {
         unlocked: true,
+		pseudoBuys:[],
 		points: new Decimal(0),
     }},
     color: "#793784",
@@ -64,6 +65,14 @@ addLayer("m", {
             effectDescription: function(){
 				return "Gain "+format(new Decimal(1).max(getPointGen()))+" points per second."
 			},
+			pseudoUnl() {
+				return true
+			},
+			pseudoReq() {return "To unlock this upgrade, get "+format(this.pseudoCost)+" points."},
+			pseudoCan() {
+				return player.points.gte(1e30)
+			},
+			pseudoCost: new Decimal(1e66),
         },
 		{
 			requirementDescription: "2nd Milestone",
@@ -1639,6 +1648,9 @@ addLayer("m", {
 			b=b.mul(player.sp.points.add(1e20).log10().log10().div(30).add(1));
 		}
 		if (player.pm.activeChallenge==12||player.pm.activeChallenge==13) b=b.add(1).log2().add(1).log(5).pow(1.5)
+			if(hasUpgrade("p",23)){
+				b=inChallenge("pm",13)?b.mul(player.p.points.add(1e50).log2().add(1).log2().div(player.m.best.gte(23)?28:30).add(1)):1;
+			}
 		return Decimal.pow(b,m);
 	},
 	milestone6Effect(){
