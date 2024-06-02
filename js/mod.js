@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "v2.017 Massive Update",
+	num: "v2.018 - ĐĘßŦŘŲÇŦĮØÑ ØF PŘĘẞŦĲĘ ŮÑIVĘŖẞÊ",
 	name: "Corrupted Game?!",
 }
 
