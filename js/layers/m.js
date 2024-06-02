@@ -1608,7 +1608,7 @@ addLayer("m", {
 		m=m.mul(layers.t.getSpecialEffect(11));
 		if(hasUpgrade("pb",42))m=m.mul(upgradeEffect("pb",42));
 		if(hasUpgrade("p",23)){
-			b=b.mul(player.p.points.add(1e20).log10().log10().div(player.m.best.gte(23)?28:30).add(1));
+			b=b.mul(player.p.points.add(1e20).log10().add(1).log10().div(player.m.best.gte(23)?28:30).add(1));
 		}
 		if(hasUpgrade("p",24)){
 			b=b.mul(player.p.points.add(1e20).log10().log10().div(player.m.best.gte(24)?20:30).add(1));
@@ -1648,8 +1648,8 @@ addLayer("m", {
 			b=b.mul(player.sp.points.add(1e20).log10().log10().div(30).add(1));
 		}
 		if (player.pm.activeChallenge==12||player.pm.activeChallenge==13) b=b.add(1).log2().add(1).log(5).pow(1.5)
-			if(hasUpgrade("p",23)){
-				b=inChallenge("pm",13)?b.mul(player.p.points.add(1e50).log2().add(1).log2().div(player.m.best.gte(23)?28:30).add(1)):1;
+			if(hasUpgrade("p",23)&&(inChallenge("pm",13))){
+				b=b.mul(player.p.points.add(1e50).log2().add(1).log2().div(player.m.best.gte(23)?28:30).add(1));
 			}
 		return Decimal.pow(b,m);
 	},
