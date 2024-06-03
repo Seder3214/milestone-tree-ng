@@ -360,7 +360,7 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
         11: {
             unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
             title() {return (player.mp.activeChallenge!=12)?"Boost Dilated Points":"Choose Dilated Points"},
-            display() {return "Status:" + (player.t.dChoose==true?" Choosed":" Not Choosed")},
+            display() {return "Status:" + (player.t.dChoose==true?" Chosen":" Not Chosen")},
             canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
 				else return player.t.choose.gte(1)},
             onClick() {
@@ -376,7 +376,7 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
 		12: {
             unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
             title() {return (player.mp.activeChallenge!=12)?"Boost Softcapped Points":"Choose Softcapped Points"},
-            display() {return "Status:" + (player.t.sChoose==true?" Choosed":" Not Choosed")},
+            display() {return "Status:" + (player.t.sChoose==true?" Chosen":" Not Chosen")},
             canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
 				else return player.t.choose.gte(1)},
             onClick() {
@@ -392,7 +392,7 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
 		21: {
             unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
             title() {return (player.mp.activeChallenge!=12)?"Boost Prestige-Dilated Points":"Choose Prestige-Dilated Points"},
-            display() {return "Status:" + (player.t.pdChoose==true?" Choosed":" Not Choosed")},
+            display() {return "Status:" + (player.t.pdChoose==true?" Chosen":" Not Chosen")},
             canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
 				else return player.t.choose.gte(1)},
             onClick() {
@@ -408,7 +408,7 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
 		22: {
             unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
             title() {return (player.mp.activeChallenge!=12)?"Boost Hardcapped Points": "Choose Hardcapped Points"},
-            display() {return "Status:" + (player.t.hChoose==true?" Choosed":" Not Choosed")},
+            display() {return "Status:" + (player.t.hChoose==true?" Chosen":" Not Chosen")},
             canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
 				else return player.t.choose.gte(1)},
             onClick() {
@@ -424,7 +424,7 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
 		31: {
             unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
             title() {return (player.mp.activeChallenge!=12)?"Boost Super-Dilated Points": "Choose Super-Dilated Points"},
-            display() {return "Status:" + (player.t.sdChoose==true?" Choosed":" Not Choosed")},
+            display() {return "Status:" + (player.t.sdChoose==true?" Chosen":" Not Chosen")},
             canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
 				else return player.t.choose.gte(1)},
             onClick() {
@@ -440,7 +440,7 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
 		32: {
             unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
             title() {return (player.mp.activeChallenge!=12)?"Boost Prestige-Hardcapped Points": "Choose Prestige-Hardcapped Points"},
-            display() {return "Status:" + (player.t.phChoose==true?" Choosed":" Not Choosed")},
+            display() {return "Status:" + (player.t.phChoose==true?" Chosen":" Not Chosen")},
             canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
 				else return player.t.choose.gte(1)},
             onClick() {

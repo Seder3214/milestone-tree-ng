@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "v2.018c - DESTRUCTION OF PRESTIGE UNIVERSE",
+	num: "v2.023a - DESTRUCTION OF MILESTONE TREE",
 	name: "Corrupted Game?!",
 }
 
@@ -23,8 +23,10 @@ Note: v<h3 style="color: green">A</h3>.<h3 style='color: blue'>B</h3><h3 style='
 <h3 style='color: green'>A</h3> is a number of <h3 style='color:yellow'>major</h3> updates like <h3 class='pmr'>Prestige Milestone Tree</h3>, <br>
 <h3 style='color: blue'>B</h3> is a number of <h3 style="color:#793784">milestones</h3> in current version, <br>
 <h3 style='color: yellow'>C</h3> is a letter that used to show <h3 style='color: cyan'>bugfix/rebalance</h3> updates<br><br>
-<h3 class="corr"> v2.035 beta I - v2.018c - ĐĘßŦŘŲÇŦĮØÑ ØF PŘĘẞŦĲĘ ŮÑIVĘŖẞÊ</h3><br>
+<h3 class="corr"> v2.035 beta I - v2.023a - DESTRUCTION OF MILESTONE TREE</h3><br>
 <i style='color: #808080'> Prestige Universe is slowly destroying itself...<br></i>
+<span style='color: #808080'> - Added Malware Milestones <br></span>
+<span style='color: #808080'> - Fixed the typos <br></span>
 <span style='color: #808080'> - Nerfed some achievemnts rewards <br></span>
 <span style='color: #808080'> - Added Achievements<br></span>
 

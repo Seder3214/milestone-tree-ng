@@ -74,7 +74,7 @@ addLayer("m", {
 				return eff
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
-			pseudoReq() {return "To malware milestone, get "+format(this.pseudoCost)+" points."},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."},
 			pseudoCan() {return player.points.gte(`e1e22`)},
 			pseudoCost: new Decimal(`e1e22`),
 			style() {
@@ -100,7 +100,7 @@ addLayer("m", {
 				return eff
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
-			pseudoReq() {return "To malware milestone, get "+format(this.pseudoCost)+" points."},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."},
 			pseudoCan() {return player.points.gte(`e1.705e22`)},
 			pseudoCost: new Decimal(`e1.705e22`),
 			style() {
@@ -126,7 +126,7 @@ addLayer("m", {
 				return eff
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
-			pseudoReq() {return "To malware milestone, get "+format(this.pseudoCost)+" points."},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."},
 			pseudoCan() {return player.points.gte(`e1.915e22`)},
 			pseudoCost: new Decimal(`e1.915e22`),
 			style() {
@@ -152,7 +152,7 @@ addLayer("m", {
 				return eff
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
-			pseudoReq() {return "To malware milestone, get "+format(this.pseudoCost)+" points."},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."},
 			pseudoCan() {return player.points.gte(`e2.92e22`)},
 			pseudoCost: new Decimal(`e2.92e22`),
 			style() {
@@ -173,7 +173,7 @@ addLayer("m", {
 				return table
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
-			pseudoReq() {return "To malware milestone, get "+format(this.pseudoCost)+" points."},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."},
 			pseudoCan() {return player.points.gte(`e3e22`)},
 			pseudoCost: new Decimal(`e3e22`),
 			style() {
