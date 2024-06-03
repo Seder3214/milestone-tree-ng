@@ -535,7 +535,7 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
                 let cost=new Decimal(200000).mul(player.cp.buyables[22].add(1).pow(new Decimal((player.cp.buyables[22])/5).add(1)))
                 player.cp.formatted=player.cp.formatted.add(cost)
             },
-            canSellOne() {return true},
+            canSellOne() {return player.cp.buyables[22].gt(0)},
 			title(){
 				return "<h3 class='corr'>Corruption Simplifier</h3>";
 			},
