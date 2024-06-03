@@ -45,7 +45,7 @@ addLayer("sp", {
         rows: 4,
         cols: 4,
 		11: {
-			title: "Super-Prestige Upgrade 11",
+			title: "Super-Prestige Delayer I",
             description: "First Milestone's effect is boosted by your super-prestige points.",
             cost: new Decimal(1),
             unlocked() { return true}, // The upgrade is only visible when this is true
@@ -64,7 +64,7 @@ addLayer("sp", {
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
 		12: {
-			title: "Super-Prestige Upgrade 12",
+			title: "Super-Prestige Delayer II",
             description: "First Milestone's effect is boosted by your super-prestige points.",
             cost: new Decimal(4),
             unlocked() { return true}, // The upgrade is only visible when this is true
@@ -83,7 +83,7 @@ addLayer("sp", {
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
 		13: {
-			title: "Super-Prestige Upgrade 13",
+			title: "Super-Prestige Prestige Boost I",
             description: "Prestige Point gain is boosted by your super-prestige points.",
             cost: new Decimal(1e15),
             unlocked() { return player.m.best.gte(30)}, // The upgrade is only visible when this is true
@@ -102,7 +102,7 @@ addLayer("sp", {
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
 		14: {
-			title: "Super-Prestige Upgrade 14",
+			title: "Super-Prestige Prestige Boost II",
             description: "Prestige Point gain is boosted by your super-prestige points.",
             cost: new Decimal(1e37),
             unlocked() { return player.m.best.gte(30)}, // The upgrade is only visible when this is true
@@ -121,7 +121,7 @@ addLayer("sp", {
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
 		21: {
-			title: "Super-Prestige Upgrade 21",
+			title: "Super-Prestige Self Boost I",
             description: "Super-Prestige Point gain is boosted by your super-prestige points.",
             cost: new Decimal(1e63),
             unlocked() { return player.m.best.gte(35)}, // The upgrade is only visible when this is true
@@ -133,7 +133,7 @@ addLayer("sp", {
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
 		22: {
-			title: "Super-Prestige Upgrade 22",
+			title: "Super-Prestige Self Boost II",
             description: "Super-Prestige Point gain is boosted by your super-prestige points.",
             cost: new Decimal(1e110),
             unlocked() { return player.m.best.gte(35)}, // The upgrade is only visible when this is true
@@ -145,19 +145,19 @@ addLayer("sp", {
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
 		23: {
-			title: "Super-Prestige Upgrade 23",
+			title: "Super-Prestige Milestone Boost I",
             description: "6th and 27th Milestone's effect ^(2+(meta-milestones))",
             cost: new Decimal(1e185),
             unlocked() { return player.m.best.gte(40)}, // The upgrade is only visible when this is true、
         },
 		24: {
-			title: "Super-Prestige Upgrade 24",
+			title: "Super-Prestige Milestone Boost II",
             description: "Third Milestone's effect is boosted by your super-prestige points.",
             cost: new Decimal(1e227),
             unlocked() { return player.m.best.gte(40)}, // The upgrade is only visible when this is true、
         },
 		31: {
-			title: "Super-Prestige Upgrade 31",
+			title: "Super-Prestige Scaling Delayer I",
             description: "Milestone Cost Scaling is weaker based on your super-prestige points.",
             cost: new Decimal("1e6864"),
 			effect(){
@@ -172,25 +172,25 @@ addLayer("sp", {
             effectDisplay() { return format(this.effect(),4)+"x weaker" }, // Add formatting to the effect
         },
 		32: {
-			title: "Super-Prestige Upgrade 32",
+			title: "Super-Prestige Upgrade 31 Boost I",
             description: "Super-Prestige Upgrade 31 is boosted.",
             cost: new Decimal("1e9617"),
             unlocked() { return player.m.best.gte(55)}, // The upgrade is only visible when this is true
         },
 		33: {
-			title: "Super-Prestige Upgrade 33",
+			title: "Super-Prestige Upgrade 31 Boost II",
             description: "Super-Prestige Upgrade 31 is boosted.",
             cost: new Decimal("1e13713"),
             unlocked() { return player.m.best.gte(55)}, // The upgrade is only visible when this is true
         },
 		34: {
-			title: "Super-Prestige Upgrade 34",
+			title: "Super-Prestige Upgrade 31 Boost II",
             description: "Super-Prestige Upgrade 31 is boosted.",
             cost: new Decimal("1e13839"),
             unlocked() { return player.m.best.gte(55)}, // The upgrade is only visible when this is true
         },
 		41: {
-			title: "Super-Prestige Upgrade 41",
+			title: "Super-Prestige Milestone Boost III",
             description: "Same as Super-Prestige Upgrade 24. To buy this upgrade, You need to complete AP challenge 2 15 times.",
             cost(){
 				if(player.ap.challenges[12]<15)return new Decimal(Infinity);
@@ -199,7 +199,7 @@ addLayer("sp", {
             unlocked() { return player.m.best.gte(127)}, // The upgrade is only visible when this is true
         },
 		42: {
-			title: "Super-Prestige Upgrade 42",
+			title: "Super-Prestige Milestone Boost IV",
             description: "Same as Super-Prestige Upgrade 24. To buy this upgrade, You need to complete AP challenge 4 21 times.",
             cost(){
 				if(player.ap.challenges[22]<21)return new Decimal(Infinity);
@@ -208,7 +208,7 @@ addLayer("sp", {
             unlocked() { return player.m.best.gte(127)}, // The upgrade is only visible when this is true
         },
 		43: {
-			title: "Super-Prestige Upgrade 43",
+			title: "Super-Prestige Cost Reducer I",
             description: "First Super-Prestige buyable is cheaper. You can buy this upgrade while you're in AP challenge 6.",
             cost(){
 				if(player.ap.activeChallenge!=32)return new Decimal(Infinity);
@@ -217,7 +217,7 @@ addLayer("sp", {
             unlocked() { return player.m.best.gte(127)}, // The upgrade is only visible when this is true
         },
 		44: {
-			title: "Super-Prestige Upgrade 44",
+			title: "Super-Prestige Row 1 Boost I",
             description: "First row of Super-Prestige upgrades is boosted. You can buy this upgrade while you're in T challenge 5.",
             cost(){
 				if(player.t.activeChallenge!=31)return new Decimal(Infinity);

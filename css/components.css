@@ -44,6 +44,18 @@
 .pseudo {
 	border: 2px dotted white;
 }
+::-webkit-scrollbar {
+    width: 20px; 
+  }
+  
+::-webkit-scrollbar-track {
+    background:  linear-gradient(0deg, #793784 0%,#c764d8 50%, #793784 100%);
+  }
+
+::-webkit-scrollbar-thumb {
+    background: transparent;
+    box-shadow: 0px 0px 0px 100vh black;
+  }
 .pseudo:not(.plocked) {
 	background-color: #f5b942;
 }

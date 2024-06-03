@@ -37,7 +37,7 @@ addLayer("pp", {
         rows: 4,
         cols: 4,
 		11: {
-			title: "Prestige Power Upgrade 11",
+			title: "Prestige Power Softcap Delayer I",
             description: "First Milestone's softcap starts later by your prestige power strength.",
             cost: new Decimal(23),
             currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency
@@ -53,7 +53,7 @@ addLayer("pp", {
             effectDisplay() { return format(this.effect(),4)+"x later" }, // Add formatting to the effect
         },
         12: {
-			title: "Prestige Power Upgrade 12",
+			title: "Prestige Power Prestige Upgrade 11 Boost I",
             description: "Prestige Upgrade 11 is boosted by your prestige power strength.",
             cost: new Decimal(1600),
             currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency
@@ -69,7 +69,7 @@ addLayer("pp", {
             effectDisplay() { return "^"+format(this.effect(),4) }, // Add formatting to the effect
         },
         13: {
-			title: "Prestige Power Upgrade 13",
+			title: "Prestige Power Prestige Buyable 2 Boost I",
             description: "Prestige Softcap Delayer effect is boosted by your prestige power strength.",
             cost: new Decimal(10000),
             currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency
@@ -88,7 +88,7 @@ addLayer("pp", {
         },
         21: {
 unlocked() {return player.m.best.gte(155)},
-			title: "Prestige Power Upgrade 21",
+			title: "Transcend Special Points Unlock I",
             description: "Unlock Super-Dilated Transcend Points effect.",
             cost: new Decimal(100000),
             currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency
@@ -98,7 +98,7 @@ unlocked() {return player.m.best.gte(155)},
         22: {
 unlocked() {return player.m.best.gte(155)},
 
-			title: "Prestige Power Upgrade 22",
+			title: "Transcend Special Points Unlock II",
             description: "Unlock Prestige-Hardcapped Transcend Points effect.<br>Req: Power Scaler -<br> [11 Lvl]",
             cost: new Decimal(3600000),
             canAfford() {return player.pp.buyables[11].gte(11) && player.pp.power.gte(3600000)},
@@ -109,7 +109,7 @@ unlocked() {return player.m.best.gte(155)},
         23: {
             unlocked() {return player.m.best.gte(155)},
             
-                        title: "Prestige Power Upgrade 23",
+                        title: "Prestige Power Upgrade 11 Boost I",
                         description: "Prestige Power 11 upgrade is better.<br>Req: Power Scaler -<br> [12 Lvl]",
                         cost: new Decimal(50000000),
                         canAfford() {return player.pp.buyables[11].gte(12) && player.pp.power.gte(20000000)},
@@ -120,8 +120,8 @@ unlocked() {return player.m.best.gte(155)},
         31: {
         unlocked() {return player.m.best.gte(159)},
                         
-         title: "Prestige Power Upgrade 31",
-        description: "Prestige Power 13 upgrade is better.<br>Req: Power Scaler -<br> [17 Lvl]",
+         title: "Prestige Power Upgrade 13 Boost I",
+        description: "Prestige Power 13 upgrade is better.<br>Req: Power Scaler - [17 Lvl]",
         cost: new Decimal(1e10),
          canAfford() {return player.pp.buyables[11].gte(17) && player.pp.power.gte(1e10)},
             currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency
@@ -131,8 +131,8 @@ unlocked() {return player.m.best.gte(155)},
         32: {
         unlocked() {return player.m.best.gte(159)},
                         
-         title: "Prestige Power Upgrade 32",
-        description: "Exotic Prestige Points boosts Prestige Power gain.<br>Req: Power Scaler -<br> [35 Lvl]",
+         title: "Prestige Power Exotic Prestige Boost I",
+        description: "Exotic Prestige Points boosts Prestige Power gain.<br>Req: Power Scaler - [35 Lvl]",
         cost: new Decimal(1e21),
          canAfford() {return player.pp.buyables[11].gte(35) && player.pp.power.gte(1e21)},
             currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency
@@ -148,7 +148,7 @@ unlocked() {return player.m.best.gte(155)},
          33: {
          unlocked() {return player.m.best.gte(159)},
                                                     
-        title: "Prestige Power Upgrade 33",
+        title: "Prestige Power Upgrade 32 Boost I",
         description: "Prestige Power upgrade 32 is better.",
          cost: new Decimal('1e1910'),
         currencyDisplayName: "Hz of Prestige Power", // Use if using a nonstandard currency

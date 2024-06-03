@@ -108,55 +108,55 @@ addLayer("pb", {
         rows: 4,
         cols: 4,
 		11: {
-			title: "Prestige Boost Upgrade 11",
+			title: "Prestige Boost Effect Boost I",
             description: "Prestige Boost's effect is better.",
             cost: new Decimal(3),
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
 		12: {
-			title: "Prestige Boost Upgrade 12",
+			title: "Prestige Boost Effect Boost II",
             description: "Prestige Boost's effect is better.",
             cost: new Decimal(7),
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
 		13: {
-			title: "Prestige Boost Upgrade 13",
+			title: "Prestige Boost Effect Boost III",
             description: "Prestige Boost's effect is better.",
             cost: new Decimal(11),
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
 		14: {
-			title: "Prestige Boost Upgrade 14",
+			title: "Prestige Boost Effect Boost IV",
             description: "Prestige Boost's effect is better.",
             cost: new Decimal(22),
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
 		21: {
-			title: "Prestige Boost Upgrade 21",
+			title: "Prestige Boost Effect Boost V",
             description: "Prestige Boost's effect is better.",
             cost: new Decimal(31),
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
 		22: {
-			title: "Prestige Boost Upgrade 22",
+			title: "Prestige Boost Effect Boost VI",
             description: "Prestige Boost's effect is better.",
             cost: new Decimal(34),
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
 		23: {
-			title: "Prestige Boost Upgrade 23",
+			title: "Prestige Boost Effect Boost VII",
             description: "Prestige Boost's effect is better.",
             cost: new Decimal(40),
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
 		24: {
-			title: "Prestige Boost Upgrade 24",
+			title: "Prestige Boost Effect Boost VIII",
             description: "Prestige Boost's effect is better.",
             cost: new Decimal(48),
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
 		31: {
-			title: "Prestige Boost Upgrade 31",
+			title: "Prestige Boost Softcap Delayer I",
             description: "Prestige Boost affects the 1st Milestone's softcap at a reduced rate.",
             cost: new Decimal(90),
             unlocked() { return player.m.best.gte(111)}, // The upgrade is only visible when this is true
@@ -172,25 +172,25 @@ addLayer("pb", {
             effectDisplay() { return format(this.effect(),4)+"x later" },
         },
 		32: {
-			title: "Prestige Boost Upgrade 32",
+			title: "Prestige Boost Upgrade 31 Boost I",
             description: "Prestige Boost Upgrade 31 is boosted.",
             cost: new Decimal(92),
             unlocked() { return player.m.best.gte(111)}, // The upgrade is only visible when this is true
         },
 		33: {
-			title: "Prestige Boost Upgrade 33",
+			title: "Prestige Boost Upgrade 31 Boost II",
             description: "Prestige Boost Upgrade 31 is boosted.",
             cost: new Decimal(95),
             unlocked() { return player.m.best.gte(111)}, // The upgrade is only visible when this is true
         },
 		34: {
-			title: "Prestige Boost Upgrade 34",
+			title: "Prestige Boost Upgrade 31 Boost III",
             description: "Prestige Boost Upgrade 31 is boosted.",
             cost: new Decimal(98),
             unlocked() { return player.m.best.gte(111)}, // The upgrade is only visible when this is true
         },
 		41: {
-			title: "Prestige Boost Upgrade 41",
+			title: "Prestige Boost Scaling Reducer I",
             description: "Prestige Boost cost scaling is weaker based on your super-prestige points. You can buy this upgrade while you're in AP challenge 2.",
             cost(){
 				if(player.ap.activeChallenge!=12)return new Decimal(Infinity);
@@ -204,7 +204,7 @@ addLayer("pb", {
             effectDisplay() { return format(this.effect(),4)+"x" },
         },
 		42: {
-			title: "Prestige Boost Upgrade 42",
+			title: "Prestige Boost Milestone Boost I",
             description: "3rd Milestone's effect is boosted based on your prestige boosts. You can buy this upgrade while you're in AP challenge 3.",
             cost(){
 				if(player.ap.activeChallenge!=21)return new Decimal(Infinity);
@@ -219,7 +219,7 @@ addLayer("pb", {
             effectDisplay() { return "^"+format(this.effect(),4) },
         },
 		43: {
-			title: "Prestige Boost Upgrade 43",
+			title: "Prestige Boost Upgrade 31 Boost IV",
             description: "Prestige Boost Upgrade 31 is boosted. You can buy this upgrade while you're in T challenge 2.",
             cost(){
 				if(player.t.activeChallenge!=12)return new Decimal(Infinity);
@@ -227,7 +227,7 @@ addLayer("pb", {
 			},unlocked() { return player.m.best.gte(132)}, // The upgrade is only visible when this is true
         },
 		44: {
-			title: "Super-Prestige Upgrade 44",
+			title: "Prestige Boost Effect Boost IX",
             description: "Prestige Boost's effect is better. To buy this upgrade, You need to complete AP challenge 5 18 times.",
             cost(){
 				if(player.ap.challenges[31]<18)return new Decimal(Infinity);

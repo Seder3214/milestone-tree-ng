@@ -46,7 +46,7 @@ addLayer("pe", {
         rows: 2,
         cols: 4,
 		11: {
-			title: "Prestige Energy Upgrade 11",
+			title: "Prestige Energy Softcap Delayer I",
             description: "1st Milestone's softcap starts later based on your prestige energy.",
             cost() { if (inChallenge("pm",13)) return new Decimal(45)
                 else return new Decimal(2.48e11)},
@@ -60,7 +60,7 @@ addLayer("pe", {
             effectDisplay() { return format(this.effect(),4)+"x later" }, // Add formatting to the effect
         },
 		12: {
-			title: "Prestige Energy Upgrade 12",
+			title: "Prestige Energy Scaling Reducer I",
             description: "Milestone Cost Scaling is weaker based on your prestige energy.",
             cost() { if (inChallenge("pm",13)) return new Decimal(54)
                 else return new Decimal(2.77e11)},
@@ -76,7 +76,7 @@ addLayer("pe", {
             effectDisplay() { return format(this.effect(),4)+"x" }, // Add formatting to the effect
         },
 		13: {
-			title: "Prestige Energy Upgrade 13",
+			title: "Prestige Energy Upgrade 11 Boost I",
             description() {if (inChallenge("pm",13)) return "Prestige Energy Upgrade 12 is greately boosted."
                else return "Prestige Energy Upgrade 11 is boosted."},
             cost() { if (inChallenge("pm",13)) return new Decimal(56)
@@ -84,14 +84,14 @@ addLayer("pe", {
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
 		14: {
-			title: "Prestige Energy Upgrade 14",
+			title: "Prestige Energy Upgrade 12 Boost I",
             description: "Prestige Energy Upgrade 12 is boosted.",
             cost() { if (inChallenge("pm",13)) return new Decimal(89)
                 else return new Decimal(7.94e11)},
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
 		21: {
-			title: "Prestige Energy Upgrade 21",
+			title: "Prestige Energy Transcend Boost I",
             description: "Transcend point gain is boosted based on your prestige energy.",
             cost: new Decimal(1.34e12),
             unlocked() { return true}, // The upgrade is only visible when this is true
@@ -104,19 +104,19 @@ addLayer("pe", {
             effectDisplay() { return format(this.effect(),4)+"x" }, // Add formatting to the effect
         },
 		22: {
-			title: "Prestige Energy Upgrade 22",
+			title: "Prestige Energy Upgrade 12 Boost II",
             description: "Prestige Energy Upgrade 12 is boosted.",
             cost: new Decimal(1.42e12),
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
 		23: {
-			title: "Prestige Energy Upgrade 23",
+			title: "Prestige Energy Upgrade 11 Boost II",
             description: "Prestige Energy Upgrade 11 is boosted.",
             cost: new Decimal(3.38e12),
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
 		24: {
-			title: "Prestige Energy Upgrade 24",
+			title: "Prestige Energy Upgrade 21 Boost I",
             description: "Prestige Energy Upgrade 21 is boosted.",
             cost: new Decimal(6.86e12),
             unlocked() { return true}, // The upgrade is only visible when this is true

@@ -480,11 +480,11 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
         },
         21:{
             sellOne() {
-                let cost = new Decimal(100000).mul(player.cp.buyables[21].sub(1).add(1).pow(player.cp.buyables[21].sub(1)/5))
-                player.cp.formatted=player.cp.formatted.add(cost)
                 player.cp.buyables[21]=player.cp.buyables[21].sub(1).max(0)
+                let cost = new Decimal(100000).mul(player.cp.buyables[21].add(1).pow(new Decimal(player.cp.buyables[21]/5).add(1)))
+                player.cp.formatted=player.cp.formatted.add(cost)
             },
-            canSellOne() {return true},
+            canSellOne() {return player.cp.buyables[21].gt(0)},
 			title(){
 				return "<h3 class='corr'>Corruption Booster</h3>";
 			},
@@ -531,9 +531,9 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
         },
         22:{
             sellOne() {
-                let cost=new Decimal(200000).mul(player.cp.buyables[22].sub(1).add(1).pow(new Decimal(player.cp.buyables[22].sub(1)/5).add(1)))
-                player.cp.formatted=player.cp.formatted.add(cost)
                 player.cp.buyables[22]=player.cp.buyables[22].sub(1).max(0)
+                let cost=new Decimal(200000).mul(player.cp.buyables[22].add(1).pow(new Decimal((player.cp.buyables[22])/5).add(1)))
+                player.cp.formatted=player.cp.formatted.add(cost)
             },
             canSellOne() {return true},
 			title(){
