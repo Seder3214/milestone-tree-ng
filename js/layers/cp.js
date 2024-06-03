@@ -581,7 +581,7 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
             }
         },
     },
-    layerShown(){return (player.mp.activeChallenge==21)&&(player.pm.best.gte(5))},
+    layerShown(){return (player.mp.activeChallenge==21)&&(player.pm.best.gte(6))},
     tabFormat: {
         "Corruptions": {
             content:[
