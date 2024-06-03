@@ -45,7 +45,7 @@
 	border: 2px dotted white;
 }
 ::-webkit-scrollbar {
-    width: 20px; 
+    width: 20px;
   }
   
 ::-webkit-scrollbar-track {
@@ -56,10 +56,12 @@
 ::-webkit-scrollbar-thumb {
     background:  linear-gradient(0deg, #793784 0%,#e78cf7 50%, #793784 100%);
 	border: 1.5px solid yellow;
+	height: 20px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background:  linear-gradient(0deg, #602b69 0%,#a74bb8 50%, #602b69 100%);
+    background:  linear-gradient(0deg, #602b69 0%,#d681e6 50%, #602b69 100%);
 	border: 1.5px solid yellow;
+	height: 20px;
   }
 .pseudo:not(.plocked) {
 	background-color: #f5b942;
