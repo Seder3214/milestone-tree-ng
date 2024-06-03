@@ -491,7 +491,7 @@ player.t.choose = new Decimal(0)
 			},
 			cost(x) {
 				let pow = new Decimal(1)
-				if (x.gte(this.scaled())) pow = new Decimal(0.75).add(x.add(1).sub(this.scaled()).div(25).mul(hasUpgrade('cp',13)?new Decimal(1).sub(upgradeEffect('cp',13)):1))
+				if (x.gte(this.scaled())) pow = new Decimal(0.75).add(x.add(1).sub(this.scaled()).div(20).mul(hasUpgrade('cp',13)?new Decimal(1).sub(upgradeEffect('cp',13)):1))
 				if (x.gte(this.ultraScaled())) pow = new Decimal(1).add(x.add(1).sub(this.ultraScaled()).div(10))
 				let cost = new Decimal(500).mul(x.max(1)).pow(x.div(5).add(1)).mul(x.sub(5).add(1).mul(5).max(1)).pow(pow)
 				return cost;
@@ -686,7 +686,7 @@ player.points = new Decimal(0)
 				["display-text", function() {let base = player.mp.buyables[22]
 					let x = player.mp.buyables[22]
 				let table="<h2>Scaling Levels</h2><br><div style='width:100%'>"
-				if (base.gte(tmp.mp.buyables[22].scaled)) table+=`<button class='scale' style="text-align:center"><h3>[ Scaled ]</h3><br><span style='font-size:12px'>Starts at ${formatScale(tmp.mp.buyables[22].scaled,2)} Essence Fusioner level<br> Power: ^${format(new Decimal(0.75).add(x.add(1).sub(tmp.mp.buyables[22].scaled).div(25).mul(hasUpgrade('cp',13)?new Decimal(1).sub(upgradeEffect('cp',13)):1)))}</span></button>`
+				if (base.gte(tmp.mp.buyables[22].scaled)) table+=`<button class='scale' style="text-align:center"><h3>[ Scaled ]</h3><br><span style='font-size:12px'>Starts at ${formatScale(tmp.mp.buyables[22].scaled,2)} Essence Fusioner level<br> Power: ^${format(new Decimal(0.75).add(x.add(1).sub(tmp.mp.buyables[22].scaled).div(20).mul(hasUpgrade('cp',13)?new Decimal(1).sub(upgradeEffect('cp',13)):1)))}</span></button>`
 				if (base.gte(tmp.mp.buyables[22].ultraScaled)) table+=`<button style="text-align:center" class='scale'><h3>[ Ultra Scaled ]</h3><br><span style='font-size:12px'>Starts at ${formatScale(tmp.mp.buyables[22].ultraScaled,2)} Essence Fusioner level<br> Power: ^${format(new Decimal(1).add(x.add(1).sub(tmp.mp.buyables[22].ultraScaled).div(10)))}</span></button>`
 			return table+"</div>"}],
 			],
