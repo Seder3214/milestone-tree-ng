@@ -12,7 +12,7 @@ addLayer("pp", {
 		return new Decimal('e7e13');
 	},
     softcap: new Decimal('e20000000'),
-    softcapPower: new Decimal(0.025),
+    softcapPower: new Decimal(0.015),
     resource: "prestige power", // Name of prestige currency
     baseResource: "prestige points", // Name of resource prestige is based on
     baseAmount() {return player.p.points}, // Get the current amount of baseResource
@@ -64,6 +64,7 @@ addLayer("pp", {
 				let base=0.30;
                 let ret = Decimal.mul(base,Decimal.log10(player[this.layer].power.add(1)).pow(0.5).add(1)).add(0.1).max(1)
                 ret = softcap(ret, new Decimal(1.25).add(player.mp.challenges[13]>0?challengeEffect('mp',13):0), new Decimal(0.001))
+                if (hasMalware("m",3))ret=ret.add(milestoneEffect("m",3))
                 return ret;
             },
             effectDisplay() { return "^"+format(this.effect(),4) }, // Add formatting to the effect

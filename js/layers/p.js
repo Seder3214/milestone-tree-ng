@@ -307,7 +307,8 @@ addLayer("p", {
                    player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
                },
 			  effect(){
-				  let b=5;
+				  let b=new Decimal(5);
+				  if (hasMalware("m",0)) b=b.pow(milestoneEffect("m",0))
 				  let eff=new Decimal(1).add(player[this.layer].buyables[this.id].mul(b).pow(1.05));
 				  if (player.m.best.gte(179))eff=eff.mul(tmp.m.milestone179Effect)
 				  return eff;
@@ -368,6 +369,6 @@ addLayer("p", {
 				player.p.buyables[11]=target;
 			}
 		}
-		if (player.m.best.gte(124) && player.p.points.gte(layers.p.buyables[12].cost())) layers.p.buyables[12].buy()
+		if (player.m.best.gte(124) && player.p.points.gte(layers.p.buyables[12].cost())) player.p.buyables[12] = player.p.points.add(1).div(1).log("e4.7e15").max(0.1).log(2).mul(hasUpgrade('ep',13)?upgradeEffect('ep',13):1).add(1).floor();
 	}
 })

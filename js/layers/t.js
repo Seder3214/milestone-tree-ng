@@ -453,6 +453,31 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
 				minHeight: "30px",
 			  },
         },
+		41: {
+            unlocked(){return true},
+            title() {return "Respec"},
+            canClick() {return true},
+            onClick() {
+				if (player.mp.activeChallenge==12) {
+					player.t.choose=new Decimal(2)
+					player.t.dChoose= false
+					player.t.sChoose= false
+					player.t.pdChoose= false
+					player.t.hChoose= false
+					player.t.sdChoose= false
+					player.t.phChoose= false
+				}
+				else {layerDataReset('pp',["upgrades"])
+				layerDataReset('ep',["upgrades","buyables"])
+				layerDataReset('t',["upgrades","challenges"])
+				player.mp.perkPoints=player.mp.buyables[13]
+			}
+            },
+			style: {
+				width: "300px",
+				minHeight: "30px",
+			  },
+        },
 	},
 	challenges: {
         rows: 3,
@@ -657,6 +682,7 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
 				["display-text",function(){return "You have "+format(player.t.specialPoints[22])+" Hardcapped Transcend Points, 1st Milestone's softcap starts "+format(layers.t.getSpecialEffect(22),4)+"x later"}],["clickable",22],
 				["display-text",function(){return "You have "+format(player.t.specialPoints[31])+" Super-Dilated Transcend Points, 154th Milestone effect is ^"+format(layers.t.getSpecialEffect(31),4) + " better"}],["clickable",31],
 				["display-text",function(){return "You have "+format(player.t.specialPoints[32])+" Prestige-Hardcapped Transcend Points, 6th Milestone effect is ^"+format(layers.t.getSpecialEffect(32),4) + " better"}],["clickable",32],
+				"blank",["clickable",41]
 			],
 			unlocked(){return player.m.best.gte(130);}
 		},
@@ -774,15 +800,15 @@ return player.t.challenges[31]++
 			let effect=player.t.specialPoints[31].add(1).log10().div(25).add(1);
 if (!hasUpgrade('pp',21)) return new Decimal(1)
 if (player.t.sdChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
-if (player.t.sdChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeChallenge!=12) effect = effect.add(0.1)
-			else return effect.max(1);
+if (player.t.sdChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeChallenge!=12) effect = effect.mul(10)
+			return effect.max(1);
 		}
         if(x==32){
 			let effect=player.t.specialPoints[32].add(1).log10().div(100).add(1);
 if (!hasUpgrade('pp',22)) return new Decimal(1)
 if (player.t.phChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
-if (player.t.phChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeChallenge!=12) effect = effect.add(0.1)
-		else	return effect.max(1);
+if (player.t.phChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeChallenge!=12) effect = effect.mul(1.35)
+		return effect.max(1);
 		}
 	}
 })

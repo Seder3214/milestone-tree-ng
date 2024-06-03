@@ -81,11 +81,13 @@ addLayer("ep", {
 	sevenEffect() {
         let eff = player.ep.points.add(1).log10().max(1).pow(0.1).mul(0.382).div(20)
 		if (player.mp.challenges[12]>0) eff=eff.add(tmp.mp.challenges[12].rewardEffect)
+			if (player.mp.buyables[12].gte(4)) eff = eff.mul(2.56)
 		if (player.mp.activeChallenge==13) return new Decimal(0)
         return eff;
     },
 	eightEffect() {
         let eff = player.ep.points.add(1).log10().max(1).pow(0.1).div(10)
+		if (player.mp.buyables[12].gte(5)) eff = eff.mul(3)
 		if (player.mp.activeChallenge==13) return new Decimal(0)
     return softcap(eff,new Decimal(0.5),0.1);
     },

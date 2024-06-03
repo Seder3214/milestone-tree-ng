@@ -26,6 +26,7 @@ addLayer("m", {
     row: 0, // Row the layer is in on the tree (0 is the first row)
 	base: new Decimal(1.5),
 	exponent: function(){
+		if(player.m.points.gte(185))return new Decimal(24.45);
 		if(player.m.points.lt(5))return new Decimal(1.7);
 		var base=new Decimal(2);
 		var firstScaling=player.m.points.sub(tmp.m.getScalingStart).max(0);
@@ -63,29 +64,77 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(0)},
             done() {return player[this.layer].best.gte(1)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Gain "+format(new Decimal(1).max(getPointGen()))+" points per second."
+				let table="Gain "+format(new Decimal(1).max(getPointGen()))+" points per second."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Exotic Booster effect base is ^"+format(tmp.m.milestones[0].effect)+" better based on points gain."
+				return table
 			},
-			pseudoUnl() {
-				return true
+			effect() {
+				let eff = new Decimal(1)
+				eff=getPointGen().add(1).log10().add(1).pow(0.3)
+				return eff
 			},
-			pseudoReq() {return "To unlock this upgrade, get "+format(this.pseudoCost)+" points."},
-			pseudoCan() {
-				return player.points.gte(1e30)
+			pseudoUnl() {return hasUpgrade("mp",21)},
+			pseudoReq() {return "To malware milestone, get "+format(this.pseudoCost)+" points."},
+			pseudoCan() {return player.points.gte(`e1e22`)},
+			pseudoCost: new Decimal(`e1e22`),
+			style() {
+				if (player.m.pseudoBuys.includes(this.id)) return {
+                    'background':'red',
+					'color':"white",
+                    'width': '100%',
+                }
 			},
-			pseudoCost: new Decimal(1e66),
         },
 		{
 			requirementDescription: "2nd Milestone",
             unlocked() {return player[this.layer].best.gte(1)},
             done() {return player[this.layer].best.gte(2)}, // Used to determine when to give the milestone
-            effectDescription: "Triple the first Milestone's effect."
+            effectDescription() {let table= "Triple the first Milestone's effect."
+			if (player.m.pseudoBuys.includes(this.id)) table+="<br>First Milestone's second effect applies to point gain after softcap at greatly boosted rate.<br>Currently: x"+format(tmp.m.milestones[1].effect)+" to points gain (reduced when in challenge)"
+			return table
+			},
+			effect() {
+				let eff = new Decimal(1)
+				if (player.ap.activeChallenge!=undefined || player.t.activeChallenge!=undefined ||player.mp.activeChallenge!=undefined||player.pm.activeChallenge!=undefined) return new Decimal(10).pow(tmp.m.milestones[0].effect.add(1).pow(0.2))
+				eff=new Decimal(`ee20`).pow(tmp.m.milestones[0].effect.add(1).pow(0.2))
+				return eff
+			},
+			pseudoUnl() {return hasUpgrade("mp",21)},
+			pseudoReq() {return "To malware milestone, get "+format(this.pseudoCost)+" points."},
+			pseudoCan() {return player.points.gte(`e1.705e22`)},
+			pseudoCost: new Decimal(`e1.705e22`),
+			style() {
+				if (player.m.pseudoBuys.includes(this.id)) return {
+                    'background':'red',
+					'color':"white",
+                    'width': '100%',
+                }
+			},
         },
 		{
 			requirementDescription: "3rd Milestone",
             unlocked() {return player[this.layer].best.gte(2)},
             done() {return player[this.layer].best.gte(3)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "First Milestone's effect is boosted by your points. Currently: "+format(tmp.m.milestone3Effect)+"x";
+				let table="First Milestone's effect is boosted by your points. Currently: "+format(tmp.m.milestone3Effect)+"x"
+				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Points boosts Challenge Slayer effect. Currently: "+format(tmp.m.milestones[2].effect)+"x"
+				return table
+			},
+			effect() {
+				let eff = new Decimal(1)
+				eff=player.points.add(1).pow(0.1).add(1).log10().add(1).log2().add(1).pow(0.15)
+				return eff
+			},
+			pseudoUnl() {return hasUpgrade("mp",21)},
+			pseudoReq() {return "To malware milestone, get "+format(this.pseudoCost)+" points."},
+			pseudoCan() {return player.points.gte(`e1.915e22`)},
+			pseudoCost: new Decimal(`e1.915e22`),
+			style() {
+				if (player.m.pseudoBuys.includes(this.id)) return {
+                    'background':'red',
+					'color':"white",
+                    'width': '100%',
+                }
 			},
         },
 		{
@@ -93,7 +142,25 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(3)},
             done() {return player[this.layer].best.gte(4)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Third Milestone's effect is better based on your milestones. Currently: 3rd Milestone's base effect base +"+format(tmp.m.milestone4Effect);
+				let table= "Third Milestone's effect is better based on your milestones. Currently: 3rd Milestone's base effect base +"+format(tmp.m.milestone4Effect);
+				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Add +"+format(tmp.m.milestones[3].effect)+" to Prestige Power Upgrade 12 after softcap (based on best milestones and points)."
+				return table
+			},
+			effect() {
+				let eff = new Decimal(1)
+				eff=player.m.best.add(1).pow(0.5).div(100).add(player.points.add(1).log10().add(1).log10().pow(0.15).div(5))
+				return eff
+			},
+			pseudoUnl() {return hasUpgrade("mp",21)},
+			pseudoReq() {return "To malware milestone, get "+format(this.pseudoCost)+" points."},
+			pseudoCan() {return player.points.gte(`e2.92e22`)},
+			pseudoCost: new Decimal(`e2.92e22`),
+			style() {
+				if (player.m.pseudoBuys.includes(this.id)) return {
+                    'background':'red',
+					'color':"white",
+                    'width': '100%',
+                }
 			},
         },
 		{
@@ -101,7 +168,20 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(4)},
             done() {return player[this.layer].best.gte(5)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Unlock the next layer. Milestones don't reset on all resets.";
+				let table=  "Unlock the next layer. Milestones don't reset on all resets.";
+				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Unlock Prestige Perk Upgrades (ENDGAME)."
+				return table
+			},
+			pseudoUnl() {return hasUpgrade("mp",21)},
+			pseudoReq() {return "To malware milestone, get "+format(this.pseudoCost)+" points."},
+			pseudoCan() {return player.points.gte(`e3e22`)},
+			pseudoCost: new Decimal(`e3e22`),
+			style() {
+				if (player.m.pseudoBuys.includes(this.id)) return {
+                    'background':'red',
+					'color':"white",
+                    'width': '100%',
+                }
 			},
         },
 		{
@@ -1738,6 +1818,7 @@ addLayer("m", {
 	tabFormat: ["main-display","prestige-button","resource-display",
 				["display-text",function(){if (!hasUpgrade('mp',14)) return "Milestone cost scaling starts at "+format(tmp.m.getScalingStart,4)}],
 				["display-text",function(){return "Milestone cost exponent is "+format(tmp.m.exponent,4)}],
+				["display-text",function(){if (player.pm.essence.gte(1)&&player.pm.best.gte(15))return "Prestige Essences boosts points after softcap by "+format(tmp.pm.essenceBoost.pow(1e19),4)+"x"}],
 				"milestones"
 				],
 })

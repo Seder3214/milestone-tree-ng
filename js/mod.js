@@ -78,7 +78,8 @@ if(b.gte(getPointSoftcapStart())){
 		sc=sc.mul(20);
 	}
 }
-if (player.pm.essence.gte(1)&&player.mp.activeChallenge!=21) b = b.mul(tmp.pm.essenceBoost)
+if (player.pm.essence.gte(1)&&(player.ap.activeChallenge==undefined && player.t.activeChallenge==undefined && player.mp.activeChallenge==undefined && player.pm.activeChallenge==undefined)) b = b.mul(tmp.pm.essenceBoost.pow(1e19))
+	if (hasMalware("m",1)) b=b.mul(milestoneEffect("m",1))
 return b.mul(corruptEffect());
 
 }

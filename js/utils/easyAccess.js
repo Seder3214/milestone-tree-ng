@@ -65,7 +65,9 @@ function buyableEffect(layer, id) {
 function clickableEffect(layer, id) {
 	return (tmp[layer].clickables[id].effect)
 }
-
+function milestoneEffect(layer, id) {
+	return (tmp[layer].milestones[id].effect)
+}
 function achievementEffect(layer, id) {
 	return (tmp[layer].achievements[id].effect)
 }
@@ -78,4 +80,7 @@ function gridCost(layer, id) {
 }
 function gridEssence(layer, id) {
 	return (gridRun(layer, 'getEssence', player[layer].grid[id], id))
+}
+function hasMalware(layer,id) {
+	return player[layer].pseudoBuys.includes(id.toString())
 }

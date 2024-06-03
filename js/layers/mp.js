@@ -80,6 +80,12 @@ addLayer("mp", {
             cost: new Decimal(11),
             unlocked() { return true}, // The upgrade is only visible when this is true
         },
+		21:  {
+			title: "Multiverse Prestige Upgrade 21",
+            description: "<i>Prestige Universe is corrupting Milestone Universe...</i><br>Unlock Malware Milestones",
+            cost: new Decimal(15),
+            unlocked() { return player.pm.best.gte(15)}, // The upgrade is only visible when this is true
+        },
 	},
     challenges: {
         11:{
@@ -314,13 +320,14 @@ player.t.choose = new Decimal(0)
             }
         },
         12:{
+			purchaseLimit: new Decimal(6),
 			title(){
 				return "<h3 class='mr'>Exotic Fusioner II</h3>";
 			},
 			display(){
 				let data = tmp[this.layer].buyables[this.id];
 				return "Level: "+format(player[this.layer].buyables[this.id])+"<br>"+
-				"Per level, change Exotic Fusioner's effect's formulas or make effect's softcaps weaker. <br>Currently: "+format(data.effect)+" effects boosted (starting at second).<br>"+
+				"Per level, change Exotic Fusioner's effect's formulas or make effect's softcaps weaker. <br>Currently: "+format(data.effect)+"/6 effects boosted (starting at second).<br>"+
 				"Cost for Next Level: "+format(data.cost)+" Multiversal Prestige Points";
 			},
 			cost(x) {
@@ -341,6 +348,14 @@ player.t.choose = new Decimal(0)
 				  return hasUpgrade('mp',13);
 			  },
 			  style() {
+				if (player.mp.buyables[12].gte(this.purchaseLimit)) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'darkgreen',
+					'border':'2px solid',
+					'height':'125px',
+					'width':'300px',
+				}
 				if (player.mp.points.lt(this.cost())) return {
 					'border-radius': '0%',
 					'color':'white',

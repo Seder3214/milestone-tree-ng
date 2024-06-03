@@ -52,7 +52,11 @@
     background:  black;
 	border: 1.5px solid white;
   }
-
+  .plocked {
+	background-color: black;
+	color: var(--color);
+	cursor: not-allowed;
+}
 ::-webkit-scrollbar-thumb {
     background:  linear-gradient(0deg, #793784 0%,#e78cf7 50%, #793784 100%);
 	border: 1.5px solid yellow;
@@ -64,7 +68,9 @@
 	height: 20px;
   }
 .pseudo:not(.plocked) {
-	background-color: #f5b942;
+	background-color: #fd3030;
+	color:white;
+	cursor:pointer;
 }
 .achievement:hover {
 	box-shadow: 0 0 10px var(--points);

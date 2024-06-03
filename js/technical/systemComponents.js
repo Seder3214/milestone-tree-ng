@@ -176,7 +176,7 @@ var systemComponents = {
 		<div>
                 <button class="opt" onclick="toggleOpt('forceOneTab'); needsCanvasUpdate = true"><b>Change Style</b> <b> - [ {{ options.forceOneTab?"Revamped":"Tree Style" }} ]</b><br><span style="font-size:12px">Choose between new and old styles</span></button>				
                 <button class="opt" onclick="adjustCCTP()"><b style="font-size:12px" >Corrupt. Tooltip Pos.</b><br><b style="font-size:12px"> [ {{ CCTP_DISPLAYS[CCTP_SETTINGS.indexOf(options.changeCorruptTooltipPlace)]}} ]</b></button>
-                <button class="opt" onclick="toggleOpt('reverseMilestones'); needsCanvasUpdate = true"><b style="font-size:12px">Milestones Order</b><b> -  [ {{ options.reverseMilestones?"Last to First":"First to Last" }} ]</b><br><span style="font-size:12px">Choose milestone ordering</span></button>
+                <button class="opt" onclick="toggleOpt('reverseMilestones')"><b style="font-size:12px">Milestones Order</b><b> -  [ {{ options.reverseMilestones?"Last to First":"First to Last" }} ]</b><br><span style="font-size:12px">Choose milestone ordering</span></button>
 		</div><br><br>
         </table>`
     },

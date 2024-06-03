@@ -486,6 +486,7 @@ canComplete(){
 			  let b=0.135;
 			  if (player.m.best.gte(180)) b+=0.005
 			  let eff=new Decimal(1).add(player[this.layer].buyables[this.id].mul(b)).pow(player.ep.points.add(1).log10().add(1).log10().pow(0.5));
+			  if (hasMalware("m",2)) eff=eff.mul(milestoneEffect("m",2))
 			  return eff;
 		  },
 		  unlocked(){

@@ -410,11 +410,12 @@ function gridRun(layer, func, data, id) {
 		return layers[layer].grid[func];
 }
 function unlockBuy(layer, id) {
+	console.log(`${id}`)
     if (!player[layer].unlocked)
         return
     if (!tmp[layer].milestones[id].pseudoUnl)
         return
-    if (tmp[layer].milestones[id].unlocked)
+    if (!tmp[layer].milestones[id].unlocked)
         return
     if (player[layer].pseudoBuys.includes(id))
         return
