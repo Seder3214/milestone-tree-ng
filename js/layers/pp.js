@@ -236,6 +236,6 @@ unlocked() {return player.m.best.gte(155)},
         let a=player.pp.buyables[11];
         x=new Decimal(x.add(1).log(2));
         if (player.pp.buyables[11].gte(1)) player.pp.power = player.pp.power.add(buyableEffect('pp', 11).times(diff))
-        if (player.m.best.gte(162)) player.pp.buyables[11] = player.pp.points.add(1).log(2).pow(1/1.03).floor()
+        if (player.m.best.gte(162)) player.pp.buyables[11] = player.pp.points.add(1).log(2).pow(1/1.03).add(1).floor()
 	}
 })
