@@ -70,13 +70,13 @@ addLayer("m", {
 			},
 			effect() {
 				let eff = new Decimal(1)
-				eff=getPointGen().add(1).log10().add(1).pow(0.3)
+				eff=getPointGen().add(1).log10().add(1).pow(0.35)
 				return eff
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."},
-			pseudoCan() {return player.points.gte(`e1e22`)},
-			pseudoCost: new Decimal(`e1e22`),
+			pseudoCan() {return player.points.gte(`e1.35e21`)},
+			pseudoCost: new Decimal(`e1.35e21`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -101,8 +101,8 @@ addLayer("m", {
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."},
-			pseudoCan() {return player.points.gte(`e1.705e22`)},
-			pseudoCost: new Decimal(`e1.705e22`),
+			pseudoCan() {return player.points.gte(`e2.07e21`)},
+			pseudoCost: new Decimal(`e2.07e21`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -127,8 +127,8 @@ addLayer("m", {
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."},
-			pseudoCan() {return player.points.gte(`e1.915e22`)},
-			pseudoCost: new Decimal(`e1.915e22`),
+			pseudoCan() {return player.points.gte(`e7.645e21`)},
+			pseudoCost: new Decimal(`e7.645e21`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -153,8 +153,8 @@ addLayer("m", {
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."},
-			pseudoCan() {return player.points.gte(`e2.92e22`)},
-			pseudoCost: new Decimal(`e2.92e22`),
+			pseudoCan() {return player.points.gte(`e8.0045e21`)},
+			pseudoCost: new Decimal(`e8.0045e21`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -169,13 +169,13 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(5)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table=  "Unlock the next layer. Milestones don't reset on all resets.";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Unlock Prestige Perk Upgrades (ENDGAME)."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Unlock Prestige Perk Upgrades."
 				return table
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."},
-			pseudoCan() {return player.points.gte(`e3e22`)},
-			pseudoCost: new Decimal(`e3e22`),
+			pseudoCan() {return player.points.gte(`e8.305e21`)},
+			pseudoCost: new Decimal(`e8.305e21`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -189,7 +189,21 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(5)},
             done() {return player[this.layer].best.gte(6)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Prestige Point gain is boosted by your milestones. Currently: "+format(tmp.m.milestone6Effect)+"x";
+				let table= "Prestige Point gain is boosted by your milestones. Currently: "+format(tmp.m.milestone6Effect)+"x";
+				if (player.m.pseudoBuys.includes(this.id)) table+="<br>This milestone's effect is greately stronger."
+				return table
+			},
+			pseudoUnl() {return hasUpgrade("mp",21)},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e8.895e21`)},
+			pseudoCost: new Decimal(`e8.895e21`),
+			style() {
+				if (player.m.pseudoBuys.includes(this.id)) return {
+                    'background':'red',
+					'color':"white",
+                    'width': '100%',
+                }
 			},
         },
 		{
@@ -1758,6 +1772,8 @@ addLayer("m", {
 		if(player.m.best.gte(106))p=p.pow(player.mm.best.pow(0.5));
 		if(player.m.best.gte(113))p=p.pow(player.mm.best.pow(0.3));
         if (player.m.best.gte(156))p=p.pow(player.mm.best.pow(layers.t.getSpecialEffect(32)))
+			if (hasMalware("m",5)) p=p.pow(1e10)
+			if(hasUpgrade("p",25))p=p.pow(upgradeEffect("p",25));
 		return softcap(p,new Decimal('ee10'), 0.15);
 	},
 	milestone27Effect(){

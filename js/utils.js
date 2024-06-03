@@ -424,6 +424,23 @@ function unlockBuy(layer, id) {
         return;
     player[layer].pseudoBuys.push(id);
 }
+function unlockUpg(layer, id) {
+    if (!player[layer].unlocked)
+        return
+    if (!tmp[layer].upgrades[id].perkUnl)
+        return
+    if (tmp[layer].upgrades[id].unlocked)
+        return
+    if (player[layer].perkUpgs.includes(id))
+        return 
+    let upg = tmp[layer].upgrades[id]
+    if (!upg.perkCan)
+        return;
+    player[layer].perkUpgs.push(id);
+}
 function pseudoUnl(layer, id) {
     return tmp[layer].milestones[id].pseudoUnl && tmp[layer].milestones[id].unlocked;
+} 
+function perkUnl(layer, id) {
+    return tmp[layer].upgrades[id].perkUnl && !tmp[layer].upgrades[id].unlocked;
 } 

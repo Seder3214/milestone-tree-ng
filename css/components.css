@@ -44,6 +44,9 @@
 .pseudo {
 	border: 2px dotted white;
 }
+.perk {
+	border: 2px dotted white;
+}
 ::-webkit-scrollbar {
     width: 20px;
   }
@@ -53,6 +56,11 @@
 	border: 1.5px solid white;
   }
   .plocked {
+	background-color: black;
+	color: var(--color);
+	cursor: not-allowed;
+}
+.perked {
 	background-color: black;
 	color: var(--color);
 	cursor: not-allowed;
@@ -69,6 +77,11 @@
   }
 .pseudo:not(.plocked) {
 	background-color: #fd3030;
+	color:white;
+	cursor:pointer;
+}
+.perk:not(.perked) {
+	background-color: #fdbc30;
 	color:white;
 	cursor:pointer;
 }

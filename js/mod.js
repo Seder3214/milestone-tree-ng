@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "v2.023a - DESTRUCTION OF MILESTONE TREE",
+	num: "v2.024 - DESTRUCTION OF MILESTONE TREE",
 	name: "Corrupted Game?!",
 }
 

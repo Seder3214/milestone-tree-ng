@@ -154,25 +154,29 @@ function loadVue() {
 		`
 	})
 
-	Vue.component('upgrades', {
-		props: ['layer', 'data'],
-		template: `
+    Vue.component('upgrades', {
+        props: ['layer'],
+        template: `
 		<div v-if="tmp[layer].upgrades" class="upgTable">
-			<div v-for="row in (data === undefined ? tmp[layer].upgrades.rows : data)" class="upgRow">
-				<div v-for="col in tmp[layer].upgrades.cols"><div v-if="tmp[layer].upgrades[row*10+col]!== undefined && tmp[layer].upgrades[row*10+col].unlocked" class="upgAlign">
-					<upgrade :layer = "layer" :data = "row*10+col" v-bind:style="tmp[layer].componentStyles.upgrade"></upgrade>
+			<div v-for="row in tmp[layer].upgrades.rows" class="upgRow">
+				<div v-for="col in tmp[layer].upgrades.cols"><div v-if="tmp[layer].upgrades[row*10+col]!== undefined" class="upgAlign">
+					<upgrade :layer = "layer" :data = "row*10+col" :cl = "hasUpgrade(layer, row*10+col)?'bought':(canAffordUpgrade(layer, row*10+col)?'can':'locked')" :pcl="tmp[layer].upgrades[row*10+col].perkCan?'can':'locked'" v-bind:style="tmp[layer].componentStyles.upgrade"></upgrade>
 				</div></div>
 			</div>
 			<br>
 		</div>
 		`
-	})
+    })
 
 	// data = id
-	Vue.component('upgrade', {
-		props: ['layer', 'data'],
-		template: `
-		<button v-if="tmp[layer].upgrades && tmp[layer].upgrades[data]!== undefined && tmp[layer].upgrades[data].unlocked" :id='"upgrade-" + layer + "-" + data' v-on:click="buyUpg(layer, data)" v-bind:class="{ [layer]: true, tooltipBox: true, upg: true, bought: hasUpgrade(layer, data), locked: (!(canAffordUpgrade(layer, data))&&!hasUpgrade(layer, data)), can: (canAffordUpgrade(layer, data)&&!hasUpgrade(layer, data))}"
+    Vue.component('upgrade', {
+        props: ['layer', 'data', 'cl', 'pcl'],
+        template: `
+		<div v-if="tmp[layer].upgrades && tmp[layer].upgrades[data]!==undefined">
+			<button v-if="perkUnl(layer, data) && !(tmp[layer].upgrades[data].unlocked)" v-on:mousedown="handleMouseEvent" v-on:mouseenter="handleMouseEvent" v-bind:class="{ [layer]: true, upg: true, perk: true, perked: pcl=='locked', can: pcl=='can', anim: (player.anim&&!player.oldStyle), grad: (player.grad&&!player.oldStyle) }" v-on:click="unlockUpg(layer, data)">
+				<h3>Explore A New Perk Upgrade</h3><br><span v-html="tmp[layer].upgrades[data].perkReq"></span>
+			</button>
+			<button v-if="tmp[layer].upgrades && tmp[layer].upgrades[data]!== undefined && tmp[layer].upgrades[data].unlocked" :id='"upgrade-" + layer + "-" + data' v-on:click="buyUpg(layer, data)" v-on:mousedown="handleMouseEvent" v-on:mouseenter="handleMouseEvent" v-bind:class="{ [layer]: true, tooltipBox: true, upg: true, bought: hasUpgrade(layer, data), locked: (!(canAffordUpgrade(layer, data))&&!hasUpgrade(layer, data)), can: (canAffordUpgrade(layer, data)&&!hasUpgrade(layer, data))}"
 			v-bind:style="[((!hasUpgrade(layer, data) && canAffordUpgrade(layer, data)) ? {'background-color': tmp[layer].color} : {}), tmp[layer].upgrades[data].style]">
 			<span v-if="layers[layer].upgrades[data].fullDisplay" v-html="run(layers[layer].upgrades[data].fullDisplay, layers[layer].upgrades[data])"></span>
 			<span v-else>
@@ -186,7 +190,17 @@ function loadVue() {
 			<tooltip v-if="tmp[layer].upgrades[data].tooltip" :text="tmp[layer].upgrades[data].tooltip"></tooltip>
 
 			</button>
-		`
+				
+		</div>
+		`,
+		methods: {
+			handleMouseEvent(event) {
+				// event.buttons is a bitmask, 0b1 is primary mouse button (usually left)
+				if (event.buttons & 1) {
+					buyUpg(this.layer, this.data)
+				}
+			}
+		},
 	})
 
 	Vue.component('milestones', {
@@ -211,7 +225,8 @@ function loadVue() {
 			<h3 v-html="tmp[layer].milestones[data].requirementDescription"></h3><br>
 			<span v-html="run(layers[layer].milestones[data].effectDescription, layers[layer].milestones[data])"></span><br>
 			<tooltip v-if="tmp[layer].milestones[data].tooltip" :text="tmp[layer].milestones[data].tooltip"></tooltip>
-			<button v-if="tmp[layer].milestones[data].pseudoUnl==true&& !player[layer].pseudoBuys.includes(data)"v-bind:class="{[layer]: true, pseudo: true, plocked: !player.points.gte(tmp[layer].milestones[data].pseudoCost), anim: (player.anim&&!player.oldStyle), grad: (player.grad&&!player.oldStyle) }" v-on:click="unlockBuy(layer, data)">Infect a Milestone with Malware<br>{{tmp[layer].milestones[data].pseudoReq}}</button>
+			<button v-if="tmp[layer].milestones[data].pseudoUnl==true&& !player[layer].pseudoBuys.includes(data)"v-bind:class="{[layer]: true, pseudo: true, plocked: !player.points.gte(tmp[layer].milestones[data].pseudoCost), anim: (player.anim&&!player.oldStyle), grad: (player.grad&&!player.oldStyle) }" v-on:click="unlockBuy(layer, data)">Infect a Milestone with Malware<br>
+			Cost: {{format(tmp[layer].milestones[data].pseudoCost)}} points.</button>
 
 		<span v-if="(tmp[layer].milestones[data].toggles)&&(hasMilestone(layer, data))" v-for="toggle in tmp[layer].milestones[data].toggles"><toggle :layer= "layer" :data= "toggle" v-bind:style="tmp[layer].componentStyles.toggle"></toggle>&nbsp;</span></td></tr>
 		`

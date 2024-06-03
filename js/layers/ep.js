@@ -65,6 +65,7 @@ addLayer("ep", {
 	fiveEffect() {
         let eff = player.ep.points.add(1).log10().add(1).log(10).pow(0.5).max(1)
 		if (player.mp.buyables[12].gte(3)) eff = eff.mul(2)
+			if(hasUpgrade("p",45))eff=eff.mul(upgradeEffect("p",45));
 		let start = new Decimal('e5.6e12').mul(player.ep.points.add(1).log10().add(1).log(10).pow(0.5))
 		if (player.m.best.gte(174)) start = start.pow(0.1)
 		if (player.mp.activeChallenge==13) eff = new Decimal(1)
@@ -87,7 +88,7 @@ addLayer("ep", {
     },
 	eightEffect() {
         let eff = player.ep.points.add(1).log10().max(1).pow(0.1).div(10)
-		if (player.mp.buyables[12].gte(5)) eff = eff.mul(3)
+		if (player.mp.buyables[12].gte(5)) eff = eff.mul(5)
 		if (player.mp.activeChallenge==13) return new Decimal(0)
     return softcap(eff,new Decimal(0.5),0.1);
     },
@@ -148,10 +149,17 @@ addLayer("ep", {
             cost: new Decimal('e7490000'),
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
                 let ret = (player.t.challenges[11]*2)+(player.t.challenges[21]*10)+(player.t.challenges[31]*10)+(player.ep.points.add(1).log(10).add(1).pow(0.5).toNumber())
+				if (hasUpgrade("ep",22)) ret=ret*2.5
                 return ret;
             },
 			effectDisplay() { return "-"+format(this.effect()) },
             unlocked() { return player.mp.buyables[21].gte(2)&& player.mp.activeChallenge!=21},
+        },
+		22: {
+			title: "Exotic Prestige Upgrade 22",
+            description: "Exotic Prestige Upgrade 21 is better",
+            cost: new Decimal('e1.43e9'),
+            unlocked() { return player.mp.buyables[21].gte(3)&& player.mp.activeChallenge!=21},
         },
 	},
 	buyables: {

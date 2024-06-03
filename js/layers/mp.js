@@ -83,7 +83,7 @@ addLayer("mp", {
 		21:  {
 			title: "Multiverse Prestige Upgrade 21",
             description: "<i>Prestige Universe is corrupting Milestone Universe...</i><br>Unlock Malware Milestones",
-            cost: new Decimal(15),
+            cost: new Decimal(13),
             unlocked() { return player.pm.best.gte(15)}, // The upgrade is only visible when this is true
         },
 	},
