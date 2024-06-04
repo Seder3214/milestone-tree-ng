@@ -158,7 +158,7 @@ addLayer("ep", {
 		22: {
 			title: "Exotic Prestige Upgrade 22",
             description: "Exotic Prestige Upgrade 21 is better",
-            cost: new Decimal('e1.43e9'),
+            cost: new Decimal('e1.39e9'),
             unlocked() { return player.mp.buyables[21].gte(3)&& player.mp.activeChallenge!=21},
         },
 	},

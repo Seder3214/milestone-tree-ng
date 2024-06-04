@@ -38,7 +38,7 @@ addLayer("p", {
         return mult
     },
 	perkCost() {
-		let eff = new Decimal(`e4e23`)
+		let eff = new Decimal(`e2e23`)
 		let base= player.p.totalPerks.mul(5).max(1).mul(player.p.totalPerks.sub(3).add(1)).mul(player.p.totalPerks.sub(4).mul(10).max(1))
 		eff=Decimal.pow(eff,base)
 		return eff
@@ -529,8 +529,8 @@ addLayer("p", {
 			player.p.maxPerks=player.p.maxPerks.max(player.p.perks)
 			if (player.p.points.gte(tmp.p.perkCost)) {
 				player.p.points=player.p.points.sub(tmp.p.perkCost)
-				player.p.totalPerks=player.p.totalPerks.add(1)
 				player.p.perks=player.p.perks.add(1)
+				player.p.totalPerks=player.p.totalPerks.add(1)
 			}
 		}
 	}
