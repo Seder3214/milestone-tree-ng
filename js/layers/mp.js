@@ -327,7 +327,7 @@ player.t.choose = new Decimal(0)
 			display(){
 				let data = tmp[this.layer].buyables[this.id];
 				return "Level: "+format(player[this.layer].buyables[this.id])+"<br>"+
-				"Per level, change Exotic Fusioner's effect's formulas or make effect's softcaps weaker. <br>Currently: "+format(data.effect)+"/6 effects boosted (starting at second).<br>"+
+				"Per level, change Exotic Fusioner's effect's formulas or make effect's softcaps weaker. <br>Currently: "+format(data.effect,0)+" / 6 effects boosted (starting at second).<br>"+
 				"Cost for Next Level: "+format(data.cost)+" Multiversal Prestige Points";
 			},
 			cost(x) {
@@ -375,13 +375,14 @@ player.t.choose = new Decimal(0)
             }
         },
         13:{
+			purchaseLimit: new Decimal(6),
 			title(){
 				return "<h3 class='mr'>Transcend Fusioner</h3>";
 			},
 			display(){
 				let data = tmp[this.layer].buyables[this.id];
 				return "Level: "+format(player[this.layer].buyables[this.id])+"<br>"+
-				"Per level, get a Perk Point, that can be used to strenghen Special Transcend Points's effect (chosen ones resets on enter Weaker Transcend). <br>Currently: "+format(data.effect)+" more Perk Points.<br>"+
+				"Per level, get a Perk Point, that can be used to strenghen Special Transcend Points's effect (chosen ones resets on enter Weaker Transcend). <br>Currently: "+format(data.effect,0)+" / 6 more Perk Points.<br>"+
 				"Cost for Next Level: "+format(data.cost)+" Multiversal Prestige Points";
 			},
 			cost(x) {
@@ -403,6 +404,14 @@ player.t.choose = new Decimal(0)
 				  return hasUpgrade('mp',13);
 			  },
 			  style() {
+				if (player.mp.buyables[13].gte(this.purchaseLimit)) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'darkgreen',
+					'border':'2px solid',
+					'height':'125px',
+					'width':'300px',
+				}
 				if (player.mp.points.lt(this.cost())) return {
 					'border-radius': '0%',
 					'color':'white',
@@ -422,13 +431,14 @@ player.t.choose = new Decimal(0)
             }
         },
         21:{
+			purchaseLimit: new Decimal(3),
 			title(){
 				return "<h3 class='mr'>Upgrading Fusioner</h3>";
 			},
 			display(){
 				let data = tmp[this.layer].buyables[this.id];
 				return "Level: "+format(player[this.layer].buyables[this.id])+"<br>"+
-				"(This fusioner's cost is not affected by amount of buyed Fusioners) Per level, unlock 2 more Exotic Prestige upgrades. <br>Currently: "+format(data.effect)+" more upgrades.<br>"+
+				"(This fusioner's cost is not affected by amount of buyed Fusioners) Per level, unlock 2 more Exotic Prestige upgrades. <br>Currently: "+format(data.effect,0)+" / 5 more upgrades.<br>"+
 				"Cost for Next Level: "+format(data.cost)+" Multiversal Prestige Points";
 			},
 			cost(x) {if (x.gte(1)) return new Decimal(10).mul(x)
@@ -442,12 +452,21 @@ player.t.choose = new Decimal(0)
                },
 			  effect(x){
                 let eff = x.mul(2)
+				if (x.gte(3)) return new Decimal(5)
 				  return eff;
 			  },
 			  unlocked(){
 				  return hasUpgrade('mp',13);
 			  },
 			  style() {
+				if (player.mp.buyables[21].gte(this.purchaseLimit)) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'darkgreen',
+					'border':'2px solid',
+					'height':'125px',
+					'width':'300px',
+				}
 				if (player.mp.points.lt(this.cost())) return {
 					'border-radius': '0%',
 					'color':'white',
