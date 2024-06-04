@@ -48,6 +48,7 @@ addLayer("hb", {
 		let p=0.5;
 		let m=0.02;
 		let e=0;
+		let extra=0;
 		if(hasUpgrade("t",42))e++;
 		if(hasUpgrade("t",43)){
 			m+=0.02;
@@ -70,7 +71,8 @@ addLayer("hb", {
 		if(hasUpgrade("hb",34)){
 			m+=0.02;
 		}
-		return new Decimal(1).add(player.hb.points.add(e).pow(p).mul(m)).add(hasAchievement('ach',28)?0.015:0);
+		if (hasMalware("m",7)) extra=15
+		return new Decimal(1).add(player.hb.points.add(extra).add(e).pow(p).mul(m)).add(hasAchievement('ach',28)?0.015:0);
 	},
 	effectDescription(){
 		return "hyper-prestige points and prestige boost effect is powered by "+format(layers.hb.effect(),4)

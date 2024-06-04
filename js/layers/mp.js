@@ -716,7 +716,7 @@ player.points = new Decimal(0)
 				layerDataReset('pb',["upgrades"])
 				layerDataReset('hb',["upgrades"])
 				layerDataReset('se',["upgrades"])
-                layerDataReset("ep",["buyables"])};
+                if (hasMalware("m",6)) layerDataReset("ep",["buyables","upgrades"]); else layerDataReset("ep",["buyables"])};
 		},
 	update(diff){
         if(player.m.best.gte(120)){

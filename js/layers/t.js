@@ -800,14 +800,14 @@ return player.t.challenges[31]++
 			let effect=player.t.specialPoints[31].add(1).log10().div(25).add(1);
 if (!hasUpgrade('pp',21)) return new Decimal(1)
 if (player.t.sdChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
-if (player.t.sdChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeChallenge!=12) effect = effect.mul(10)
+if (player.t.sdChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeChallenge!=12) effect = effect.add(0.25)
 			return effect.max(1);
 		}
         if(x==32){
 			let effect=player.t.specialPoints[32].add(1).log10().div(100).add(1);
 if (!hasUpgrade('pp',22)) return new Decimal(1)
 if (player.t.phChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
-if (player.t.phChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeChallenge!=12) effect = effect.mul(1.35)
+if (player.t.phChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeChallenge!=12) effect = effect.add(0.015)
 		return effect.max(1);
 		}
 	}

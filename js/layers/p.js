@@ -34,11 +34,12 @@ addLayer("p", {
 		if(hasUpgrade("ap",12))mult=mult.mul(upgradeEffect("ap",12));
 		mult=mult.mul(tmp.sp.buyables[11].effect);
 		mult=mult.mul(tmp.hp.buyables[11].effect);
+		if (hasMalware("m",8)) mult=mult.mul(tmp.m.milestone3Effect.pow(0.1))
         return mult
     },
 	perkCost() {
 		let eff = new Decimal(`e4e23`)
-		let base= player.p.totalPerks.mul(5).max(1)
+		let base= player.p.totalPerks.mul(5).max(1).mul(player.p.totalPerks.sub(3).add(1)).mul(player.p.totalPerks.sub(4).mul(10).max(1))
 		eff=Decimal.pow(eff,base)
 		return eff
 	},
@@ -65,7 +66,19 @@ addLayer("p", {
             title() {return "Respec Perk Upgrades"},
             canClick() {return true},
             onClick() {
+				player.points = new Decimal(0)
+				tmp.t.doReset
+				tmp.mp.doReset
+				layerDataReset("se",["upgrades"])
+				layerDataReset("pe",["upgrades"])
+				layerDataReset("hb",["upgrades"])
+				layerDataReset("pb",["upgrades"])
+				layerDataReset("sp",["upgrades"])
+				layerDataReset("hp",["upgrades"])
+				layerDataReset("ap",["upgrades","challenges","buyables"])
+				layerDataReset("pp",["upgrades"])
 					layerDataReset("t",["challenges","upgrades"])
+					layerDataReset("ep",[])
 					layerDataReset("p",[])
 					player.mp.perkPoints=player.mp.buyables[13]
 					player.p.upgrades.push('11','12','13','14','21','22','23','24','31','32','33','34','41','42','43','44')
@@ -168,17 +181,22 @@ addLayer("p", {
 		15: {
 			title: "Prestige Boost II",
             description: "First Milestone's effect is boosted by your prestige points.",
-            cost: new Decimal(`e2.2e24`),
+            cost: new Decimal(`e4.85e24`),
+			canAfford() {return player.p.spentPerks.lt(player.p.maxPerks)},
+			pay() {
+				player.p.spentPerks=player.p.spentPerks.add(1)
+				player.p.points=player.p.points.sub(`e4.85e24`)
+			},
             unlocked() { return player[this.layer].perkUpgs.includes(Number(this.id))}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
-				let base=3;
+				let base=7;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
                 return softcap(ret,new Decimal('e5e16'),0.1);
             },
 			perkReq() {return "To get this perk upgrade, get "+format(this.perkCost)+" points in AP Challenge 6."},
-			perkCan() {return player.points.gte(`e3e20`)&&player.ap.activeChallenge==32},
+			perkCan() {return player.points.gte(`e2.055e20`)&&player.ap.activeChallenge==32},
 			perkUnl() {return hasMalware("m", 4) },
-			perkCost: new Decimal(`e3e20`),
+			perkCost: new Decimal(`e2.055e20`),
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
 		21: {
@@ -209,11 +227,11 @@ addLayer("p", {
 		25: {
 			title: "Exponential Boost III",
             description: "6th Milestone's effect is better based on your prestige points.",
-            cost: new Decimal(`e2.78e24`),
+            cost: new Decimal(`e1.55e24`),
 			canAfford() {return player.p.spentPerks.lt(player.p.maxPerks)},
 			pay() {
 				player.p.spentPerks=player.p.spentPerks.add(1)
-				player.p.points=player.p.points.sub(this.cost)
+				player.p.points=player.p.points.sub(`e1.55e24`)
 			},
 			effect(){
 				let p=player.p.points.add(1).log10().add(1).log10().pow(0.25)
@@ -222,9 +240,9 @@ addLayer("p", {
             effectDisplay() { return "^"+format(this.effect(),4) }, // Add formatting to the effect
             unlocked() { return player[this.layer].perkUpgs.includes(Number(this.id))}, // The upgrade is only visible when this is true
 			perkReq() {return "To get this perk upgrade, get "+format(this.perkCost)+" points in AP Challenge 3."},
-			perkCan() {return player.points.gte(`e9.15e21`)&&player.ap.activeChallenge==21},
+			perkCan() {return player.points.gte(`e4.8e21`)&&player.ap.activeChallenge==21},
 			perkUnl() {return hasMalware("m", 4) },
-			perkCost: new Decimal(`e9.15e21`),
+			perkCost: new Decimal(`e4.8e21`),
         },
 		31: {
 			title: "Prestige Scaling Reducer I",
@@ -263,22 +281,22 @@ addLayer("p", {
 		35: {
 			title: "Prestige Upgrade 13 Boost I",
             description: "Prestige Upgrade 13 is boosted by prestige-points.",
-            cost: new Decimal(`e4.878e23`),
+            cost: new Decimal(`e3.84e23`),
             unlocked() { return player[this.layer].perkUpgs.includes(Number(this.id))}, // The upgrade is only visible when this is true
 			perkReq() {return "To get this perk upgrade, get "+format(this.perkCost)+" Exotic Prestige."},
 			canAfford() {return player.p.spentPerks.lt(player.p.maxPerks)},
 			pay() {
 				player.p.spentPerks=player.p.spentPerks.add(1)
-				player.p.points=player.p.points.sub(this.cost)
+				player.p.points=player.p.points.sub(`e3.84e23`)
 			},
 			effect(){
 				let p=player.p.points.pow(0.015).pow(0.5);
 				return p.add(1);
 			},
 			effectDisplay() { return format(this.effect(),4)+"x" },
-			perkCan() {return player.ep.points.gte(`e4e8`)},
+			perkCan() {return player.ep.points.gte(`e3.5e8`)},
 			perkUnl() {return hasMalware("m", 4) },
-			perkCost: new Decimal(`e4e8`), // Add formatting to the effect
+			perkCost: new Decimal(`e3.5e8`), // Add formatting to the effect
         },
 		41: {
 			title: "Prestige Boost V",
@@ -327,7 +345,7 @@ addLayer("p", {
 			canAfford() {return player.p.spentPerks.lt(player.p.maxPerks)},
 			pay() {
 				player.p.spentPerks=player.p.spentPerks.add(1)
-				player.p.points=player.p.points.sub(this.cost)
+				player.p.points=player.p.points.sub(`e5.125e23`)
 			},
 			effect(){
 				let p=player.p.points.pow(0.015).add(1).log10().add(1).log10().pow(0.15).div(10);
@@ -465,8 +483,6 @@ addLayer("p", {
 		doReset(l){
 			if (hasMalware("m",4)) {
 				layerDataReset("p")
-				layerDataReset("t",["challenges","upgrades"])
-				player.mp.perkPoints=player.mp.buyables[13]
 				player.p.upgrades.push('11','12','13','14','21','22','23','24','31','32','33','34','41','42','43','44')
 			}
 			if(l=="p"){return;}

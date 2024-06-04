@@ -244,6 +244,6 @@ addLayer("ep", {
 		doReset(l){
 			if(l=="ep")if(player.m.best.gte(162))layerDataReset("pp",["upgrades", 'buyables']);else layerDataReset("pp",[])
 		},
-	update(){
+	update(diff){
 	}
 })

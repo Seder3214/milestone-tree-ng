@@ -11,7 +11,7 @@ addLayer("pp", {
     requires(){
 		return new Decimal('e7e13');
 	},
-    softcap: new Decimal('e20000000'),
+    softcap: new Decimal('e28000000'),
     softcapPower: new Decimal(0.015),
     resource: "prestige power", // Name of prestige currency
     baseResource: "prestige points", // Name of resource prestige is based on
@@ -188,7 +188,8 @@ unlocked() {return player.m.best.gte(155)},
                   if (player.m.best.gte(163)) eff= eff.pow(1.5)
                   if (player.m.best.gte(164)) eff= eff.pow(1.5)
                   eff=softcap(eff,new Decimal('e10000000'),0.1);
-				  return softcap(eff,new Decimal('e13000000'),0.1);
+                  eff=softcap(eff,new Decimal('e13000000'),0.1)
+				  return softcap(eff,new Decimal('e20000000'),0.1);
 			  },
 			  unlocked(){
 				  return player.m.best.gte(123);
