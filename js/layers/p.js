@@ -181,11 +181,11 @@ addLayer("p", {
 		15: {
 			title: "Prestige Boost II",
             description: "First Milestone's effect is boosted by your prestige points.",
-            cost: new Decimal(`e4.85e24`),
+            cost: new Decimal(`e3.85e24`),
 			canAfford() {return player.p.spentPerks.lt(player.p.maxPerks)},
 			pay() {
 				player.p.spentPerks=player.p.spentPerks.add(1)
-				player.p.points=player.p.points.sub(`e4.85e24`)
+				player.p.points=player.p.points.sub(`e3.85e24`)
 			},
             unlocked() { return player[this.layer].perkUpgs.includes(Number(this.id))}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
@@ -227,11 +227,11 @@ addLayer("p", {
 		25: {
 			title: "Exponential Boost III",
             description: "6th Milestone's effect is better based on your prestige points.",
-            cost: new Decimal(`e1.55e24`),
+            cost: new Decimal(`e1.31e24`),
 			canAfford() {return player.p.spentPerks.lt(player.p.maxPerks)},
 			pay() {
 				player.p.spentPerks=player.p.spentPerks.add(1)
-				player.p.points=player.p.points.sub(`e1.55e24`)
+				player.p.points=player.p.points.sub(`e1.31e24`)
 			},
 			effect(){
 				let p=player.p.points.add(1).log10().add(1).log10().pow(0.25)
