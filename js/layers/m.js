@@ -240,8 +240,8 @@ addLayer("m", {
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
 			},
-			pseudoCan() {return player.points.gte(`e1.924e22`)},
-			pseudoCost: new Decimal(`e1.924e22`),
+			pseudoCan() {return player.points.gte(`e1.85e22`)},
+			pseudoCost: new Decimal(`e1.85e22`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',

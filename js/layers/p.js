@@ -190,6 +190,7 @@ addLayer("p", {
             unlocked() { return player[this.layer].perkUpgs.includes(Number(this.id))}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=7;
+				if (player.ap.activeChallenge==42) return Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).add(1).pow(`1e-10`).pow(0.9).add(1))
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
                 return softcap(ret,new Decimal('e5e16'),0.1);
             },
