@@ -581,7 +581,7 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
             }
         },
     },
-    layerShown(){return (player.mp.activeChallenge==21)&&(player.pm.best.gte(5))},
+    layerShown(){return (player.mp.activeChallenge==21)&&(player.pm.best.gte(6))},
     tabFormat: {
         "Corruptions": {
             content:[
@@ -621,7 +621,7 @@ if (data.level>=30 && data.type=='div') eff = eff.div(1000)
                             ["display-text", "You caused <h2 style='color:  black; text-shadow: white 0px 0px 10px;'> "+format(player.cp.points,0)+"</h2> corruptions."],
                             "prestige-button",
                             ["display-text", "You have <h2 style='color:  green; text-shadow: green 0px 0px 10px;'> "+format(player.cp.formatted)+"</h2> corruption essences, which boosts points and Prestige Essences gain by "+ format(corruptEffect())+ "x (points boost works outside of prestige universe)"],
-                            ["display-text", "Caution Power affects corruption's goal, reward, and debuff. Also it stays on disk permanently, even if it has no corruption."],
+                            ["display-text", "Note: It is highly recommended to NOT get Caution power for now.<br> Caution Power affects corruption's goal, reward, and debuff. Also it stays on disk permanently, even if it has no corruption."],
                              "blank",
                         ["buyable",11],
                         "blank",
