@@ -236,7 +236,7 @@ player.tab='m'
 		return player.pep.points.gte(tmp.mp.challenges[this.id].goal)&&player.m.points.lt(110);
 	},
 	completionsAfter120(){
-		let p=player.ep.points;
+		let p=player.pep.points;
 		if(player.m.best.gte(130)||player.pm.best.gte(1)){
 			if(p.lte("1e20"))return 0;
 			return p.log10().div(20).log(1.01).pow(1/1.01).toNumber();
@@ -249,7 +249,7 @@ player.tab='m'
 	goalAfter120(x=player.mp.challenges[21]){
 		if(player.m.best.gte(130)||player.pm.best.gte(1))return Decimal.pow(10,Decimal.pow(1.01,Decimal.pow(x,1.01)).mul(20));
 	},
-	goalDescription() {return "Goal: "+format(this.goalAfter120())+" Exotic Prestige Points in this challenge"},
+	goalDescription() {return "Goal: "+format(this.goalAfter120())+" Prestiged-Exotic Prestige Points in this challenge"},
 	currencyDisplayName: "Exotic Prestige Points",
 	rewardDescription() { return "Unlock Ascensions<br><hr color='black'><i>You've reached the limit of Milestones Power. Travel into <b>Prestige Dimension</b> to get some kind of better Milestones... <br>Or even <b>Ascend</b>?</i>" },
 },
