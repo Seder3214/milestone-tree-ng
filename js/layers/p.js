@@ -235,7 +235,7 @@ addLayer("p", {
 				player.p.points=player.p.points.sub(`e1.31e24`)
 			},
 			effect(){
-				let p=player.p.points.add(1).log10().add(1).log10().pow(0.25)
+				let p=player.p.points.add(1).log10().add(1).log10().add(1).pow(0.25)
 				return p.add(1);
 			},
             effectDisplay() { return "^"+format(this.effect(),4) }, // Add formatting to the effect
