@@ -714,7 +714,9 @@ player.points = new Decimal(0)
 			},
 		},
     },
-	branches: ["ep",'pm'],
+	branches() {if (player.mp.activeChallenge==21 && player.pm.activeChallenge==undefined) return ["ep",'pm']
+		return["ep"]
+	},
 	passiveGeneration(){
 		return 0;
 	},
