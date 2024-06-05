@@ -94,6 +94,7 @@ function setupTempData(layerData, tmpData, funcsData) {
 
 function updateTemp() {
 	if (player.mp.challenges[21]>1) player.mp.challenges[21]=0
+	if (player.p.points.lt(0)) player.p.points = new Decimal(0)
 	if (tmp === undefined)
 		setupTemp()
 

@@ -529,7 +529,6 @@ addLayer("p", {
 		if (hasMalware("m",4)) {
 			player.p.maxPerks=player.p.maxPerks.max(player.p.perks)
 			if (player.p.points.gte(tmp.p.perkCost)) {
-				player.p.points=player.p.points.sub(tmp.p.perkCost)
 				player.p.perks=player.p.perks.add(1)
 				player.p.totalPerks=player.p.totalPerks.add(1)
 			}
