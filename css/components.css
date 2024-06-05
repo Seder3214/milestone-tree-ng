@@ -68,12 +68,12 @@
 ::-webkit-scrollbar-thumb {
     background:  linear-gradient(0deg, #793784 0%,#e78cf7 50%, #793784 100%);
 	border: 1.5px solid yellow;
-	height: 20px;
+	height: 50px;
   }
   ::-webkit-scrollbar-thumb:hover {
     background:  linear-gradient(0deg, #602b69 0%,#d681e6 50%, #602b69 100%);
 	border: 1.5px solid yellow;
-	height: 20px;
+	height: 50px;
   }
 .pseudo:not(.plocked) {
 	background-color: #fd3030;

@@ -14,7 +14,8 @@ addLayer("pp", {
     softcap: new Decimal('e28000000'),
     softcapPower: new Decimal(0.015),
     resource: "prestige power", // Name of prestige currency
-    baseResource: "prestige points", // Name of resource prestige is based on
+    baseResource() {if (hasMalware("m", 4)) return "<span style='color:red'>infected</span> prestige points"
+		return "prestige points"},// Name of resource prestige is based on
     baseAmount() {return player.p.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
     gainMult() { // Calculate the multiplier for main currency from bonuses

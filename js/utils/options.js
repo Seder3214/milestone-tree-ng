@@ -17,6 +17,7 @@ function getStartOptions() {
 		tooltipForcing: true,
 		reverseMilestones: true,
 		changeCorruptTooltipPlace:"right",
+		menuShown: true,
 	}
 }
 

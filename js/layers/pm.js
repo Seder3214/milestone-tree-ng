@@ -627,7 +627,7 @@ else return new Decimal(1)
                     ["display-text",function(){table = '<div style="width:500px;border: 2px solid white;"><h2 style="color:  #f71c50; text-shadow: #f71c50 0px 0px 10px;">Current Unlocked Boosts</h2><br>'
                     if (tmp.pm.count.gte(3)) table+=(player.mp.modeP==true?"Points Mode:<br> Reduce Recharge Fusioner effect by <h3 style='color:#f71c50'>-"+format(tmp.pm.pChalReward1)+"</h3>":"Prestige Essence Mode:<br> Increase Recharge Fusioner effect by <h3 style='color:#f71c50'>+"+format(tmp.pm.pChalReward1)+"</h3>")
                     if (tmp.pm.count.gte(7)) table+=(player.mp.modeP==true?"<br>Corruption Essences effect are boosted by <h3 style='color:#f71c50'>"+format(tmp.pm.pChalReward2)+"x</h3>":"<br> Boost Prestiged-Exotic Fusioner 1st Effect by <h3 style='color:#f71c50'>"+format(tmp.pm.pChalReward2)+"x</h3>")
-                        if (tmp.pm.count.gte(7)) table+=(player.mp.modeP==true?"<br>Second Pr-Exotic Fusioner effect is <h3 style='color:#f71c50'>/"+format(tmp.pm.pChalReward3)+"</h3> weaker (boosted by Prestige Essences)":"<br>Second Pr-Exotic Fusioner effect is <h3 style='color:#f71c50'>"+format(tmp.pm.pChalReward3)+"x</h3> better")
+                        if (tmp.pm.count.gte(11)) table+=(player.mp.modeP==true?"<br>Second Pr-Exotic Fusioner effect is <h3 style='color:#f71c50'>/"+format(tmp.pm.pChalReward3)+"</h3> weaker (boosted by Prestige Essences)":"<br>Second Pr-Exotic Fusioner effect is <h3 style='color:#f71c50'>"+format(tmp.pm.pChalReward3)+"x</h3> better")
                     return table+"</div><br>"}],
                     ["challenges",[1]]
                 ],

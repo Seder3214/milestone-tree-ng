@@ -174,8 +174,8 @@
 	z-index:1000;
 	width: 350px;
 	justify-content: auto;
-	height: 99%;
-	left:1px;
+	height: 100%;
+	left:2px;
 	background: #414141;
 	border: 3px solid rgb(122, 122, 122);
 	display: flexbox;
@@ -201,7 +201,26 @@ overflow-x: hidden;
 	color: rgb(75, 75, 75);
 	height: 45px;
 }
-  
+.backButton {
+	width: 75px;
+	position: absolute;
+	left:10px;
+	bottom:50px;
+	height: 75px;
+	justify-content: auto;
+	margin-bottom: 5px;
+	color: white;
+	font-size:50px;
+	z-index:10000;
+	cursor: pointer;
+	pointer-events: auto;
+	background: #414141;
+	border-right: 2px solid rgb(122, 122, 122);
+	border-top: 2px solid rgb(122, 122, 122);
+	border-bottom: 2px solid rgb(122, 122, 122);
+	border-left: 0px solid rgb(122, 122, 122);
+	transition: all 0.5s;
+} 
 .import {
 	width: 80px;
 	height: 40px;

@@ -11,11 +11,14 @@ addLayer("p", {
 		totalPerks: new Decimal(0),
 		spentPerks: new Decimal(0),
     }},
-    color: "#658091",
+    color() {
+		if (hasMalware("m", 4)) return "#d68f8f"
+		return "#658091"},
     requires(){
 		return new Decimal(3000);
 	},
-    resource: "prestige points", // Name of prestige currency
+    resource() {if (hasMalware("m", 4)) return "<span style='color:red'>infected</span> prestige points"
+		return "prestige points"}, // Name of prestige currency
     baseResource: "points", // Name of resource prestige is based on
     baseAmount() {return player.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -502,19 +505,6 @@ addLayer("p", {
 					"upgrades",
 					"clickables",
 				]
-			},
-			"Scalings":{
-				content:[
-					["display-text", function() {let base = player.mp.buyables[22]
-						let x = player.mp.buyables[22]
-					let table="<h2>Scaling Levels</h2><br><div style='width:100%'>"
-					if (base.gte(tmp.mp.buyables[22].scaled)) table+=`<button class='scale' style="text-align:center"><h3>[ Scaled ]</h3><br><span style='font-size:12px'>Starts at ${formatScale(tmp.mp.buyables[22].scaled,2)} Essence Fusioner level<br> Power: ^${format(new Decimal(0.75).add(x.add(1).sub(tmp.mp.buyables[22].scaled).div(25).mul(hasUpgrade('cp',13)?new Decimal(1).sub(upgradeEffect('cp',13)):1)))}</span></button>`
-					if (base.gte(tmp.mp.buyables[22].ultraScaled)) table+=`<button style="text-align:center" class='scale'><h3>[ Ultra Scaled ]</h3><br><span style='font-size:12px'>Starts at ${formatScale(tmp.mp.buyables[22].ultraScaled,2)} Essence Fusioner level<br> Power: ^${format(new Decimal(1).add(x.add(1).sub(tmp.mp.buyables[22].ultraScaled).div(10)))}</span></button>`
-				return table+"</div>"}],
-				],
-				unlocked() {
-					return player.mp.buyables[22].gte(tmp.mp.buyables[22].scaled)
-				},
 			},
 		},
 	update(){

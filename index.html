@@ -40,7 +40,7 @@
 
 <body onload="load()" onmousemove="updateMouse(event)">
 	<div id="app">
-		<div class="menu" v-if="options.forceOneTab==true">
+		<div class="menu" v-if="options.forceOneTab==true" v-bind:style="options.menuShown==false?{'left':'-355px'}:{'left':'0px'}">
 			<hr>
 			[ Misc ]
 			<button class="menuButton" style="margin-top:4px"onclick="showTab('info-tab')"><span class="buttonText">Information</span></button>
@@ -98,7 +98,8 @@
 				<button class="menuButton" v-if="layerShown('pep')==true" v-bind:style="constructMenuButtonStyle('pep') " onclick="showTab('pep')"><span class="buttonText">Prestiged-Exotic Prestige (+{{player.pm.essence.gte(tmp.pep.nextAtDisp)?1:0}}) </span></button>
 				<button class="menuButton" v-if="layerShown('cp')==true" style="margin-top:4px; color: lime; border: 2px solid lime; background: black" onclick="showTab('cp')"><span class="buttonText">Corrupted Prestige (+{{player.points.gte(tmp.cp.nextAt)?tmp.cp.resetGain:0}}) </button>
 				<button class="menuButton" v-if="(player.tab=='cp' || player.tab=='cm') && layerShown('cm')==true" style="border: 2px solid lime; color:lime;" v-bind:style="constructMenuButtonStyle('cm')" onclick="showTab('cm')"><span class="buttonText">Corrupted Milestone (+{{player.cp.totalCorrupt>=tmp.hb.nextAt?1:0}}) </button>
-				<br v-if="layerShown('pep')==true || layerShown('cp')==true"><hr v-if="layerShown('pep')==true || layerShown('cp')==true"></div>		
+				<br v-if="layerShown('pep')==true || layerShown('cp')==true"><hr v-if="layerShown('pep')==true || layerShown('cp')==true"></div>	
+				<button class="backButton" onclick="toggleOpt('menuShown')"v-if="options.forceOneTab==true" v-bind:style="options.menuShown==true?{'left':'356px'}:{'left':'1px'}">{{options.menuShown==true?'<':'>'}}</button>	
 		<canvas id="treeCanvas" class="canvas" v-if="!(tmp.gameEnded && !player.keepGoing)"></canvas>
 <div id="version" v-if="options.forceOneTab==true" class="overlayThing">
 						{{VERSION.num}}</div>		
