@@ -52,7 +52,7 @@ addLayer("p", {
 		return m;
     },
 	effectDescription() {
-		return "You have "+format(player.p.perks.sub(player.p.spentPerks))+" / "+format(player.p.maxPerks)+" Upgrade Perks (Next at "+format(tmp.p.perkCost)+" Prestige Points).<br>" 
+		if (hasMalware("m",4)) return "You have "+format(player.p.perks.sub(player.p.spentPerks))+" / "+format(player.p.maxPerks)+" Upgrade Perks (Next at "+format(tmp.p.perkCost)+" Prestige Points).<br>" 
 	},
     row: 1, // Row the layer is in on the tree (0 is the first row)
 	exponent: 0.5,
