@@ -74,7 +74,7 @@ canBuyMax() {return true},
         }
     },
     canReset() {
-        return tmp.cp.resetGain>0&&player.pm.activeChallenge!=12
+        return tmp.cp.resetGain>0&&player.pm.activeChallenge==undefined
     },
     color: "black",
     componentStyles: {
