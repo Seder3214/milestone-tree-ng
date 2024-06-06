@@ -269,8 +269,8 @@ addLayer("m", {
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
 			},
-			pseudoCan() {return player.points.gte(`e2.38e22`)},
-			pseudoCost: new Decimal(`e2.38e22`),
+			pseudoCan() {return player.points.gte(`e2.135e22`)},
+			pseudoCost: new Decimal(`e2.135e22`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -292,8 +292,8 @@ addLayer("m", {
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
 			},
-			pseudoCan() {return player.points.gte(`e2.6e22`)},
-			pseudoCost: new Decimal(`e2.6e22`),
+			pseudoCan() {return player.points.gte(`e2.5e22`)},
+			pseudoCost: new Decimal(`e2.5e22`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
