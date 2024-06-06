@@ -466,7 +466,8 @@ addLayer("p", {
 			  }, 
 		},
 	},
-	branches: ["m"],
+	branches() { if (hasMalware("m",4))return [["m","#c86a6a"]]
+		else return ["m"]},
 	passiveGeneration(){
 		if(player.m.best.gte(135))return 1e10;
 		if(player.m.best.gte(20))return 100;

@@ -85,4 +85,5 @@ function drawTreeBranch(num1, data, prefix) { // taken from Antimatter Dimension
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
     ctx.stroke();
+	console.log(`${data[0][1]}`)
 }

@@ -7,7 +7,9 @@ addLayer("m", {
 		pseudoBuys:[],
 		points: new Decimal(0),
     }},
-    color: "#793784",
+	color() {
+		if (hasMalware("m", 4)) return "#9f2846"
+		return "#793784"},
     requires(){
 		//if(player.m.best.gte(99))return new Decimal(Infinity);
 		return new Decimal(10);
