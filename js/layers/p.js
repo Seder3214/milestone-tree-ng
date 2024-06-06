@@ -12,7 +12,7 @@ addLayer("p", {
 		spentPerks: new Decimal(0),
     }},
     color() {
-		if (hasMalware("m", 4)) return "#d68f8f"
+		if (hasMalware("m", 4)) return "#c25757"
 		return "#658091"},
     requires(){
 		return new Decimal(3000);
