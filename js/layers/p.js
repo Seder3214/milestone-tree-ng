@@ -185,7 +185,7 @@ addLayer("p", {
 			title: "Prestige Boost II",
             description: "First Milestone's effect is boosted by your prestige points.",
             cost: new Decimal(`e3.85e24`),
-			canAfford() {return player.p.spentPerks.lt(player.p.maxPerks)},
+			canAfford() {return player.p.spentPerks.lt(player.p.maxPerks)&&player.mp.activeChallenge!=21},
 			pay() {
 				player.p.spentPerks=player.p.spentPerks.add(1)
 				player.p.points=player.p.points.sub(`e3.85e24`)
@@ -232,7 +232,7 @@ addLayer("p", {
 			title: "Exponential Boost III",
             description: "6th Milestone's effect is better based on your prestige points.",
             cost: new Decimal(`e1.31e24`),
-			canAfford() {return player.p.spentPerks.lt(player.p.maxPerks)},
+			canAfford() {return player.p.spentPerks.lt(player.p.maxPerks)&&player.mp.activeChallenge!=21},
 			pay() {
 				player.p.spentPerks=player.p.spentPerks.add(1)
 				player.p.points=player.p.points.sub(`e1.31e24`)
@@ -288,7 +288,7 @@ addLayer("p", {
             cost: new Decimal(`e3.84e23`),
             unlocked() { return player[this.layer].perkUpgs.includes(Number(this.id))}, // The upgrade is only visible when this is true
 			perkReq() {return "To get this perk upgrade, get "+format(this.perkCost)+" Exotic Prestige."},
-			canAfford() {return player.p.spentPerks.lt(player.p.maxPerks)},
+			canAfford() {return player.p.spentPerks.lt(player.p.maxPerks)&&player.mp.activeChallenge!=21},
 			pay() {
 				player.p.spentPerks=player.p.spentPerks.add(1)
 				player.p.points=player.p.points.sub(`e3.84e23`)
@@ -346,7 +346,7 @@ addLayer("p", {
             cost: new Decimal(`e5.125e23`),
             unlocked() { return player[this.layer].perkUpgs.includes(Number(this.id))}, // The upgrade is only visible when this is true
 			perkReq() {return "To get this perk upgrade, get "+format(this.perkCost)+" points in Multiverse Challenge 3."},
-			canAfford() {return player.p.spentPerks.lt(player.p.maxPerks)},
+			canAfford() {return player.p.spentPerks.lt(player.p.maxPerks)&&player.mp.activeChallenge!=21},
 			pay() {
 				player.p.spentPerks=player.p.spentPerks.add(1)
 				player.p.points=player.p.points.sub(`e5.125e23`)

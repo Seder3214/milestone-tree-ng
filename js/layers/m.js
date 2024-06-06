@@ -79,7 +79,7 @@ addLayer("m", {
 			pseudoCost: new Decimal(`e9.485e20`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
-                    'background':'red',
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
 					'color':"white",
                     'width': '100%',
                 }
@@ -106,6 +106,7 @@ addLayer("m", {
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
 					'color':"white",
                     'width': '100%',
                 }
@@ -132,6 +133,7 @@ addLayer("m", {
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
 					'color':"white",
                     'width': '100%',
                 }
@@ -158,6 +160,7 @@ addLayer("m", {
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
 					'color':"white",
                     'width': '100%',
                 }
@@ -179,6 +182,7 @@ addLayer("m", {
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
 					'color':"white",
                     'width': '100%',
                 }
@@ -201,6 +205,7 @@ addLayer("m", {
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
 					'color':"white",
                     'width': '100%',
                 }
@@ -223,6 +228,7 @@ addLayer("m", {
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
 					'color':"white",
                     'width': '100%',
                 }
@@ -245,6 +251,7 @@ addLayer("m", {
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
 					'color':"white",
                     'width': '100%',
                 }
@@ -268,6 +275,7 @@ addLayer("m", {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
 					'color':"white",
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
                     'width': '100%',
                 }
 			},
@@ -290,6 +298,7 @@ addLayer("m", {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
 					'color':"white",
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
                     'width': '100%',
                 }
 			},

@@ -39,3 +39,14 @@ h1, h2, h3, b, input {
 	color: var(--points);
 	text-shadow: 0 0 10px var(--points);
 }
+@keyframes inf_milestone {
+	0% {
+		background-color: rgb(255, 0, 0);
+	}
+	33.3% {
+		background-color: rgb(163, 8, 8);
+	}
+	100% {
+		background-color: rgb(255, 0, 0);
+	}
+}
