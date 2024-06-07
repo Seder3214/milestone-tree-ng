@@ -29,7 +29,7 @@ addLayer("ap", {
         {key: "a", description: "A: Reset for atomic-prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
     layerShown(){return player.m.best.gte(80)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12||player.pm.activeChallenge==13},
-	branches: ["hp"],
+	branches: [["hp",3]],
 	softcap:new Decimal(Infinity),
 	softcapPower:new Decimal(1),
 	
