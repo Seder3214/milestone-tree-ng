@@ -22,7 +22,7 @@ function formatRoman(num) {
 }
 function antiCorrupt() {
     let base=40+(player.cm.best.gte(4)?20:0)
-    if (player.cm.best.gte(5))base+=30
+    if (player.cm.best.gte(5))base+=20
     return base
 }
 function formatScale(num,precision) {
