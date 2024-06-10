@@ -361,7 +361,7 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
             if (data.type=='pm') eff = new Decimal(1e17).mul(data.level).pow(0.75).div(player.cp.buyables[22].gte(1)?buyableEffect('cp',22):1)
             if (data.level>=15 && data.type=='div') eff = eff.div(player.cm.points.gte(2)?5**4:5)
             if (player.cm.best.gte(3)&&data.level>=40 && data.type=='div') eff = eff.div(new Decimal(data.level).pow(player.cp.totalCorrupt/100))
-            if (player.cm.best.gte(3)&&data.level>=90 && data.type=='div') eff = eff.mul(new Decimal(data.level).pow(player.cp.totalCorrupt/20))
+            if (player.cm.best.gte(3)&&data.level>=100 && data.type=='div') eff = eff.mul(new Decimal(data.level).pow(player.cp.totalCorrupt/50))
             if (player.cm.best.gte(3)&&data.level>=40 && data.type=='pm') eff = eff.mul(new Decimal(data.level/10).pow(player.cp.totalCorrupt/15))
             if (data.level>=15 && data.type=='pm') eff = eff.div(player.cm.points.gte(2)?5**2:1.25)
                 if (player.cm.best.gte(3)&&data.level>=80 && data.type=='pm') eff = eff.mul(new Decimal(data.level/15).pow(player.cp.totalCorrupt/20))
@@ -393,6 +393,7 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
 
            if (data.level>=10 && data.type=='div') eff = eff.mul(new Decimal(data.level).div(data.level>=25?20:10)).div(10)
 if (data.level>=30 && data.type=='div') eff = eff.div(1000)
+if (data.level>=100 && data.type=='div') eff = eff.mul(1e25)
             return eff.mul(new Decimal(data.cautPower).add(1))},
         onClick(data, id) { 
             if (player.pm.activeChallenge==undefined) {
