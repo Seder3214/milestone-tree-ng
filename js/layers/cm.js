@@ -109,6 +109,22 @@ addLayer("cm", {
                 }
             }
         },
+        {
+			requirementDescription: "5th Corrupted Milestone",
+            unlocked() {return player[this.layer].best.gte(4)},
+            done() {return player[this.layer].best.gte(5)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "Add +30 to auto-fix level range."
+			},
+            style() {
+                if (hasMilestone('cm',4)) return {
+                    'background':'#00520b',
+                    'border-color':'lime',
+                    'color':'lime',
+                    'width': '100%',
+                }
+            }
+        },
 	],
     tabFormat: {
         "Main": {

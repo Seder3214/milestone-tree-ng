@@ -4,7 +4,7 @@ let modInfo = {
 	author: "Seder3214",
 	pointsName: "points",
 	modFiles: ["/layers/m.js","/layers/p.js","/layers/sp.js","/layers/hp.js","/layers/pb.js","/layers/hb.js","/layers/ap.js",
-	"/layers/t.js","/layers/mm.js","/layers/em.js","/layers/pe.js","/layers/se.js","/layers/pp.js","/layers/ep.js","/layers/mp.js","/layers/pm.js","/layers/cp.js","/layers/cm.js","tree.js","/layers/pep.js","/layers/ach.js",'modal.js',],
+	"/layers/t.js","/layers/mm.js","/layers/em.js","/layers/pe.js","/layers/se.js","/layers/pp.js","/layers/ep.js","/layers/mp.js","/layers/pm.js","/layers/cp.js","/layers/cm.js","tree.js","/layers/pep.js","/layers/ex.js","/layers/ach.js",'modal.js',],
 
 	discordName: "",
 	discordLink: "",

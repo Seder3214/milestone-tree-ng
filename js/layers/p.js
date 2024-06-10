@@ -193,6 +193,7 @@ addLayer("p", {
             unlocked() { return player[this.layer].perkUpgs.includes(Number(this.id))}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=7;
+				if(hasMalware("m",13))base+=10;
 				if (player.ap.activeChallenge==42) return Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).add(1).pow(`1e-10`).pow(0.9).add(1))
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
                 return softcap(ret,new Decimal('e5e16'),0.1);
@@ -238,8 +239,10 @@ addLayer("p", {
 				player.p.points=player.p.points.sub(`e1.31e24`)
 			},
 			effect(){
+				let extra=0
+				if(hasMalware("m",12))extra+=0.35;
 				let p=player.p.points.add(1).log10().add(1).log10().add(1).pow(0.25)
-				return p.add(1);
+				return p.add(1).add(extra);
 			},
             effectDisplay() { return "^"+format(this.effect(),4) }, // Add formatting to the effect
             unlocked() { return player[this.layer].perkUpgs.includes(Number(this.id))}, // The upgrade is only visible when this is true
@@ -294,7 +297,9 @@ addLayer("p", {
 				player.p.points=player.p.points.sub(`e3.84e23`)
 			},
 			effect(){
-				let p=player.p.points.pow(0.015).pow(0.5);
+				let base=0.5
+				if(hasMalware("m",10))base+=0.075;
+				let p=player.p.points.pow(0.015).pow(base);
 				return p.add(1);
 			},
 			effectDisplay() { return format(this.effect(),4)+"x" },
@@ -352,7 +357,9 @@ addLayer("p", {
 				player.p.points=player.p.points.sub(`e5.125e23`)
 			},
 			effect(){
-				let p=player.p.points.pow(0.015).add(1).log10().add(1).log10().pow(0.15).div(10);
+				let extra=0
+				if(hasMalware("m",11))extra+=0.175;
+				let p=player.p.points.pow(0.015).add(1).log10().add(1).log10().pow(0.15).div(10).add(extra);
 				return p.add(1);
 			},
 			effectDisplay() { return format(this.effect(),4)+"x" },

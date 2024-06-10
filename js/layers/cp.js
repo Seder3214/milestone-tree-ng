@@ -21,7 +21,8 @@ function formatRoman(num) {
     return str;
 }
 function antiCorrupt() {
-    let base=40+(player.cm.best.gte(4)?16:0)
+    let base=40+(player.cm.best.gte(4)?20:0)
+    if (player.cm.best.gte(5))base+=30
     return base
 }
 function formatScale(num,precision) {
@@ -62,7 +63,7 @@ addLayer("cp", {
 cap() {
     let cap = 0
     cap=tmp.cp.grid.rows*tmp.cp.grid.cols
-    let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].level>1)
+    let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].level>0)
     return cap-slots.length
 },
 canBuyMax() {return true},
@@ -362,13 +363,15 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
             if (player.cm.best.gte(3)&&data.level>=40 && data.type=='div') eff = eff.div(new Decimal(data.level).pow(player.cp.totalCorrupt/100))
             if (player.cm.best.gte(3)&&data.level>=40 && data.type=='pm') eff = eff.mul(new Decimal(data.level/10).pow(player.cp.totalCorrupt/15))
             if (data.level>=15 && data.type=='pm') eff = eff.div(player.cm.points.gte(2)?5**2:1.25)
-                if (player.cm.best.gte(3)&&data.level>=80 && data.type=='pm') eff = eff.mul(new Decimal(data.level/25).pow(player.cp.totalCorrupt/15))
+                if (player.cm.best.gte(3)&&data.level>=80 && data.type=='pm') eff = eff.mul(new Decimal(data.level/15).pow(player.cp.totalCorrupt/20))
+                    if (player.cm.best.gte(3)&&data.level>=90 && data.type=='pm') eff = eff.mul(new Decimal(data.level/25).pow(player.cp.totalCorrupt/40))
             return eff.div(new Decimal(data.cautPower).add(1)) },
         getEssence(data,id) {
             let gain = new Decimal(0)
             if (data.type=='pm') gain = new Decimal(1).mul(data.level).pow(1.5).add(1)
             else gain = new Decimal(1).mul(data.level).mul(1.5).add(1)
         if (hasUpgrade('cp',12)) gain = gain.mul(upgradeEffect('cp',12))
+        if (player.ex.dotUnl>=1) gain = gain.mul(tmp.ex.exOneEffect)
             return gain.div(new Decimal(data.cautPower).div(2).add(1))},
         getTooltip(data,id) {
             if (data.level<1) return ""
@@ -385,6 +388,7 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
            if (data.level>=20 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(5))
            if (data.level>=30 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(3))
            if (data.level>=50 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(10))
+            if (data.level>=85 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(8))
 
            if (data.level>=10 && data.type=='div') eff = eff.mul(new Decimal(data.level).div(data.level>=25?20:10)).div(10)
 if (data.level>=30 && data.type=='div') eff = eff.div(1000)

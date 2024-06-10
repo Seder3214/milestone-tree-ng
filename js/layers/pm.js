@@ -44,6 +44,7 @@ addLayer("pm", {
         if (player.pm.activeChallenge==11) gain = gain.pow(0.3*(player.pm.challengeTimer.add(1).log10().add(1)))
         if (player.pm.activeChallenge==12||player.pm.activeChallenge==13) return player.pm.challengeTimer.add(1).pow(2.75).add(1)
         if (challengeCompletions('pm',11)>=1) gain = gain.mul(challengeEffect('pm',11))
+        if (hasUpgrade("sp",51)) gain = gain.mul(upgradeEffect("sp",51))
         return gain.div(s).max(1)
     },
     reduce() {

@@ -309,6 +309,26 @@ overflow-x: hidden;
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-timing-function: linear;
   }
+  .exf {
+	text-align: center;
+	font-size: 18px;
+	color: #000;
+	max-width: 700px;
+	background: rgba(255,253,160,1);
+	background: -webkit-linear-gradient( left, #46a364 0%, #5dd182 25%, #80f0a4 50%, #46a364 100% ) repeat;
+	-webkit-background-clip: text;
+	-ms-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-ms-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	text-fill-color: transparent;
+	-webkit-animation-name: masked-animation;
+	-webkit-animation-duration: 50s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+  }
 *:focus {
 	outline: none;
 	webkit-outline: none;

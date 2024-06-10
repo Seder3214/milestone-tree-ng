@@ -5,6 +5,7 @@ addLayer("sp", {
     startData() { return {
         unlocked: false,
 		points: new Decimal(0),
+		perkUpgs: [],
     }},
     color: "#65A0B0",
     requires(){
@@ -42,7 +43,7 @@ addLayer("sp", {
     ],
     layerShown(){return player.m.best.gte(25) && (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12||player.pm.activeChallenge==13},
 	upgrades: {
-        rows: 4,
+        rows: 5,
         cols: 4,
 		11: {
 			title: "Super-Prestige Delayer I",
@@ -224,6 +225,22 @@ addLayer("sp", {
 				return new Decimal("e1293e4");
 			},
             unlocked() { return player.m.best.gte(127)}, // The upgrade is only visible when this is true
+        },
+		51: {
+			title: "Prestige Essence Boost I",
+            description: "Prestige Essence gain is boosted by your prestige points.",
+            cost: new Decimal(`e1.895e24`),
+            unlocked() { return player[this.layer].perkUpgs.includes(Number(this.id))}, // The upgrade is only visible when this is true
+			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
+				let base=new Decimal(2).add(player[this.layer].points.add(1).log10().add(1).log10().pow(1.55).div(100));
+                let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).add(1).log10().pow(0.9).add(1))
+                return softcap(ret,new Decimal('e5e16'),0.1);
+            },
+			perkReq() {return "To get this upgrade, get "+format(this.perkCost)+" points in T Challenge 6."},
+			perkCan() {return player.points.gte(`e5.510e14`)&&player.t.activeChallenge==32},
+			perkUnl() {return player.ex.dotUnl>=1 },
+			perkCost: new Decimal(`e5.510e14`),
+            effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
 	},
 	buyables: {

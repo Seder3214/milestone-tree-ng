@@ -808,7 +808,7 @@ if (player.t.sdChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeC
 if (!hasUpgrade('pp',22)) return new Decimal(1)
 if (player.t.phChoose!=true && player.mp.activeChallenge==12) return new Decimal(1)
 if (player.t.phChoose==true && player.mp.buyables[13].gte(1)&& player.mp.activeChallenge!=12) effect = effect.add(0.015)
-		return effect.max(1);
+		return softcap(effect.max(1),new Decimal(2.1),0.1);
 		}
 	}
 })

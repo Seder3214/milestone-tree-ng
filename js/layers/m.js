@@ -288,7 +288,7 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(10)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table = "Unlock 2 new Prestige Upgrades.";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Unlock a new layer in Prestige Universe (Endgame)."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Unlock a new layer in Prestige Universe."
 				return table
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
@@ -310,7 +310,22 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(10)},
             done() {return player[this.layer].best.gte(11)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Prestige Upgrade 11's effect is better.";
+				let table = "Prestige Upgrade 11's effect is better.";
+				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Prestige Upgrade 35's effect is better."
+				return table
+			},
+			pseudoUnl() {return player.ex.dotUnl>=2},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e2.55e22`)},
+			pseudoCost: new Decimal(`e2.55e22`),
+			style() {
+				if (player.m.pseudoBuys.includes(this.id)) return {
+                    'background':'red',
+					'color':"white",
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
+                    'width': '100%',
+                }
 			},
         },
 		{
@@ -318,7 +333,22 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(11)},
             done() {return player[this.layer].best.gte(12)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Prestige Upgrade 12's effect is better.";
+				let table = "Prestige Upgrade 12's effect is better.";
+				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Prestige Upgrade 45's effect is better."
+				return table
+			},
+			pseudoUnl() {return player.ex.dotUnl>=2},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e2.6e22`)},
+			pseudoCost: new Decimal(`e2.6e22`),
+			style() {
+				if (player.m.pseudoBuys.includes(this.id)) return {
+                    'background':'red',
+					'color':"white",
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
+                    'width': '100%',
+                }
 			},
         },
 		{
@@ -326,7 +356,22 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(12)},
             done() {return player[this.layer].best.gte(13)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Prestige Upgrade 13's effect is better.";
+				let table = "Prestige Upgrade 13's effect is better.";
+				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Prestige Upgrade 25's effect is better."
+				return table
+			},
+			pseudoUnl() {return player.ex.dotUnl>=2},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e3.025e22`)},
+			pseudoCost: new Decimal(`e3.025e22`),
+			style() {
+				if (player.m.pseudoBuys.includes(this.id)) return {
+                    'background':'red',
+					'color':"white",
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
+                    'width': '100%',
+                }
 			},
         },
 		{
@@ -334,7 +379,22 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(13)},
             done() {return player[this.layer].best.gte(14)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Prestige Upgrade 14's effect is better.";
+				let table = "Prestige Upgrade 14's effect is better.";
+				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Prestige Upgrade 15's effect is better."
+				return table
+			},
+			pseudoUnl() {return player.ex.dotUnl>=2},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e3.25e22`)},
+			pseudoCost: new Decimal(`e3.25e22`),
+			style() {
+				if (player.m.pseudoBuys.includes(this.id)) return {
+                    'background':'red',
+					'color':"white",
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
+                    'width': '100%',
+                }
 			},
         },
 		{
@@ -342,7 +402,22 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(14)},
             done() {return player[this.layer].best.gte(15)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "Unlock 2 new Prestige Upgrades.";
+				let table = "Unlock 2 new Prestige Upgrades.";
+				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Unlock Exploration Upgrades (Endgame)."
+				return table
+			},
+			pseudoUnl() {return player.ex.dotUnl>=2},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e3.425e22`)},
+			pseudoCost: new Decimal(`e3.425e22`),
+			style() {
+				if (player.m.pseudoBuys.includes(this.id)) return {
+                    'background':'red',
+					'color':"white",
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
+                    'width': '100%',
+                }
 			},
         },
 		{
