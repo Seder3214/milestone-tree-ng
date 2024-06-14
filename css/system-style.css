@@ -176,7 +176,7 @@
 	justify-content: auto;
 	height:100%;
 	left:2px;
-	background: #414141;
+	background: #0f0f0f;
 	border: 3px solid rgb(122, 122, 122);
 	display: block;
 overflow-y:auto;
@@ -214,7 +214,7 @@ overflow-x: hidden;
 	z-index:10000;
 	cursor: pointer;
 	pointer-events: auto;
-	background: #414141;
+	background: #0f0f0f;
 	border-right: 2px solid rgb(122, 122, 122);
 	border-top: 2px solid rgb(122, 122, 122);
 	border-bottom: 2px solid rgb(122, 122, 122);
