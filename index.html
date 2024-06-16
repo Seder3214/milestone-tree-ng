@@ -91,7 +91,11 @@
 				<button class="menuButton" v-if="layerShown('pep')==true" v-bind:style="constructMenuButtonStyle('pep') " onclick="showTab('pep')"><span class="buttonText">Prestiged-Exotic Prestige </span></button>
 				<button class="menuButton" v-if="layerShown('cp')==true" style="margin-top:4px; color: lime; border: 2px solid lime; background: black" onclick="showTab('cp')"><span class="buttonText">Corrupted Prestige</button>
 				<button class="menuButton" v-if="(player.tab=='cp' || player.tab=='cm') && layerShown('cm')==true" style="border: 2px solid lime; color:lime;" v-bind:style="constructMenuButtonStyle('cm')" onclick="showTab('cm')"><span class="buttonText">Corrupted Milestone</button>
-				<br v-if="(layerShown('pep')==true || layerShown('cp')==true) && player.mp.activeChallenge==21"><hr v-if="layerShown('pep')==true || layerShown('cp')==true"></div>	
+				<br v-if="(layerShown('pep')==true || layerShown('cp')==true) && player.mp.activeChallenge==21"><hr v-if="layerShown('pep')==true || layerShown('cp')==true">
+				<span v-if="layerShown('ex')==true">[ Row 2 ]</span>
+				<button class="menuButton" v-if="layerShown('ex')==true" v-bind:style="constructMenuButtonStyle('ex') " onclick="showTab('ex')"><span class="buttonText">Exploration Points </span></button>
+				<hr v-if="layerShown('ex')==true ">
+			</div>	
 				<button class="backButton" onclick="toggleOpt('menuShown')"v-if="options.forceOneTab==true" v-bind:style="options.menuShown==true?{'left':'330px'}:{'left':'1px'}">{{options.menuShown==true?'<':'>'}}</button>	
 		<canvas id="treeCanvas" class="canvas" v-if="!(tmp.gameEnded && !player.keepGoing)"></canvas>
 <div id="version" v-if="options.forceOneTab==true" class="overlayThing">

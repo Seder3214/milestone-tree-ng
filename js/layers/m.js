@@ -1977,7 +1977,7 @@ addLayer("m", {
 	tabFormat: ["main-display","prestige-button","resource-display",
 				["display-text",function(){if (!hasUpgrade('mp',14)) return "Milestone cost scaling starts at "+format(tmp.m.getScalingStart,4)}],
 				["display-text",function(){return "Milestone cost exponent is "+format(tmp.m.exponent,4)}],
-				["display-text",function(){if (player.pm.essence.gte(1)&&player.pm.best.gte(15))return "Prestige Essences boosts points after softcap by "+format(tmp.pm.essenceBoost.pow(1e19),4)+"x"}],
+				["display-text",function(){if (player.pm.essence.gte(1)&&player.pm.best.gte(15))return "Prestige Essences boosts points after softcap by "+format(tmp.pm.essenceBoost.pow(1e19).pow(hasUpgrade("ex",11)?upgradeEffect("ex",11):1),4)+"x"}],
 				"milestones"
 				],
 })

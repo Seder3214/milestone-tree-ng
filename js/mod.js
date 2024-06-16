@@ -14,8 +14,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "v2.033a - Exploration",
-	name: "Corrupted Game?!",
+	num: "v2.033b - Exploration",
+	name: "Exploring the Destroying Universe...",
 }
 
 let changelog = `<h3>Changelog:</h3><br><br>
@@ -83,7 +83,7 @@ if(b.gte(getPointSoftcapStart())){
 		sc=sc.mul(20);
 	}
 }
-if (player.pm.essence.gte(1)&&(player.ap.activeChallenge==undefined && player.t.activeChallenge==undefined && player.mp.activeChallenge==undefined && player.pm.activeChallenge==undefined)) b = b.mul(tmp.pm.essenceBoost.pow(1e19))
+if (player.pm.essence.gte(1)&&(player.ap.activeChallenge==undefined && player.t.activeChallenge==undefined && player.mp.activeChallenge==undefined && player.pm.activeChallenge==undefined)) b = b.mul(tmp.pm.essenceBoost.pow(1e19).pow(hasUpgrade("ex",11)?upgradeEffect("ex",11):1))
 	if (hasMalware("m",1)) b=b.mul(milestoneEffect("m",1))
 	if(hasUpgrade("p",15))b=b.mul(upgradeEffect("p",15));
 return b.mul(corruptEffect());
