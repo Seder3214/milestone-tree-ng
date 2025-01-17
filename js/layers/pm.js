@@ -296,7 +296,7 @@ addLayer("pm", {
             unlocked() {return player[this.layer].best.gte(13)},
             done() {return player[this.layer].best.gte(14)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Reduce formula in corruption goals that bases on total corruptions by -"+format(tmp.pm.pMilestone14Effect,3)+" based on Prestige Milestones."
+				return "Reduce corruption goals by /"+format(tmp.pm.pMilestone14Effect,3)+" based on Prestige Milestones and Prestige Essences."
 			},
             style() {
                 if (hasMilestone('pm',13)) return {
@@ -415,11 +415,11 @@ else return new Decimal(1)
         },
         12:{
             levelScaleTrojan() {
-                let scale= new Decimal(50).add(new Decimal(30).mul(challengeCompletions('pm',12)))
+                let scale= new Decimal(30).add(new Decimal(30).mul(challengeCompletions('pm',12)))
                 return scale
             },
             levelScalePE() {
-                let scale= new Decimal(50).add(new Decimal(20).mul(challengeCompletions('pm',12)))
+                let scale= new Decimal(30).add(new Decimal(20).mul(challengeCompletions('pm',12)))
                 return scale
             },
             onEnter() {
@@ -553,7 +553,7 @@ else return new Decimal(1)
             +"/3 completions.<br>At 3 completions, unlock a new challenge!"},
             unlocked() { return challengeCompletions('pm',12)>=3 },
             goal: function(){
-                let goal=new Decimal(30).mul(new Decimal(challengeCompletions('pm',13)).add(1))
+                let goal=new Decimal(35).mul(new Decimal(challengeCompletions('pm',13)).div(2).add(1)).floor()
                 return goal
             },
             canComplete(){
@@ -664,7 +664,7 @@ else return new Decimal(1)
             return p;
         },
     	pMilestone14Effect(){
-            let p=player.pm.points.add(1).pow(0.5).add(1);
+            let p=player.pm.points.add(1).pow(5.5).pow(player.pm.points.pow(0.15).mul(player.pm.essence.max(1).log10().pow(0.15)));
             return p;
         },
     	pChalReward1(){
