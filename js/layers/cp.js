@@ -408,11 +408,12 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
            if (data.level>=15 && data.type=='pm') eff = eff.mul(25)
            if (data.level>=20 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(5))
            if (data.level>=30 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(3))
+            if (data.level>=50 && data.type=='pm') eff = eff = eff.mul(new Decimal(data.level).div(2).pow(1.35).pow(data.level-49)/(data.level))
             if (data.level>=85 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(8))
 
            if (data.level>=10 && data.type=='div') eff = eff.mul(new Decimal(data.level).div(data.level>=25?20:10)).div(10)
 if (data.level>=30 && data.type=='div') eff = eff.div(1000)
-    if (data.level>=50 && data.type=='div')  eff = eff.mul(new Decimal(data.level).div(2).pow(3))
+    if (data.level>=50 && data.type=='div')  eff = eff.mul(new Decimal(data.level).div(2).pow(2).pow(data.level-49)/(data.level))
 if (data.level>=100 && data.type=='div') eff = eff.mul(1e42)
 if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
             return eff.mul(new Decimal(data.cautPower).add(1))},
