@@ -21,7 +21,7 @@ function formatRoman(num) {
     return str;
 }
 function antiCorrupt() {
-    let base=40+(player.cm.best.gte(4)?20:0)
+    let base=40+(player.cm.best.gte(4)?8:0)
     if (player.cm.best.gte(5))base+=5
     return base
 }
@@ -412,6 +412,7 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
 
            if (data.level>=10 && data.type=='div') eff = eff.mul(new Decimal(data.level).div(data.level>=25?20:10)).div(10)
 if (data.level>=30 && data.type=='div') eff = eff.div(1000)
+    if (data.level>=50 && data.type=='div')  eff = eff.mul(new Decimal(data.level).div(2).pow(3))
 if (data.level>=100 && data.type=='div') eff = eff.mul(1e42)
 if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
             return eff.mul(new Decimal(data.cautPower).add(1))},
