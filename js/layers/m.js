@@ -403,7 +403,7 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(15)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table = "Unlock 2 new Prestige Upgrades.";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Unlock Exploration Upgrades (Endgame)."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Unlock Exploration Upgrades and Portals."
 				return table
 			},
 			pseudoUnl() {return player.ex.dotUnl>=2},
