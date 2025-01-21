@@ -220,6 +220,8 @@ onExit() {
             let slots = Object.keys(grid).filter(x => grid[x].active==true)
             for (i=0;i<slots.length;i++){
                 player.cp.grid[slots[i]] = {level: getGridData('cp',slots[i]).level,active:false,fixed:false,type:getGridData('cp',slots[i]).type}
+				player.cp.trojanChosen = undefined
+				player.cp.pointsInCorrupt=new Decimal(0)
             }
 setInterval(100000000)
 player.mp.perkPoints = player.mp.buyables[13]
@@ -628,6 +630,7 @@ if (player.mp.modeP==true) base = new Decimal(0.05)
 				player.mp.modeE=true
 				player.pm.essence = new Decimal(0)
 player.points = new Decimal(0)
+player.cp.pointsInCorrupt=new Decimal(0)
 			},
 			style() {
 				if (player.mp.modeE==true) return {
@@ -657,6 +660,7 @@ player.points = new Decimal(0)
 			player.mp.modeE=false
 			player.points = new Decimal(0)
 			player.pm.essence = new Decimal(0)
+			player.cp.pointsInCorrupt=new Decimal(0)
 		},
 		style() {
 			if (player.mp.modeP==true) return {

@@ -13,12 +13,14 @@ if (dot==`(${tmp.ex.xGoal};${tmp.ex.yGoal})`) {
 function checkPortalEnterDot(dot="") {
 	dot=[]
 	dot2=[]
+	dotback=[]
 	zone=player.ex.zone
 	switch(zone){
 		case "a": 
-		dot=["(11;5)","a-02"]
+		dot=["(10;5)","a-02"]
 		break
 		case "a-02": 
+		dotback=["(1;1)","a"]
 		dot=["(7;3)","b-01"]
 		dot2=["(6;5)","c-01"]
 		break
@@ -30,6 +32,13 @@ function checkPortalEnterDot(dot="") {
 	}
 	else if (dot2[0]==`(${player.ex.buyables[11]};${player.ex.buyables[12]})`) {
 		player.ex.zone=dot2[1]
+		player.ex.buyables[11]=new Decimal(0)
+		player.ex.buyables[12]=new Decimal(0)
+	}
+	else if (dotback[0]==`(${player.ex.buyables[11]};${player.ex.buyables[12]})`) {
+		player.ex.zone=dotback[1]
+		player.ex.buyables[11]=new Decimal(0)
+		player.ex.buyables[12]=new Decimal(0)
 	}
 	}
 addLayer("ex", {
@@ -95,7 +104,7 @@ addLayer("ex", {
 					if (x>=2) goal=goal.add(x.add(1).mul(1.25)).floor()
 					break
 				case "a-02":
-					x=player.ex.a2Unl
+					x=new Decimal(player.ex.a2Unl)
 					goal=new Decimal(2)
 					goal=goal.add(x.add(1))
 					break
@@ -105,6 +114,8 @@ addLayer("ex", {
     exOneEffect() {
         let eff= new Decimal(1)
         if (player.ex.dotUnl>=1)eff=eff.mul(player.ex.points.add(1).pow(2.674))
+		if (hasUpgrade('ex',12)) eff = eff.mul(player.ex.points.add(1).pow(2.867))
+		eff=softcap(eff,new Decimal(1000),0.15)
         return eff
     },
 	exponent: function(){
@@ -134,6 +145,14 @@ addLayer("ex", {
 			pay() {
 			},
             effectDisplay() { return "^"+format(this.effect(),4) }, // Add formatting to the effect
+        },
+		12: {
+			title: "Explore Upgrade 12",
+            description: "Zone a (8;4) reward formula is slightly better. Corruption Booster effect is slightly better.",
+            cost: new Decimal(3),
+            unlocked() { return hasMalware("m",14)}, // The upgrade is only visible when this is true
+			pay() {
+			}, // Add formatting to the effect
         },
 	},
 	buyables: {
@@ -255,11 +274,12 @@ player.ex.buyables[i] = new Decimal(0)}
 			content:[
 				"main-display","prestige-button","resource-display",
                 ["display-text",function(){table=""
-					if (player.ex.points.gte(1))table = 'Your exploration points are increasing your exploration area limits. For now, your area limits are: X axis - '+format(tmp.ex.xLimit)+", Y axis - "+format(tmp.ex.yLimit)+".<br>By reaching some of positions in the area you can unlock new features.<br>New feature is at "+`(${tmp.ex.xGoal};${tmp.ex.yGoal})`+"."
+					if (player.ex.points.gte(1))table = 'Your exploration points are increasing your exploration area limits. For now, your area limits are: X axis - '+format(tmp.ex.xLimit)+", Y axis - "+format(tmp.ex.yLimit)+".<br>By reaching some of positions in the area you can unlock new features.<br>New feature is at "+`(${tmp.ex.xGoal};${tmp.ex.yGoal})`
+					+`. Current zone: ${player.ex.zone}`
                     return table}],
 				"buyables",
 				["display-text",function(){table=""
-					if (player.ex.points.gte(1))table = `Green circle is current position, the yellow star is a position for a new feature.<br><svg width="${((tmp.ex.xLimit)*20)+60}" height="${((tmp.ex.yLimit)*20)+90}" version="1.1">
+					if (player.ex.points.gte(1))table = `Green circle is current position, the yellow star is a position for a new feature${hasMalware('m',14)?`,<br> the Portal is a teleport to a new zone, the yellow arrow is the portal to go to previous zone`:"."}.<br><svg width="${((tmp.ex.xLimit)*20)+60}" height="${((tmp.ex.yLimit)*20)+90}" version="1.1">
 					<text x="0" y="40" fill="white" font-size="12px">0</text>
 					<line x1="20" x2="20" y1="50" y2="${((tmp.ex.yLimit)*20)+50}" stroke="white" stroke-width="4"/>
 					<line x1="20" x2="${((tmp.ex.xLimit)*20)+20}" y1="50" y2="50" stroke="white" stroke-width="4"/>`
@@ -276,12 +296,14 @@ player.ex.buyables[i] = new Decimal(0)}
 					}
 					zone=player.ex.zone
 					dot=[0,0]
+					dotback=undefined
 					switch(zone){
 						case "a": 
-						dot=[11,5]
+						dot=[10,5]
 						break
 						case "a-02": 
 						dot=[7,3]
+						dotback=[1,1]
 						break
 					}
 					if (player.ex.points.gte(1))table+=`
@@ -289,7 +311,8 @@ player.ex.buyables[i] = new Decimal(0)}
 					<line x2="${((tmp.ex.xLimit)*20)+20}" x1="20" y1="${((tmp.ex.yLimit)*20)+50}" y2="${((tmp.ex.yLimit)*20)+50}" stroke="#909090" stroke-width="3"/>
 					<text x="${player.ex.buyables[11].mul(20).add(11)}" y="${player.ex.buyables[12].mul(20).add(55)}" fill="#46a364" font-size="12px">🟢</text>
 					<text x="${tmp.ex.xGoal.mul(20).add(11)}" y="${tmp.ex.yGoal.mul(20).add(55)}" fill="yellow" font-size="20px">★</text>`
-					if (hasMalware('m',14)) table+=`<text x="${new Decimal(dot[0]).mul(20).add(6)}" y="${new Decimal(dot[1]).mul(20).add(55)}" fill="yellow" font-size="20px">🌀</text>`
+					if (hasMalware('m',14)) {table+=`<text x="${new Decimal(dot[0]).mul(20).add(6)}" y="${new Decimal(dot[1]).mul(20).add(55)}" fill="yellow" font-size="20px">🌀</text>`
+					if (dotback!=undefined) table+=`<text x="${new Decimal(dotback[0]).mul(20).add(8)}" y="${new Decimal(dotback[1]).mul(20).add(57)}" fill="yellow" font-size="20px">⇦</text>`}
 					return table+"</svg>"}]
 			]
 		},
@@ -309,6 +332,7 @@ player.ex.buyables[i] = new Decimal(0)}
 							let tableB=player.ex.a2Unl>=1?"<br>Zone A-2 Rewards:":""
 							if (player.ex.dotUnl>=1) tableA+="<br>(8;4) - [ Corruptions rewards are "+format(tmp.ex.exOneEffect)+"x better.<br>Unlock one Super Prestige Upgrade in Normal Universe. ]"
 							if (player.ex.dotUnl>=2) tableA+="<br>(9;5) - [ Unlock more Malware Milestones. ]"
+							if (player.ex.dotUnl>=3) tableA+="<br>(11;7) - [ Unlock one Malware Milestones. ]"
 							if (player.ex.a2Unl>=1) tableB+= "<br>Zone A-2 (3;2) - [ Unlock Security Algorithms. ]"
 							table = "Currently unlocked:"+tableA+tableB
 							return table}],

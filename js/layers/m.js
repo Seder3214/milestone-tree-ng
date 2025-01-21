@@ -403,7 +403,7 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(15)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table = "Unlock 2 new Prestige Upgrades.";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>Unlock Exploration Upgrades and Portals."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>Unlock Exploration Upgrades and Portals.<br>Add +5 to [Corrupted Essence] Challenge Completions"
 				return table
 			},
 			pseudoUnl() {return player.ex.dotUnl>=2},
@@ -425,7 +425,22 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(15)},
             done() {return player[this.layer].best.gte(16)}, // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "3rd Milestone's effect ^1.016";
+				table = "3rd Milestone's effect ^1.016";
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>Unlock Milestone Ambers (in Super Prestige)."
+				return table
+			},
+			pseudoUnl() {return player.ex.dotUnl>=3},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e1.309e24`)},
+			pseudoCost: new Decimal(`e1.309e24`),
+			style() {
+				if (player.m.pseudoBuys.includes(this.id)) return {
+                    'background':'red',
+					'color':"white",
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
+                    'width': '100%',
+                }
 			},
         },
 		{

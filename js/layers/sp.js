@@ -7,11 +7,13 @@ addLayer("sp", {
 		points: new Decimal(0),
 		perkUpgs: [],
     }},
-    color: "#65A0B0",
+    color() { if (hasMalware('m',15)) return "rgb(238, 112, 112)"
+		return "#65A0B0"},
     requires(){
 		return new Decimal(1e98);
 	}, // Can be a function that takes requirement increases into account
-    resource: "super-prestige points", // Name of prestige currency
+    resource() {if (hasMalware("m", 15)) return "<span style='color:red'>infected</span> super prestige points"
+		return "super-prestige points"}, // Name of prestige currency
     baseResource: "prestige points", // Name of resource prestige is based on
     baseAmount() {return player.p.points}, // Get the current amount of baseResource
     type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
@@ -234,6 +236,7 @@ addLayer("sp", {
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=new Decimal(2).add(player[this.layer].points.add(1).log10().add(1).log10().pow(1.55).div(100));
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).add(1).log10().pow(0.9).add(1))
+				if (player.pep.buyables[11].gte(5)) ret = ret.mul(tmp.pep.prFiveEffect)
                 return softcap(ret,new Decimal('e5e16'),0.1);
             },
 			perkReq() {return "To get this upgrade, get "+format(this.perkCost)+" points in T Challenge 6."},
@@ -346,6 +349,22 @@ addLayer("sp", {
 					'height':'100px'
 				}
 			  }, 
+		},
+	},
+	tabFormat: {
+		"Main":{
+			content:[
+				"main-display","prestige-button","resource-display",
+                'buyables',
+                'upgrades',
+
+			]
+		},
+		"Milestone Ambers":{
+			content:[
+				"main-display","prestige-button","resource-display",
+				["display-text",function(){if (hasMalware('m',15)) return "You have "+format(player.sp.ambers) + " Milestone Ambers (ENDGAME)"}],
+			]
 		},
 	},
 	branches: ["p"],

@@ -20,6 +20,18 @@ function formatRoman(num) {
   
     return str;
 }
+function checkMinimum() {
+    let rangeMul = Math.floor(player.cp.totalCorrupt/4)
+    let addLevel = Math.floor(player.cp.totalCorrupt/5)*1.5
+    let ranType = Math.floor(Math.random()*1.5)
+    let range = 10+addLevel-(player.pm.best.gte(13)?tmp.pm.pMilestone13Effect:0)
+    let start = new Decimal(1).add(rangeMul)
+    let minCorrupt=1000
+    for (l in player.cp.grid) {
+    if (player.cp.grid[l].level!=0)minCorrupt=Math.min(minCorrupt,player.cp.grid[l].level-start)
+    }
+return minCorrupt
+}
 function antiCorrupt() {
     let base=40+(player.cm.best.gte(4)?8:0)
     if (player.cm.best.gte(5))base+=5
@@ -55,10 +67,10 @@ addLayer("cp", {
 		points: new Decimal(0),
         formatted: new Decimal(0),
         chosenTrojan:0,
-        chosenBackdoor:0,
         pointsInCorrupt:new Decimal(0),
         peInCorrupt:new Decimal(0),
         cooldown:0,
+        cooldown2:0,
         pool: ["div","pm"],
         totalCorrupt:0,
     }},
@@ -142,6 +154,12 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
         let slow=player.cp.trojanChosen!=undefined?gridEffect('cp',player.cp.trojanChosen):new Decimal(1)
         if (gain.div(slow).lte(1)) return new Decimal(0)
         return player.cp.trojanChosen!=undefined?gain.div(slow):new Decimal(0)
+    },
+    peGainInCorrupt() {
+        let gain=tmp.pm.gain.mul(player.cp.buyables[31].gt(0)?buyableEffect("cp",31):1)
+        let slow=player.cp.chosenBackdoor!=undefined?gridEffect('cp',player.cp.chosenBackdoor):new Decimal(1)
+        if (gain.div(slow).lte(1)) return new Decimal(0)
+        return player.cp.chosenBackdoor!=undefined?gain.div(slow):new Decimal(0)
     },
     upgrades: {
         rows() {
@@ -314,6 +332,16 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
                     'border-radius':'0%',
                 }
             }
+            else if (player.cp.chosenBackdoor==id && data.type=="pm") {
+                return {
+                    'background':'#0f0f0f',
+                    'border-color':'yellow',
+                    'color':'lime',
+                    'width':'100px',
+                    'height':'100px',
+                    'border-radius':'0%',
+                }
+            }
             else{
                 return {
                     'background':'#0f0f0f',
@@ -386,7 +414,7 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
             if (player.cm.best.gte(3)&&data.level>=40 && data.type=='pm') eff = eff.mul(new Decimal(data.level/10).pow(player.cp.totalCorrupt/20))
                 if (player.cm.best.gte(3)&&data.level>=60 && data.type=='pm') eff = eff.mul(new Decimal(data.level/10).pow(player.cp.totalCorrupt/100).mul(data.level-59))
             if (data.level>=15 && data.type=='pm') eff = eff.div(player.cm.points.gte(2)?5**2:1.25)
-                if (player.cm.best.gte(3)&&data.level>=80 && data.type=='pm') eff = eff.mul(new Decimal(data.level/15).pow(player.cp.totalCorrupt/20))
+                if (player.cm.best.gte(3)&&data.level>=80 && data.type=='pm') eff = eff.mul(new Decimal(data.level/5).pow(player.cp.totalCorrupt/15).pow(((data.level-79)/1000)+1))
                     if (player.cm.best.gte(3)&&data.level>=90 && data.type=='pm') eff = eff.mul(new Decimal(data.level/25).pow(player.cp.totalCorrupt/40))
                 if(player.pm.best.gte(14)&& data.type=='div') eff = eff.div((player.pm.best.gte(14)?tmp.pm.pMilestone14Effect:0))
                 if(player.pm.best.gte(14)&& data.type=='pm') eff = eff.div((player.pm.best.gte(14)?tmp.pm.pMilestone14Effect.pow(0.15):0))
@@ -451,6 +479,14 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
                     table = table.replace('=','█')        
                     }
             }
+            if ((data.active==true || player.cp.chosenBackdoor==id) && data.type=='pm') {
+                if ((player.cp.chosenBackdoor==id) && player.cp.peInCorrupt.gte(gridCost('cp',player.cp.chosenBackdoor).mul(new Decimal(0.1).mul(i)))) {
+                    table = table.replace('=','█')        
+                 }
+                if ((data.active==true)&&(player.pm.essence.gte(gridCost('cp',id).mul(new Decimal(0.1).mul(i))))) {
+                table = table.replace('=','█')        
+                }
+        }
             else if (data.active==true && data.type=='pm') {
                 if (player.pm.essence.gte(gridCost('cp',id).mul(new Decimal(0.1).mul(i)))) {
                     table = table.replace('=','█')        
@@ -461,6 +497,11 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
                 if (player.cp.trojanChosen==id) { table+="<br>-< "+format(player.cp.pointsInCorrupt.add(1).div(gridCost('cp',id)).mul(100).min(100))+"% >-"       
                  }
                 else table+="<br>-< "+format(player.points.div(gridCost('cp',id)).mul(100).min(100))+"% >-" 
+            }
+            if ((data.active==true || player.cp.chosenBackdoor==id)&& data.type=='pm'){
+                if (player.cp.chosenBackdoor==id) { table+="<br>-< "+format(player.cp.peInCorrupt.add(1).div(gridCost('cp',id)).mul(100).min(100))+"% >-"       
+                 }
+                else table+="<br>-< "+format(player.pm.essence.div(gridCost('cp',id)).mul(100).min(100))+"% >-" 
             }
             if (data.active==true&& data.type=='pm'){
                 table+="<br>-< "+format(player.pm.essence.div(gridCost('cp',id)).mul(100).min(100))+"% >-" 
@@ -519,7 +560,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
         21:{
             sellOne() {
                 player.cp.buyables[21]=player.cp.buyables[21].sub(1).max(0)
-                let cost = new Decimal(100000).mul(player.cp.buyables[21].add(1).pow(new Decimal(player.cp.buyables[21]/5).add(1)))
+                let cost = new Decimal(100000).mul(player.cp.buyables[21].add(1).pow(new Decimal(player.cp.buyables[21]/5).add(1))).pow(player.cp.buyables[21].gte(6)?1.15:1)
                 player.cp.formatted=player.cp.formatted.add(cost)
             },
             canSellOne() {return player.cp.buyables[21].gt(0)},
@@ -530,7 +571,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 				let data = tmp[this.layer].buyables[this.id];
 				return "Total buyed: "+format(player[this.layer].buyables[this.id])+"<br>"+"Boosts corruption essences effect. <br>Cost: "+format(data.cost)+" Corruption Essences"+"<br>Currently: "+format(this.effect())+"x";
 			},
-			cost(x) {return new Decimal(100000).mul(x.add(1).pow(new Decimal(x/5).add(1)));
+			cost(x) {return new Decimal(100000).mul(x.add(1).pow(new Decimal(x/5).add(1))).pow(x.gte(6)?1.15:1);
 			},
 			canAfford() {
                    return player.cp.formatted.gte(tmp[this.layer].buyables[this.id].cost)
@@ -545,6 +586,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 			  },
             effect(x) {
                 let eff = x*100.56*(3**(x+1))+1
+                if (hasUpgrade('ex',12)) eff=x*119.56*(3.25**(x+1)*5)+1
                 return softcap(new Decimal(eff),new Decimal(1e14),0.5)
             },
 			  style() {
@@ -570,7 +612,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
         22:{
             sellOne() {
                 player.cp.buyables[22]=player.cp.buyables[22].sub(1).max(0)
-                let cost=new Decimal(200000).mul(player.cp.buyables[22].add(1).pow(new Decimal((player.cp.buyables[22])/5).add(1)))
+                let cost=new Decimal(200000).mul(player.cp.buyables[22].add(1).pow(new Decimal((player.cp.buyables[22])/5).add(1))).pow(player.cp.buyables[22].gte(3)?1.25:1)
                 player.cp.formatted=player.cp.formatted.add(cost)
             },
             canSellOne() {return player.cp.buyables[22].gt(0)},
@@ -581,7 +623,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 				let data = tmp[this.layer].buyables[this.id];
 				return "Total buyed: "+format(player[this.layer].buyables[this.id])+"<br>"+"Reduces corruptions goals. <br>Cost: "+format(data.cost)+" Corruption Essences"+"<br>Currently: /"+format(this.effect());
 			},
-			cost(x) {return new Decimal(200000).mul(x.add(1).pow(new Decimal(x/5).add(1)));
+			cost(x) {return new Decimal(200000).mul(x.add(1).pow(new Decimal(x/5).add(1))).pow(x.gte(3)?1.25:1);
 			},
 			canAfford() {
                    return player.cp.formatted.gte(tmp[this.layer].buyables[this.id].cost)
@@ -624,9 +666,9 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 			},
 			display(){
 				let data = tmp[this.layer].buyables[this.id];
-				return "Algorithm will fix corruptions faster. <br>Cost: "+format(data.cost)+" Points"+"<br>Speed: "+format(this.effect())+"x";
+				return "Algorithm will fix corruptions faster (based on chosen corruption's level). <br>Cost: "+format(data.cost)+" Points"+"<br>Speed: "+format(this.effect())+"x";
 			},
-			cost(x) {return new Decimal(1e126).mul(x.add(1).pow(new Decimal(x).add(1).mul(1.25)));
+			cost(x) {return new Decimal(1e100).mul(x.add(1).pow(new Decimal(x).add(1).mul(1.85)));
 			},
 			canAfford() {
                    return player.points.gte(tmp[this.layer].buyables[this.id].cost)
@@ -640,8 +682,8 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 				  return player.ex.a2Unl>=1;
 			  },
             effect(x) {
-                let eff = new Decimal(10).pow(x)
-                return eff
+                let eff = new Decimal(10*(getGridData("cp",player.cp.trojanChosen).level>=1?x*((getGridData("cp",player.cp.trojanChosen).level/100)+1):1)).pow(x*((getGridData("cp",player.cp.trojanChosen).level/1000)+1))
+                return softcap(eff,new Decimal(1e38),0.205)
             },
 			  style() {
 				if (player.points.lt(this.cost())) return {
@@ -650,7 +692,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 					'background-color':'black',
 					'border':'2px solid',
                     "margin-left":"10px",
-					'height':'65px',
+					'height':'75px',
 					'width':'250px',
 				}
 				else return {
@@ -658,7 +700,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 					'color':'white',
 					'background-color':'rgb(68, 68, 68)',
 					'border':'2px solid',
-					'height':'65px',
+					'height':'75px',
                     "margin-left":"10px",
 					'width':'250px',
                     'cursor':'pointer',
@@ -673,7 +715,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 				let data = tmp[this.layer].buyables[this.id];
 				return "Reduce cooldown after fixing a corruption. <br>Cost: "+format(data.cost)+" Points"+"<br>Cooldown: "+format(this.effect())+"s";
 			},
-			cost(x) {return new Decimal(1e127).mul(x.add(1).pow(new Decimal(x).add(1).mul(4*(x/1.5))));
+			cost(x) {return new Decimal(1e115).mul(x.add(1).pow(new Decimal(x).add(1).mul(5*(x/1.5))));
 			},
 			canAfford() {
                    return player.points.gte(tmp[this.layer].buyables[this.id].cost)
@@ -697,7 +739,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 					'background-color':'black',
 					'border':'2px solid',
                     "margin-left":"10px",
-					'height':'65px',
+					'height':'75px',
 					'width':'250px',
 				}
 				else return {
@@ -705,7 +747,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 					'color':'white',
 					'background-color':'rgb(68, 68, 68)',
 					'border':'2px solid',
-					'height':'65px',
+					'height':'75px',
                     "margin-left":"10px",
 					'width':'250px',
                     'cursor':'pointer',
@@ -734,7 +776,54 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 				  return player.ex.a2Unl>=1;
 			  },
             effect(x) {
-                let eff = new Decimal(2).pow(x)
+                let eff = new Decimal(2*(getGridData("cp",player.cp.chosenBackdoor).level>=1?x*((getGridData("cp",player.cp.chosenBackdoor).level/100)+1):1)).pow(x*(getGridData("cp",player.cp.chosenBackdoor).level>=1?x*((getGridData("cp",player.cp.chosenBackdoor).level/1000)+1):1))
+                return softcap(eff,new Decimal(1e20),0.175)
+            },
+			  style() {
+				if (player.pm.essence.lt(this.cost())) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'black',
+					'border':'2px solid',
+                    "margin-left":"10px",
+					'height':'65px',
+					'width':'250px',
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'rgb(68, 68, 68)',
+					'border':'2px solid',
+					'height':'65px',
+                    "margin-left":"10px",
+					'width':'250px',
+                    'cursor':'pointer',
+				}
+            }
+        },
+        34:{
+			title(){
+				return `<h3>Cooldown Reduce [${player.cp.buyables[34]}]</h3>`;
+			},
+			display(){
+				let data = tmp[this.layer].buyables[this.id];
+				return "Reduce cooldown after fixing a corruption. <br>Cost: "+format(data.cost)+" Prestige Essences"+"<br>Cooldown: "+format(this.effect())+"s";
+			},
+			cost(x) {return new Decimal(1e125).mul(x.add(1).pow(new Decimal(x).add(1).mul(2*(x/2))));
+			},
+			canAfford() {
+                   return player.pm.essence.gte(tmp[this.layer].buyables[this.id].cost)
+			},
+               buy() { 
+                cost = tmp[this.layer].buyables[this.id].cost
+                   player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
+                   player.pm.essence=player.pm.essence.sub(cost)
+               },
+			  unlocked(){
+				  return player.ex.a2Unl>=1;
+			  },
+            effect(x) {
+                let eff = new Decimal(120).mul(new Decimal(0.5).pow(x))
                 return eff
             },
 			  style() {
@@ -820,9 +909,9 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
                             "blank",
                             ["buyables",[2]],
                             "blank",
-                            player.ex.a2Unl>=1?["row", [["display-text",  `<div style="border:2px solid white; width:450px; height:60px; display:flexflex-wrap: wrap; align-content: center; justify-content: center; align-items: center;">Security Algorithm: <span style='color:  green; text-shadow: green 0px 0px 10px; font-size:20px'>TrojanFix.scr</span><br>Cooldown: ${format(player.cp.cooldown,2)}s<hr color="#4f4f4f">Automatically Fixes Trojan Corruptions.<br>`],["buyable",[31]],["display-text", `</div>`],["buyable",[33]]]]:[],
+                            player.ex.a2Unl>=1?["row", [["display-text",  `<div style="border:2px solid white; width:450px; height:75px; display:flexflex-wrap: wrap; align-content: center; justify-content: center; align-items: center;">Security Algorithm: <span style='color:  green; text-shadow: green 0px 0px 10px; font-size:20px'>TrojanFix.scr</span><br>Cooldown: ${format(player.cp.cooldown,2)}s<hr color="#4f4f4f">Automatically Fixes Trojan Corruptions.<br>`],["buyable",[31]],["display-text", `</div>`],["buyable",[33]]]]:[],
                             ["blank","5px"],
-                            player.ex.a2Unl>=1?["row", [["display-text", `<div style="border:2px solid white; width:450px; height:60px; display:flexflex-wrap: wrap; align-content: center; justify-content: center; align-items: center;">Security Algorithm: <span style='color:  green; text-shadow: green 0px 0px 10px; font-size:16px'>BackdoorRemove.scr</span><hr color="#4f4f4f">Automatically Fixes backdoor Corruptions.<br>`],["buyable",[32]],["display-text", `</div>`]]]:[],
+                            player.ex.a2Unl>=1?["row", [["display-text", `<div style="border:2px solid white; width:450px; height:75px; display:flexflex-wrap: wrap; align-content: center; justify-content: center; align-items: center;">Security Algorithm: <span style='color:  green; text-shadow: green 0px 0px 10px; font-size:16px'>BackdoorRemove.scr</span><br>Cooldown: ${format(player.cp.cooldown2,2)}s<hr color="#4f4f4f">Automatically Fixes backdoor Corruptions.<br>`],["buyable",[32]],["display-text", `</div>`],["buyable",[34]]]]:[],
                         ]
                     ]
                 },
@@ -833,8 +922,11 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 	branches: ["pm"],
     update(diff) {
         if (player.cp.trojanChosen!=undefined&&player.ex.a2Unl>=1)player.cp.pointsInCorrupt=player.cp.pointsInCorrupt.add(tmp.cp.gainInCorrupt.times(diff))
+        if (player.cp.chosenBackdoor!=undefined&&player.ex.a2Unl>=1)player.cp.peInCorrupt=player.cp.peInCorrupt.add(tmp.cp.peGainInCorrupt.times(diff))
         if (player.cp.cooldown>0) player.cp.cooldown-=diff
         if (player.cp.cooldown<0)player.cp.cooldown=0
+        if (player.cp.cooldown2>0) player.cp.cooldown2-=diff
+        if (player.cp.cooldown2<0)player.cp.cooldown2=0
         if (player.cp.pool.includes("pow")) player.cp.pool = ["div","pm"]
     let slots=activeCorruptions()
     let all = Object.keys(player.cp.grid).filter(x=>player.cp.grid[x].level<antiCorrupt() && player.cp.grid[x].level>0)
@@ -856,6 +948,15 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
                     player.cp.trojanChosen=undefined
                     player.cp.pointsInCorrupt=new Decimal(0)
                 } 
+                if (player.mp.activeChallenge==21&&player.ex.a2Unl>=1 && player.cp.chosenBackdoor!=undefined && (player.cp.peInCorrupt.gte(gridCost('cp',player.cp.chosenBackdoor))&& getGridData('cp',player.cp.chosenBackdoor).type=='pm')&&getGridData('cp',player.cp.chosenBackdoor).level>=1) {
+                    player.cp.formatted = player.cp.formatted.add(gridEssence('cp',player.cp.chosenBackdoor))
+                    player.cp.grid[player.cp.chosenBackdoor]={level: 0,active:false,fixed:false,type: getGridData('cp',player.cp.chosenBackdoor).type,cautPower: getGridData('cp',player.cp.chosenBackdoor).cautPower}
+                    doPopup("none","Corruption was fixed!","Corruption Info",3,"black","lime")
+                    player.cp.totalCorrupt += 1
+                    player.cp.cooldown2=buyableEffect("cp",34)
+                    player.cp.chosenBackdoor=undefined
+                    player.cp.peInCorrupt=new Decimal(0)
+                } 
         for (i=0;i<slots.length;i++) {
             if (player.pm.activeChallenge==undefined) {
                 if (player.ex.a2Unl<=1&&(player.points.gte(gridCost('cp',slots[i]))&& getGridData('cp',slots[i]).type=='div')) {
@@ -874,12 +975,34 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
             }
         }
         for (i in player.cp.grid) {
+            let rangeMul = Math.floor(player.cp.totalCorrupt/4)
             let addLevel = Math.floor(player.cp.totalCorrupt/5)*1.5
             let ranType = Math.floor(Math.random()*1.5)
-            let range = addLevel-(player.pm.best.gte(13)?tmp.pm.pMilestone13Effect:0)
-            if (player.ex.a2Unl>=1) {
-                    if (player.cp.grid[i].type=="div" && player.cp.grid[i].level>=1&&player.cp.cooldown==0) {player.cp.trojanChosen=i
+            let range = 10+addLevel-(player.pm.best.gte(13)?tmp.pm.pMilestone13Effect:0)
+            let start = new Decimal(1).add(rangeMul)
+            let minCorrupt=1000
+            for (l in player.cp.grid) {
+            if (player.cp.grid[l].level!=0&&player.cp.grid[l].type=="div")minCorrupt=Math.min(minCorrupt,player.cp.grid[l].level-start)
+                if (player.ex.a2Unl>=1) {
+                    if (player.cp.grid[i].type=="div" && player.cp.grid[i].level>=1&&player.cp.cooldown==0&&player.cp.grid[i].level-start==minCorrupt) {player.cp.trojanChosen=i
                 break}
+            }
+            }
+            if (player.cp.grid[i].level>range&&player.pm.activeChallenge==undefined) player.cp.grid[i].level = getGridData('cp',i).level-(player.pm.best.gte(13)?tmp.pm.pMilestone13Effect:0)
+        }
+        for (i in player.cp.grid) {
+            let rangeMul = Math.floor(player.cp.totalCorrupt/4)
+            let addLevel = Math.floor(player.cp.totalCorrupt/5)*1.5
+            let ranType = Math.floor(Math.random()*1.5)
+            let range = 10+addLevel-(player.pm.best.gte(13)?tmp.pm.pMilestone13Effect:0)
+            let start = new Decimal(1).add(rangeMul)
+            let minCorrupt=1000
+            for (l in player.cp.grid) {
+            if (player.cp.grid[l].level!=0&&player.cp.grid[l].type=="pm")minCorrupt=Math.min(minCorrupt,player.cp.grid[l].level-start)
+                if (player.ex.a2Unl>=1) {
+                    if (player.cp.grid[i].type=="pm" && player.cp.grid[i].level>=1&&player.cp.cooldown2==0&&player.cp.grid[i].level-start==minCorrupt) {player.cp.chosenBackdoor=i
+                break}
+            }
             }
             if (player.cp.grid[i].level>range&&player.pm.activeChallenge==undefined) player.cp.grid[i].level = getGridData('cp',i).level-(player.pm.best.gte(13)?tmp.pm.pMilestone13Effect:0)
         }

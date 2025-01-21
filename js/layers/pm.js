@@ -45,7 +45,7 @@ addLayer("pm", {
         if (player.pm.activeChallenge==12||player.pm.activeChallenge==13) return player.pm.challengeTimer.add(1).pow(2.75).add(1)
         if (challengeCompletions('pm',11)>=1) gain = gain.mul(challengeEffect('pm',11))
         if (hasUpgrade("sp",51)) gain = gain.mul(upgradeEffect("sp",51))
-        return gain.div(s).max(1)
+        return gain.div(s)
     },
     reduce() {
 		let base = 0.5
@@ -337,11 +337,27 @@ addLayer("pm", {
                 }
             },
         },
+        {
+			requirementDescription: "16th Prestige Milestone",
+            unlocked() {return player[this.layer].best.gte(15)},
+            done() {return player[this.layer].best.gte(16)}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return "4th Pr-Exotic Prestige effect is slightly better."
+			},
+            style() {
+                if (hasMilestone('pm',15)) return {
+                    'background':'#00520b',
+                    'border-color':'lime',
+                    'color':'lime',
+                    'width': '100%',
+                }
+            },
+        },
 	],
     challenges: {
         11:{
             levelScale() {
-                let scale= new Decimal(35).add(new Decimal(challengeCompletions('pm',11)>=3?4:5).mul(challengeCompletions('pm',11)))
+                let scale= new Decimal(35).add(new Decimal(challengeCompletions('pm',11)>=3?4:5).add(challengeCompletions('pm',11)>=5?2.75:0).mul(challengeCompletions('pm',11)).floor())
                 return scale
             },
             onEnter() {
@@ -358,14 +374,17 @@ addLayer("pm", {
                 player.points=new Decimal(0)
             },
             name: "Corrupted Essences",
-            completionLimit: new Decimal(5),
+            completionLimit() {let comps=new Decimal(5)
+                if (hasMalware('m',14))comps=comps.add(5)
+                return comps
+            },
             challengeDescription() {return (player.pm.activeChallenge==11?"You spent "+formatTime(player.pm.challengeTimer)+" in this challenge.":"")+ "<br>You are trapped in Level " + format(this.levelScale()) + " Trojan Corruption, Prestige Essences gain formula is much weaker, but increases over time."+"<br>"+format(challengeCompletions(this.layer, this.id),0)
             +"/5 completions.<br>At 2 completions, unlock a new challenge!"},
             unlocked() { return player.pm.best.gte(12) },
             goal: function(){
                 let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].active==true)
                 if(player.pm.activeChallenge==11 && slots.length>0)return gridCost('cp',slots[0])
-else return new Decimal(1)
+else return new Decimal(2e308)
             },
             canComplete(){
                 return player.points.gte(tmp.pm.challenges[this.id].goal) && player.pm.activeChallenge==11;
