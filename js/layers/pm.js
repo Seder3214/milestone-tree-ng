@@ -329,7 +329,7 @@ addLayer("pm", {
 				return "Something is wrong in Prestige Universe...<br>Prestige Essences effect is applied in Normal Universe (after the softcap)."
 			},
             style() {
-                if (hasMilestone('pm',13)) return {
+                if (hasMilestone('pm',14)) return {
                     'background':'#00520b',
                     'border-color':'lime',
                     'color':'lime',
@@ -553,7 +553,7 @@ else return new Decimal(1)
             +"/3 completions.<br>At 3 completions, unlock a new challenge!"},
             unlocked() { return challengeCompletions('pm',12)>=3 },
             goal: function(){
-                let goal=new Decimal(35).mul(new Decimal(challengeCompletions('pm',13)).div(2).add(1)).floor()
+                let goal=new Decimal(70).div(new Decimal(challengeCompletions('pm',13)).div(4).add(1)).floor()
                 return goal
             },
             canComplete(){

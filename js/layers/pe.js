@@ -48,7 +48,7 @@ addLayer("pe", {
 		11: {
 			title: "Prestige Energy Softcap Delayer I",
             description: "1st Milestone's softcap starts later based on your prestige energy.",
-            cost() { if (inChallenge("pm",13)) return new Decimal(45)
+            cost() { if (inChallenge("pm",13)) return new Decimal(60)
                 else return new Decimal(2.48e11)},
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() {
@@ -62,7 +62,7 @@ addLayer("pe", {
 		12: {
 			title: "Prestige Energy Scaling Reducer I",
             description: "Milestone Cost Scaling is weaker based on your prestige energy.",
-            cost() { if (inChallenge("pm",13)) return new Decimal(54)
+            cost() { if (inChallenge("pm",13)) return new Decimal(70)
                 else return new Decimal(2.77e11)},
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() {
@@ -79,7 +79,7 @@ addLayer("pe", {
 			title: "Prestige Energy Upgrade 11 Boost I",
             description() {if (inChallenge("pm",13)) return "Prestige Energy Upgrade 12 is greately boosted."
                else return "Prestige Energy Upgrade 11 is boosted."},
-            cost() { if (inChallenge("pm",13)) return new Decimal(56)
+            cost() { if (inChallenge("pm",13)) return new Decimal(80)
                 else return new Decimal(5.98e11)},
             unlocked() { return true}, // The upgrade is only visible when this is true
         },

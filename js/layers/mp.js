@@ -745,5 +745,16 @@ player.points = new Decimal(0)
                 player.mp.challenges[player.mp.activeChallenge]=Math.max(player.mp.challenges[player.mp.activeChallenge],layers.mp.challenges[player.mp.activeChallenge].completionsAfter120());
             }
         }
+		if (hasMalware('m',3)){
+			if (player.ep.points.gte(tmp.mp.challenges[11].goal)){
+				player.mp.challenges[11]=Math.max(player.mp.challenges[11],layers.mp.challenges[11].completionsAfter120());
+			}
+			if (player.ep.points.gte(tmp.mp.challenges[12].goal)){
+				player.mp.challenges[12]=Math.max(player.mp.challenges[12],layers.mp.challenges[12].completionsAfter120());
+			}
+			if (player.ep.points.gte(tmp.mp.challenges[13].goal)){
+				player.mp.challenges[13]=Math.max(player.mp.challenges[13],layers.mp.challenges[13].completionsAfter120());
+			}
+		}
 	}
 })

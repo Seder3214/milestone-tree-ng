@@ -77,8 +77,8 @@ addLayer("m", {
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."},
-			pseudoCan() {return player.points.gte(`e9.485e20`)},
-			pseudoCost: new Decimal(`e9.485e20`),
+			pseudoCan() {return player.points.gte(`e1.31e21`)},
+			pseudoCost: new Decimal(`e1.31e21`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
 					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
@@ -103,8 +103,8 @@ addLayer("m", {
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."},
-			pseudoCan() {return player.points.gte(`e9.69e20`)},
-			pseudoCost: new Decimal(`e9.69e20`),
+			pseudoCan() {return player.points.gte(`e1.3505e21`)},
+			pseudoCost: new Decimal(`e1.3505e21`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -130,8 +130,8 @@ addLayer("m", {
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."},
-			pseudoCan() {return player.points.gte(`e5.855e21`)},
-			pseudoCost: new Decimal(`e5.855e21`),
+			pseudoCan() {return player.points.gte(`e6.755e21`)},
+			pseudoCost: new Decimal(`e6.755e21`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -147,7 +147,7 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(4)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table= "Third Milestone's effect is better based on your milestones. Currently: 3rd Milestone's base effect base +"+format(tmp.m.milestone4Effect);
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Add +"+format(tmp.m.milestones[3].effect)+" to Prestige Power Upgrade 12 after softcap (based on best milestones and points)."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Add +"+format(tmp.m.milestones[3].effect)+" to Prestige Power Upgrade 12 after softcap (based on best milestones and points).<br>Auto-complete Multiverse Challenges outside."
 				return table
 			},
 			effect() {
@@ -157,8 +157,8 @@ addLayer("m", {
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."},
-			pseudoCan() {return player.points.gte(`e6.583e21`)},
-			pseudoCost: new Decimal(`e6.583e21`),
+			pseudoCan() {return player.points.gte(`e7.605e21`)},
+			pseudoCost: new Decimal(`e7.605e21`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -179,8 +179,8 @@ addLayer("m", {
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."},
-			pseudoCan() {return player.points.gte(`e6.620e21`)},
-			pseudoCost: new Decimal(`e6.620e21`),
+			pseudoCan() {return player.points.gte(`e8.011e21`)},
+			pseudoCost: new Decimal(`e8.011e21`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -202,8 +202,8 @@ addLayer("m", {
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
 			},
-			pseudoCan() {return player.points.gte(`e6.75e21`)},
-			pseudoCost: new Decimal(`e6.75e21`),
+			pseudoCan() {return player.points.gte(`e8.18e21`)},
+			pseudoCost: new Decimal(`e8.18e21`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -219,14 +219,14 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(7)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table = "6th Milestone's effect is powered by 1.5";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>6th Milestone's effect is powered by 1.25.<br>Exotic Prestige no longer resets on row 5 reset."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<br>6th Milestone's effect is powered by 1.35.<br>Exotic Prestige no longer resets on row 5 reset."
 				return table
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
 			},
-			pseudoCan() {return player.points.gte(`e1.54e22`)},
-			pseudoCost: new Decimal(`e1.54e22`),
+			pseudoCan() {return player.points.gte(`e1.57e22`)},
+			pseudoCost: new Decimal(`e1.57e22`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -248,8 +248,8 @@ addLayer("m", {
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
 			},
-			pseudoCan() {return player.points.gte(`e1.85e22`)},
-			pseudoCost: new Decimal(`e1.85e22`),
+			pseudoCan() {return player.points.gte(`e2.175e22`)},
+			pseudoCost: new Decimal(`e2.175e22`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -271,8 +271,8 @@ addLayer("m", {
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
 			},
-			pseudoCan() {return player.points.gte(`e2.05e22`)},
-			pseudoCost: new Decimal(`e2.05e22`),
+			pseudoCan() {return player.points.gte(`e2.395e22`)},
+			pseudoCost: new Decimal(`e2.395e22`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -294,8 +294,8 @@ addLayer("m", {
 			pseudoUnl() {return hasUpgrade("mp",21)},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
 			},
-			pseudoCan() {return player.points.gte(`e2.25e22`)},
-			pseudoCost: new Decimal(`e2.25e22`),
+			pseudoCan() {return player.points.gte(`e2.53e22`)},
+			pseudoCost: new Decimal(`e2.53e22`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -1916,7 +1916,7 @@ addLayer("m", {
         if (player.m.best.gte(156))p=p.pow(player.mm.best.pow(layers.t.getSpecialEffect(32)))
 			if (hasMalware("m",5)) p=p.pow(1e10)
 			if(hasUpgrade("p",25))p=p.pow(upgradeEffect("p",25));
-		if(hasMalware("m",6))p=p.pow(1.25);
+		if(hasMalware("m",6))p=p.pow(1.35);
 		return softcap(p,new Decimal('ee10'), 0.15);
 	},
 	milestone27Effect(){
