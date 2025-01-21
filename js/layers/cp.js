@@ -140,6 +140,7 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
     gainInCorrupt() {
         let gain=getPointGen().mul(player.cp.buyables[31].gt(0)?buyableEffect("cp",31):1)
         let slow=player.cp.trojanChosen!=undefined?gridEffect('cp',player.cp.trojanChosen):new Decimal(1)
+        if (gain.div(slow).lte(1)) return new Decimal(0)
         return player.cp.trojanChosen!=undefined?gain.div(slow):new Decimal(0)
     },
     upgrades: {
@@ -383,6 +384,7 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
             if (player.cm.best.gte(3)&&data.level>=40 && data.type=='div') eff = eff.div(new Decimal(data.level).pow(player.cp.totalCorrupt/40))
             if (player.cm.best.gte(3)&&data.level>=100 && data.type=='div') eff = eff.mul(new Decimal(data.level).pow(player.cp.totalCorrupt/50))
             if (player.cm.best.gte(3)&&data.level>=40 && data.type=='pm') eff = eff.mul(new Decimal(data.level/10).pow(player.cp.totalCorrupt/20))
+                if (player.cm.best.gte(3)&&data.level>=60 && data.type=='pm') eff = eff.mul(new Decimal(data.level/10).pow(player.cp.totalCorrupt/100).mul(data.level-59))
             if (data.level>=15 && data.type=='pm') eff = eff.div(player.cm.points.gte(2)?5**2:1.25)
                 if (player.cm.best.gte(3)&&data.level>=80 && data.type=='pm') eff = eff.mul(new Decimal(data.level/15).pow(player.cp.totalCorrupt/20))
                     if (player.cm.best.gte(3)&&data.level>=90 && data.type=='pm') eff = eff.mul(new Decimal(data.level/25).pow(player.cp.totalCorrupt/40))
@@ -411,6 +413,7 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
            if (data.level>=20 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(5))
            if (data.level>=30 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(3))
             if (data.level>=50 && data.type=='pm'&&!(player.pm.activeChallenge==12)) eff = eff = eff.mul(new Decimal(data.level).div(2).pow(1.35).pow(data.level-49)/(data.level))
+            if (data.level>=55 && data.type=='pm'&&!(player.pm.activeChallenge==12)) eff = eff = eff.mul(new Decimal(data.level).div(2).div(data.level-54)**(data.level/2))
             if (data.level>=85 && data.type=='pm') eff = eff.mul(new Decimal(data.level).div(2).pow(8))
 
            if (data.level>=10 && data.type=='div') eff = eff.mul(new Decimal(data.level).div(data.level>=25?20:10)).div(10)
@@ -455,7 +458,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
             }
             }
             if ((data.active==true || player.cp.trojanChosen==id)&& data.type=='div'){
-                if (player.cp.trojanChosen==id) { table+="<br>-< "+format(player.cp.pointsInCorrupt.div(gridCost('cp',id)).mul(100).min(100))+"% >-"       
+                if (player.cp.trojanChosen==id) { table+="<br>-< "+format(player.cp.pointsInCorrupt.add(1).div(gridCost('cp',id)).mul(100).min(100))+"% >-"       
                  }
                 else table+="<br>-< "+format(player.points.div(gridCost('cp',id)).mul(100).min(100))+"% >-" 
             }
@@ -817,9 +820,9 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
                             "blank",
                             ["buyables",[2]],
                             "blank",
-                            ["row", [["display-text", `<div style="border:2px solid white; width:450px; height:60px; display:flexflex-wrap: wrap; align-content: center; justify-content: center; align-items: center;">Security Algorithm: <span style='color:  green; text-shadow: green 0px 0px 10px; font-size:20px'>TrojanFix.scr</span><br>Cooldown: ${format(player.cp.cooldown,2)}s<hr color="#4f4f4f">Automatically Fixes Trojan Corruptions.<br>`],["buyable",[31]],["display-text", `</div>`],["buyable",[33]]]],
+                            player.ex.a2Unl>=1?["row", [["display-text",  `<div style="border:2px solid white; width:450px; height:60px; display:flexflex-wrap: wrap; align-content: center; justify-content: center; align-items: center;">Security Algorithm: <span style='color:  green; text-shadow: green 0px 0px 10px; font-size:20px'>TrojanFix.scr</span><br>Cooldown: ${format(player.cp.cooldown,2)}s<hr color="#4f4f4f">Automatically Fixes Trojan Corruptions.<br>`],["buyable",[31]],["display-text", `</div>`],["buyable",[33]]]]:[],
                             ["blank","5px"],
-                            ["row", [["display-text", `<div style="border:2px solid white; width:450px; height:60px; display:flexflex-wrap: wrap; align-content: center; justify-content: center; align-items: center;">Security Algorithm: <span style='color:  green; text-shadow: green 0px 0px 10px; font-size:16px'>BackdoorRemove.scr</span><hr color="#4f4f4f">Automatically Fixes backdoor Corruptions.<br>`],["buyable",[32]],["display-text", `</div>`]]]
+                            player.ex.a2Unl>=1?["row", [["display-text", `<div style="border:2px solid white; width:450px; height:60px; display:flexflex-wrap: wrap; align-content: center; justify-content: center; align-items: center;">Security Algorithm: <span style='color:  green; text-shadow: green 0px 0px 10px; font-size:16px'>BackdoorRemove.scr</span><hr color="#4f4f4f">Automatically Fixes backdoor Corruptions.<br>`],["buyable",[32]],["display-text", `</div>`]]]:[],
                         ]
                     ]
                 },
@@ -844,7 +847,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
         }
     }
                     setTimeout(100000)
-                if (player.ex.a2Unl>=1 && player.cp.trojanChosen!=undefined && (player.cp.pointsInCorrupt.gte(gridCost('cp',player.cp.trojanChosen))&& getGridData('cp',player.cp.trojanChosen).type=='div')&&getGridData('cp',player.cp.trojanChosen).level>=1) {
+                if (player.mp.activeChallenge==21&&player.ex.a2Unl>=1 && player.cp.trojanChosen!=undefined && (player.cp.pointsInCorrupt.gte(gridCost('cp',player.cp.trojanChosen))&& getGridData('cp',player.cp.trojanChosen).type=='div')&&getGridData('cp',player.cp.trojanChosen).level>=1) {
                     player.cp.formatted = player.cp.formatted.add(gridEssence('cp',player.cp.trojanChosen))
                     player.cp.grid[player.cp.trojanChosen]={level: 0,active:false,fixed:false,type: getGridData('cp',player.cp.trojanChosen).type,cautPower: getGridData('cp',player.cp.trojanChosen).cautPower}
                     doPopup("none","Corruption was fixed!","Corruption Info",3,"black","lime")

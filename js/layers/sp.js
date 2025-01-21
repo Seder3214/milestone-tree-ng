@@ -229,7 +229,7 @@ addLayer("sp", {
 		51: {
 			title: "Prestige Essence Boost I",
             description: "Prestige Essence gain is boosted by your prestige points.",
-            cost: new Decimal(`e1.895e24`),
+            cost: new Decimal(`e2.52e14`),
             unlocked() { return player[this.layer].perkUpgs.includes(Number(this.id))}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=new Decimal(2).add(player[this.layer].points.add(1).log10().add(1).log10().pow(1.55).div(100));
@@ -237,9 +237,9 @@ addLayer("sp", {
                 return softcap(ret,new Decimal('e5e16'),0.1);
             },
 			perkReq() {return "To get this upgrade, get "+format(this.perkCost)+" points in T Challenge 6."},
-			perkCan() {return player.points.gte(`e5.510e14`)&&player.t.activeChallenge==32},
+			perkCan() {return player.points.gte(`e5.985e14`)&&player.t.activeChallenge==32},
 			perkUnl() {return player.ex.dotUnl>=1 },
-			perkCost: new Decimal(`e5.510e14`),
+			perkCost: new Decimal(`e5.985e14`),
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
 	},

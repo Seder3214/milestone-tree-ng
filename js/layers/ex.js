@@ -3,14 +3,16 @@ if (dot==`(${tmp.ex.xGoal};${tmp.ex.yGoal})`) {
 	switch(player.ex.zone){
 		case "a":
 			player.ex.dotUnl+=1
+			break
 		case "a-02":
 			player.ex.a2Unl+=1
+			break
 	}
 }
 }
 function checkPortalEnterDot(dot="") {
-	dot=["(0;0)"]
-	dot2=["(0;0)"]
+	dot=[]
+	dot2=[]
 	zone=player.ex.zone
 	switch(zone){
 		case "a": 
@@ -70,13 +72,12 @@ addLayer("ex", {
         return x
     },
 	xGoal(x=new Decimal(player.ex.dotUnl)) {
-		let goal=new Decimal(0)
+		let goal=new Decimal(8)
 			switch(player.ex.zone){
 				case "a":
 					goal=new Decimal(8)
-					goal=goal.add(x.mul(2))
-					if (x==1) goal=new Decimal(9)
-					if (x>=3) goal=goal.add(x.mul(1.75)).floor()
+					if (x<2)goal=goal.add(x)
+					if (x>=2) goal=goal.add(x.add(1).mul(1.15)).floor()
 					break
 				case "a-02":
 					x=player.ex.a2Unl
@@ -87,25 +88,23 @@ addLayer("ex", {
 		return goal
 	},
 	yGoal(x=new Decimal(player.ex.dotUnl)) {
-		let goal=new Decimal(0)
-		goal=goal.add(x.mul(2))
-		if (x==1) goal=new Decimal(5)
+		let goal=new Decimal(4)
 			switch(player.ex.zone){
 				case "a":
-					goal=goal.add(x.mul(2))
-					if (x==1) goal=new Decimal(5)
+					if (x<2)goal=goal.add(x)
+					if (x>=2) goal=goal.add(x.add(1).mul(1.25)).floor()
 					break
 				case "a-02":
 					x=player.ex.a2Unl
 					goal=new Decimal(2)
-					goal=goal.add(x)
+					goal=goal.add(x.add(1))
 					break
 			}
 		return goal
 	},
     exOneEffect() {
         let eff= new Decimal(1)
-        if (player.ex.dotUnl>=1)eff=eff.mul(player.ex.points.pow(2.674))
+        if (player.ex.dotUnl>=1)eff=eff.mul(player.ex.points.add(1).pow(2.674))
         return eff
     },
 	exponent: function(){
@@ -144,6 +143,7 @@ player.ex.buyables[i] = new Decimal(0)}
         },
         respecMessage() {return "Are you sure you want to respec Multiversal Fusioners? This will reset your current position ("+format(player.ex.buyables[11],0)+";"+format(player.ex.buyables[12],0)+") to (0,0)!"},
         respecText: "Respec Position",
+		showRespec() {return player.ex.points.gte(1)},
 		rows: 2,
 		cols: 2,
 		11:{
@@ -179,7 +179,7 @@ player.ex.buyables[i] = new Decimal(0)}
 				  return eff;
 			  },
 			  unlocked(){
-				  return player.mp.activeChallenge==21;
+				  return player.mp.activeChallenge==21&&player.ex.points.gte(1);
 			  },
 			  style() {
 				if (player.pm.essence.lt(this.cost())) return {
@@ -230,7 +230,7 @@ player.ex.buyables[i] = new Decimal(0)}
 				  return eff;
 			  },
 			  unlocked(){
-				  return player.mp.activeChallenge==21;
+				  return player.mp.activeChallenge==21&&player.ex.points.gte(1);
 			  },
 			  style() {
 				if (player.cp.formatted.lt(this.cost())) return {
@@ -254,10 +254,12 @@ player.ex.buyables[i] = new Decimal(0)}
 		"Main":{
 			content:[
 				"main-display","prestige-button","resource-display",
-                ["display-text",function(){table = 'Your exploration points are increasing your exploration area limits. For now, your area limits are: X axis - '+format(tmp.ex.xLimit)+", Y axis - "+format(tmp.ex.yLimit)+".<br>By reaching some of positions in the area you can unlock new features.<br>New feature is at "+`(${tmp.ex.xGoal};${tmp.ex.yGoal})`+"."
+                ["display-text",function(){table=""
+					if (player.ex.points.gte(1))table = 'Your exploration points are increasing your exploration area limits. For now, your area limits are: X axis - '+format(tmp.ex.xLimit)+", Y axis - "+format(tmp.ex.yLimit)+".<br>By reaching some of positions in the area you can unlock new features.<br>New feature is at "+`(${tmp.ex.xGoal};${tmp.ex.yGoal})`+"."
                     return table}],
 				"buyables",
-				["display-text",function(){table = `Green circle is current position, the yellow star is a position for a new feature.<br><svg width="${((tmp.ex.xLimit)*20)+60}" height="${((tmp.ex.yLimit)*20)+90}" version="1.1">
+				["display-text",function(){table=""
+					if (player.ex.points.gte(1))table = `Green circle is current position, the yellow star is a position for a new feature.<br><svg width="${((tmp.ex.xLimit)*20)+60}" height="${((tmp.ex.yLimit)*20)+90}" version="1.1">
 					<text x="0" y="40" fill="white" font-size="12px">0</text>
 					<line x1="20" x2="20" y1="50" y2="${((tmp.ex.yLimit)*20)+50}" stroke="white" stroke-width="4"/>
 					<line x1="20" x2="${((tmp.ex.xLimit)*20)+20}" y1="50" y2="50" stroke="white" stroke-width="4"/>`
@@ -282,12 +284,12 @@ player.ex.buyables[i] = new Decimal(0)}
 						dot=[7,3]
 						break
 					}
-					table+=`
+					if (player.ex.points.gte(1))table+=`
 					<line x1="${((tmp.ex.xLimit)*20)+20}" x2="${((tmp.ex.xLimit)*20)+20}" y1="50" y2="${((tmp.ex.yLimit)*20)+50}" stroke="#909090" stroke-width="3"/>
 					<line x2="${((tmp.ex.xLimit)*20)+20}" x1="20" y1="${((tmp.ex.yLimit)*20)+50}" y2="${((tmp.ex.yLimit)*20)+50}" stroke="#909090" stroke-width="3"/>
 					<text x="${player.ex.buyables[11].mul(20).add(11)}" y="${player.ex.buyables[12].mul(20).add(55)}" fill="#46a364" font-size="12px">🟢</text>
-					<text x="${tmp.ex.xGoal.mul(20).add(11)}" y="${tmp.ex.yGoal.mul(20).add(55)}" fill="yellow" font-size="20px">★</text>
-					<text x="${new Decimal(dot[0]).mul(20).add(6)}" y="${new Decimal(dot[1]).mul(20).add(55)}" fill="yellow" font-size="20px">🌀</text>`
+					<text x="${tmp.ex.xGoal.mul(20).add(11)}" y="${tmp.ex.yGoal.mul(20).add(55)}" fill="yellow" font-size="20px">★</text>`
+					if (hasMalware('m',14)) table+=`<text x="${new Decimal(dot[0]).mul(20).add(6)}" y="${new Decimal(dot[1]).mul(20).add(55)}" fill="yellow" font-size="20px">🌀</text>`
 					return table+"</svg>"}]
 			]
 		},
@@ -324,7 +326,8 @@ player.ex.buyables[i] = new Decimal(0)}
 			if(player.mp.activeChallenge==21) player.pm.essence = new Decimal(0)
 		},
 	update(diff){
+		if (player.ex.zone==undefined) player.ex.zone="a"
         checkFeatureDot(dot=`(${player.ex.buyables[11]};${player.ex.buyables[12]})`)
-		checkPortalEnterDot(dot=`(${player.ex.buyables[11]};${player.ex.buyables[12]})`)
+		if (hasMalware('m',14))checkPortalEnterDot(dot=`(${player.ex.buyables[11]};${player.ex.buyables[12]})`)
 	}
 })

@@ -67,7 +67,7 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(1)}, // Used to determine when to give the milestone
             effectDescription: function(){
 				let table="Gain "+format(new Decimal(1).max(getPointGen()))+" points per second."
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Exotic Booster effect base is ^"+format(tmp.m.milestones[0].effect)+" better based on points gain."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>Exotic Booster effect base is ^"+format(tmp.m.milestones[0].effect)+" better based on points gain."
 				return table
 			},
 			effect() {
@@ -92,7 +92,7 @@ addLayer("m", {
             unlocked() {return player[this.layer].best.gte(1)},
             done() {return player[this.layer].best.gte(2)}, // Used to determine when to give the milestone
             effectDescription() {let table= "Triple the first Milestone's effect."
-			if (player.m.pseudoBuys.includes(this.id)) table+="<br>First Milestone's second effect applies to point gain after softcap at greatly boosted rate.<br>Currently: x"+format(tmp.m.milestones[1].effect)+" to points gain (reduced when in challenge)"
+			if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>First Milestone's second effect applies to point gain after softcap at greatly boosted rate.<br>Currently: x"+format(tmp.m.milestones[1].effect)+" to points gain (reduced when in challenge)"
 			return table
 			},
 			effect() {
@@ -120,7 +120,7 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(3)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table="First Milestone's effect is boosted by your points. Currently: "+format(tmp.m.milestone3Effect)+"x"
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Points boosts Challenge Slayer effect. Currently: "+format(tmp.m.milestones[2].effect)+"x"
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>Points boosts Challenge Slayer effect. Currently: "+format(tmp.m.milestones[2].effect)+"x"
 				return table
 			},
 			effect() {
@@ -147,7 +147,7 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(4)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table= "Third Milestone's effect is better based on your milestones. Currently: 3rd Milestone's base effect base +"+format(tmp.m.milestone4Effect);
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Add +"+format(tmp.m.milestones[3].effect)+" to Prestige Power Upgrade 12 after softcap (based on best milestones and points).<br>Auto-complete Multiverse Challenges outside."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>Add +"+format(tmp.m.milestones[3].effect)+" to Prestige Power Upgrade 12 after softcap (based on best milestones and points).<br>Auto-complete Multiverse Challenges outside."
 				return table
 			},
 			effect() {
@@ -174,7 +174,7 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(5)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table=  "Unlock the next layer. Milestones don't reset on all resets.";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Unlock Prestige Perk Upgrades."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>Unlock Prestige Perk Upgrades."
 				return table
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
@@ -196,7 +196,7 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(6)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table= "Prestige Point gain is boosted by your milestones. Currently: "+format(tmp.m.milestone6Effect)+"x";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>This milestone's effect is greately stronger."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>This milestone's effect is greately stronger."
 				return table
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
@@ -219,7 +219,7 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(7)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table = "6th Milestone's effect is powered by 1.5";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>6th Milestone's effect is powered by 1.35.<br>Exotic Prestige no longer resets on row 5 reset."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>6th Milestone's effect is powered by 1.35.<br>Exotic Prestige no longer resets on row 5 reset."
 				return table
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
@@ -242,7 +242,7 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(8)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table = "6th Milestone's effect is powered by 1.2";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Add 15 free Hyper Boosts."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>Add 15 free Hyper Boosts."
 				return table
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
@@ -265,7 +265,7 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(9)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table = "6th Milestone's effect is powered by 1.1.";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>3rd Milestone applies to Prestige Points gain at reduced rate."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>3rd Milestone applies to Prestige Points gain at reduced rate."
 				return table
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
@@ -288,7 +288,7 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(10)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table = "Unlock 2 new Prestige Upgrades.";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Unlock a new layer in Prestige Universe."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>Unlock a new layer in Prestige Universe."
 				return table
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},
@@ -311,14 +311,14 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(11)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table = "Prestige Upgrade 11's effect is better.";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Prestige Upgrade 35's effect is better."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>Prestige Upgrade 35's effect is better."
 				return table
 			},
 			pseudoUnl() {return player.ex.dotUnl>=2},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
 			},
-			pseudoCan() {return player.points.gte(`e2.55e22`)},
-			pseudoCost: new Decimal(`e2.55e22`),
+			pseudoCan() {return player.points.gte(`e2.655e22`)},
+			pseudoCost: new Decimal(`e2.655e22`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -334,14 +334,14 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(12)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table = "Prestige Upgrade 12's effect is better.";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Prestige Upgrade 45's effect is better."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>Prestige Upgrade 45's effect is better."
 				return table
 			},
 			pseudoUnl() {return player.ex.dotUnl>=2},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
 			},
-			pseudoCan() {return player.points.gte(`e2.6e22`)},
-			pseudoCost: new Decimal(`e2.6e22`),
+			pseudoCan() {return player.points.gte(`e2.68e22`)},
+			pseudoCost: new Decimal(`e2.68e22`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -357,14 +357,14 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(13)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table = "Prestige Upgrade 13's effect is better.";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Prestige Upgrade 25's effect is better."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>Prestige Upgrade 25's effect is better."
 				return table
 			},
 			pseudoUnl() {return player.ex.dotUnl>=2},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
 			},
-			pseudoCan() {return player.points.gte(`e3.025e22`)},
-			pseudoCost: new Decimal(`e3.025e22`),
+			pseudoCan() {return player.points.gte(`e3.325e22`)},
+			pseudoCost: new Decimal(`e3.325e22`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -380,14 +380,14 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(14)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table = "Prestige Upgrade 14's effect is better.";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Prestige Upgrade 15's effect is better."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>Prestige Upgrade 15's effect is better."
 				return table
 			},
 			pseudoUnl() {return player.ex.dotUnl>=2},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
 			},
-			pseudoCan() {return player.points.gte(`e3.25e22`)},
-			pseudoCost: new Decimal(`e3.25e22`),
+			pseudoCan() {return player.points.gte(`e3.465e22`)},
+			pseudoCost: new Decimal(`e3.465e22`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
@@ -403,14 +403,14 @@ addLayer("m", {
             done() {return player[this.layer].best.gte(15)}, // Used to determine when to give the milestone
             effectDescription:  function(){
 				let table = "Unlock 2 new Prestige Upgrades.";
-				if (player.m.pseudoBuys.includes(this.id)) table+="<br>Unlock Exploration Upgrades and Portals."
+				if (player.m.pseudoBuys.includes(this.id)) table+="<hr color='darkred' size='3'>Unlock Exploration Upgrades and Portals."
 				return table
 			},
 			pseudoUnl() {return player.ex.dotUnl>=2},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
 			},
-			pseudoCan() {return player.points.gte(`e3.425e22`)},
-			pseudoCost: new Decimal(`e3.425e22`),
+			pseudoCan() {return player.points.gte(`e3.69e22`)},
+			pseudoCost: new Decimal(`e3.69e22`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',
