@@ -682,7 +682,8 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 				  return player.ex.a2Unl>=1;
 			  },
             effect(x) {
-                let eff = new Decimal(10*(getGridData("cp",player.cp.trojanChosen).level>=1?x*((getGridData("cp",player.cp.trojanChosen).level/100)+1):1)).pow(x*((getGridData("cp",player.cp.trojanChosen).level/1000)+1))
+                let eff = new Decimal(1)
+                if (player.cp.trojanChosen!=undefined)eff = new Decimal(10*(getGridData("cp",player.cp.trojanChosen).level>=1?x*((getGridData("cp",player.cp.trojanChosen).level/100)+1):1)).pow(x*((getGridData("cp",player.cp.trojanChosen).level/1000)+1))
                 return softcap(eff,new Decimal(1e38),0.205)
             },
 			  style() {
@@ -775,8 +776,8 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 			  unlocked(){
 				  return player.ex.a2Unl>=1;
 			  },
-            effect(x) {
-                let eff = new Decimal(2*(getGridData("cp",player.cp.chosenBackdoor).level>=1?x*((getGridData("cp",player.cp.chosenBackdoor).level/100)+1):1)).pow(x*(getGridData("cp",player.cp.chosenBackdoor).level>=1?x*((getGridData("cp",player.cp.chosenBackdoor).level/1000)+1):1))
+            effect(x) {let eff = new Decimal(1)
+                if (player.cp.chosenBackdoor!=undefined) eff = new Decimal(2*(getGridData("cp",player.cp.chosenBackdoor).level>=1?x*((getGridData("cp",player.cp.chosenBackdoor).level/100)+1):1)).pow(x*(getGridData("cp",player.cp.chosenBackdoor).level>=1?x*((getGridData("cp",player.cp.chosenBackdoor).level/1000)+1):1))
                 return softcap(eff,new Decimal(1e20),0.175)
             },
 			  style() {
