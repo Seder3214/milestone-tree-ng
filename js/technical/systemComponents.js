@@ -117,9 +117,15 @@ var systemComponents = {
 		<br>
 		<span v-if="player.points.lt('1e1000')"  class="overlayThing">You have </span>
 		<h2  class="overlayThing" id="points">{{format(player.points)}}</h2>
+				<span v-if="canGenPoints()"  class="overlayThing">({{tmp.other.oompsMag != 0 ? format(tmp.other.oomps) + " OOM" + (tmp.other.oompsMag < 0 ? "^OOM" : tmp.other.oompsMag > 1 ? "^" + tmp.other.oompsMag : "") + "s" : formatSmall(getPointGen())}}/sec)</span>
 		<span v-if="player.points.lt('1e1e6')"  class="overlayThing"> {{modInfo.pointsName}}</span>
+		<span v-if="player.sp.activeChallenge==11"  class="overlayThing"> and </span>
+		<h2 v-if="player.sp.activeChallenge==11" class="overlayThing" style="color:#9f2846">{{format(player.m.points,0)}}</h2>
+		<span v-if="player.sp.activeChallenge==11"  class="overlayThing"> milestones,<br> which can be transformed into </span>
+		<h2 v-if="player.sp.activeChallenge==11" class="overlayThing" style="color:orange">{{format(tmp.sp.ambersGain)}}</h2>
+		<span v-if="player.sp.activeChallenge==11"  class="overlayThing"> Prestige Ashes after a cooldown. ({{format(player.sp.chalCooldown)}}s)</span>
+		<span v-if="(player.sp.sparkMilestones.gt(0))&&(new Decimal(player.sp.ashedMilestones+1).lt(player.sp.sparkMilestones))"  class="spark"><br>Your {{format(player.sp.ashedMilestones+1,0)}}{{helper(player.sp.ashedMilestones+1)}} Spark Milestone will burn for {{formatTime(player.sp.burningTimer)}}</span>
 		<br>
-		<span v-if="canGenPoints()"  class="overlayThing">({{tmp.other.oompsMag != 0 ? format(tmp.other.oomps) + " OOM" + (tmp.other.oompsMag < 0 ? "^OOM" : tmp.other.oompsMag > 1 ? "^" + tmp.other.oompsMag : "") + "s" : formatSmall(getPointGen())}}/sec)</span>
 		<div v-for="thing in tmp.displayThings" class="overlayThing"><span v-if="thing" v-html="thing"></span></div>
 	</div>
 	`

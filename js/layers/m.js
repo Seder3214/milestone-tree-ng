@@ -46,7 +46,7 @@ addLayer("m", {
 		if(hasUpgrade("ap",23))firstScaling=firstScaling.div(upgradeEffect("ap",23));
 		if(hasUpgrade("pe",12))firstScaling=firstScaling.div(upgradeEffect("pe",12));
 		if(hasUpgrade("se",12))firstScaling=firstScaling.div(upgradeEffect("se",12));
-		return new Decimal(2).add(firstScaling).add(player.m.points.gte(145)&&player.m.points.lte(170)?0.5:0).mul(player.m.points.gte(getCostOverflowStart())?getCostOverflowEff():1);
+		return new Decimal(2).add(firstScaling).add(player.m.points.gte(145)&&player.m.points.lte(170)?0.5:0).mul(player.m.points.gte(getCostOverflowStart())?getCostOverflowEff():1).div(hasUpgrade('p',53)?upgradeEffect('p',53):1);
 	},
     getScalingStart(){
         let start=new Decimal(14);
@@ -432,8 +432,8 @@ addLayer("m", {
 			pseudoUnl() {return player.ex.dotUnl>=3},
 			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
 			},
-			pseudoCan() {return player.points.gte(`e1.309e24`)},
-			pseudoCost: new Decimal(`e1.309e24`),
+			pseudoCan() {return player.points.gte(`e5e23`)},
+			pseudoCost: new Decimal(`e5e23`),
 			style() {
 				if (player.m.pseudoBuys.includes(this.id)) return {
                     'background':'red',

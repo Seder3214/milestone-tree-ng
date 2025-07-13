@@ -159,6 +159,27 @@
 	-webkit-animation-iteration-count: infinite;
 	-webkit-animation-timing-function: linear;
   }
+  .spark {
+	text-align: center;
+	font-size: 18px;
+	color: #000;
+	max-width: 700px;
+	background: rgba(255,253,160,1);
+	background: -webkit-linear-gradient( left, #fba61d 0%, #ff9100 25%, #ff5100 50%, #ff9100 75%, #ff9100 100% ) repeat;
+	border-color: -webkit-linear-gradient( left, #fba61d 0%, #ff9100 25%, #ff5100 50%, #ff9100 100% ) repeat;
+	-webkit-background-clip: text;
+	-ms-background-clip: text;
+	-moz-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-ms-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	text-fill-color: transparent;
+	-webkit-animation-name: masked-animation;
+	-webkit-animation-duration: 150s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+  }
   .saveState {
 	width: 100%;
 	border: 2px solid #ffffff7f;
@@ -185,7 +206,7 @@ overflow-x: hidden;
 } 
 .menuButton {
 	width: 285px;
-	height: 45px;
+	height: 35px;
 	justify-content: auto;
 	margin-bottom: 5px;
 	color: rgb(0, 0, 0);
@@ -198,8 +219,8 @@ overflow-x: hidden;
 	transition: all 0.5s;
 } 
 .menuButton:hover{
-	color: rgb(75, 75, 75);
-	height: 50px;
+	color: rgb(255, 255, 255);
+	height: 40px;
 }
 .backButton {
 	width: 75px;

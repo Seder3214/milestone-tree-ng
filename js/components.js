@@ -224,7 +224,7 @@ function loadVue() {
 		<td v-if="tmp[layer].milestones && tmp[layer].milestones[data]!== undefined && milestoneShown(layer, data) && tmp[layer].milestones[data].unlocked" v-bind:style="[tmp[layer].milestones[data].style]" v-bind:class="{milestone: !hasMilestone(layer, data), tooltipBox: true, milestoneDone: hasMilestone(layer, data)}">
 			<h3 v-html="tmp[layer].milestones[data].requirementDescription"></h3><br>
 			<span v-html="run(layers[layer].milestones[data].effectDescription, layers[layer].milestones[data])"></span><br>
-			<tooltip v-if="tmp[layer].milestones[data].tooltip" :text="tmp[layer].milestones[data].tooltip"></tooltip>
+			<tooltip v-bind:style="tmp[layer].milestones[data].tooltipStyle?tmp[layer].milestones[data].tooltipStyle:{}"v-if="tmp[layer].milestones[data].tooltip" :text="tmp[layer].milestones[data].tooltip"></tooltip>
 			<button v-if="tmp[layer].milestones[data].pseudoUnl==true&& !player[layer].pseudoBuys.includes(data)"v-bind:class="{[layer]: true, pseudo: true, plocked: !player.points.gte(tmp[layer].milestones[data].pseudoCost), anim: (player.anim&&!player.oldStyle), grad: (player.grad&&!player.oldStyle) }" v-on:click="unlockBuy(layer, data)">Infect a Milestone with Malware<br>
 			Cost: {{format(tmp[layer].milestones[data].pseudoCost)}} points.</button>
 

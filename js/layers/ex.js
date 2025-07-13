@@ -2,10 +2,13 @@ function checkFeatureDot(dot="") {
 if (dot==`(${tmp.ex.xGoal};${tmp.ex.yGoal})`) {
 	switch(player.ex.zone){
 		case "a":
-			player.ex.dotUnl+=1
+			if (player.ex.dotUnl<player.ex.aLimit)player.ex.dotUnl+=1
 			break
 		case "a-02":
-			player.ex.a2Unl+=1
+			if (player.ex.a2Unl<player.ex.a2Limit)player.ex.a2Unl+=1
+			break
+		case "a-03":
+			if (player.ex.a3Unl<player.ex.a3Limit)player.ex.a3Unl+=1
 			break
 	}
 }
@@ -18,11 +21,18 @@ function checkPortalEnterDot(dot="") {
 	switch(zone){
 		case "a": 
 		dot=["(10;5)","a-02"]
+		dot2=["(9;6)","a-03"]
 		break
 		case "a-02": 
 		dotback=["(1;1)","a"]
 		dot=["(7;3)","b-01"]
 		dot2=["(6;5)","c-01"]
+		break
+		case "a-03": 
+		dotback=["(1;1)","a"]
+		break
+		case "b-01": 
+		dotback=["(6;5)","a-03"]
 		break
 	}
 	if (dot[0]==`(${player.ex.buyables[11]};${player.ex.buyables[12]})`) {
@@ -51,8 +61,12 @@ addLayer("ex", {
 		zone: "a",
         dotUnl:0,
 		a2Unl:0,
+		a3Unl:0,
 		b1Unl:0,
 		c1Unl:0,
+		aLimit:4,
+		a2Limit:3,
+		a3Limit:5,
     }},
     color() {return '#46a364'},
     requires(){
@@ -93,6 +107,11 @@ addLayer("ex", {
 					goal=new Decimal(3)
 					goal=goal.add(x)
 					break
+				case "a-03":
+					x=player.ex.a3Unl
+					goal=new Decimal(1)
+					goal=goal.add(x)
+					break
 			}
 		return goal
 	},
@@ -107,6 +126,11 @@ addLayer("ex", {
 					x=new Decimal(player.ex.a2Unl)
 					goal=new Decimal(2)
 					goal=goal.add(x.add(1))
+					break
+				case "a-03":
+					x=new Decimal(player.ex.a3Unl)
+					goal=new Decimal(4)
+					goal=goal.add(x)
 					break
 			}
 		return goal
@@ -139,7 +163,7 @@ addLayer("ex", {
 				let base=100;
 				let xPos=player.ex.buyables[11]
 				let yPos=player.ex.buyables[12]
-				let ret = (new Decimal(player.points).add(1).slog(2)).mul(xPos.add(yPos).pow(0.5).mul(base))
+				let ret = (new Decimal(player.points).add(1).slog(2)).mul(xPos.add(yPos).pow(0.5).mul(base)).max(1)
                 return ret;
             },
 			pay() {
@@ -182,6 +206,8 @@ player.ex.buyables[i] = new Decimal(0)}
 						break
 					case "a-02":
 						cost = Decimal.pow(27,x.add(1).mul(27.6))
+					case "a-03":
+						cost = Decimal.pow(15,x.add(1).mul(8.6))
 				}
 				return cost
 			},
@@ -233,7 +259,9 @@ player.ex.buyables[i] = new Decimal(0)}
 						cost = Decimal.pow(2,x.add(1).mul(3.76))
 						break
 					case "a-02":
-						cost = Decimal.pow(7,x.add(1).mul(2.96))
+						cost = Decimal.pow(7,x.mul(3.25).add(1))
+					case "a-03":
+						cost = Decimal.pow(8,x.mul(2.65).add(1))
 				}
 				return cost
 			},
@@ -295,23 +323,36 @@ player.ex.buyables[i] = new Decimal(0)}
 						}							
 					}
 					zone=player.ex.zone
-					dot=[0,0]
+					let dot=undefined
+					let dot2=undefined
+					let dot3=undefined
 					dotback=undefined
 					switch(zone){
 						case "a": 
 						dot=[10,5]
+						dot2=[9,6]
 						break
 						case "a-02": 
 						dot=[7,3]
 						dotback=[1,1]
 						break
+						case "a-03": 
+						dot=[16,3]
+						dotback=[1,1]
+						break
+						case "b-01": 
+						dot=[25,25]
+						dotback=[6,5]
+						break
 					}
 					if (player.ex.points.gte(1))table+=`
 					<line x1="${((tmp.ex.xLimit)*20)+20}" x2="${((tmp.ex.xLimit)*20)+20}" y1="50" y2="${((tmp.ex.yLimit)*20)+50}" stroke="#909090" stroke-width="3"/>
 					<line x2="${((tmp.ex.xLimit)*20)+20}" x1="20" y1="${((tmp.ex.yLimit)*20)+50}" y2="${((tmp.ex.yLimit)*20)+50}" stroke="#909090" stroke-width="3"/>
-					<text x="${player.ex.buyables[11].mul(20).add(11)}" y="${player.ex.buyables[12].mul(20).add(55)}" fill="#46a364" font-size="12px">🟢</text>
-					<text x="${tmp.ex.xGoal.mul(20).add(11)}" y="${tmp.ex.yGoal.mul(20).add(55)}" fill="yellow" font-size="20px">★</text>`
+					<text x="${player.ex.buyables[11].mul(20).add(11)}" y="${player.ex.buyables[12].mul(20).add(55)}" fill="#46a364" font-size="12px">🟢</text>`
+					if ((player.ex.dotUnl<player.ex.aLimit)||(player.ex.a2Unl<player.ex.a2Limit)||(player.ex.a3Unl<player.ex.a3Limit)) table +=`<text x="${tmp.ex.xGoal.mul(20).add(11)}" y="${tmp.ex.yGoal.mul(20).add(55)}" fill="yellow" font-size="20px">★</text>`
 					if (hasMalware('m',14)) {table+=`<text x="${new Decimal(dot[0]).mul(20).add(6)}" y="${new Decimal(dot[1]).mul(20).add(55)}" fill="yellow" font-size="20px">🌀</text>`
+					if (dot2!=undefined) table+=`<text x="${new Decimal(dot2[0]).mul(20).add(6)}" y="${new Decimal(dot2[1]).mul(20).add(55)}" fill="yellow" font-size="20px">꩜</text>`
+					if (dot3!=undefined) table+=`<text x="${new Decimal(dot3[0]).mul(20).add(6)}" y="${new Decimal(dot3[1]).mul(20).add(55)}" fill="red" font-size="20px">꩜</text>`
 					if (dotback!=undefined) table+=`<text x="${new Decimal(dotback[0]).mul(20).add(8)}" y="${new Decimal(dotback[1]).mul(20).add(57)}" fill="yellow" font-size="20px">⇦</text>`}
 					return table+"</svg>"}]
 			]
@@ -329,12 +370,13 @@ player.ex.buyables[i] = new Decimal(0)}
 	"Rewards": {
 				content:[
 						["display-text",function(){let tableA=hasMalware("m",14)?"<br>Zone A Rewards:":""
-							let tableB=player.ex.a2Unl>=1?"<br>Zone A-2 Rewards:":""
+							let tableA2=player.ex.a2Unl>=1?"<br>Zone A-2 Rewards:":""
+							let tableA3=player.ex.a3Unl>=1?"<br>Zone A-3 Rewards:":""
 							if (player.ex.dotUnl>=1) tableA+="<br>(8;4) - [ Corruptions rewards are "+format(tmp.ex.exOneEffect)+"x better.<br>Unlock one Super Prestige Upgrade in Normal Universe. ]"
 							if (player.ex.dotUnl>=2) tableA+="<br>(9;5) - [ Unlock more Malware Milestones. ]"
 							if (player.ex.dotUnl>=3) tableA+="<br>(11;7) - [ Unlock one Malware Milestones. ]"
-							if (player.ex.a2Unl>=1) tableB+= "<br>Zone A-2 (3;2) - [ Unlock Security Algorithms. ]"
-							table = "Currently unlocked:"+tableA+tableB
+							if (player.ex.a2Unl>=1) tableA2+= "<br>Zone A-2 (3;2) - [ Unlock Security Algorithms. ]"
+							table = "Currently unlocked:"+tableA+tableA2+tableA3
 							return table}],
 					]
 		 },

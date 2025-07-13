@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "v2.038 - Exploration with Portals!",
+	num: "v2.039 - Exploring Ashes!",
 	name: "Exploring the Destroying Universe...",
 }
 
@@ -23,6 +23,11 @@ Note: v<h3 style="color: green">A</h3>.<h3 style='color: blue'>B</h3><h3 style='
 <h3 style='color: green'>A</h3> is a number of <h3 style='color:yellow'>major</h3> updates like <h3 class='pmr'>Prestige Milestone Tree</h3>, <br>
 <h3 style='color: blue'>B</h3> is a number of <h3 style="color:#793784">milestones</h3> in current version, <br>
 <h3 style='color: yellow'>C</h3> is a letter that used to show <h3 style='color: cyan'>bugfix/rebalance</h3> updates<br><br>
+<h3 class="spark"> v2.039 - Exploring Ashes</h3><br>
+<span style='color: #808080'>- Added one more exploration zone<br></span>
+<span style='color: #808080'>- Added Prestige Ashes<br></span>
+<span style='color: #808080'>- Balancing of post-corruption milestones content<br></span>
+<span style='color: #808080'>- Added a new type of milestones (only one for now)<br></span>
 <h3 class="corr"> v2.035 beta I - v2.028d - DESTRUCTION OF MILESTONE TREE</h3><br>
 <i style='color: #808080'> Prestige Universe is slowly destroying itself...<br></i>
 <span style='color: #808080'> - Added a close menu button for Revamped Style Menu<br></span>
@@ -86,7 +91,14 @@ if(b.gte(getPointSoftcapStart())){
 if (player.pm.essence.gte(1)&&(player.ap.activeChallenge==undefined && player.t.activeChallenge==undefined && player.mp.activeChallenge==undefined && player.pm.activeChallenge==undefined)) b = b.mul(tmp.pm.essenceBoost.pow(1e19).pow(hasUpgrade("ex",11)?upgradeEffect("ex",11):1))
 	if (hasMalware("m",1)) b=b.mul(milestoneEffect("m",1))
 	if(hasUpgrade("p",15))b=b.mul(upgradeEffect("p",15));
-return b.mul(corruptEffect());
+	if (player.sp.activeChallenge==11) 
+	{b=b.max(1).slog(new Decimal(1.15)).add(1)
+	if(hasUpgrade("p",51))b=b.mul(upgradeEffect("p",51))
+	if(hasUpgrade("p",52))b=b.pow(upgradeEffect("p",52))
+	if (hasMilestone('sp',0))b=b.mul(milestoneEffect("sp",0))
+	}
+    if (hasMilestone('cm',1)&&player.pm.points.lte(11)) b = b.mul(1e3)
+return player.sp.activeChallenge!=11?b.mul(corruptEffect()):b;
 
 }
 
@@ -110,7 +122,7 @@ if(hasUpgrade("ap",11))b=b.mul(upgradeEffect("ap",11));
 }
 if(player.t.activeChallenge==11||player.t.activeChallenge==21||player.t.activeChallenge==31)b=b.pow(tmp.t.dilationEffect);
 if(player.ap.activeChallenge==22 ||player.ap.activeChallenge==41||player.ap.activeChallenge==42 )b=b.add(1).log10().pow(player.m.best.gte(122)?player.m.points:100);
-if (player.pm.essence.gte(1)) b = b.mul(tmp.pm.essenceBoost)
+if (player.pm.essence.gte(1)&&player.sp.activeChallenge!=11) b = b.mul(tmp.pm.essenceBoost)
 if (player.mp.modeP==true) b = b.mul(buyableEffect('mp',22).eff)
 if (challengeCompletions('pm',12)>=1) b = b.mul(challengeEffect('pm',12))
 if(player.m.best.gte(3)&&(player.pm.activeChallenge==12||player.pm.activeChallenge==13))b=b.mul(tmp.m.milestone3Effect);
@@ -183,7 +195,7 @@ function(){let table = ''
 	if(getPointGen().gte(getPointSoftcapStart().sqrt())){
 		table += "1st milestone's effect ^"+format(getPointGen().log(getPointGenBeforeSoftcap()),4)+" because of softcap.<br>1st milestone's softcap starts at "+format(getPointSoftcapStart());
 	}
-	if(player.m.best.gte(getCostOverflowStart())){
+	if(player.m.points.gte(getCostOverflowStart())){
 		table += "<br>Milestone cost exponent is x"+format(getCostOverflowEff(),4)+" because of overflow.<br> Starts at "+format(getCostOverflowStart()) + " milestones, scales at " +format(getCostOverflowScale()) + " milestones";
    }
 	return table

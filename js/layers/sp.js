@@ -1,3 +1,40 @@
+function helper(num) {
+	let endings=['th','st','nd','rd','th','th','th','th','th','th']
+	return endings[num%10]
+}
+function fetchTimer(id,burnTimer) {
+	player.sp.timer[id]=burnTimer
+}
+function handleBurnDisplay(checkId) {
+	if (new Decimal(checkId).lt(player.sp.sparkMilestones)) return ["display-text",`<div if="new Decimal(player.sp.chosenSparkMil+1).lt(player.sp.sparkMilestones)" style="border:2px solid white; width:300px; height:44px; background:linear-gradient(to right,rgb(174, 113, 42) ${player.sp.timer[checkId]!=undefined?((1-(Math.max(0,(120-player.sp.timer[checkId])/120)))*300):300}px,rgb(30, 30, 30) 0px); display:flexflex-wrap: wrap; align-content: center; justify-content: center; align-items: center;"><span style='font-size:14px'>
+	Milestone ${player.sp.timer[checkId]==0?' Ashed':' is Burning'}</span><hr color="#4f4f4f"><span style="font-size:14px">Burning power: </span><span style='color:  rgb(249, 147, 30); text-shadow: rgb(249, 147, 30) 0px 0px 10px; font-size:16px'>`+format(player.sp.timer[checkId]!=undefined?((1-(Math.max(0,(120-player.sp.timer[checkId])/120)))*100):100,3)+`%</span></div>`]
+}
+function handleBasicMilestoneDisplay(id) {
+	return ["row", [["milestone",[id]],handleBurnDisplay(id)]]}
+function handleDisplay() {
+	let table1 = handleBasicMilestoneDisplay(player.sp.chosenSparkMil)
+		let table2 = ["column",[
+			handleBasicMilestoneDisplay(player.sp.chosenSparkMil),
+			["blank",'5px'],
+			handleBasicMilestoneDisplay(player.sp.chosenSparkMil+1),
+			["blank",'5px'],
+			handleBasicMilestoneDisplay(player.sp.chosenSparkMil+2)]]
+		let table3 = ["column",[
+			handleBasicMilestoneDisplay(player.sp.chosenSparkMil),
+			["blank",'5px'],
+			handleBasicMilestoneDisplay(player.sp.chosenSparkMil+1),
+			["blank",'5px'],
+			handleBasicMilestoneDisplay(player.sp.chosenSparkMil+2),
+			["blank",'5px'],
+			handleBasicMilestoneDisplay(player.sp.chosenSparkMil+3),
+			["blank",'5px'],
+			handleBasicMilestoneDisplay(player.sp.chosenSparkMil+4),
+			]
+			]
+	if (player.sp.showSparkAmt==1) return table1
+	if (player.sp.showSparkAmt==3) return table2
+	if (player.sp.showSparkAmt==5) return table3
+}
 addLayer("sp", {
     name: "super-prestige", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol: "SP", // This appears on the layer's node. Default is the id with the first letter capitalized
@@ -5,6 +42,18 @@ addLayer("sp", {
     startData() { return {
         unlocked: false,
 		points: new Decimal(0),
+		timer:[],
+		ambers: new Decimal(0),
+		sparkFill: new Decimal(0),
+		ambersDbg: new Decimal(0),
+		sparkMilestones: new Decimal(0),
+		showSparkAmt:1,
+		chalCooldown:new Decimal(0),
+		chosenSparkMil: 0,
+		burningTimer:0,
+		ashedMilestones:0,
+		sparkPage:1,
+		fillActive: false,
 		perkUpgs: [],
     }},
     color() { if (hasMalware('m',15)) return "rgb(238, 112, 112)"
@@ -43,7 +92,204 @@ addLayer("sp", {
     hotkeys: [
         {key: "s", description: "S: Reset for super-prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
+	reigniteCost() {
+		let cost = (new Decimal(120).sub(player.sp.timer[player.sp.ashedMilestones])).div(4.175).mul(player.sp.ashedMilestones+1)
+		if (player.sp.timer[player.sp.ashedMilestones]==0) cost = cost.mul(1.5)
+		return cost
+	},
+	ambersGain() {
+		let eff= player.points.max(1).log(10).pow(0.5).mul(player.m.points.div(player.points.max(1).log(2).pow(0.015).add(1)))
+		return eff;
+	},
+	SparkUnlReq() {
+		let cost = new Decimal(20).mul(player.sp.sparkMilestones.add(1).pow(1.367).mul(1.45))
+		return cost;
+	},
     layerShown(){return player.m.best.gte(25) && (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12||player.pm.activeChallenge==13},
+		clickables: {
+		11: {
+			title() {return `<span style="color:orange; font-size:16px">Ignite the Milestone.</span>`},
+			display() {return `<span style="font-size:14px">Auto-fill: ${player.sp.fillActive?"ON":"OFF"}</span> <hr color="#4f4f4f"><span style="font-size:10px"><i>Turn your prestige ashes into something that will light you the way from the fall of the Milestone universes</span>`},
+			canClick() {return player.sp.ambers.gt(0)},
+			onClick() {
+				player.sp.fillActive = !player.sp.fillActive
+			},
+			style() {
+				if (!this.canClick) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background':`linear-gradient(to right, rgb(174, 113, 42) ${player.sp.sparkFill.div(tmp.sp.SparkUnlReq).mul(200)}px ,rgb(30, 30, 30) 0px)`,
+					'border':'2px solid',
+					'width':'250px',
+					'min-height':'100px'
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background':`linear-gradient(to right, rgb(174, 113, 42) ${player.sp.sparkFill.div(tmp.sp.SparkUnlReq).mul(200)}px ,rgb(66, 66, 66) 0px)`,
+					'border':'2px solid',
+					'min-height':'100px',
+					'width':'250px',
+				}
+            },
+			unlocked(){
+				return true
+			},	
+		},
+		12: {
+			title() {return `<`},
+			canClick() {return new Decimal(player.sp.chosenSparkMil).gt(0)},
+			onClick() {
+				if (player.sp.showSparkAmt==1) player.sp.chosenSparkMil--
+				if (player.sp.showSparkAmt==3) player.sp.chosenSparkMil=player.sp.chosenSparkMil-3
+				if (player.sp.showSparkAmt==5) player.sp.chosenSparkMil=player.sp.chosenSparkMil-5
+				player.sp.sparkPage--
+			},
+			style() {
+				if (new Decimal(player.sp.chosenSparkMil).gt(0)) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':`grey`,
+					'border':'2px solid',
+					'min-height':'44px',
+					'width':'40px'
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':`rgb(20, 20, 20)`,
+					'border':'2px solid',
+					'min-height':'44px',
+					'width':'40px'
+				}
+            },
+		},
+		13: {
+			title() {return `>`},
+			canClick() {return new Decimal(player.sp.chosenSparkMil).lt(player.sp.sparkMilestones.sub(player.sp.showSparkAmt))
+			},
+			onClick() {
+				if (player.sp.showSparkAmt==1) player.sp.chosenSparkMil++
+				if (player.sp.showSparkAmt==3) player.sp.chosenSparkMil=player.sp.chosenSparkMil+3
+				if (player.sp.showSparkAmt==5) player.sp.chosenSparkMil=player.sp.chosenSparkMil+5
+				player.sp.sparkPage++
+			},
+			style() {
+				if (new Decimal(player.sp.chosenSparkMil).lt(player.sp.sparkMilestones.sub(player.sp.showSparkAmt))) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':`grey`,
+					'border':'2px solid',
+					'min-height':'44px',
+					'width':'40px'
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':`rgb(20, 20, 20)`,
+					'border':'2px solid',
+					'min-height':'44px',
+					'width':'40px'
+				}
+            },
+		},
+		14: {
+			canClick() {return true},
+			display() {return `<h3>Show Multiple Milestones</h3><hr><b>Currently: ${format(player.sp.showSparkAmt,0)} Spark Milestone${player.sp.showSparkAmt==1?'':'s'}</b>`},
+			onClick() {
+				if (player.sp.showSparkAmt==1) player.sp.showSparkAmt=3
+				else if (player.sp.showSparkAmt==3) player.sp.showSparkAmt=5
+				else if (player.sp.showSparkAmt==5) player.sp.showSparkAmt=1
+				player.sp.sparkPage = 1
+				player.sp.chosenSparkMil=0
+			},
+			style() {
+				 return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':`grey`,
+					'border':'2px solid',
+					'min-height':'50px',
+					'width':'150px'
+				}
+            },
+		},
+		15: {
+			title() {return `<<`},
+			canClick() {return new Decimal(player.sp.chosenSparkMil).gt(0)},
+			onClick() {
+				player.sp.chosenSparkMil=0
+				player.sp.sparkPage = 1
+			},
+			style() {
+				if (new Decimal(player.sp.chosenSparkMil).gt(0)) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':`grey`,
+					'border':'2px solid',
+					'min-height':'44px',
+					'width':'40px'
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':`rgb(20, 20, 20)`,
+					'border':'2px solid',
+					'min-height':'44px',
+					'width':'40px'
+				}
+            },
+		},
+		16: {
+			title() {return `>>`},
+			canClick() {return new Decimal(player.sp.chosenSparkMil).lt(player.sp.sparkMilestones.sub(player.sp.showSparkAmt))},
+			onClick() {
+				player.sp.chosenSparkMil=new Decimal(player.sp.showSparkAmt).mul(player.sp.sparkMilestones.div(player.sp.showSparkAmt).sub(player.sp.showSparkAmt==1?1:0).floor()).toNumber()
+				player.sp.sparkPage = new Decimal(player.sp.sparkMilestones.div(player.sp.showSparkAmt).ceil().max(1)).toNumber()
+			},
+			style() {
+				if (new Decimal(player.sp.chosenSparkMil).lt(player.sp.sparkMilestones.sub(player.sp.showSparkAmt))) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':`grey`,
+					'border':'2px solid',
+					'min-height':'44px',
+					'width':'40px'
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':`rgb(20, 20, 20)`,
+					'border':'2px solid',
+					'min-height':'44px',
+					'width':'40px'
+				}
+            },
+		},
+		21: {
+			title() {return `<span style="color:orange; font-size:16px">Regnite the Milestone #${player.sp.ashedMilestones+1}.</span>`},
+			display() {return `<hr color="#4f4f4f"><span style="font-size:12px">Spend <b>${format(tmp.sp.reigniteCost)}</b> filled prestige ashes to reignite the Spark Milestone</span>`},
+			canClick() {return player.sp.sparkFill.gte(tmp.sp.reigniteCost)},
+			onClick() {
+				if (player.sp.sparkFill.gte(tmp.sp.reigniteCost))player.sp.sparkFill=player.sp.sparkFill.sub(tmp.sp.reigniteCost)
+				player.sp.timer[player.sp.ashedMilestones]=120
+				if (player.sp.ashedMilestones>0)player.sp.ashedMilestones--
+				player.sp.burningTimer=player.sp.timer[player.sp.ashedMilestones]
+			},
+			style() { return {
+					'border-radius': '0%',
+					'color':'white',
+					'background':`linear-gradient(to right, rgb(66, 66, 66) 0px)`,
+					'border':'2px solid',
+					'min-height':'100px',
+					'width':'250px',
+				}
+            },
+			unlocked(){
+				return player.sp.ashedMilestones>0
+			},	
+		},
+	},
 	upgrades: {
         rows: 5,
         cols: 4,
@@ -246,6 +492,71 @@ addLayer("sp", {
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
 	},
+	 challenges: {
+        11:{
+            onEnter() {
+				player.p.perkUpgs=[15,25,35,45]
+				player.m.points=new Decimal(0)
+				player.em.points=new Decimal(0)
+				player.mm.points = new Decimal(0)
+                player.points=new Decimal(0)
+				player.sp.chalCooldown=new Decimal(20)
+            },
+			onExit() {
+				if (player.sp.chalCooldown.lte(0))player.sp.ambers = player.sp.ambers.add(tmp.sp.ambersGain)
+				player.sp.ambersDbg = player.sp.ambersDbg.add(tmp.sp.ambersGain)
+				player.p.perkUpgs=[15,25,35,45]},
+            name: "Milestone Dilation",
+            completionLimit() {let comps=new Decimal(0)
+                return comps
+            },
+            challengeDescription() {return "<br>Points and prestige points gain is slog(1.15). Also unlocks more in-challenge Perk Upgrades."},
+            unlocked() { return player.pm.best.gte(12) },
+            canComplete(){
+                return false
+            },
+            goalDescription() {return "Based on bought milestones amount and points you will produce Milestone Ambers, that can be spent for a temporal boosts for both universes."},
+            currencyDisplayName: "Points",
+            rewardDescription() { return "The challenge has no rewards, it only produces Milestone Ambers" },
+            style() {
+                    if (!this.canComplete()) return {
+                        'border-radius': '0%',
+                        'color':'rgb(238, 112, 112)',
+                        'background-color':'black',
+                        'border':'2px solid rgb(238, 112, 112)',
+                        'height':'330px',
+						'border-radius':'33%',
+                        'width':'330px',
+                        "transition":" border 3s"
+                    }
+                    else return {
+                        'border-radius': '0%',
+                        'color':'gold',
+                        'background-color':'black',
+                        'border':'2px solid gold',
+                        'cursor':'pointer',
+                        'height':'330px',
+                        'width':'330px',
+                    }
+            },
+            buttonStyle() {
+                if (!this.canComplete()) return {
+                    'border-radius': '0%',
+                    'color':'rgb(238, 112, 112)',
+					'border-radius':'33%',
+                    'background-color':'rgba(0,0,0,0)',
+                    'border':'2px solid rgb(238, 112, 112)',
+                    "transition":" all 1s"
+                }
+                    return {
+                    'border-radius': '0%',
+                    'color':'gold',
+                    'background-color':'rgba(0,0,0,0)',
+                    'border':'2px solid gold',
+                }
+        },
+        },
+	},
 	buyables: {
 		rows: 1,
 		cols: 2,
@@ -351,6 +662,44 @@ addLayer("sp", {
 			  }, 
 		},
 	},
+		milestones: [
+		{
+			requirementDescription() {return `<span class='spark'>Spark Milestone #${new Decimal(this.id).add(1)}</span>`},
+            unlocked() {return player[this.layer].sparkMilestones.gte(new Decimal(this.id).add(1))},
+			tooltip() {return `Currently: ${format(this.effect())}x`},
+			tooltipStyle() {
+            return {
+			'border':'2px solid lime',
+			'background':`rgb(19, 19, 19)`,	
+			'font-size':'12px',
+			'border-width':'2px 2px 0 2px',
+            'border-image':'linear-gradient(to right, orange 0%, rgb(255, 132, 0) 50%,orange 100%)',
+            'width':'200px',
+			'margin-bottom':'0px',
+            'border-image-slice': '1'}
+        	},
+            done() {return player[this.layer].sparkMilestones.gte(new Decimal(this.id).add(1))}, // Used to determine when to give the milestone
+            effectDescription: function(){
+				return `<hr color="#4f4f4f"><span style="font-size:11px">Boost points gain after slog in [Milestone Overflow] by current points.</span>`
+			},
+			effect() {
+				let base = new Decimal(1.155)
+				let timerMult=1-(Math.max(0,(120-player.sp.timer[this.id])/120))
+				let thisId=new Decimal(this.id).toNumber()
+				let eff = new Decimal(10).mul(player.sp.ambers.max(1).log(1.5).pow(base).add(1)).pow(player.points.max(1).log(10).max(1).log(2).max(1).pow(0.25)).mul(player.sp.ashedMilestones>=(thisId)?timerMult:1).max(1)
+				return eff
+			},
+			style() {
+				return {
+				'border-radius': '0%',
+				'color':'white',
+				'background':`rgb(19, 19, 19)`,
+				'border':'2px solid',
+				'min-height':'102px'
+				}
+            },
+        },
+	],
 	tabFormat: {
 		"Main":{
 			content:[
@@ -360,10 +709,31 @@ addLayer("sp", {
 
 			]
 		},
-		"Milestone Ambers":{
+		"Prestige Ashes":{
+			unlocked() {return hasMalware('m',15)},
 			content:[
-				"main-display","prestige-button","resource-display",
-				["display-text",function(){if (hasMalware('m',15)) return "You have "+format(player.sp.ambers) + " Milestone Ambers (ENDGAME)"}],
+				"main-display","prestige-button","blank",
+				["display-text",function(){if (hasMalware('m',15)) return "You have <h2 style='color:  rgb(249, 147, 30); text-shadow: rgb(249, 147, 30) 0px 0px 10px;'>"+format(player.sp.ambers)+"</h2> Prestige Ashes"}],
+				"resource-display",
+				"challenges",
+			]
+		},
+			"Spark Milestones":{
+			unlocked() {return hasMalware('m',15)},
+			content:[
+				"main-display","prestige-button","blank",
+				["display-text",function(){if (hasMalware('m',15)) return `You have <h2 style='color:  rgb(249, 147, 30); text-shadow: rgb(249, 147, 30) 0px 0px 10px;'>`+format(player.sp.ambers) +"</h2> Prestige Ashes"}],
+				["display-text",function(){if (hasMalware('m',15)) return "Here you can burn Prestige Ashes to earn Spark Milestones, which will temporarily [Burn]. <br>In order to get the bonuses from these milestones, you should check if they're still burning (working). If they're not, you should burn them by using Prestige Ashes. "}],
+				"blank",
+				["clickable",[14]],
+				"blank",
+				["row", [["display-text",function(){return `<div style="border:2px solid white; width:630px; height:96px; display:flexflex-wrap: wrap; align-content: center; justify-content: center; align-items: center;"><span style='font-size:20px'>To unlock Spark Milestone:</span><span style='color:  rgb(249, 147, 30); text-shadow: rgb(249, 147, 30) 0px 0px 10px; font-size:16px'><br>`+format(player.sp.sparkFill) +" / "+ format(tmp.sp.SparkUnlReq)+`</span> Prestige Ashes<hr color="#4f4f4f">Tip: Tap to the clickable on the right to activate/deactivate auto-fill of Prestige Ashes`}],["display-text", `</div>`],["clickable",[11]],["clickable",[21]]]],
+				"blank",
+				function(){
+					return handleDisplay()
+			},
+				"blank",
+				["row", [["clickable",[15]],"blank",["clickable",[12]],"blank",["display-text",function(){if (hasMalware('m',15)) return `Page: ${format(player.sp.sparkPage,0)}/${format(player.sp.sparkMilestones.div(player.sp.showSparkAmt).ceil().max(1),0)}`}],"blank",["clickable",[13]],"blank",["clickable",[16]]]]
 			]
 		},
 	},
@@ -385,7 +755,25 @@ addLayer("sp", {
 			if(l=="t")if(player.m.best.gte(100))layerDataReset("sp",["upgrades"]);else layerDataReset("sp",[]);
 			if(l=="hb")if(player.m.best.gte(104))layerDataReset("sp",["upgrades"]);else layerDataReset("sp",[]);
 		},
-	update(){
+	update(diff){
+	if (player.sp.burningTimer>=0&&(new Decimal(player.sp.ashedMilestones+1).lt(player.sp.sparkMilestones))) player.sp.burningTimer=new Decimal(player.sp.burningTimer).sub(diff).max(0).toNumber()
+	if (player.sp.burningTimer<=0) {
+		if (new Decimal(player.sp.ashedMilestones+1).lt(player.sp.sparkMilestones)){player.sp.ashedMilestones++
+		player.sp.burningTimer=120
+	}
+}
+	if (player.sp.activeChallenge==11&&player.sp.chalCooldown>0) player.sp.chalCooldown=player.sp.chalCooldown.sub(diff).max(0)
+	if (player.sp.sparkFill.gte(tmp.sp.SparkUnlReq)) {
+		player.sp.sparkFill=player.sp.sparkFill.sub(tmp.sp.SparkUnlReq)
+		player.sp.sparkMilestones=player.sp.sparkMilestones.add(1)
+		player.sp.burningTimer=120
+	}
+	if (player.sp.fillActive) {
+		let filler = new Decimal(1)
+		player.sp.ambers=player.sp.ambers.sub(10*diff).max(0)
+		if (player.sp.ambers.toNumber()!=0)player.sp.sparkFill=player.sp.sparkFill.add(10*diff)
+		if (player.sp.ambers.toNumber()==0) player.sp.fillActive = false
+	}
 		if(player.m.best.gte(83)){
 			var target=player.sp.points.add(1).div("1e652955").log("1e12345");
 			if(target.gte(3)){
@@ -404,6 +792,11 @@ addLayer("sp", {
 			if(target.gt(player.sp.buyables[12])){
 				player.sp.buyables[12]=target;
 			}
+		}
+		for (i in player.sp.milestones) {
+			if (player.sp.ashedMilestones>i&&player.sp.timer[i]<1) {
+				fetchTimer(i,Math.floor(player.sp.timer[i]))}
+			if (player.sp.ashedMilestones==i) fetchTimer(i,player.sp.burningTimer)
 		}
 	}
 })

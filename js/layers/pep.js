@@ -134,7 +134,7 @@ addLayer("pep", {
 				"Cost for Next Tier: "+format(data.cost,0)+" Exotic Prestige points";
 			},
 			cost(){
-				return [new Decimal("1"),new Decimal("2"),new Decimal("8"),new Decimal("35"),new Decimal('50'),Decimal.dInf][player.pep.buyables[11]]
+				return [new Decimal("1"),new Decimal("2"),new Decimal("8"),new Decimal("30"),new Decimal('50'),Decimal.dInf][player.pep.buyables[11]]
 			},
 			canAfford() {
                    return player.pep.points.gte(tmp[this.layer].buyables[this.id].cost)

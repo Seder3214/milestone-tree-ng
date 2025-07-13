@@ -66,7 +66,7 @@ addLayer("cm", {
             unlocked() {return player[this.layer].best.gte(1)},
             done() {return player[this.layer].best.gte(2)}, // Used to determine when to give the milestone
             effectDescription: function(){
-				return "Expand disk amount - Add one more column of disks. Prestige Milestone 9 is much better."
+				return "Expand disk amount - Add one more column of disks. Prestige Milestone 9 is much better. Tenfold points gain."
 			},
             style() {
                 if (hasMilestone('cm',1)) return {

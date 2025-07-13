@@ -379,7 +379,7 @@ addLayer("pm", {
                 return comps
             },
             challengeDescription() {return (player.pm.activeChallenge==11?"You spent "+formatTime(player.pm.challengeTimer)+" in this challenge.":"")+ "<br>You are trapped in Level " + format(this.levelScale()) + " Trojan Corruption, Prestige Essences gain formula is much weaker, but increases over time."+"<br>"+format(challengeCompletions(this.layer, this.id),0)
-            +"/5 completions.<br>At 2 completions, unlock a new challenge!"},
+            +(hasMalware("m",14)?"/10 completions.":"/5 completions.")+"<br>At 2 completions, unlock a new challenge!"},
             unlocked() { return player.pm.best.gte(12) },
             goal: function(){
                 let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].active==true)

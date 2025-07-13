@@ -214,6 +214,8 @@ ret = softcap(new Decimal(ret), new Decimal(7),0.25)
 		layerDataReset("mm",[])
 		layerDataReset("m",[])
 		layerDataReset('t',["upgrades","challenges"])
+				player.pm.essence = new Decimal(0)
+				player.points = new Decimal(0)
 	},
 onExit() {
             let grid = player.cp.grid
@@ -221,6 +223,8 @@ onExit() {
             for (i=0;i<slots.length;i++){
                 player.cp.grid[slots[i]] = {level: getGridData('cp',slots[i]).level,active:false,fixed:false,type:getGridData('cp',slots[i]).type}
 				player.cp.trojanChosen = undefined
+				player.points = new Decimal(0)
+				player.pm.essence = new Decimal(0)
 				player.cp.pointsInCorrupt=new Decimal(0)
             }
 setInterval(100000000)

@@ -469,7 +469,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
         getDisplay(data, id) {
             table=''
             if (data.level<1) table="This hard drive is stable. No corruptions detected."
-            else table= `<h3>${typeName[data.type]}</h3>`+(data.cautPower>0?"<br>(Caution "+formatRoman(data.cautPower)+")<br>":"<br>")+ `Corruption` +"<br>Level: <h3>"+formatRoman(data.level)+"</h3><br>Progress to fix: [==========]"
+            else table= `<h3>${typeName[data.type]}</h3>`+(data.cautPower>0?"<br>(Caution "+formatRoman(data.cautPower)+")<br>":"<br>")+ `Corruption` +"<br>Level: <h3>"+formatRoman(data.level)+(data.active==true?"</h3><br>Progress to fix: [==========]":``)
             for(i=1;i<11;i++){
                 if ((data.active==true || player.cp.trojanChosen==id) && data.type=='div') {
                     if ((player.cp.trojanChosen==id) && player.cp.pointsInCorrupt.gte(gridCost('cp',player.cp.trojanChosen).mul(new Decimal(0.1).mul(i)))) {
@@ -503,7 +503,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
                  }
                 else table+="<br>-< "+format(player.pm.essence.div(gridCost('cp',id)).mul(100).min(100))+"% >-" 
             }
-            if (data.active==true&& data.type=='pm'){
+            else if (data.active==true&& data.type=='pm'){
                 table+="<br>-< "+format(player.pm.essence.div(gridCost('cp',id)).mul(100).min(100))+"% >-" 
             }
             return table
@@ -623,7 +623,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 				let data = tmp[this.layer].buyables[this.id];
 				return "Total buyed: "+format(player[this.layer].buyables[this.id])+"<br>"+"Reduces corruptions goals. <br>Cost: "+format(data.cost)+" Corruption Essences"+"<br>Currently: /"+format(this.effect());
 			},
-			cost(x) {return new Decimal(200000).mul(x.add(1).pow(new Decimal(x/5).add(1))).pow(x.gte(3)?1.25:1);
+			cost(x) {return new Decimal(190000).mul(x.add(1).pow(new Decimal(x/5).add(1))).pow(x.gte(3)?1.25:1);
 			},
 			canAfford() {
                    return player.cp.formatted.gte(tmp[this.layer].buyables[this.id].cost)
@@ -683,7 +683,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
 			  },
             effect(x) {
                 let eff = new Decimal(1)
-                if (player.cp.trojanChosen!=undefined)eff = new Decimal(10*(getGridData("cp",player.cp.trojanChosen).level>=1?x*((getGridData("cp",player.cp.trojanChosen).level/100)+1):1)).pow(x*((getGridData("cp",player.cp.trojanChosen).level/1000)+1))
+                if (player.cp.trojanChosen!=undefined)eff = new Decimal(2*(getGridData("cp",player.cp.trojanChosen).level>=1?x*((getGridData("cp",player.cp.trojanChosen).level/100)+1):1)).pow(x*((getGridData("cp",player.cp.trojanChosen).level/10000)+1))
                 return softcap(eff,new Decimal(1e38),0.205)
             },
 			  style() {
