@@ -573,6 +573,7 @@ else return new Decimal(2e308)
             unlocked() { return challengeCompletions('pm',12)>=3 },
             goal: function(){
                 let goal=new Decimal(55).div(new Decimal(challengeCompletions('pm',13)).div(4).add(1)).floor()
+                if (challengeCompletions('pm',13)==2) goal = new Decimal(32)
                 return goal
             },
             canComplete(){
