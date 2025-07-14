@@ -286,7 +286,7 @@ addLayer("sp", {
 				}
             },
 			unlocked(){
-				return player.sp.ashedMilestones>0
+				return player.sp.burningTimer>0||player.sp.ashedMilestones>0
 			},	
 		},
 	},
@@ -756,7 +756,7 @@ addLayer("sp", {
 			if(l=="hb")if(player.m.best.gte(104))layerDataReset("sp",["upgrades"]);else layerDataReset("sp",[]);
 		},
 	update(diff){
-	if (player.sp.burningTimer>=0&&(new Decimal(player.sp.ashedMilestones+1).lt(player.sp.sparkMilestones))) player.sp.burningTimer=new Decimal(player.sp.burningTimer).sub(diff).max(0).toNumber()
+	if (player.sp.burningTimer>=0&&(new Decimal(player.sp.ashedMilestones).lt(player.sp.sparkMilestones))) player.sp.burningTimer=new Decimal(player.sp.burningTimer).sub(diff).max(0).toNumber()
 	if (player.sp.burningTimer<=0) {
 		if (new Decimal(player.sp.ashedMilestones+1).lt(player.sp.sparkMilestones)){player.sp.ashedMilestones++
 		player.sp.burningTimer=120

@@ -572,7 +572,7 @@ else return new Decimal(2e308)
             +"/3 completions.<br>At 3 completions, unlock a new challenge!"},
             unlocked() { return challengeCompletions('pm',12)>=3 },
             goal: function(){
-                let goal=new Decimal(70).div(new Decimal(challengeCompletions('pm',13)).div(4).add(1)).floor()
+                let goal=new Decimal(55).div(new Decimal(challengeCompletions('pm',13)).div(4).add(1)).floor()
                 return goal
             },
             canComplete(){
