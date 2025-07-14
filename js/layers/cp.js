@@ -612,7 +612,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
         22:{
             sellOne() {
                 player.cp.buyables[22]=player.cp.buyables[22].sub(1).max(0)
-                let cost=new Decimal(200000).mul(player.cp.buyables[22].add(1).pow(new Decimal((player.cp.buyables[22])/5).add(1))).pow(player.cp.buyables[22].gte(3)?1.25:1)
+                let cost=new Decimal(190000).mul(player.cp.buyables[22].add(1).pow(new Decimal((player.cp.buyables[22])/5).add(1))).pow(player.cp.buyables[22].gte(3)?1.25:1)
                 player.cp.formatted=player.cp.formatted.add(cost)
             },
             canSellOne() {return player.cp.buyables[22].gt(0)},
