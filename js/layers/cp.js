@@ -453,7 +453,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
         onClick(data, id) { 
             if (player.pm.activeChallenge==undefined) {
             if (data.level>=1) {player[this.layer].grid[id].active=!player[this.layer].grid[id].active
-             if (data.type=='pm') player.pm.essence=new Decimal(0)
+             if (data.type=='pm') player.pm.essence=new Decimal(1)
              if (data.type=='div')player.points=new Decimal(0)
             let slots = activeCorruptions()
             let activeNum = 1
