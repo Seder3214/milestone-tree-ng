@@ -570,7 +570,7 @@ else return new Decimal(2e308)
             name: "Corrupted Normal Universe II",
             completionLimit: new Decimal(3),
             challengeDescription() {return (player.pm.activeChallenge==13?"You spent "+formatTime(player.pm.challengeTimer)+" in this challenge.":"")+ "<br>You are trapped in Level " + format(this.levelScaleTrojan()) + " Trojan"+ " Corruption, All upgrades that affect First Milestone are much weaker, you're trapped in Normal Universe."+"<br>"+format(challengeCompletions(this.layer, this.id),0)
-            +"/3 completions.<br>At 3 completions, unlock a new challenge!"},
+            +"/3 completions."},
             unlocked() { return challengeCompletions('pm',12)>=3 },
             goal: function(){
                 let goal=new Decimal(55).div(new Decimal(challengeCompletions('pm',13)).div(4).add(1)).floor()

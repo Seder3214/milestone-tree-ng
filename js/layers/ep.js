@@ -76,19 +76,22 @@ addLayer("ep", {
 		let eff=player.ep.points.add(1).log(1.1).pow(2.15)
 		if (player.mp.challenges[11]>0) eff=eff.mul(tmp.mp.challenges[11].rewardEffect)
 			if (player.mp.buyables[12].gte(3)) eff = eff.pow(2.5)
+			if (player.mp.buyables[12].gte(4)) eff = eff.pow(1.015)
 		if (player.mp.activeChallenge==13) return new Decimal(1)
 		return eff.max(1)
 	},
 	sevenEffect() {
         let eff = player.ep.points.add(1).log10().max(1).pow(0.1).mul(0.382).div(20)
 		if (player.mp.challenges[12]>0) eff=eff.add(tmp.mp.challenges[12].rewardEffect)
-			if (player.mp.buyables[12].gte(4)) eff = eff.mul(2.56)
+		if (player.mp.buyables[12].gte(4)) eff = eff.mul(2.56)
+		if (player.mp.buyables[12].gte(5)) eff = eff.mul(1.055)
 		if (player.mp.activeChallenge==13) return new Decimal(0)
         return eff;
     },
 	eightEffect() {
         let eff = player.ep.points.add(1).log10().max(1).pow(0.1).div(10)
 		if (player.mp.buyables[12].gte(5)) eff = eff.mul(5)
+		if (player.mp.buyables[12].gte(6)) eff = eff.mul(1.155)
 		if (player.mp.activeChallenge==13) return new Decimal(0)
     return softcap(eff,new Decimal(0.5),0.1);
     },
@@ -217,9 +220,9 @@ addLayer("ep", {
 				"main-display","prestige-button","resource-display",
 				["display-text",function(){table = ''
                 if (player.ep.buyables[11].gte(1)) table += ('1st effect: AP challenge 41 effect is ' + format(tmp.ep.oneEffect) + "x better")
-                if (player.ep.buyables[11].gte(2)) table += ('<br>2nd effect: Transcend Points gain is ' + format(tmp.ep.twoEffect) + "x better (only outside of T challenges)")
+                if (player.ep.buyables[11].gte(2)) table += (player.mp.buyables[12].gte(1)?'<br><span class="ef">2nd effect: Transcend Points gain is ' + format(tmp.ep.twoEffect) + "x better (only outside of T challenges)</span>":'<br>2nd effect: Transcend Points gain is ' + format(tmp.ep.twoEffect) + "x better (only outside of T challenges)")
 				if (player.ep.buyables[11].gte(3)) table += (player.mp.buyables[12].gte(1)?'<br><span class="ef">3rd effect: Hyper Boost effect base +' + format(tmp.ep.threeEffect,4)+"</span>":'<br>3rd effect: Hyper Boost effect base +' + format(tmp.ep.threeEffect,4))
-				if (player.ep.buyables[11].gte(4)) table += (player.mp.buyables[12].gte(2)?'<br><span class="ef">4th effect: Transcend Points hardcap starts ' + format(tmp.ep.fourEffect,4) + "x later</span>":'<br>4th effect: Transcend Points hardcap starts ' + format(tmp.ep.fourEffect,4) + "x later")
+				if (player.ep.buyables[11].gte(4)) table += ('<br>4th effect: Transcend Points hardcap starts ' + format(tmp.ep.fourEffect,4) + "x later")
 				if (player.ep.buyables[11].gte(5)) table += (player.mp.buyables[12].gte(3)?'<br><span class="ef">5th effect: Add an Hyper-Prestige Points inflation (^' + format(tmp.ep.fiveEffect.eff,4) + " to gain), that starts at "+ format(tmp.ep.fiveEffect.start,4) + " Hyper-Prestige Points</span>":'<br>5th effect: Add an Hyper-Prestige Points inflation (^' + format(tmp.ep.fiveEffect.eff,4) + " to gain), that starts at "+ format(tmp.ep.fiveEffect.start,4) + " Hyper-Prestige Points")
 				if (player.ep.buyables[11].gte(6)) table += (player.mp.buyables[12].gte(4)?'<br><span class="ef">6th effect: Transcend Points gain in Transcend Challenges is x' + format(tmp.ep.sixEffect,4) + " better.</span>":'<br>6th effect: Transcend Points gain in Transcend Challenges is x' + format(tmp.ep.sixEffect,4) + " better.")
 				if (player.ep.buyables[11].gte(7)) table += (player.mp.buyables[12].gte(5)?`<br><span class="ef">7th effect: Softcap of Prestige Boost's effect starts +` + format(tmp.ep.sevenEffect,4) + " later.</span>":"<br>7th effect: Softcap of Prestige Boost's effect starts +" + format(tmp.ep.sevenEffect,4) + " later.")

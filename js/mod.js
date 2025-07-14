@@ -99,7 +99,7 @@ if (player.pm.essence.gte(1)&&(player.ap.activeChallenge==undefined && player.t.
 	if(hasUpgrade("p",52))b=b.pow(upgradeEffect("p",52))
 	if (hasMilestone('sp',0))b=b.mul(milestoneEffect("sp",0))
 	}
-    if (hasMilestone('cm',1)&&player.pm.points.lte(11)) b = b.mul(1e3)
+    if (hasMilestone('cm',1)&&player.mp.activeChallenge==21) b = b.mul(1e3)
 return player.sp.activeChallenge!=11?b.mul(corruptEffect()):b;
 
 }
