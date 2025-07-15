@@ -364,8 +364,14 @@ addLayer("pm", {
             onEnter() {
                 player.pm.essence=new Decimal(0)
                 player.points=new Decimal(0)
-                let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].level<1 && x!=101 && (Math.floor(x/100)<=tmp.cp.grid.rows && (x%10)<=tmp.cp.grid.cols))
+                let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].level<1 && x!=101)
                 player.cp.grid[slots[0]] = {level: this.levelScale(),active:true,fixed:false,type:"div"}
+				player.cp.pointsInCorrupt=new Decimal(0)
+				player.cp.peInCorrupt=new Decimal(0)
+				player.cp.cooldown=Infinity
+				player.cp.cooldown2=Infinity
+				player.cp.trojanChosen=undefined
+				player.cp.chosenBackdoor=undefined
             },
             onExit() {
                 let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].active==true)
@@ -373,6 +379,12 @@ addLayer("pm", {
                 player.pm.challengeTimer = new Decimal(0)
                 player.pm.essence=new Decimal(0)
                 player.points=new Decimal(0)
+				player.cp.pointsInCorrupt=new Decimal(0)
+				player.cp.peInCorrupt=new Decimal(0)
+				player.cp.cooldown=buyableEffect("cp",33)
+				player.cp.cooldown2=buyableEffect("cp",34)
+				player.cp.trojanChosen=undefined
+				player.cp.chosenBackdoor=undefined
             },
             name: "Corrupted Essences",
             completionLimit() {let comps=new Decimal(5)

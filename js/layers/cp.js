@@ -38,7 +38,7 @@ return minCorrupt
 }
 function antiCorrupt() {
     let base=40+(player.cm.best.gte(4)?8:0)
-    if (player.cm.best.gte(5))base+=5
+    if (player.cm.best.gte(5))base+=38
     return base
 }
 function formatScale(num,precision) {
@@ -939,7 +939,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
     let slots=activeCorruptions()
     let all = Object.keys(player.cp.grid).filter(x=>player.cp.grid[x].level<antiCorrupt() && player.cp.grid[x].level>0)
     for (i=0;i<all.length;i++) {
-        if (player.cm.best.gte(3) && all.length>0) {
+        if (player.cm.best.gte(3) && all.length>0&&player.pm.activeChallenge==undefined) {
             player.cp.formatted = player.cp.formatted.add(gridEssence('cp',all[i]))
             player.cp.grid[all[i]]={level: 0,active:false,fixed:false,type: getGridData('cp',all[i]).type,cautPower: getGridData('cp',all[i]).cautPower}
             doPopup("none","Corruption was fixed!","Corruption Info",3,"black","lime")
