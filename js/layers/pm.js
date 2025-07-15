@@ -436,11 +436,11 @@ else return new Decimal(2e308)
         12:{
             levelScaleTrojan() {
                 let scale= new Decimal(30).add(new Decimal(30).mul(challengeCompletions('pm',12)))
-                return scale
+                return scale.toNumber()
             },
             levelScalePE() {
                 let scale= new Decimal(30).add(new Decimal(20).mul(challengeCompletions('pm',12)))
-                return scale
+                return scale.toNumber()
             },
             onEnter() {
                 layerDataReset('pp')
