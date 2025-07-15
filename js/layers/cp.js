@@ -20,6 +20,10 @@ function formatRoman(num) {
   
     return str;
 }
+function checkCorruptions() {
+        let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].level>0)
+    return slots
+}
 function checkMinimum() {
     let rangeMul = Math.floor(player.cp.totalCorrupt/4)
     let addLevel = Math.floor(player.cp.totalCorrupt/5)*1.5
@@ -144,6 +148,7 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
     row: 1, // Row the layer is in on the tree (0 is the first row)
 	base: new Decimal(12),
 	exponent: function(){
+        if (player.ex.a2Unl>=2) return new Decimal(0.79)
 		return new Decimal(0.65)
 	},
     hotkeys: [
@@ -288,10 +293,12 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
         maxCols:7,
         rows() {
         let rows = 4
+        if (player.ex.a2Unl>=2) rows+=2
         return rows},
         cols() {
         let cols = 4
         if (player.cm.points.gte(2)) cols+=1
+        if (player.ex.a2Unl>=2) cols+=1
         return cols},
         getStartData(id) {
             return {level: 0,active: false,fixed: false,type:"div",cautPower:0}

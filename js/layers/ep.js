@@ -34,7 +34,8 @@ addLayer("ep", {
 		if (player.mp.activeChallenge==13) return new Decimal(1)
 		eff=softcap(eff,new Decimal('1e1000000'),0.075)
 		eff=softcap(eff,new Decimal('1e2500000'),0.075)
-        return softcap(eff,new Decimal('1e5000000'),0.015);
+		eff=softcap(eff,new Decimal('1e5000000'),0.015)
+        return softcap(eff,new Decimal('ee9'),1/1e10);
     },
     twoEffect() {
         let eff = player.ep.points.add(1).pow(player.m.best.gte(166)?2.5:2.2).mul(4).max(1)
@@ -43,7 +44,10 @@ addLayer("ep", {
 		if (player.mp.activeChallenge==13) return new Decimal(1)
 		eff = softcap(eff,soft,0.075)
 		eff=softcap(eff,new Decimal('1e100000'),0.22)
-        return softcap(eff,new Decimal('1e200000'),0.02);
+		eff=softcap(eff,new Decimal('1e200000'),0.02)
+		eff=eff.min(`ee11`)
+		if (eff.gte(`ee11`)) eff = eff.pow(player.ep.points.max(1).log10().max(1).log10())
+        return eff;
     },
 	threeEffect() {
         let eff = player.ep.points.add(1).log10().max(1).pow(0.01).div(500)
@@ -51,6 +55,7 @@ addLayer("ep", {
 		if (player.m.best.gte(172)) eff = eff.mul(1.1)
 		if (player.mp.buyables[12].gte(2)) eff = eff.mul(4)
 		if (player.mp.activeChallenge==13) return new Decimal(0)
+		eff = softcap(eff,new Decimal(0.02),0.05)
         return eff.toNumber();
     },
 	fourEffect() {
@@ -70,7 +75,8 @@ addLayer("ep", {
 		if (player.m.best.gte(174)) start = start.pow(0.1)
 		if (player.mp.activeChallenge==13) eff = new Decimal(1)
 		start=start.add(tmp.ap.challenges[42].effect)
-        return {eff: softcap(eff,new Decimal(2.75),0.5), start: start};
+		eff=softcap(eff,new Decimal(2.75),0.5)
+        return {eff: softcap(eff,new Decimal(5),0.15), start: start};
     },
 	sixEffect() {
 		let eff=player.ep.points.add(1).log(1.1).pow(2.15)
@@ -86,7 +92,7 @@ addLayer("ep", {
 		if (player.mp.buyables[12].gte(4)) eff = eff.mul(2.56)
 		if (player.mp.buyables[12].gte(5)) eff = eff.mul(1.055)
 		if (player.mp.activeChallenge==13) return new Decimal(0)
-        return eff;
+        return softcap(eff,new Decimal(4.5),0.01);
     },
 	eightEffect() {
         let eff = player.ep.points.add(1).log10().max(1).pow(0.1).div(10)
@@ -112,8 +118,12 @@ addLayer("ep", {
             unlocked() { return player.mp.activeChallenge!=21}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=1.2;
+				let effAfter1e20 = player.ep.points.max(1).log(10).max(1).log(2).pow(4.65)
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.275).add(1)).max(1)
-                return softcap(ret,new Decimal(1e9),0.1);
+				ret = softcap(ret,new Decimal(1e9),0.1)
+				ret = ret.min(1e20)
+				if (ret.gte(1e20))ret = ret.mul(effAfter1e20)
+                return ret;
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
@@ -153,7 +163,7 @@ addLayer("ep", {
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
                 let ret = (player.t.challenges[11]*2)+(player.t.challenges[21]*10)+(player.t.challenges[31]*10)+(player.ep.points.add(1).log(10).add(1).pow(0.5).toNumber())
 				if (hasUpgrade("ep",22)) ret=ret*2.5
-                return ret;
+                return softcap(new Decimal(ret),new Decimal(1e6),0.25);
             },
 			effectDisplay() { return "-"+format(this.effect()) },
             unlocked() { return player.mp.buyables[21].gte(2)&& player.mp.activeChallenge!=21},

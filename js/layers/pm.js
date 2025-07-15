@@ -457,9 +457,9 @@ else return new Decimal(2e308)
                 layerDataReset("mm",[])
                 layerDataReset("m",[])
                 layerDataReset('t',["challenges"])
-                player.m.best = new Decimal(0)
+                player.m.best = new Decimal(129)
                 player.mm.best = new Decimal(1)
-                player.pm.essence=new Decimal(0)
+                player.pm.essence=new Decimal(0)    
                 player.points=new Decimal(0)
                 let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].level<1 && x!=101)
                 player.cp.grid[slots[0]] = {level: this.levelScaleTrojan(),active:true,fixed:false,type:"div"}
@@ -489,7 +489,7 @@ else return new Decimal(2e308)
             },
             rewardEffect() {
                 let ret = 15.46**(player.pm.challenges[12])*(challengeCompletions('pm',12)>=1?player.pm.essence.add(1).log2().add(1).log2().pow(1.5):1)
-                return ret*(challengeCompletions("pm",13)>=1?challengeEffect('pm',13):1)
+                return new Decimal(ret*(challengeCompletions("pm",13)>=1?challengeEffect('pm',13):1)).max(1)
             },
             goalDescription() {let req = " Prestige Points"
                 return "Get "+format(this.goal())+req},

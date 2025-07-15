@@ -12,7 +12,9 @@ addLayer("pp", {
 		return new Decimal('e7e13');
 	},
     softcap: new Decimal('e28000000'),
-    softcapPower: new Decimal(0.015),
+    softcapPower() {
+       return new Decimal(0.015)
+    },
     resource: "prestige power", // Name of prestige currency
     baseResource() {if (hasMalware("m", 4)) return "<span style='color:red'>infected</span> prestige points"
 		return "prestige points"},// Name of resource prestige is based on
@@ -80,10 +82,13 @@ addLayer("pp", {
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=1.05;
+                let effAfter1000 = player.pp.points.max(1).slog(10).max(1).pow(6)
                 if (hasUpgrade('pp', 31)) base += 0.15
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].power.add(1)).add(1))
                 ret = softcap(ret, new Decimal(3), new Decimal(0.001))
                 ret = softcap(ret, new Decimal(4.5), new Decimal(0.001))
+                ret = ret.min(1000)
+                if (ret.gte(1000)) ret = ret.add(effAfter1000)
                 return ret;
             },
             effectDisplay() { return "x"+format(this.effect()) }, // Add formatting to the effect
@@ -143,7 +148,8 @@ unlocked() {return player.m.best.gte(155)},
              effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
                 let ret = player.ep.points.add(1).pow(hasUpgrade('pp', 33)?0.8:0.75).mul(1.5).add(1)
                 ret=softcap(ret,new Decimal('1e800'),0.1)
-                return softcap(ret,new Decimal('1e20000'),0.1);
+                ret=softcap(ret,new Decimal('1e20000'),0.1)
+                return softcap(ret,new Decimal('ee10'),0.0000067);
             },
             effectDisplay() { return "x"+format(this.effect()) },
                                 },

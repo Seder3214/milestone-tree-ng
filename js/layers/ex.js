@@ -10,6 +10,9 @@ if (dot==`(${tmp.ex.xGoal};${tmp.ex.yGoal})`) {
 		case "a-03":
 			if (player.ex.a3Unl<player.ex.a3Limit)player.ex.a3Unl+=1
 			break
+		case "b-01":
+			if (player.ex.b1Unl<player.ex.b1Limit)player.ex.b1Unl+=1
+			break
 	}
 }
 }
@@ -25,14 +28,14 @@ function checkPortalEnterDot(dot="") {
 		break
 		case "a-02": 
 		dotback=["(1;1)","a"]
-		dot=["(7;3)","b-01"]
+		dot=["(5;3)","b-01"]
 		dot2=["(6;5)","c-01"]
 		break
 		case "a-03": 
-		dotback=["(1;1)","a"]
+		dotback=["(1;1)","a-02"]
 		break
 		case "b-01": 
-		dotback=["(6;5)","a-03"]
+		dotback=["(1;1)","a-03"]
 		break
 	}
 	if (dot[0]==`(${player.ex.buyables[11]};${player.ex.buyables[12]})`) {
@@ -67,6 +70,8 @@ addLayer("ex", {
 		aLimit:4,
 		a2Limit:3,
 		a3Limit:5,
+		b1Limit:1,
+		c1Limit:1,
     }},
     color() {return '#46a364'},
     requires(){
@@ -109,8 +114,13 @@ addLayer("ex", {
 					break
 				case "a-03":
 					x=player.ex.a3Unl
-					goal=new Decimal(1)
+					goal=new Decimal(2)
 					goal=goal.add(x)
+					break
+				case "b-01":
+					x=new Decimal(player.ex.b1Unl)
+					goal=new Decimal(4)
+					goal=goal=goal.add(x.add(1).mul(1.15)).floor()
 					break
 			}
 		return goal
@@ -129,8 +139,13 @@ addLayer("ex", {
 					break
 				case "a-03":
 					x=new Decimal(player.ex.a3Unl)
-					goal=new Decimal(4)
+					goal=new Decimal(5)
 					goal=goal.add(x)
+					break
+				case "b-01":
+					x=new Decimal(player.ex.b1Unl)
+					goal=new Decimal(4)
+					goal=goal=goal.add(x.add(1).mul(1.15)).floor()
 					break
 			}
 		return goal
@@ -156,14 +171,15 @@ addLayer("ex", {
         cols: 4,
 		11: {
 			title: "Explore Upgrade 11",
-            description: "slog(points)*Square root of current coordinates summa<br>Exponents Prestige Essence effect outside Prestige Universe at boosted rate",
+            description() { return `slog(points)*${player.ex.b1Unl>=1?`C`:`Square root of c`}urrent coordinates summa<br>Exponents Prestige Essence effect outside Prestige Universe at boosted rate`},
             cost: new Decimal(2),
             unlocked() { return hasMalware("m",14)}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=100;
 				let xPos=player.ex.buyables[11]
 				let yPos=player.ex.buyables[12]
-				let ret = (new Decimal(player.points).add(1).slog(2)).mul(xPos.add(yPos).pow(0.5).mul(base)).max(1)
+				let ret = (new Decimal(player.points).add(1).slog(2).max(1)).mul(xPos.add(yPos).pow(0.5).mul(base)).max(1)
+				if (player.ex.b1Unl>=1) ret = (new Decimal(player.points).add(1).slog(1.5).max(1)).mul(xPos.add(yPos).mul(base)).max(1)
                 return ret;
             },
 			pay() {
@@ -205,9 +221,14 @@ player.ex.buyables[i] = new Decimal(0)}
 						cost = Decimal.pow(10,x.add(1).mul(11.76))
 						break
 					case "a-02":
-						cost = Decimal.pow(27,x.add(1).mul(27.6))
+						cost = Decimal.pow(17,x.add(1).mul(22.6))
+						break
 					case "a-03":
 						cost = Decimal.pow(15,x.add(1).mul(8.6))
+						break
+					case "b-01":
+						cost = Decimal.pow(15,x.add(1).mul(23.6))
+						break
 				}
 				return cost
 			},
@@ -259,9 +280,14 @@ player.ex.buyables[i] = new Decimal(0)}
 						cost = Decimal.pow(2,x.add(1).mul(3.76))
 						break
 					case "a-02":
-						cost = Decimal.pow(7,x.mul(3.25).add(1))
+						cost = Decimal.pow(6,x.mul(3.25).add(1))
+						break
 					case "a-03":
 						cost = Decimal.pow(8,x.mul(2.65).add(1))
+						break
+					case "b-01":
+						cost = Decimal.pow(5,x.mul(2.65).add(1))
+						break
 				}
 				return cost
 			},
@@ -333,7 +359,7 @@ player.ex.buyables[i] = new Decimal(0)}
 						dot2=[9,6]
 						break
 						case "a-02": 
-						dot=[7,3]
+						dot=[5,3]
 						dotback=[1,1]
 						break
 						case "a-03": 
@@ -342,7 +368,7 @@ player.ex.buyables[i] = new Decimal(0)}
 						break
 						case "b-01": 
 						dot=[25,25]
-						dotback=[6,5]
+						dotback=[1,1]
 						break
 					}
 					if (player.ex.points.gte(1))table+=`
@@ -372,11 +398,14 @@ player.ex.buyables[i] = new Decimal(0)}
 						["display-text",function(){let tableA=hasMalware("m",14)?"<br>Zone A Rewards:":""
 							let tableA2=player.ex.a2Unl>=1?"<br>Zone A-2 Rewards:":""
 							let tableA3=player.ex.a3Unl>=1?"<br>Zone A-3 Rewards:":""
+							let tableB1=player.ex.b1Unl>=1?"<br>Zone B-1 Rewards:":""
 							if (player.ex.dotUnl>=1) tableA+="<br>(8;4) - [ Corruptions rewards are "+format(tmp.ex.exOneEffect)+"x better.<br>Unlock one Super Prestige Upgrade in Normal Universe. ]"
 							if (player.ex.dotUnl>=2) tableA+="<br>(9;5) - [ Unlock more Malware Milestones. ]"
 							if (player.ex.dotUnl>=3) tableA+="<br>(11;7) - [ Unlock one Malware Milestones. ]"
 							if (player.ex.a2Unl>=1) tableA2+= "<br>Zone A-2 (3;2) - [ Unlock Security Algorithms. ]"
-							table = "Currently unlocked:"+tableA+tableA2+tableA3
+							if (player.ex.a2Unl>=2) tableA2+= "<br>Zone A-2 (4;4) - [ Expand Disks to 6x6 grid. ]"		
+							if (player.ex.b1Unl>=1) tableB1+= "<br>Zone B-1 (5;5) - [ Explore Upgrade 11 formula is better ]"					
+							table = "Currently unlocked:"+tableA+tableA2+tableA3+tableB1
 							return table}],
 					]
 		 },

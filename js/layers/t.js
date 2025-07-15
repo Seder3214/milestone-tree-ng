@@ -111,7 +111,7 @@ addLayer("t", {
     hotkeys: [
         {key: "t", description: "T: Reset for transcend points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-	    layerShown(){return player.m.best.gte(99)&& (player.mp.activeChallenge!=21)},
+	    layerShown(){return player.m.best.gte(99)&& (player.mp.activeChallenge!=21)||player.pm.activeChallenge==12||player.pm.activeChallenge==13},
 	branches: ["ap"],
 	softcap:new Decimal(Infinity),
 	softcapPower:new Decimal(1),
@@ -273,6 +273,7 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
 					p+=0.1;
 				}
 				let eff=player.t.points.add(10).log10().pow(p).mul(m);
+				eff = softcap(eff,new Decimal(1e70),0.01)
 				return new Decimal(1).plus(eff);
 			},
             effectDisplay() { return format(this.effect(),4)+"x later" },
@@ -754,7 +755,7 @@ if (player.em.best.gte(19)){
 	let c=0;
 for(var i in player.ap.challenges)c+=player.ap.challenges[i];
 if (c >=(tmp.t.challenges[31].goal)){
-return player.t.challenges[31]++
+	return player.t.challenges[31]++
 }
 }
 	},

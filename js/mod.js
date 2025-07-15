@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "v2.039 - Exploring Ashes!",
+	num: "v2.043 - THE DESTABILIZATION",
 	name: "Exploring the Destroying Universe...",
 }
 
@@ -23,6 +23,10 @@ Note: v<h3 style="color: green">A</h3>.<h3 style='color: blue'>B</h3><h3 style='
 <h3 style='color: green'>A</h3> is a number of <h3 style='color:yellow'>major</h3> updates like <h3 class='pmr'>Prestige Milestone Tree</h3>, <br>
 <h3 style='color: blue'>B</h3> is a number of <h3 style="color:#793784">milestones</h3> in current version, <br>
 <h3 style='color: yellow'>C</h3> is a letter that used to show <h3 style='color: cyan'>bugfix/rebalance</h3> updates<br><br>
+<h3 class="spark"> v2.042</h3><br>
+<span style='color: #808080'>- Added 2 Spark Milestones<br></span>
+<span style='color: #808080'>- Normal Milestones go higher?<br></span>
+<span style='color: #808080'>- Added new rewardw for zone b-01 and a-02<br></span>
 <h3 class="spark"> v2.039a</h3><br>
 <span style='color: #808080'>- Fixed burning system and its display<br></span>
 <h3 class="spark"> v2.039 - Exploring Ashes</h3><br>
@@ -90,7 +94,9 @@ if(b.gte(getPointSoftcapStart())){
 		sc=sc.mul(20);
 	}
 }
-if (player.pm.essence.gte(1)&&(player.ap.activeChallenge==undefined && player.t.activeChallenge==undefined && player.mp.activeChallenge==undefined && player.pm.activeChallenge==undefined)) b = b.mul(tmp.pm.essenceBoost.pow(1e19).pow(hasUpgrade("ex",11)?upgradeEffect("ex",11):1))
+let prEsEffect=tmp.pm.essenceBoost.pow(1e19).pow(hasUpgrade("ex",11)?upgradeEffect("ex",11):1)
+if (hasMilestone('m',185)) prEsEffect = prEsEffect.pow(milestoneEffect('m',185))
+if (player.pm.essence.gte(1)&&(player.ap.activeChallenge==undefined && player.t.activeChallenge==undefined && player.mp.activeChallenge==undefined && player.pm.activeChallenge==undefined)) b = b.mul(prEsEffect)
 	if (hasMalware("m",1)) b=b.mul(milestoneEffect("m",1))
 	if(hasUpgrade("p",15))b=b.mul(upgradeEffect("p",15));
 	if (player.sp.activeChallenge==11) 
@@ -184,6 +190,7 @@ function getCostOverflowStart(){
 		if (player.m.points.gte(getCostOverflowScale())){
 		eff=new Decimal(1).add(player.m.points.sub(getCostOverflowStart()).add(1.15).div(10)).pow(player.m.points.gte(181)?new Decimal(1.5).add(player.m.points.sub(181).div(10)):1.2).sub(hasUpgrade("mp",12)?upgradeEffect("mp",12):1)
 		}
+		if (hasMalware('m',16)) eff=eff.sub(milestoneEffect('m',16))
 		return eff.add(1);
 		}
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values

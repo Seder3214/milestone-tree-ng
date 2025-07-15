@@ -124,7 +124,7 @@ var systemComponents = {
 		<span v-if="player.sp.activeChallenge==11"  class="overlayThing"> milestones,<br> which can be transformed into </span>
 		<h2 v-if="player.sp.activeChallenge==11" class="overlayThing" style="color:orange">{{format(tmp.sp.ambersGain)}}</h2>
 		<span v-if="player.sp.activeChallenge==11"  class="overlayThing"> Prestige Ashes after a cooldown. ({{format(player.sp.chalCooldown)}}s)</span>
-		<span v-if="(player.sp.sparkMilestones.gt(0))&&(new Decimal(player.sp.ashedMilestones).lt(player.sp.sparkMilestones))&&(player.sp.burningTimer>0)"  class="spark"><br>Your {{format(player.sp.ashedMilestones+1,0)}}{{helper(player.sp.ashedMilestones+1)}} Spark Milestone will burn for {{formatTime(player.sp.burningTimer)}}</span>
+		<span v-if="((player.sp.sparkMilestones.gt(0))&&(new Decimal(player.sp.ashedMilestones).lt(player.sp.sparkMilestones))&&(player.sp.burningTimer>0))&&(tmp.sp.milestones[player.sp.ashedMilestones].permanent==false)"  class="spark"><br>Your {{format(player.sp.ashedMilestones+1,0)}}{{helper(player.sp.ashedMilestones+1)}} Spark Milestone will burn for {{formatTime(player.sp.burningTimer)}}</span>
 		<br>
 		<div v-for="thing in tmp.displayThings" class="overlayThing"><span v-if="thing" v-html="thing"></span></div>
 	</div>

@@ -28,7 +28,6 @@ addLayer("m", {
     row: 0, // Row the layer is in on the tree (0 is the first row)
 	base: new Decimal(1.5),
 	exponent: function(){
-		if(player.m.points.gte(185))return new Decimal(24.45);
 		if(player.m.points.lt(5))return new Decimal(1.7);
 		var base=new Decimal(2);
 		var firstScaling=player.m.points.sub(tmp.m.getScalingStart).max(0);
@@ -46,6 +45,7 @@ addLayer("m", {
 		if(hasUpgrade("ap",23))firstScaling=firstScaling.div(upgradeEffect("ap",23));
 		if(hasUpgrade("pe",12))firstScaling=firstScaling.div(upgradeEffect("pe",12));
 		if(hasUpgrade("se",12))firstScaling=firstScaling.div(upgradeEffect("se",12));
+		if(player.m.points.gte(185))return new Decimal(5).mul(getCostOverflowEff());
 		return new Decimal(2).add(firstScaling).add(player.m.points.gte(145)&&player.m.points.lte(170)?0.5:0).mul(player.m.points.gte(getCostOverflowStart())?getCostOverflowEff():1).div(hasUpgrade('p',53)?upgradeEffect('p',53):1);
 	},
     getScalingStart(){
@@ -446,31 +446,89 @@ addLayer("m", {
 		{
 			requirementDescription: "17th Milestone",
             unlocked() {return player[this.layer].best.gte(16)},
-            done() {return player[this.layer].best.gte(17)}, // Used to determine when to give the milestone
+            done() {return player[this.layer].best.gte(17)}, 
+			pseudoUnl() {return (hasMilestone('sp',2)&&(milestoneEffect('sp',2)>=1))},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e6.215e23`)},
+			pseudoCost: new Decimal(`e6.215e23`),
             effectDescription:  function(){
-				return "3rd Milestone's effect ^1.017";
+				table= "3rd Milestone's effect ^1.017";
+				if (player.m.pseudoBuys.includes(this.id)) table+=`<hr color='darkred' size='3'>Reduce Milestone Overflow effect by amount of Spark Milestones and points.<br>Currently: -${format(this.effect())} to overflow effect`
+				return table
+			},
+			effect() {
+				let eff = player.sp.sparkMilestones.max(1).div(4.37).add(1).mul(player.points.max(1).slog(20).max(1).log(6).add(1))
+				return eff
+			},
+			style() {
+				if (player.m.pseudoBuys.includes(this.id)) return {
+                    'background':'red',
+					'color':"white",
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
+                    'width': '100%',
+                }
 			},
         },
 		{
 			requirementDescription: "18th Milestone",
             unlocked() {return player[this.layer].best.gte(17)},
-            done() {return player[this.layer].best.gte(18)}, // Used to determine when to give the milestone
+            done() {return player[this.layer].best.gte(18)}, 
+			pseudoUnl() {return (hasMilestone('sp',2)&&(milestoneEffect('sp',2)>=2))},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e1.605e24`)},
+			pseudoCost: new Decimal(`e1.605e24`),// Used to determine when to give the milestone
             effectDescription:  function(){
-				return "3rd Milestone's effect ^1.018";
+				table= "3rd Milestone's effect ^1.018";
+				if (player.m.pseudoBuys.includes(this.id)) table+=`<hr color='darkred' size='3'>Boost [Prestige Essence Boost I] by unspent super prestige points.<br>Currently: ^${format(this.effect())}`
+				return table
+			},
+			effect() {
+				let eff = player.sp.points.max(1).log10().max(1).log10().max(1).log10()
+				return eff
+			},
+			style() {
+				if (player.m.pseudoBuys.includes(this.id)) return {
+                    'background':'red',
+					'color':"white",
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
+                    'width': '100%',
+                }
 			},
         },
 		{
 			requirementDescription: "19th Milestone",
             unlocked() {return player[this.layer].best.gte(18)},
-            done() {return player[this.layer].best.gte(19)}, // Used to determine when to give the milestone
+            done() {return player[this.layer].best.gte(19)},
+			pseudoUnl() {return (hasMilestone('sp',2)&&(milestoneEffect('sp',2)>=3))},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e5.555e25`)},
+			pseudoCost: new Decimal(`e5.555e25`), // Used to determine when to give the milestone
             effectDescription:  function(){
-				return "3rd Milestone's effect ^1.019";
+				table= "3rd Milestone's effect ^1.019";
+				if (player.m.pseudoBuys.includes(this.id)) table+=`<hr color='darkred' size='3'>Increase Maximum Unlockable Spark Milestones by +1.`
+				return table
+			},
+			style() {
+				if (player.m.pseudoBuys.includes(this.id)) return {
+                    'background':'red',
+					'color':"white",
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running inf_milestone",
+                    'width': '100%',
+                }
 			},
         },
 		{
 			requirementDescription: "20th Milestone",
             unlocked() {return player[this.layer].best.gte(19)},
-            done() {return player[this.layer].best.gte(20)}, // Used to determine when to give the milestone
+            done() {return player[this.layer].best.gte(20)},
+			pseudoUnl() {return (hasMilestone('sp',2)&&(milestoneEffect('sp',2)>=4))},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e5e26`)},
+			pseudoCost: new Decimal(`e5e26`), // Used to determine when to give the milestone
             effectDescription:  function(){
 				if(player[this.layer].best.gte(135))return "Gain 1e12% of Prestige Point gain per second.";
 				return "Gain 10000% of Prestige Point gain per second.";
@@ -479,7 +537,12 @@ addLayer("m", {
 		{
 			requirementDescription: "21st Milestone",
             unlocked() {return player[this.layer].best.gte(20)},
-            done() {return player[this.layer].best.gte(21)}, // Used to determine when to give the milestone
+            done() {return player[this.layer].best.gte(21)},
+			pseudoUnl() {return (hasMilestone('sp',2)&&(milestoneEffect('sp',2)>=5))},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e9e27`)},
+			pseudoCost: new Decimal(`e9e27`), // Used to determine when to give the milestone
             effectDescription:  function(){
 				return "Unlock 2 new Prestige Upgrades.";
 			},
@@ -487,7 +550,12 @@ addLayer("m", {
 		{
 			requirementDescription: "22nd Milestone",
             unlocked() {return player[this.layer].best.gte(21)},
-            done() {return player[this.layer].best.gte(22)}, // Used to determine when to give the milestone
+            done() {return player[this.layer].best.gte(22)},
+			pseudoUnl() {return (hasMilestone('sp',2)&&(milestoneEffect('sp',2)>=6))},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e2.39e28`)},
+			pseudoCost: new Decimal(`e2.39e28`), // Used to determine when to give the milestone
             effectDescription:  function(){
 				return "Prestige Point Gain is multiplied by 22";
 			},
@@ -495,7 +563,12 @@ addLayer("m", {
 		{
 			requirementDescription: "23rd Milestone",
             unlocked() {return player[this.layer].best.gte(22)},
-            done() {return player[this.layer].best.gte(23)}, // Used to determine when to give the milestone
+            done() {return player[this.layer].best.gte(23)},
+			pseudoUnl() {return (hasMilestone('sp',2)&&(milestoneEffect('sp',2)>=7))},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e1.28e29`)},
+			pseudoCost: new Decimal(`e1.28e29`), // Used to determine when to give the milestone
             effectDescription:  function(){
 				return "Prestige Upgrade 23's effect is better.";
 			},
@@ -503,7 +576,12 @@ addLayer("m", {
 		{
 			requirementDescription: "24th Milestone",
             unlocked() {return player[this.layer].best.gte(23)},
-            done() {return player[this.layer].best.gte(24)}, // Used to determine when to give the milestone
+            done() {return player[this.layer].best.gte(24)},
+			pseudoUnl() {return (hasMilestone('sp',2)&&(milestoneEffect('sp',2)>=8))},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e1e33`)},
+			pseudoCost: new Decimal(`e1e33`), // Used to determine when to give the milestone
             effectDescription:  function(){
 				return "Prestige Upgrade 24's effect is better.";
 			},
@@ -511,7 +589,12 @@ addLayer("m", {
 		{
 			requirementDescription: "25th Milestone",
             unlocked() {return player[this.layer].best.gte(24)},
-            done() {return player[this.layer].best.gte(25)}, // Used to determine when to give the milestone
+            done() {return player[this.layer].best.gte(25)},
+			pseudoUnl() {return (hasMilestone('sp',2)&&(milestoneEffect('sp',2)>=9))},
+			pseudoReq() {return "To infect a milestone, get "+format(this.pseudoCost)+" points."
+			},
+			pseudoCan() {return player.points.gte(`e3.838e38`)},
+			pseudoCost: new Decimal(`e3.838e38`), // Used to determine when to give the milestone
             effectDescription:  function(){
 				return "Unlock a new layer.";
 			},
@@ -1799,6 +1882,34 @@ addLayer("m", {
 				return "<b>Unlock Prestige Milestone Tree.";
 			},
         },
+	    {
+			requirementDescription: "186th Milestone",
+            unlocked() {return hasMalware('m',16)},
+            done() {return player[this.layer].best.gte(186)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return `<b>Prestige Ashes boosts Prestige Essences effect.<br>Currently: ^${format(this.effect())}`;
+			},
+			effect() {
+				let eff = player.sp.ambers.max(1).log(10).pow(0.675).add(1)
+				return eff
+			},
+    	},
+	    {
+			requirementDescription: "187th Milestone",
+            unlocked() {return player[this.layer].best.gte(187)},
+            done() {return player[this.layer].best.gte(187)}, // Used to determine when to give the milestone
+            effectDescription:  function(){
+				return `<b>Unlock a new layer in Prestige Universe.`;
+			},
+						style() {
+				if (player[this.layer].best.gte(187)) return {
+                    'background':'green',
+					'color':"white",
+					'animation':" 3s cubic-bezier(0.4, 0, 1, 1) 0s infinite normal none running rank_milestone",
+                    'width': '100%',
+                }
+			},
+    	},
 	],
 	milestone4EffectExponent(){
 		if(player.m.best.gte(118))return 0.8;
@@ -1992,7 +2103,10 @@ addLayer("m", {
 	tabFormat: ["main-display","prestige-button","resource-display",
 				["display-text",function(){if (!hasUpgrade('mp',14)) return "Milestone cost scaling starts at "+format(tmp.m.getScalingStart,4)}],
 				["display-text",function(){return "Milestone cost exponent is "+format(tmp.m.exponent,4)}],
-				["display-text",function(){if (player.pm.essence.gte(1)&&player.pm.best.gte(15))return "Prestige Essences boosts points after softcap by "+format(tmp.pm.essenceBoost.pow(1e19).pow(hasUpgrade("ex",11)?upgradeEffect("ex",11):1),4)+"x"}],
+				["display-text",function(){if (player.pm.essence.gte(1)&&player.pm.best.gte(15)){
+					let prEsEffect=tmp.pm.essenceBoost.pow(1e19).pow(hasUpgrade("ex",11)?upgradeEffect("ex",11):1)
+					if (hasMilestone('m',185)) prEsEffect = prEsEffect.pow(milestoneEffect('m',185))
+					return "Prestige Essences boosts points after softcap by "+format(prEsEffect,4)+"x"}}],
 				"milestones"
 				],
 })

@@ -116,7 +116,8 @@ addLayer("p", {
 				if(player.m.best.gte(94))base+=0.1;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
 				if (player.pm.activeChallenge==12||player.pm.activeChallenge==13) ret=ret.add(1).pow(0.85)
-                return softcap(ret,new Decimal('e5e16'),0.1);
+				ret=softcap(ret,new Decimal('e5e16'),0.1)
+                return softcap(ret,new Decimal('e5e24'),0.01);
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
@@ -159,7 +160,8 @@ addLayer("p", {
 				if(player.m.best.gte(94))base+=0.05;
                 let ret = Decimal.pow(base,Decimal.log10(player[this.layer].points.add(1)).pow(0.9).add(1))
 				if(hasUpgrade("p",35))ret=ret.mul(upgradeEffect("p",35));
-                return softcap(ret,new Decimal('e1e15'),0.1);
+				ret=softcap(ret,new Decimal('e1e15'),0.1)
+                return softcap(ret,new Decimal('e1e25'),0.001);
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
@@ -383,6 +385,7 @@ addLayer("p", {
 			effect(){
 				let extra=player.points.max(1).log(10).div(1.5)
 				let p=upgradeEffect('p',11).slog(1.25).mul(extra)
+				if (hasMilestone('sp',1))p=p.mul(milestoneEffect("sp",1))
 				return p.add(1);
 			},
 			effectDisplay() { return format(this.effect(),4)+"x" },
@@ -465,6 +468,7 @@ addLayer("p", {
 				  let eff=new Decimal(1).add(player[this.layer].buyables[this.id].mul(b));
 				  eff=eff.pow(tmp.ap.challenges[32].rewardEffect);
                   if (hasUpgrade('pp', 13))eff=eff.mul(upgradeEffect('pp', 13))
+				
 				  return softcap(eff, new Decimal(17), 0.25);
 			  },
 			  unlocked(){
@@ -514,7 +518,7 @@ addLayer("p", {
 				  if (hasMalware("m",0)) b=b.pow(milestoneEffect("m",0))
 				  let eff=new Decimal(1).add(player[this.layer].buyables[this.id].mul(b).pow(1.05));
 				  if (player.m.best.gte(179))eff=eff.mul(tmp.m.milestone179Effect)
-				  return eff;
+				  return softcap(eff,new Decimal('ee10'),0.001);
 			  },
 			  unlocked(){
 				  return player.em.best.gte(7);

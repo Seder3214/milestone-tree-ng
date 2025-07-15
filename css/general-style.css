@@ -50,3 +50,14 @@ h1, h2, h3, b, input {
 		background-color: rgb(255, 0, 0);
 	}
 }
+@keyframes rank_milestone {
+	0% {
+		background-color: rgb(39, 255, 61);
+	}
+	33.3% {
+		background-color: rgb(5, 140, 7);
+	}
+	100% {
+		background-color: rgb(27, 255, 39);
+	}
+}

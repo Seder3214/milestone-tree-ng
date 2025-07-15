@@ -29,7 +29,10 @@ addLayer("mp", {
     },
     row: 4,
 	newRow: 2, // Row the layer is in on the tree (0 is the first row)
-	exponent: 7.5,
+	exponent()  
+	{
+		if (player.mp.points.gte(29)) return new Decimal(7).add(player.mp.points.div(25))
+		return new Decimal(7.5)},
     hotkeys: [
         {key: "v", description: "V: Reset for Multiverse Prestige points", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
@@ -44,8 +47,9 @@ addLayer("mp", {
             unlocked() { return true}, // The upgrade is only visible when this is true
 			effect() { // Calculate bonuses from the upgrade. Can return a single value or an object with multiple values
 				let base=0.2;
-                let ret = player.pp.power.add(1).div('1e1000').pow(base)
-                return ret.max(1);
+                let ret = player.pp.power.add(1).div('1e1000').pow(base).max(1)
+				
+                return softcap(ret, new Decimal(`ee10`), 0.00025);
             },
             effectDisplay() { return format(this.effect())+"x" }, // Add formatting to the effect
         },
@@ -92,6 +96,13 @@ addLayer("mp", {
             onEnter() {
                 player.t.points=new Decimal(0)
                 player.p.points=new Decimal(0)
+				player.t.dChoose = false
+           	 	player.t.sChoose = false
+            	player.t.pdChoose = false
+           	 	player.t.hChoose = false
+            	player.t.sdChoose = false
+            	player.t.phChoose = false
+            	player.mp.perkPoints = player.mp.buyables[13]
             },
             name: "Ex-Dilation",
             completionLimit: Infinity,
@@ -109,6 +120,8 @@ addLayer("mp", {
                     if(p.lte("1e4500"))return 0;
                     return p.log10().div(4500).log(1.1).pow(1/1.1).toNumber();
                 }
+				    if(p.lte("1e45000"))return 0;
+                    return p.log10().div(45000).log(1.1).pow(1/1.1).toNumber();
             },
             rewardEffect() {
                 let ret = (player.mp.challenges[11]+1*1.46)**1.75
@@ -116,6 +129,7 @@ addLayer("mp", {
             },
             goalAfter120(x=player.mp.challenges[11]){
                 if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.1,Decimal.pow(x,1.1)).mul(4500));
+				return Decimal.pow(10,Decimal.pow(1.1,Decimal.pow(x,1.1)).mul(45000))
             },
             currencyDisplayName: "Exotic Prestige Points",
             rewardDescription() { return "6th Exotic Fusioner effect is x"+ format(this.rewardEffect())+" better." },
@@ -152,6 +166,8 @@ addLayer("mp", {
                 if(p.lte("1e3000"))return 0;
                 return p.log10().div(3000).log(1.15).pow(1/1.15).toNumber();
             }
+			    if(p.lte("1e30000"))return 0;
+                return p.log10().div(30000).log(1.15).pow(1/1.15).toNumber();
         },
         rewardEffect() {
             let ret = (player.mp.challenges[12]+1)/5000
@@ -159,6 +175,7 @@ addLayer("mp", {
         },
         goalAfter120(x=player.mp.challenges[12]){
             if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.15,Decimal.pow(x,1.15)).mul(3000));
+			return Decimal.pow(10,Decimal.pow(1.15,Decimal.pow(x,1.15)).mul(30000))
         },
         currencyDisplayName: "Exotic Prestige Points",
         rewardDescription() { return "7th Exotic Fusioner effect is +"+ format(this.rewardEffect())+" better." },
@@ -169,6 +186,13 @@ addLayer("mp", {
 		player.p.points=new Decimal(0)
 		player.ep.points = new Decimal(0)
 		player.pp.points = new Decimal(0)
+            player.t.dChoose = false
+            player.t.sChoose = false
+            player.t.pdChoose = false
+            player.t.hChoose = false
+            player.t.sdChoose = false
+            player.t.phChoose = false
+            player.mp.perkPoints = player.mp.buyables[13]
 	},
 	name: "Exotic-less and No Transcend",
 	completionLimit: Infinity,
@@ -186,6 +210,8 @@ addLayer("mp", {
 			if(p.lte("1e950000"))return 0;
 			return p.log10().div(950000).log(1.01).pow(1/2.5).toNumber();
 		}
+			if(p.lte("1e9500000"))return 0;
+			return p.log10().div(9500000).log(1.01).pow(1/2.5).toNumber();
 	},
 	rewardEffect() {
 		let ret = (player.mp.challenges[13])*0.55
@@ -194,6 +220,7 @@ ret = softcap(new Decimal(ret), new Decimal(7),0.25)
 	},
 	goalAfter120(x=player.mp.challenges[13]){
 		if(player.m.best.gte(130))return Decimal.pow(10,Decimal.pow(1.01,Decimal.pow(x,2.5)).mul(950000));
+		return Decimal.pow(10,Decimal.pow(1.01,Decimal.pow(x,2.5)).mul(9500000))
 	},
 	currencyDisplayName: "Exotic Prestige Points",
 	rewardDescription() { return "Prestige Power Upgrade 12 softcap starts "+ format(this.rewardEffect())+" later." },
@@ -202,7 +229,7 @@ ret = softcap(new Decimal(ret), new Decimal(7),0.25)
 	onEnter() {
 		layerDataReset('pp',["upgrades"])
 		layerDataReset('p',["upgrades"])
-		layerDataReset('sp',["upgrades"])
+		if (!hasMalware('m',15))layerDataReset('sp',["upgrades"])
 		layerDataReset('pe',["upgrades"])
 		layerDataReset('hp',["upgrades"])
 		layerDataReset('ap',["upgrades","challenges"])
@@ -214,18 +241,26 @@ ret = softcap(new Decimal(ret), new Decimal(7),0.25)
 		layerDataReset("mm",[])
 		layerDataReset("m",[])
 		layerDataReset('t',["upgrades","challenges"])
+				player.cp.trojanChosen=undefined
+				player.cp.chosenBackdoor=undefined
 				player.pm.essence = new Decimal(0)
 				player.points = new Decimal(0)
+				player.cp.cooldown=buyableEffect("cp",33)
+				player.cp.cooldown2=buyableEffect("cp",34)
 	},
 onExit() {
             let grid = player.cp.grid
             let slots = Object.keys(grid).filter(x => grid[x].active==true)
             for (i=0;i<slots.length;i++){
                 player.cp.grid[slots[i]] = {level: getGridData('cp',slots[i]).level,active:false,fixed:false,type:getGridData('cp',slots[i]).type}
-				player.cp.trojanChosen = undefined
 				player.points = new Decimal(0)
 				player.pm.essence = new Decimal(0)
 				player.cp.pointsInCorrupt=new Decimal(0)
+				player.cp.peInCorrupt=new Decimal(0)
+				player.cp.cooldown=buyableEffect("cp",33)
+				player.cp.cooldown2=buyableEffect("cp",34)
+				player.cp.trojanChosen=undefined
+				player.cp.chosenBackdoor=undefined
             }
 setInterval(100000000)
 player.mp.perkPoints = player.mp.buyables[13]
@@ -300,7 +335,9 @@ player.t.choose = new Decimal(0)
                    player.mp.totalF = player.mp.totalF.add(1)
                },
 			  effect(x){
-                let eff = x.add(1).pow(player.m.best.pow(2.5)).pow(new Decimal(2).pow(x))
+                let eff = x.add(1).pow(player.m.best.max(1).pow(2.5)).pow(new Decimal(2).pow(x))
+				eff = softcap(eff,new Decimal(`ee10`),0)
+				if (eff.gte(`ee10`))eff = eff.pow(player.m.best.max(1).pow(0.75)).pow(new Decimal(1.15).pow(x))
 				  return eff;
 			  },
 			  unlocked(){
@@ -738,7 +775,7 @@ player.cp.pointsInCorrupt=new Decimal(0)
 			if(l=="mp") {
                 layerDataReset('pp',["upgrades"])
                 layerDataReset('p',["upgrades"])
-				layerDataReset('sp',["upgrades"])
+				if (!hasMalware('m',15))layerDataReset('sp',["upgrades"])
 				layerDataReset('pe',["upgrades"])
 				layerDataReset('hp',["upgrades"])
 				layerDataReset('ap',["upgrades","challenges"])
