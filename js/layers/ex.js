@@ -286,7 +286,7 @@ player.ex.buyables[i] = new Decimal(0)}
 						cost = Decimal.pow(8,x.mul(2.65).add(1))
 						break
 					case "b-01":
-						cost = Decimal.pow(5,x.mul(2.65).add(1))
+						cost = Decimal.pow(5,x.mul(2.85).add(1))
 						break
 				}
 				return cost

@@ -624,7 +624,7 @@ let base = new Decimal(3)
 				return new Decimal(5500).mul(x.max(1)).pow(x.div(2).add(1)).pow(pow);
 			},
 			canAfford() {
-                   return player.pm.essence.gte(tmp[this.layer].buyables[this.id].cost)
+                   return player.pm.essence.gte(tmp[this.layer].buyables[this.id].cost)&&(player.mp.activeChallenge==21)
 			},
                buy() { 
 				cost = tmp[this.layer].buyables[this.id].cost
