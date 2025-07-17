@@ -566,7 +566,7 @@ addLayer("ex", {
 				["display-text", function () {
 					table = ""
 					if (player.ex.points.gte(1)) table = 'You can move in the zone by typing arrow keys and reset current position by clicking R button.<br>our exploration points are increasing your exploration area limits. For now, your area limits are: X axis - ' + format(tmp.ex.xLimit) + ", Y axis - " + format(tmp.ex.yLimit) + ".<br>By reaching some of positions in the area you can unlock new features.<br>New feature is at " + `(${tmp.ex.xGoal};${tmp.ex.yGoal})`
-						+ `. Current zone: ${player.ex.zone}<br>For mobile players, the buyables are shown below:`
+						+ `. Current zone: ${player.ex.zone}`
 					return table
 				}],
 				"buyables",

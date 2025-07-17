@@ -955,7 +955,7 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
          ]
                 },
                 "Caution": {
-                    unlocked() {return player.pm.best.gte(15)},
+                    unlocked() {return false},
                     content:[
                         function() { if (player.tab == "cp")  return ["column", [
                             ["display-text", "You caused <h2 style='color:  black; text-shadow: white 0px 0px 10px;'> "+format(player.cp.points,0)+"</h2> corruptions."],
