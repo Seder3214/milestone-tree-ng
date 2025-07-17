@@ -14,7 +14,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "v2.043 - THE DESTABILIZATION",
+	num: "v2.044 - Explorations Revamp",
 	name: "Exploring the Destroying Universe...",
 }
 
@@ -23,7 +23,11 @@ Note: v<h3 style="color: green">A</h3>.<h3 style='color: blue'>B</h3><h3 style='
 <h3 style='color: green'>A</h3> is a number of <h3 style='color:yellow'>major</h3> updates like <h3 class='pmr'>Prestige Milestone Tree</h3>, <br>
 <h3 style='color: blue'>B</h3> is a number of <h3 style="color:#793784">milestones</h3> in current version, <br>
 <h3 style='color: yellow'>C</h3> is a letter that used to show <h3 style='color: cyan'>bugfix/rebalance</h3> updates<br><br>
-<h3 class="spark"> v2.042</h3><br>
+<h3 class="exp"> v2.044 - Explorations Revamp</h3><br>
+<span style='color: #808080'>- Full Rework of Explorations grid mechanic<br></span>
+<span style='color: #808080'>- More Minor Bugfixes<br></span>
+<span style='color: #808080'>- Made more advanced spark reignite mechanic<br></span>
+<h3 class="spark"> v2.043</h3><br>
 <span style='color: #808080'>- Added 2 Spark Milestones<br></span>
 <span style='color: #808080'>- Normal Milestones go higher?<br></span>
 <span style='color: #808080'>- Added new rewardw for zone b-01 and a-02<br></span>

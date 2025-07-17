@@ -27,6 +27,9 @@ addLayer("m", {
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)
 	base: new Decimal(1.5),
+	milestonePopups() {
+		return (player.mp.activeChallenge!=21)
+	},
 	exponent: function(){
 		if(player.m.points.lt(5))return new Decimal(1.7);
 		var base=new Decimal(2);

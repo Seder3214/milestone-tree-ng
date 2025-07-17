@@ -7,6 +7,9 @@ addLayer("mm", {
         unlocked: true,
 		points: new Decimal(0),
     }},
+    	milestonePopups() {
+		return (player.mp.activeChallenge!=21)
+	},
     color: "#A057B0",
     requires(){
 		//if(player.mm.points.gte(20))return new Decimal(Infinity);

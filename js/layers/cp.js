@@ -166,6 +166,68 @@ if (player.cp.grid[slot].level>=1) slot = slots[Math.floor(Math.random() * slots
         if (gain.div(slow).lte(1)) return new Decimal(0)
         return player.cp.chosenBackdoor!=undefined?gain.div(slow):new Decimal(0)
     },
+    	clickables: {
+		11: {
+			display: "Change Essence & Recharge mode to Prestige Essence boost, but lose ^0.5 of Prestige Essences.",
+			canClick() {return player.mp.modeE==false},
+			onClick() {
+				player.mp.modeP=false
+				player.mp.modeE=true
+				player.pm.essence = new Decimal(0)
+player.points = new Decimal(0)
+player.cp.pointsInCorrupt=new Decimal(0)
+			},
+			style() {
+				if (player.mp.modeE==true) return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'black',
+					'border':'2px solid',
+					'height':'50px'
+				}
+				else return {
+					'border-radius': '0%',
+					'color':'white',
+					'background-color':'rgb(68, 68, 68)',
+					'border':'2px solid',
+					'height':'50px'
+				}
+            },
+			unlocked(){
+				return player.pm.best.gte(2);
+			},	
+		},
+		12: {
+			canClick() {return player.mp.modeP==false},
+		display: "Change Essence & Recharge mode to Points boost, but nullify Prestige Essences.",
+		onClick() {
+			player.mp.modeP=true
+			player.mp.modeE=false
+			player.points = new Decimal(0)
+			player.pm.essence = new Decimal(0)
+			player.cp.pointsInCorrupt=new Decimal(0)
+		},
+		style() {
+			if (player.mp.modeP==true) return {
+				'border-radius': '0%',
+				'color':'white',
+				'background-color':'black',
+				'border':'2px solid',
+				'height':'50px'
+			}
+			else return {
+				'border-radius': '0%',
+				'color':'white',
+				'background-color':'rgb(68, 68, 68)',
+				'border':'2px solid',
+				'height':'50px'
+			}
+		},
+		unlocked(){
+			return player.pm.best.gte(2);
+		},
+	},
+	},
     upgrades: {
         rows() {
         let rows = 4
@@ -867,6 +929,8 @@ if (data.level>=110 && data.type=='div') eff = eff.div(1e12)
                     ["display-text", "You have <h2 style='color:  green; text-shadow: green 0px 0px 10px;'> "+format(player.cp.formatted)+"</h2> corruption essences, which boosts points and Prestige Essences gain by "+ format(corruptEffect())+ "x (points boost works outside of prestige universe)"],
                     ["display-text", "When you do a Corruption Reset, a malware will appear on a random disk.<br>Fix corruptions, get essences and get a boost to prior resources! To activate corruption, click on it.<br>And total corruptions amount will scale up all corruptions goals."],
                      "blank",
+                "blank",
+                "clickables",
                 "blank",
                 "grid"
                 ]

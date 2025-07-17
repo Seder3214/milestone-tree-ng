@@ -10,6 +10,9 @@ addLayer("em", {
     requires(){
 		let b=new Decimal(30);
 		return b;
+	},
+	milestonePopups() {
+		return (player.mp.activeChallenge!=21)
 	}, // Can be a function that takes requirement increases into account
     resource: "extra-milestones", // Name of prestige currency
     baseResource: "meta-milestones", // Name of resource prestige is based on

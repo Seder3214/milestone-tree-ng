@@ -362,7 +362,7 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
             unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
             title() {return (player.mp.activeChallenge!=12)?"Boost Dilated Points":"Choose Dilated Points"},
             display() {return "Status:" + (player.t.dChoose==true?" Chosen":" Not Chosen")},
-            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
+            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12&&player.t.dChoose==false)return player.mp.perkPoints.gte(1)
 				else return player.t.choose.gte(1)},
             onClick() {
 				if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12) player.mp.perkPoints= player.mp.perkPoints.sub(1)
@@ -378,7 +378,7 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
             unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
             title() {return (player.mp.activeChallenge!=12)?"Boost Softcapped Points":"Choose Softcapped Points"},
             display() {return "Status:" + (player.t.sChoose==true?" Chosen":" Not Chosen")},
-            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
+            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12&&player.t.sChoose==false)return player.mp.perkPoints.gte(1)
 				else return player.t.choose.gte(1)},
             onClick() {
 				if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12) player.mp.perkPoints= player.mp.perkPoints.sub(1)
@@ -394,7 +394,7 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
             unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
             title() {return (player.mp.activeChallenge!=12)?"Boost Prestige-Dilated Points":"Choose Prestige-Dilated Points"},
             display() {return "Status:" + (player.t.pdChoose==true?" Chosen":" Not Chosen")},
-            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
+            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12&&player.t.pdChoose==false)return player.mp.perkPoints.gte(1)
 				else return player.t.choose.gte(1)},
             onClick() {
 				if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12) player.mp.perkPoints= player.mp.perkPoints.sub(1)
@@ -410,7 +410,7 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
             unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
             title() {return (player.mp.activeChallenge!=12)?"Boost Hardcapped Points": "Choose Hardcapped Points"},
             display() {return "Status:" + (player.t.hChoose==true?" Chosen":" Not Chosen")},
-            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
+            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12&&player.t.hChoose==false)return player.mp.perkPoints.gte(1)
 				else return player.t.choose.gte(1)},
             onClick() {
 				if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12) player.mp.perkPoints= player.mp.perkPoints.sub(1)
@@ -426,7 +426,7 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
             unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
             title() {return (player.mp.activeChallenge!=12)?"Boost Super-Dilated Points": "Choose Super-Dilated Points"},
             display() {return "Status:" + (player.t.sdChoose==true?" Chosen":" Not Chosen")},
-            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
+            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12&&player.t.sdChoose==false)return player.mp.perkPoints.gte(1)
 				else return player.t.choose.gte(1)},
             onClick() {
 				if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12) player.mp.perkPoints= player.mp.perkPoints.sub(1)
@@ -442,7 +442,7 @@ if (player.t.activeChallenge) amt = softcap(amt,new Decimal(1e300),0.01)
             unlocked(){return player.mp.activeChallenge==12 || player.mp.buyables[13].gte(1)},
             title() {return (player.mp.activeChallenge!=12)?"Boost Prestige-Hardcapped Points": "Choose Prestige-Hardcapped Points"},
             display() {return "Status:" + (player.t.phChoose==true?" Chosen":" Not Chosen")},
-            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12)return player.mp.perkPoints.gte(1)
+            canClick() {if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12&&player.t.phChoose==false)return player.mp.perkPoints.gte(1)
 				else return player.t.choose.gte(1)},
             onClick() {
 				if (player.mp.buyables[13].gte(1) && player.mp.activeChallenge!=12) player.mp.perkPoints= player.mp.perkPoints.sub(1)
