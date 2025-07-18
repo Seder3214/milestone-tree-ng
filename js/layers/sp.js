@@ -302,14 +302,17 @@ addLayer("sp", {
 		},
 		21: {
 			title() { return `<span style="color:orange; font-size:16px">Regnite the Milestone #${tmp.sp.milestones[player.sp.ashedMilestones].permanent == true ? checkLastUnPermSpark():player.sp.ashedMilestones+1}.</span>` },
-			display() { return `<hr color="#4f4f4f"><span style="font-size:12px">Spend <b>${format(tmp.sp.reigniteCost)}</b> filled prestige ashes to reignite the Spark Milestone ` + (player.sp.ashedMilestones > 0 ? `will burn Spark Milestone #${tmp.sp.milestones[player.sp.ashedMilestones].permanent == true ? checkLastUnPermSpark():player.sp.ashedMilestones+1} to 10% power)</span>` : '') },
+			display() { return `<hr color="#4f4f4f"><span style="font-size:12px">Spend <b>${format(tmp.sp.reigniteCost)}</b> filled prestige ashes to reignite the Spark Milestone ` + (player.sp.ashedMilestones > 0 ? `will burn Spark Milestone #${tmp.sp.milestones[player.sp.ashedMilestones].permanent == true ? checkLastUnPermSpark():player.sp.ashedMilestones} to 10% power)</span>` : '') },
 			canClick() { return player.sp.sparkFill.gte(tmp.sp.reigniteCost) },
 			onClick() {
 				if (player.sp.sparkFill.gte(tmp.sp.reigniteCost)) player.sp.sparkFill = player.sp.sparkFill.sub(tmp.sp.reigniteCost)
+				if (player.sp.ashedMilestones >= 0) {
 				player.sp.timer[player.sp.ashedMilestones] = 240
-				if (player.sp.ashedMilestones > 0) {
+				if (player.sp.timer[player.sp.ashedMilestones - 1] == 0 && player.sp.ashedMilestones>0) player.sp.timer[player.sp.ashedMilestones - 1] = 36
+				if (player.sp.timer[player.sp.ashedMilestones] == 240 && player.sp.ashedMilestones>0) player.sp.ashedMilestones--
+				player.sp.burningTimer = player.sp.timer[player.sp.ashedMilestones]
 					let min = 100
-					if (tmp.sp.milestones[player.sp.ashedMilestones].permanent == true)for (i of tmp.sp.milestones) {
+					if (tmp.sp.milestones[player.sp.ashedMilestones].permanent == true) for (i of tmp.sp.milestones) {
 						if (i.permanent == true) {
 							min = Math.min(min, i.id-1)
 							player.sp.ashedMilestones = min
@@ -317,12 +320,7 @@ addLayer("sp", {
 							player.sp.burningTimer = 240
 							console.log(`${min}, ${i.id}, ${player.sp.ashedMilestones}`)
 						}
-						else {
-							if (player.sp.timer[player.sp.ashedMilestones - 1] == 0) player.sp.timer[player.sp.ashedMilestones - 1] = 36
-							if (player.sp.timer[player.sp.ashedMilestones] == 240) player.sp.ashedMilestones--
-						}
 					}
-				player.sp.burningTimer = player.sp.timer[player.sp.ashedMilestones]
 			}
 			},
 			style() {
