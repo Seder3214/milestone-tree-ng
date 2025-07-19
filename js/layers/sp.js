@@ -20,7 +20,7 @@ function countPermanent() {
 function checkLastUnPermSpark() {
 	let min = 0
 	for (i of tmp.sp.milestones) {
-		if (i.permanent == false) {
+		if (i.permanent == false && player.sp.timer[i.id]<240) {
 			min = Math.max(min, i.id)
 			return min
 		}
@@ -313,7 +313,7 @@ addLayer("sp", {
 				player.sp.burningTimer = player.sp.timer[player.sp.ashedMilestones]
 					let min = 100
 					if (tmp.sp.milestones[player.sp.ashedMilestones].permanent == true) for (i of tmp.sp.milestones) {
-						if (i.permanent == false) {
+						if (i.permanent == false && player.sp.timer[i.id]<240) {
 							min = Math.min(min, i.id)
 							player.sp.ashedMilestones = min
 							if (player.sp.timer[min]<1)player.sp.timer[min] = 36
