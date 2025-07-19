@@ -18,9 +18,19 @@ function countPermanent() {
 	return x
 }
 function checkLastUnPermSpark() {
-	let min = 0
+	let min = 100
 	for (i of tmp.sp.milestones) {
 		if (i.permanent == false && player.sp.timer[i.id]<240) {
+			min = Math.min(min, i.id)
+		}
+	}
+		console.log(`${min}`)
+	return min
+}
+function checkLastPermSpark() {
+	let min = 0
+	for (i of tmp.sp.milestones) {
+		if (i.permanent == true) {
 			min = Math.max(min, i.id)
 			return min
 		}
@@ -124,7 +134,7 @@ addLayer("sp", {
 		{ key: "s", description: "S: Reset for super-prestige points", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
 	],
 	reigniteCost() {
-		let cost = (new Decimal(240).sub(player.sp.timer[player.sp.ashedMilestones])).div(15.175).mul(player.sp.ashedMilestones + 1).mul(tmp.sp.milestones[player.sp.ashedMilestones].permanent==true?checkLastUnPermSpark()*2:1)
+		let cost = (new Decimal(240).sub(player.sp.timer[player.sp.ashedMilestones])).div(15.175).mul(player.sp.ashedMilestones + 1).mul(tmp.sp.milestones[player.sp.ashedMilestones].permanent==true?checkLastPermSpark():1)
 		if (player.sp.timer[player.sp.ashedMilestones] == 0) cost = cost.mul(1.5)
 		return cost
 	},
