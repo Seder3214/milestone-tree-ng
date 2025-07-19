@@ -544,8 +544,10 @@ addLayer("sp", {
 	challenges: {
 		11: {
 			onEnter() {
+		for (i in player) {
+    		if (i.length<4 && i!='tab')console.log(`${player[i].points}`)
+		}
 				player.p.perkUpgs = [15, 25, 35, 45]
-				player.m.points = new Decimal(0)
 				player.em.points = new Decimal(0)
 				player.mm.points = new Decimal(0)
 				player.points = new Decimal(0)

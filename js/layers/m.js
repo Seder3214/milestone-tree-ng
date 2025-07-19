@@ -75,7 +75,7 @@ addLayer("m", {
 			},
 			effect() {
 				let eff = new Decimal(1)
-				eff=getPointGen().add(1).log10().add(1).pow(0.35)
+				eff=getPointGen().add(1).log10().add(1).pow(0.35).max(1)
 				return eff
 			},
 			pseudoUnl() {return hasUpgrade("mp",21)},

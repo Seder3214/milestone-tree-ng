@@ -38,7 +38,7 @@ addLayer("p", {
 		mult=mult.mul(tmp.sp.buyables[11].effect);
 		mult=mult.mul(tmp.hp.buyables[11].effect);
 		if (hasMalware("m",8)) mult=mult.mul(tmp.m.milestone3Effect.pow(0.1))
-				if (player.sp.activeChallenge==11) mult=mult.max(1).slog(1.15).add(1)
+		if (player.sp.activeChallenge==11) mult=mult.max(1).slog(1.15).add(1)
         return mult
     },
 	perkCost() {
