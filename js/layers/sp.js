@@ -24,7 +24,6 @@ function checkLastUnPermSpark() {
 			min = Math.min(min, i.id)
 		}
 	}
-		console.log(`${min}`)
 	return min
 }
 function checkLastPermSpark() {

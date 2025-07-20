@@ -84,7 +84,7 @@ addLayer("cp", {
 cap() {
     let cap = 0
     cap=tmp.cp.grid.rows*tmp.cp.grid.cols
-    let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].level>0)
+    let slots = Object.keys(player.cp.grid).filter(x => player.cp.grid[x].level>0&& (Math.floor(x/100)<=tmp.cp.grid.rows && (x%10)<=tmp.cp.grid.cols))
     return cap-slots.length
 },
 canBuyMax() {return true},
