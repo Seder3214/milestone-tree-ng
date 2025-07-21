@@ -142,12 +142,12 @@ addLayer("sp", {
 		{ key: "s", description: "S: Reset for super-prestige points", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
 	],
 	reigniteCostCurrent() {
-		let cost = (new Decimal(240).sub(player.sp.timer[player.sp.ashedMilestones])).div(15.175).mul(player.sp.ashedMilestones + 1).mul(tmp.sp.milestones[player.sp.ashedMilestones].permanent==true?checkLastPermSpark():1)
+		let cost = (new Decimal(240).sub(player.sp.timer[player.sp.ashedMilestones])).div(15.175).mul(player.sp.ashedMilestones + 1).mul(tmp.sp.milestones[player.sp.ashedMilestones].permanent==true?player.sp.ashedMilestones:1)
 		if (player.sp.timer[player.sp.ashedMilestones] == 0) cost = cost.mul(1.5)
 		return cost
 	},
 	reigniteCostNext() {
-		let cost = (new Decimal(480).sub(player.sp.timer[player.sp.ashedMilestones])).div(15.175).mul(player.sp.ashedMilestones + 1).mul(tmp.sp.milestones[player.sp.ashedMilestones].permanent==true?checkLastPermSpark():1)
+		let cost = (new Decimal(480).sub(player.sp.timer[player.sp.ashedMilestones])).div(15.175).mul(player.sp.ashedMilestones + 1).mul(tmp.sp.milestones[player.sp.ashedMilestones].permanent==true?player.sp.ashedMilestones:1)
 		if (player.sp.timer[player.sp.ashedMilestones] == 0) cost = cost.mul(1.5)
 		return cost
 	},
