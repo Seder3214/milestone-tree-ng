@@ -17,11 +17,20 @@ function countPermanent() {
 	}
 	return x
 }
-function checkLastUnPermSpark() {
+function checkFirstUnPermSpark() {
 	let min = 100
 	for (i of tmp.sp.milestones) {
 		if (i.permanent == false && player.sp.timer[i.id]<240) {
 			min = Math.min(min, i.id)
+		}
+	}
+	return min
+}
+function checkLastUnPermSpark() {
+	let min = 0
+	for (i of tmp.sp.milestones) {
+		if (i.permanent == false) {
+			min = Math.max(min, i.id)
 		}
 	}
 	return min
@@ -31,9 +40,9 @@ function checkLastPermSpark() {
 	for (i of tmp.sp.milestones) {
 		if (i.permanent == true) {
 			min = Math.max(min, i.id)
-			return min
 		}
 	}
+	return min
 }
 function handleBurnDisplay(checkId) {
 	if (new Decimal(checkId).lt(player.sp.sparkMilestones) && (tmp.sp.milestones[checkId].permanent == false)) return ["display-text", `<div if="new Decimal(player.sp.chosenSparkMil+1).lt(player.sp.sparkMilestones)" style="border:2px solid white; width:300px; height:44px; background:linear-gradient(to right,rgb(174, 113, 42) ${player.sp.timer[checkId] != undefined ? ((1 - (Math.max(0, (240 - player.sp.timer[checkId]) / 240))) * 300) : 300}px,rgb(30, 30, 30) 0px); display:flexflex-wrap: wrap; align-content: center; justify-content: center; align-items: center;"><span style='font-size:14px'>
@@ -132,8 +141,13 @@ addLayer("sp", {
 	hotkeys: [
 		{ key: "s", description: "S: Reset for super-prestige points", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
 	],
-	reigniteCost() {
+	reigniteCostCurrent() {
 		let cost = (new Decimal(240).sub(player.sp.timer[player.sp.ashedMilestones])).div(15.175).mul(player.sp.ashedMilestones + 1).mul(tmp.sp.milestones[player.sp.ashedMilestones].permanent==true?checkLastPermSpark():1)
+		if (player.sp.timer[player.sp.ashedMilestones] == 0) cost = cost.mul(1.5)
+		return cost
+	},
+	reigniteCostNext() {
+		let cost = (new Decimal(480).sub(player.sp.timer[player.sp.ashedMilestones])).div(15.175).mul(player.sp.ashedMilestones + 1).mul(tmp.sp.milestones[player.sp.ashedMilestones].permanent==true?checkLastPermSpark():1)
 		if (player.sp.timer[player.sp.ashedMilestones] == 0) cost = cost.mul(1.5)
 		return cost
 	},
@@ -310,11 +324,11 @@ addLayer("sp", {
 			},
 		},
 		21: {
-			title() { return `<span style="color:orange; font-size:16px">Regnite the Milestone #${tmp.sp.milestones[player.sp.ashedMilestones].permanent == true ? checkLastUnPermSpark()+1:player.sp.ashedMilestones+1}.</span>` },
-			display() { return `<hr color="#4f4f4f"><span style="font-size:12px">Spend <b>${format(tmp.sp.reigniteCost)}</b> filled prestige ashes to reignite the Spark Milestone ` + (player.sp.ashedMilestones > 0 && player.sp.ashedMilestones==checkLastUnPermSpark()-1? `will burn Spark Milestone #${tmp.sp.milestones[player.sp.ashedMilestones].permanent == true ? checkLastUnPermSpark():player.sp.ashedMilestones} to 10% power)</span>` : '') },
-			canClick() { return player.sp.sparkFill.gte(tmp.sp.reigniteCost) },
+			title() { return `<span style="color:orange; font-size:16px">Regnite the Milestone #${tmp.sp.milestones[player.sp.ashedMilestones].permanent == true ? checkFirstUnPermSpark()+1:player.sp.ashedMilestones+1}.</span>` },
+			display() { return `<hr color="#4f4f4f"><span style="font-size:12px">Spend <b>${format(tmp.sp.reigniteCostCurrent)}</b> filled prestige ashes to reignite the Spark Milestone ` + (player.sp.ashedMilestones > 0 && player.sp.ashedMilestones==checkFirstUnPermSpark()-1? `will burn Spark Milestone #${tmp.sp.milestones[player.sp.ashedMilestones].permanent == true ? checkFirstUnPermSpark():player.sp.ashedMilestones} to 10% power)</span>` : '') },
+			canClick() { return player.sp.sparkFill.gte(tmp.sp.reigniteCostCurrent) },
 			onClick() {
-				if (player.sp.sparkFill.gte(tmp.sp.reigniteCost)) player.sp.sparkFill = player.sp.sparkFill.sub(tmp.sp.reigniteCost)
+				if (player.sp.sparkFill.gte(tmp.sp.reigniteCostCurrent)) player.sp.sparkFill = player.sp.sparkFill.sub(tmp.sp.reigniteCostCurrent)
 				if (player.sp.ashedMilestones >= 0) {
 				player.sp.timer[player.sp.ashedMilestones] = 240
 				if (player.sp.timer[player.sp.ashedMilestones - 1] == 0 && player.sp.ashedMilestones>0) player.sp.timer[player.sp.ashedMilestones - 1] = 36
@@ -330,6 +344,45 @@ addLayer("sp", {
 							console.log(`${min}, ${i.id}, ${player.sp.ashedMilestones}`)
 						}
 					}
+			}
+			},
+			style() {
+				return {
+					'border-radius': '0%',
+					'color': 'white',
+					'background': `linear-gradient(to right, rgb(66, 66, 66) 0px)`,
+					'border': '2px solid',
+					'min-height': '100px',
+					'width': '250px',
+				}
+			},
+			unlocked() {
+				return player.sp.burningTimer > 0 || player.sp.ashedMilestones > 0
+			},
+		},
+			22: {
+			title() {
+				let count=0;
+				let finCount=0;
+				if (tmp.sp.milestones[player.sp.ashedMilestones+2]==undefined) return `<span style="color:orange; font-size:16px">No milestones to Reignite.</span>`
+					else if (tmp.sp.milestones[player.sp.ashedMilestones+2]!=undefined){
+					if (tmp.sp.milestones[player.sp.ashedMilestones+1].permanent==false)return `<span style="color:orange; font-size:16px">Regnite the Milestone #${player.sp.ashedMilestones+2}.</span>`
+					if (tmp.sp.milestones[player.sp.ashedMilestones+1].permanent==true) {
+						for (i of tmp.sp.milestones) {
+							if (i.permanent==true) count++;
+							if (i.permanent==false) {finCount=count; count=0;}
+						}
+						return `<span style="color:orange; font-size:16px">Regnite the Milestone #${player.sp.ashedMilestones+finCount+2}.</span>`
+					}}},
+			display() { if (tmp.sp.milestones[player.sp.ashedMilestones+1]!=undefined) return `<hr color="#4f4f4f"><span style="font-size:12px">Spend <b>${format(tmp.sp.reigniteCostNext)}</b> filled prestige ashes to reignite the Spark Milestone ` + (player.sp.ashedMilestones > 0 && player.sp.ashedMilestones==checkFirstUnPermSpark()-1? `will burn Spark Milestone #${tmp.sp.milestones[player.sp.ashedMilestones].permanent == true ? checkFirstUnPermSpark():player.sp.ashedMilestones} to 10% power)</span>` : '') 
+						else return `<hr color="#4f4f4f"><span style="font-size:12px">No milestones to Reignite`},
+			canClick() { return player.sp.sparkFill.gte(tmp.sp.reigniteCostNext)&&(tmp.sp.milestones[player.sp.ashedMilestones+1]!=undefined && player.sp.timer[player.sp.ashedMilestones+1]<=240) },
+			onClick() {
+				if (player.sp.sparkFill.gte(tmp.sp.reigniteCostNext)) player.sp.sparkFill = player.sp.sparkFill.sub(tmp.sp.reigniteCostNext)
+				if (player.sp.ashedMilestones >= 0&& tmp.sp.milestones[player.sp.ashedMilestones]!=undefined) {
+				player.sp.timer[player.sp.ashedMilestones+1] = 240
+				player.sp.burningTimer = 240
+				player.sp.ashedMilestones++
 			}
 			},
 			style() {
@@ -872,6 +925,70 @@ addLayer("sp", {
 				}
 			},
 		},
+		{
+			requirementDescription() { return `<span class='spark'>Spark Milestone #${new Decimal(this.id).add(1)}</span>` },
+			id: 4,
+			unlocked() { return player[this.layer].sparkMilestones.gte(new Decimal(this.id).add(1)) },
+			tooltip() { return `Currently: ${this.done() ? "Unlocked" : "Not Unlocked"}` },
+			permanent: false,
+			tooltipStyle() {
+				return {
+					'border': '2px solid lime',
+					'background': `rgb(19, 19, 19)`,
+					'font-size': '12px',
+					'border-width': '2px 2px 0 2px',
+					'border-image': 'linear-gradient(to right, orange 0%, rgb(255, 132, 0) 50%,orange 100%)',
+					'width': '200px',
+					'margin-bottom': '0px',
+					'border-image-slice': '1'
+				}
+			},
+			done() { return player[this.layer].sparkMilestones.gte(new Decimal(this.id).add(1)) }, // Used to determine when to give the milestone
+			effectDescription: function () {
+				return `<hr color="#4f4f4f"><span style="font-size:11px">[Permanent] Unlock CNU3 in Prestige Universe [ENDGAME].</span>`
+			},
+			style() {
+				return {
+					'border-radius': '0%',
+					'color': 'white',
+					'background': `rgb(19, 19, 19)`,
+					'border': '2px solid',
+					'min-height': '102px'
+				}
+			},
+		},
+			{
+			requirementDescription() { return `<span class='spark'>Spark Milestone #${new Decimal(this.id).add(1)}</span>` },
+			id: 5,
+			unlocked() { return player[this.layer].sparkMilestones.gte(new Decimal(this.id).add(1)) },
+			tooltip() { return `Currently: ${this.done() ? "Unlocked" : "Not Unlocked"}` },
+			permanent: true,
+			tooltipStyle() {
+				return {
+					'border': '2px solid lime',
+					'background': `rgb(19, 19, 19)`,
+					'font-size': '12px',
+					'border-width': '2px 2px 0 2px',
+					'border-image': 'linear-gradient(to right, orange 0%, rgb(255, 132, 0) 50%,orange 100%)',
+					'width': '200px',
+					'margin-bottom': '0px',
+					'border-image-slice': '1'
+				}
+			},
+			done() { return player[this.layer].sparkMilestones.gte(new Decimal(this.id).add(1)) }, // Used to determine when to give the milestone
+			effectDescription: function () {
+				return `<hr color="#4f4f4f"><span style="font-size:11px">[Permanent] Unlock CNU3 in Prestige Universe [ENDGAME].</span>`
+			},
+			style() {
+				return {
+					'border-radius': '0%',
+					'color': 'white',
+					'background': `rgb(19, 19, 19)`,
+					'border': '2px solid',
+					'min-height': '102px'
+				}
+			},
+		},
 	],
 	tabFormat: {
 		"Main": {
@@ -900,7 +1017,7 @@ addLayer("sp", {
 				"blank",
 				["clickable", [14]],
 				"blank",
-				["row", [["display-text", function () { return `<div style="border:2px solid white; width:630px; height:96px; display:flexflex-wrap: wrap; align-content: center; justify-content: center; align-items: center;"><span style='font-size:20px'>To unlock Spark Milestone:</span><span style='color:  rgb(249, 147, 30); text-shadow: rgb(249, 147, 30) 0px 0px 10px; font-size:16px'><br>` + format(player.sp.sparkFill) + " / " + format(tmp.sp.SparkUnlReq) + `</span> Prestige Ashes (Unlocked ${format(player.sp.sparkMilestones, 0)} / ${format(maxMilestones(), 0)} Spark Milestones) <hr color="#4f4f4f">Tip: Tap to the clickable on the right to activate/deactivate auto-fill of Prestige Ashes` }], ["display-text", `</div>`], ["clickable", [11]], ["clickable", [21]]]],
+				["row", [["display-text", function () { return `<div style="border:2px solid white; width:630px; height:96px; display:flexflex-wrap: wrap; align-content: center; justify-content: center; align-items: center;"><span style='font-size:20px'>To unlock Spark Milestone:</span><span style='color:  rgb(249, 147, 30); text-shadow: rgb(249, 147, 30) 0px 0px 10px; font-size:16px'><br>` + format(player.sp.sparkFill) + " / " + format(tmp.sp.SparkUnlReq) + `</span> Prestige Ashes (Unlocked ${format(player.sp.sparkMilestones, 0)} / ${format(maxMilestones(), 0)} Spark Milestones) <hr color="#4f4f4f">Tip: Tap to the clickable on the right to activate/deactivate auto-fill of Prestige Ashes` }], ["display-text", `</div>`], ["clickable", [11]], ["clickable", [21]], ["clickable",[22]]]],
 				"blank",
 				["row", [["display-text", function () { return `(${format(player.sp.ashedMilestones, 0)} / ${format(player.sp.sparkMilestones, 0)} Spark Milestones are Ashed, where ${format(countPermanent(), 0)} of them are [Permanent])` }]]],
 				"blank",
